@@ -30,11 +30,20 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "The Debrief",
+    images: [
+      {
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: "The Debrief — AI news, explained simply.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "The Debrief",
     description: "AI news, explained simply.",
+    images: ["/api/og"],
   },
 };
 

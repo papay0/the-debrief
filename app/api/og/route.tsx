@@ -10,8 +10,11 @@ export async function GET(request: Request) {
       searchParams.get("title") || "The Debrief"
     );
     const description = decodeURIComponent(
-      searchParams.get("description") || "AI news, explained simply."
+      searchParams.get("description") || ""
     );
+
+    // Is this the homepage/default OG (no article title)?
+    const isDefault = !searchParams.get("title");
 
     return new ImageResponse(
       (
@@ -20,101 +23,110 @@ export async function GET(request: Request) {
             height: "100%",
             width: "100%",
             display: "flex",
-            flexDirection: "column",
             position: "relative",
-            background: "#0c1529",
+            background: "#0a1628",
           }}
         >
-          {/* Gradient orbs */}
+          {/* Ambient gradient — fills center for warmth */}
           <div
             style={{
               position: "absolute",
-              top: "-20%",
-              right: "-10%",
-              width: "800px",
-              height: "800px",
+              top: "10%",
+              left: "20%",
+              width: "900px",
+              height: "700px",
               background:
-                "radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 70%)",
-              filter: "blur(80px)",
+                "radial-gradient(ellipse, rgba(59, 130, 246, 0.18) 0%, transparent 65%)",
+              filter: "blur(60px)",
               display: "flex",
             }}
           />
+          {/* Edge highlight — top right corner glow */}
           <div
             style={{
               position: "absolute",
-              bottom: "-30%",
-              left: "-10%",
-              width: "900px",
-              height: "900px",
+              top: "-10%",
+              right: "-5%",
+              width: "500px",
+              height: "500px",
               background:
-                "radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%)",
-              filter: "blur(80px)",
+                "radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)",
+              filter: "blur(50px)",
               display: "flex",
             }}
           />
 
-          {/* Content */}
+          {/* Content — vertically centered, maximum title prominence */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              height: "100%",
               width: "100%",
-              padding: "80px",
-              justifyContent: "space-between",
+              height: "100%",
+              padding: "60px 80px",
+              justifyContent: "center",
+              gap: "0",
             }}
           >
-            <div style={{ display: "flex" }} />
-
+            {/* Brand — small, muted, above the title */}
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
-                gap: "24px",
+                fontSize: "22px",
+                fontWeight: 600,
+                color: "#3b82f6",
+                letterSpacing: "0.05em",
+                textTransform: "uppercase" as const,
+                marginBottom: "28px",
               }}
             >
-              <div
-                style={{
-                  fontSize: "64px",
-                  fontWeight: "bold",
-                  lineHeight: 1.1,
-                  color: "white",
-                  display: "flex",
-                  letterSpacing: "-0.02em",
-                  maxWidth: "900px",
-                }}
-              >
-                {title}
-              </div>
+              The Debrief
+            </div>
 
+            {/* Title — DOMINANT, fills the card */}
+            <div
+              style={{
+                fontSize: isDefault ? "88px" : title.length > 50 ? "64px" : title.length > 30 ? "76px" : "88px",
+                fontWeight: "bold",
+                lineHeight: 1.05,
+                color: "#ffffff",
+                display: "flex",
+                letterSpacing: "-0.03em",
+                maxWidth: "1050px",
+              }}
+            >
+              {isDefault ? "AI news, explained simply." : title}
+            </div>
+
+            {/* Description — only if present and short enough to matter at thumbnail */}
+            {!isDefault && description && description.length <= 100 && (
               <div
                 style={{
-                  fontSize: "32px",
-                  color: "#94a3b8",
+                  fontSize: "30px",
+                  color: "#7a8ba8",
                   display: "flex",
-                  letterSpacing: "-0.01em",
-                  maxWidth: "800px",
+                  lineHeight: 1.35,
+                  maxWidth: "900px",
+                  marginTop: "24px",
                 }}
               >
                 {description}
               </div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                fontSize: "24px",
-                color: "#64748b",
-              }}
-            >
-              <span style={{ fontWeight: "bold", color: "#3b82f6" }}>
-                The Debrief
-              </span>
-              <span>— AI news, explained simply.</span>
-            </div>
+            )}
           </div>
+
+          {/* Bottom bar — thin accent line */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "0",
+              left: "0",
+              right: "0",
+              height: "4px",
+              background: "linear-gradient(90deg, #3b82f6 0%, #6366f1 50%, #3b82f6 100%)",
+              display: "flex",
+            }}
+          />
         </div>
       ),
       {
