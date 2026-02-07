@@ -159,7 +159,7 @@
 }
 
 .prose-debrief pre {
-  @apply bg-[oklch(0.15_0.02_260)] text-[oklch(0.9_0.01_260)] p-3 sm:p-4 rounded-lg overflow-x-auto my-6 text-xs sm:text-sm -mx-4 sm:mx-0;
+  @apply bg-[oklch(0.15_0.02_260)] text-[oklch(0.9_0.01_260)] p-3 sm:p-4 rounded-lg overflow-x-auto my-6 text-xs sm:text-sm;
 }
 
 .prose-debrief ul {
@@ -183,7 +183,7 @@
 }
 
 .prose-debrief .table-wrapper {
-  @apply overflow-x-auto -mx-4 sm:mx-0 my-6;
+  @apply overflow-x-auto my-6;
 }
 
 .prose-debrief table {
