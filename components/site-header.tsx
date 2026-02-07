@@ -11,7 +11,7 @@ export function SiteHeader() {
           <Link href="/" className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors shrink-0">
             The Debrief
           </Link>
-          <span className="hidden sm:inline text-sm text-muted-foreground truncate">
+          <span className="text-sm text-muted-foreground truncate">
             AI news, explained simply.
           </span>
         </div>

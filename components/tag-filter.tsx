@@ -8,7 +8,7 @@ interface TagFilterProps {
 
 export function TagFilter({ tags, activeTag }: TagFilterProps) {
   return (
-    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+    <div className="hidden sm:flex flex-wrap gap-2">
       <Link href="/">
         <Badge
           variant={!activeTag ? "default" : "secondary"}
