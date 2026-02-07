@@ -9,6 +9,20 @@ export function AskChatGPT({ slug }: { slug: string }) {
   const [expanded, setExpanded] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [placeholderWidth, setPlaceholderWidth] = useState(0);
+
+  // Measure the placeholder text width on mount to size the collapsed state perfectly
+  useEffect(() => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (ctx && inputRef.current) {
+      const style = window.getComputedStyle(inputRef.current);
+      ctx.font = `${style.fontSize} ${style.fontFamily}`;
+      const measured = ctx.measureText("Ask ChatGPT a follow-up question...");
+      // placeholder width + button (28px) + gaps/padding (48px) + breathing room (24px)
+      setPlaceholderWidth(Math.ceil(measured.width) + 100);
+    }
+  }, []);
 
   useEffect(() => {
     if (!expanded) return;
@@ -48,13 +62,20 @@ export function AskChatGPT({ slug }: { slug: string }) {
   return (
     <div
       ref={containerRef}
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] transition-[max-width] duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-        expanded ? "max-w-xl" : "max-w-56"
+      style={
+        !expanded && placeholderWidth
+          ? { maxWidth: `${placeholderWidth}px` }
+          : undefined
+      }
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 transition-[max-width] duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+        expanded
+          ? "w-[calc(100%-2rem)] max-w-xl"
+          : "w-[calc(100%-2rem)]"
       }`}
     >
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 rounded-full bg-secondary/95 backdrop-blur border border-border/50 shadow-lg px-4 py-2.5 cursor-text"
+        className="flex items-center gap-2 rounded-full bg-secondary/95 backdrop-blur border border-border/50 shadow-lg px-5 py-2.5 cursor-text"
         onClick={() => {
           inputRef.current?.focus();
         }}
