@@ -1,0 +1,65 @@
+---
+title: "Opus 4.6 vs GPT-5.3-Codex: The New Frontier Models Compared"
+date: "2026-02-07"
+description: "Anthropic's Opus 4.6 and OpenAI's GPT-5.3-Codex just dropped. Here's how they compare and which one you should actually use."
+tags: ["Claude", "GPT", "Models", "Comparison"]
+draft: false
+---
+
+## Two Giants, One Week
+
+This week we got two major model releases: Anthropic's Claude Opus 4.6 and OpenAI's GPT-5.3-Codex. Both are being called the best models ever. Both cost a fortune to run. And if you're building with AI, you're probably wondering which one to use.
+
+Let me save you some time.
+
+## The Quick Take
+
+**Opus 4.6** is the better general-purpose reasoning model. Longer context, more coherent over extended conversations, better at following complex instructions.
+
+**GPT-5.3-Codex** is the better coding model. Faster, more aggressive, better at autonomous multi-file edits.
+
+If you're doing research or writing, Opus. If you're shipping code, Codex.
+
+## Where Opus 4.6 Shines
+
+Opus has always been Anthropic's "think harder" model, and 4.6 continues that tradition. It's:
+
+- **Better at nuance.** Opus handles ambiguous requests more gracefully. It asks clarifying questions when appropriate instead of guessing wrong.
+- **More coherent over long contexts.** If you're working with 100k+ tokens, Opus holds together better. Codex starts losing the thread.
+- **More careful.** For tasks where precision matters more than speed, Opus makes fewer mistakes.
+
+The downside: it's slow. And expensive. "Token whore" as one person on my timeline put it. Opus thinks hard, and you pay for that thinking.
+
+## Where GPT-5.3-Codex Shines
+
+Codex is OpenAI's answer to Claude Code eating their lunch. It's:
+
+- **Fast.** Noticeably faster than Opus for code generation.
+- **Aggressive.** It takes initiative, makes multi-file changes, and doesn't ask for permission as often.
+- **Great at agentic workflows.** If you're running Codex in an autonomous loop, it feels more "natural" at taking action.
+
+The downside: it sometimes does too much. It'll refactor things you didn't ask about. It occasionally hallucinates file paths. It optimizes for speed over correctness.
+
+## Real-World Usage
+
+I've been using both for the past few days. Here's how I'd split them:
+
+**Use Opus 4.6 for:**
+- Complex reasoning tasks
+- Writing and editing
+- Conversations where context matters
+- Anything where being wrong is expensive
+
+**Use GPT-5.3-Codex for:**
+- Rapid prototyping
+- Autonomous coding agents
+- Multi-file refactors
+- Tasks where speed matters more than perfection
+
+## The Meta Point
+
+We're at the point where the "best model" depends entirely on what you're doing. There's no single winner. The gap between Anthropic and OpenAI has closed to the point where it's about use case fit, not raw capability.
+
+That's good for us. Competition is working. Both companies are shipping faster than ever.
+
+Pick the one that fits your workflow. Or use both — most of us do.

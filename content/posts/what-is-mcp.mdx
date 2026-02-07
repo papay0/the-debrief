@@ -1,58 +1,77 @@
 ---
-title: "What Is MCP? The Protocol Connecting AI to Everything"
-date: "2025-12-15"
-description: "Model Context Protocol is Anthropic's open standard for connecting AI assistants to external tools and data. Here's what it means and why it matters."
-tags: ["MCP", "Anthropic", "AI Infrastructure"]
+title: "What Is MCP? The Protocol That Connects AI to Everything"
+date: "2026-01-28"
+description: "Model Context Protocol is becoming the USB of AI — a standard way for language models to talk to external tools and data. Here's what it is and why you should care."
+tags: ["MCP", "Anthropic", "Infrastructure", "Tools"]
 draft: false
 ---
 
-## The Problem MCP Solves
+## The Problem
 
-Every AI assistant faces the same limitation: it can only work with what's inside its context window. Need it to check your calendar, query a database, or read a file? Each integration has historically required custom code, bespoke APIs, and brittle glue logic.
+Every AI assistant has the same limitation: it can only work with what's in its context window. Need it to check your calendar? Query a database? Read a file? Each integration requires custom code, bespoke APIs, and fragile glue logic.
 
-**Model Context Protocol (MCP)** changes this. It's an open standard — created by Anthropic and now adopted across the industry — that gives AI models a universal way to connect to external tools and data sources.
+It's 2026 and we're still building one-off integrations like it's 2015.
 
-Think of it like USB for AI. Before USB, every peripheral needed its own proprietary connector. MCP does the same thing for AI integrations: one protocol, infinite connections.
+## The Solution
+
+Model Context Protocol (MCP) is an open standard that gives AI models a universal way to connect to external tools and data.
+
+Think of it like USB for AI. Before USB, every device needed its own connector. MCP does the same thing for AI integrations — one protocol, infinite connections.
 
 ## How It Works
 
-MCP follows a simple client-server architecture:
+MCP uses a client-server architecture:
 
-- **MCP Hosts** are AI applications (like Claude Desktop or an IDE) that want to access external data
-- **MCP Clients** maintain connections between the host and servers
-- **MCP Servers** expose tools, resources, and prompts through a standardized interface
+- **MCP Hosts** are AI applications (Claude Desktop, an IDE, your custom agent)
+- **MCP Clients** maintain connections between hosts and servers
+- **MCP Servers** expose tools, resources, and data through a standard interface
 
-When Claude needs to read a file, query a database, or call an API, it communicates through MCP rather than needing a custom integration for each service.
+When Claude needs to read a file or call an API, it communicates through MCP rather than needing custom integration code.
 
 ```
-AI Assistant ←→ MCP Client ←→ MCP Server ←→ Your Data/Tools
+Your AI ←→ MCP Client ←→ MCP Server ←→ External Service
 ```
 
-## Why It Matters
+Build one MCP server for your service. Every MCP-compatible AI can use it.
 
-### For Developers
-Instead of building custom integrations for every AI tool, you build one MCP server. That server then works with any MCP-compatible AI assistant. Write once, connect everywhere.
+## What Can MCP Do?
 
-### For Users
-MCP means your AI assistant can actually *do things* — not just talk about them. Check your email, update a spreadsheet, deploy code, manage your calendar — all through natural conversation.
-
-### For the Ecosystem
-An open standard prevents lock-in. Your MCP servers work with Claude, but they'll also work with any other AI that supports the protocol. Competition happens on model quality, not integration lock-in.
-
-## What's Available Today
-
-The MCP ecosystem is growing fast:
+The ecosystem is growing fast. There are MCP servers for:
 
 - **File systems** — read and write local files
-- **Databases** — query PostgreSQL, SQLite, and more
-- **APIs** — GitHub, Slack, Linear, and dozens of others
+- **Databases** — PostgreSQL, SQLite, MongoDB
+- **APIs** — GitHub, Slack, Linear, Notion, dozens more
 - **Browser automation** — control Chrome programmatically
-- **Development tools** — run tests, lint code, manage deployments
+- **Dev tools** — run tests, lint code, manage deployments
 
-> The key insight is that MCP isn't just about connecting AI to tools. It's about creating a standard that makes those connections composable, secure, and portable.
+If there's a service you use, someone's probably building an MCP server for it.
 
-## What's Next
+## Why This Matters
 
-MCP is still early, but the trajectory is clear. As more servers get built and more AI assistants adopt the protocol, we're moving toward a world where AI can seamlessly interact with any digital system — the same way your computer can connect to any USB device without thinking about drivers.
+**For developers:** Instead of building custom integrations for each AI tool, build one MCP server. It works with Claude, GPT, and any other compatible model.
 
-The protocol is open source and the spec is public. If you're building AI-powered tools, MCP is worth understanding now — it's quickly becoming the standard way AI talks to the world.
+**For users:** Your AI can actually *do* things — not just talk about them. Check email, update spreadsheets, deploy code, manage your calendar. All through natural conversation.
+
+**For the ecosystem:** Open standards prevent lock-in. Your MCP servers work everywhere. Competition happens on model quality, not integration monopolies.
+
+## The Anthropic Connection
+
+MCP was created by Anthropic, but it's open source and model-agnostic. You can use it with any AI system. Anthropic open-sourced it specifically to avoid fragmentation — they'd rather have a shared standard than a proprietary advantage.
+
+That's notable. In a world of AI companies hoarding everything, Anthropic gave this away.
+
+## What MCP Doesn't Do
+
+MCP isn't magic. It doesn't make integrations secure by itself. It doesn't prevent misuse. It doesn't guarantee that every MCP server is well-built.
+
+It's plumbing. Good plumbing enables good applications, but you still have to build the applications.
+
+Also, MCP is for tools and data, not for the models themselves. It's about what AI can *access*, not how AI *thinks*.
+
+## Where This Is Going
+
+MCP is becoming the default. Major AI companies are adopting it. The server ecosystem is exploding. Within a year, "does it have an MCP server?" will be a standard question for any service.
+
+We're moving toward a world where AI can seamlessly interact with any digital system — the same way your computer can connect to any USB device without thinking about drivers.
+
+That world is closer than most people realize. MCP is how we get there.

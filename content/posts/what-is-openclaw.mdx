@@ -1,0 +1,71 @@
+---
+title: "What Is OpenClaw? The AI Agent Gateway Explained"
+date: "2026-02-04"
+description: "OpenClaw is the open-source gateway that turns Claude, GPT, and other models into persistent AI agents with real access to your computer. Here's what it does and why it matters."
+tags: ["OpenClaw", "AI Agents", "Tools"]
+draft: false
+---
+
+## The Short Version
+
+OpenClaw is an open-source agent gateway. You connect it to an AI model (Claude, GPT, Gemini, whatever), and suddenly that model can:
+
+- Read and write files on your computer
+- Run terminal commands
+- Browse the web
+- Control your browser
+- Send messages on your behalf
+- Remember things between conversations
+
+It turns a chatbot into an assistant that actually *does* things.
+
+## Why This Exists
+
+Most AI tools are sandboxed. You chat with them in a browser, they generate text, and that's it. If you want the AI to actually take action — edit a file, run a script, send an email — you have to copy-paste its output and do it yourself.
+
+OpenClaw removes that friction. The agent runs locally on your machine with real access to your tools. You say "fix that bug" and it opens your codebase, finds the issue, edits the file, and commits the change.
+
+It's the difference between an AI that gives advice and an AI that does the work.
+
+## How It Works
+
+OpenClaw runs as a daemon on your computer. It:
+
+1. **Connects to messaging surfaces** — Telegram, Discord, iMessage, whatever you configure
+2. **Routes messages to an AI model** — Claude, GPT, or any compatible API
+3. **Gives the model tools** — file access, shell execution, browser control, memory
+4. **Persists across sessions** — the agent remembers context in markdown files
+
+You message it, it thinks, it acts. Simple loop, powerful results.
+
+## Skills and Extensibility
+
+OpenClaw's power comes from "skills" — modular packages that teach the agent how to do specific things. There are skills for:
+
+- Reading tweets and posting
+- Managing Google Calendar
+- Controlling smart home devices
+- Transcribing audio with Whisper
+- Searching your email
+
+Skills are just markdown files with instructions and optional scripts. You can write your own in minutes.
+
+## The Trade-Off
+
+This power comes with risk. An agent with file access and shell commands can do a lot of damage if it misbehaves or gets exploited. The recent ClawHub malware incident showed how real this risk is.
+
+OpenClaw isn't for everyone. It's for people who want maximum capability and are willing to manage the security implications themselves.
+
+## Who's Using This?
+
+Developers, mostly. People who want an AI pair programmer that can actually run tests, commit code, and deploy changes. But also researchers, tinkerers, and anyone who wants to push the boundaries of what AI assistance can look like.
+
+It's open source. If you're curious, you can run it today.
+
+## The Bigger Picture
+
+OpenClaw represents a specific philosophy: AI should have real agency, not just conversation. It should be able to take actions in the world, not just describe what actions to take.
+
+That philosophy is winning. Claude Code, GPT agents, computer-use models — they're all moving in this direction. OpenClaw is just the open-source version that runs on your own machine.
+
+The future of AI isn't chat. It's agents that do things. OpenClaw is one way to get there early.

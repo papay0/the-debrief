@@ -1,0 +1,80 @@
+---
+title: "What Are Agent Skills? The Modular Future of AI Capabilities"
+date: "2026-02-01"
+description: "Skills are how AI agents learn to do new things. They're simple, portable, and about to change how we think about AI extensibility."
+tags: ["Skills", "AI Agents", "MCP", "Tools"]
+draft: false
+---
+
+## The Basic Idea
+
+A skill is a package that teaches an AI agent how to do something specific.
+
+Want your agent to read tweets? There's a skill for that. Check your calendar? Skill. Control your smart lights? Skill.
+
+Instead of building one massive AI that knows everything, we build a simple AI and give it skills. Modular, composable, extensible.
+
+## What's Inside a Skill?
+
+At its core, a skill is just a folder with a SKILL.md file. That file contains:
+
+- **Metadata** — name, description, what tools it needs
+- **Instructions** — how to use the skill, what commands to run
+- **Examples** — sample interactions
+
+Optionally, a skill can bundle:
+
+- **Scripts** — shell scripts, Python files, whatever the skill needs
+- **Assets** — templates, config files, reference docs
+
+That's it. A markdown file and some optional extras. Simple by design.
+
+## Why Markdown?
+
+Because LLMs can read markdown natively. When an agent loads a skill, it literally just reads the instructions. No special parsing, no complex API. The skill *is* the documentation.
+
+This simplicity has trade-offs (see: the ClawHub malware incident), but it also means anyone can write a skill in minutes. Lower barrier, faster ecosystem growth.
+
+## The Agent Skills Standard
+
+There's an emerging open standard called Agent Skills that multiple platforms are adopting. OpenAI's Codex uses it. OpenClaw uses it. Various other agents use it.
+
+The idea: write a skill once, use it anywhere. A skill that works with Claude should work with GPT should work with any compatible agent.
+
+We're not fully there yet, but the convergence is happening.
+
+## Skills vs MCP
+
+If you've heard of MCP (Model Context Protocol), you might wonder how skills differ.
+
+**MCP** is a protocol for connecting AI to tools and data sources. It defines how an agent talks to external services.
+
+**Skills** are instructions that teach agents how to use those tools. They often wrap MCP servers or other integrations.
+
+Think of MCP as the plumbing and skills as the user manual. You need both.
+
+## Why This Matters
+
+**For users:** You can customize your AI without coding. Just drop skills into a folder and your agent learns new tricks.
+
+**For developers:** You can package your tool as a skill and reach every agent that supports the standard. Build once, distribute everywhere.
+
+**For the ecosystem:** Skills create a marketplace. People share what they've built. Best practices emerge. The whole system gets smarter.
+
+## The Risk
+
+Skills are powerful, which means they can be dangerous. A malicious skill can include instructions that trick agents into running harmful commands. The recent ClawHub malware attack proved this isn't theoretical.
+
+As skills become more common, we'll need:
+
+- Better verification and signing
+- Sandboxing for untrusted skills
+- User education about what they're installing
+
+We're early. Expect growing pains.
+
+## Where This Is Going
+
+The skill ecosystem is exploding. Every week there are new skills for new use cases. The quality is uneven, but the best ones are genuinely useful.
+
+My prediction: in a year, asking "what skills does your agent have?" will be as common as asking "what apps do you use?" Skills are becoming the new apps — just for AI instead of humans.
