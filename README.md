@@ -1,6 +1,4 @@
 <div align="center">
-<br>
-<br>
 
 # The Debrief
 
@@ -8,12 +6,9 @@
 
 [thedebrief.ai](https://thedebrief.ai)
 
-<br>
 </div>
 
 ---
-
-<br>
 
 AI moves fast. Every week brings a new model, a new benchmark, a new claim that changes everything.
 
@@ -21,19 +16,11 @@ Most coverage assumes you already know what a transformer is, what RLHF means, o
 
 We take the biggest stories in AI and break them down — clearly, honestly, without the hype. Whether you're a developer trying to keep up, a founder evaluating tools, or just someone curious about where this is all heading, this is your weekly read.
 
-<br>
-
 ---
-
-<br>
 
 > *"If you can't explain it simply, you don't understand it well enough."*
 
-<br>
-
 ---
-
-<br>
 
 ### What you'll find here
 
@@ -43,11 +30,7 @@ We take the biggest stories in AI and break them down — clearly, honestly, wit
 
 **The bigger picture** — What these changes mean for how we build, create, and work.
 
-<br>
-
 ---
-
-<br>
 
 <div align="center">
 
@@ -55,6 +38,4 @@ Open source. No ads. No fluff.
 
 **[Read the latest &rarr;](https://thedebrief.ai)**
 
-<br>
-<br>
 </div>
