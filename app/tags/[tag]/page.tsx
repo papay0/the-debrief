@@ -1,6 +1,7 @@
 import { getAllTags, getPostsByTag } from "@/lib/posts";
 import { ArticleList } from "@/components/article-list";
 import { TagFilter } from "@/components/tag-filter";
+import { TagPageHeader } from "@/components/tag-page-header";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -40,9 +41,10 @@ export default async function TagPage({
   const posts = getPostsByTag(tag);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-4 pb-8 sm:py-10">
       <TagFilter tags={allTags} activeTag={tag} />
-      <div className="mt-6">
+      <TagPageHeader tag={tag} count={posts.length} />
+      <div className="sm:mt-6">
         <ArticleList posts={posts} />
       </div>
     </div>
