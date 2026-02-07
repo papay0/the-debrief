@@ -1,8 +1,9 @@
 import { MetadataRoute } from "next";
 import { getAllPosts, getAllTags } from "@/lib/posts";
+import { SITE_URL } from "@/lib/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://thedebrief.ai";
+  const baseUrl = SITE_URL;
   const posts = getAllPosts();
   const tags = getAllTags();
 

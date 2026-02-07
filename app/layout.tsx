@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SearchCommand } from "@/components/search-command";
 import { getAllPosts } from "@/lib/posts";
+import { SITE_URL } from "@/lib/config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thedebrief.ai"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "The Debrief — AI News, Explained Simply",
     template: "%s | The Debrief",
