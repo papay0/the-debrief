@@ -11,6 +11,7 @@ import {
   CommandGroup,
   CommandItem,
 } from "@/components/ui/command";
+import type { Locale } from "@/lib/i18n";
 
 interface SearchPost {
   slug: string;
@@ -19,9 +20,27 @@ interface SearchPost {
   tags: string[];
 }
 
-export function SearchCommand({ posts }: { posts: SearchPost[] }) {
+const translations = {
+  en: {
+    title: "Search articles",
+    description: "Search for articles by title, description, or tags",
+    placeholder: "Search articles...",
+    empty: "No articles found.",
+    group: "Articles",
+  },
+  fr: {
+    title: "Rechercher des articles",
+    description: "Rechercher des articles par titre, description ou tags",
+    placeholder: "Rechercher des articles...",
+    empty: "Aucun article trouvé.",
+    group: "Articles",
+  },
+};
+
+export function SearchCommand({ posts, locale }: { posts: SearchPost[]; locale: Locale }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const strings = translations[locale];
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -33,7 +52,6 @@ export function SearchCommand({ posts }: { posts: SearchPost[] }) {
 
     document.addEventListener("keydown", down);
 
-    // Allow header search button to open dialog
     const handleClick = () => setOpen(true);
     const trigger = document.querySelector("[data-search-trigger]");
     trigger?.addEventListener("click", handleClick);
@@ -46,20 +64,21 @@ export function SearchCommand({ posts }: { posts: SearchPost[] }) {
 
   const handleSelect = (slug: string) => {
     setOpen(false);
-    router.push(`/posts/${slug}`);
+    const path = locale === "en" ? `/posts/${slug}` : `/${locale}/posts/${slug}`;
+    router.push(path);
   };
 
   return (
     <CommandDialog
       open={open}
       onOpenChange={setOpen}
-      title="Search articles"
-      description="Search for articles by title, description, or tags"
+      title={strings.title}
+      description={strings.description}
     >
-      <CommandInput placeholder="Search articles..." />
+      <CommandInput placeholder={strings.placeholder} />
       <CommandList>
-        <CommandEmpty>No articles found.</CommandEmpty>
-        <CommandGroup heading="Articles">
+        <CommandEmpty>{strings.empty}</CommandEmpty>
+        <CommandGroup heading={strings.group}>
           {posts.map((post) => (
             <CommandItem
               key={post.slug}

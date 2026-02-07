@@ -1,28 +1,54 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { ArrowUp } from "lucide-react";
 import { SITE_URL } from "@/lib/config";
+import type { Locale } from "@/lib/i18n";
 
-export function AskChatGPT({ slug }: { slug: string }) {
+const placeholders = {
+  en: "Ask ChatGPT a follow-up question...",
+  fr: "Posez une question de suivi à ChatGPT...",
+};
+
+export function AskChatGPT({ slug, locale }: { slug: string; locale: Locale }) {
   const [query, setQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [placeholderWidth, setPlaceholderWidth] = useState(0);
 
-  // Measure the placeholder text width on mount to size the collapsed state perfectly
+  const placeholder = placeholders[locale];
+
   useEffect(() => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     if (ctx && inputRef.current) {
       const style = window.getComputedStyle(inputRef.current);
       ctx.font = `${style.fontSize} ${style.fontFamily}`;
-      const measured = ctx.measureText("Ask ChatGPT a follow-up question...");
-      // placeholder width + button (28px) + gaps/padding (48px) + breathing room (24px)
+      const measured = ctx.measureText(placeholder);
       setPlaceholderWidth(Math.ceil(measured.width) + 100);
     }
+  }, [placeholder]);
+
+  // Hide when footer is in view
+  const checkFooterVisibility = useCallback(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const footerRect = footer.getBoundingClientRect();
+    // Hide when footer top is within viewport (with a small buffer)
+    setHidden(footerRect.top < window.innerHeight - 20);
   }, []);
+
+  useEffect(() => {
+    checkFooterVisibility();
+    window.addEventListener("scroll", checkFooterVisibility, { passive: true });
+    window.addEventListener("resize", checkFooterVisibility, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", checkFooterVisibility);
+      window.removeEventListener("resize", checkFooterVisibility);
+    };
+  }, [checkFooterVisibility]);
 
   useEffect(() => {
     if (!expanded) return;
@@ -67,11 +93,11 @@ export function AskChatGPT({ slug }: { slug: string }) {
           ? { maxWidth: `${placeholderWidth}px` }
           : undefined
       }
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 transition-[max-width] duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+      className={`fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:bottom-6 left-1/2 -translate-x-1/2 z-40 transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
         expanded
           ? "w-[calc(100%-2rem)] max-w-xl"
           : "w-[calc(100%-2rem)]"
-      }`}
+      } ${hidden ? "translate-y-4 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"}`}
     >
       <form
         onSubmit={handleSubmit}
@@ -86,7 +112,7 @@ export function AskChatGPT({ slug }: { slug: string }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={handleFocus}
-          placeholder="Ask ChatGPT a follow-up question..."
+          placeholder={placeholder}
           className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none min-w-0"
         />
         <button
