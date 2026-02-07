@@ -65,7 +65,7 @@ export function AskChatGPT({ slug }: { slug: string }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={handleFocus}
-          placeholder="Ask ChatGPT about this article..."
+          placeholder="Ask ChatGPT a follow-up question..."
           className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none min-w-0"
         />
         <button
