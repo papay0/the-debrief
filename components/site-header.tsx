@@ -13,7 +13,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
       <div className="mx-auto max-w-2xl flex h-14 items-center justify-between px-4 sm:px-6">
         <Link href={localePath(locale, "/")} className="flex items-center gap-2 shrink-0">
           <Image
-            src="/logo-td.png"
+            src="/logo-td.svg"
             alt="The Debrief"
             width={24}
             height={24}
