@@ -150,18 +150,15 @@
 @keyframes keystrike {
   0% {
     opacity: 0;
-    transform: translateY(1.5px) scale(1.04);
-    text-shadow: 0 0 0 currentColor;
+    transform: translateY(2px);
   }
-  40% {
+  50% {
     opacity: 1;
-    transform: translateY(-0.5px) scale(1.01);
-    text-shadow: 0 0 2px currentColor;
+    transform: translateY(-0.5px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    text-shadow: none;
+    transform: translateY(0);
   }
 }
 
