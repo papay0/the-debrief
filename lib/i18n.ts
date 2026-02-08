@@ -43,6 +43,15 @@ const translations: Record<Locale, Record<string, string>> = {
     "notFound.description": "The page you're looking for doesn't exist or has been moved. Let's get you back to the latest AI news.",
     "notFound.button": "Back to homepage",
 
+    // Newsletter
+    "newsletter.title": "Stay in the loop",
+    "newsletter.description": "Get the latest AI news in your inbox. No spam, just the good stuff.",
+    "newsletter.placeholder": "Your email address",
+    "newsletter.subscribe": "Subscribe",
+    "newsletter.subscribing": "Subscribing...",
+    "newsletter.success": "You're in! Check your email to confirm.",
+    "newsletter.error": "Something went wrong. Please try again.",
+
     // Language
     "lang.switchLabel": "Lire en français",
     "lang.switchText": "FR",
@@ -85,6 +94,15 @@ const translations: Record<Locale, Record<string, string>> = {
     "notFound.title": "Page introuvable",
     "notFound.description": "La page que vous cherchez n'existe pas ou a été déplacée. Retournons aux dernières nouvelles IA.",
     "notFound.button": "Retour à l'accueil",
+
+    // Newsletter
+    "newsletter.title": "Restez informé",
+    "newsletter.description": "Recevez les dernières nouvelles IA dans votre boîte mail. Pas de spam, que du bon.",
+    "newsletter.placeholder": "Votre adresse email",
+    "newsletter.subscribe": "S'abonner",
+    "newsletter.subscribing": "Envoi en cours...",
+    "newsletter.success": "C'est fait ! Vérifiez votre email pour confirmer.",
+    "newsletter.error": "Une erreur s'est produite. Veuillez réessayer.",
 
     // Language
     "lang.switchLabel": "Read in English",

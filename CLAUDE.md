@@ -1,5 +1,9 @@
 # The Debrief
 
+## Project info
+
+- Domain: the-debrief.ai
+
 ## Writing style
 
 - Articles are written for non-technical people. Avoid jargon, developer-specific terms, and code references.
