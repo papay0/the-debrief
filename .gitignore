@@ -42,6 +42,9 @@ yarn-error.log*
 # whisper.cpp (auto-installed by @remotion/install-whisper-cpp)
 /whisper.cpp/
 
+# auto-generated agent skills
+.agents/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
