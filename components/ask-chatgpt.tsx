@@ -101,7 +101,7 @@ export function AskChatGPT({ slug, locale }: { slug: string; locale: Locale }) {
     >
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 rounded-full bg-secondary/95 backdrop-blur border border-border/50 shadow-lg px-5 py-2.5 cursor-text"
+        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur border border-border/50 shadow-lg px-5 py-2.5 cursor-text"
         onClick={() => {
           inputRef.current?.focus();
         }}

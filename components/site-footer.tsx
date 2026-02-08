@@ -1,46 +1,26 @@
 import { Instagram } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import type { Locale } from "@/lib/i18n"
 
 export function SiteFooter({ locale }: { locale: Locale }) {
   return (
-    <footer className="border-t py-6 sm:py-8 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:pb-8">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        {/* Mobile: toggles + copyright */}
-        <div className="flex flex-col items-center gap-4 sm:hidden">
-          <div className="flex items-center gap-1">
-            <LanguageSwitcher locale={locale} />
-            <ThemeToggle />
-          </div>
-          <div className="flex items-center gap-3">
+    <footer className="border-t border-border">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 sm:py-10 pb-[calc(2rem+env(safe-area-inset-bottom))] sm:pb-10">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
+            &copy; {new Date().getFullYear()} The Debrief
+          </p>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <a
               href="https://instagram.com/the.debrief.ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Instagram"
+              className="hover:text-foreground transition-colors"
             >
-              <Instagram className="w-4 h-4" />
+              <Instagram className="h-4 w-4" />
             </a>
-            <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} The Debrief
-            </p>
+            <LanguageSwitcher locale={locale} />
           </div>
-        </div>
-        {/* Desktop: copyright + instagram */}
-        <div className="hidden sm:flex items-center justify-center gap-3 text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} The Debrief</p>
-          <span className="text-border">·</span>
-          <a
-            href="https://instagram.com/the.debrief.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
-          >
-            <Instagram className="w-3.5 h-3.5" />
-            Instagram
-          </a>
         </div>
       </div>
     </footer>

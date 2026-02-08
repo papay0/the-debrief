@@ -1,15 +1,12 @@
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { fr as frLocale } from "date-fns/locale/fr";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { MDXContent } from "@/components/mdx-content";
 import { ReadingProgress } from "@/components/reading-progress";
 import { ScrollToAnchor } from "@/components/scroll-to-anchor";
 import { AskChatGPT } from "@/components/ask-chatgpt";
-import { locales, isValidLocale, t, localePath, localizeReadingTime } from "@/lib/i18n";
+import { locales, isValidLocale, localizeReadingTime } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/config";
 import type { Metadata } from "next";
@@ -88,35 +85,16 @@ export default async function PostPage({
     <>
       <ReadingProgress />
       <ScrollToAnchor />
-      <article className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 pb-24">
-        <Link
-          href={localePath(locale, "/")}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {t(locale, "posts.back")}
-        </Link>
-
-        <header className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{post.title}</h1>
-          <div className="flex items-center gap-2 mt-3 text-sm text-muted-foreground">
-            <time dateTime={post.date}>
+      <article className="mx-auto max-w-2xl px-4 sm:px-6 pt-8 sm:pt-12 pb-12 sm:pb-16">
+        <header className="mb-10 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-[2.75rem] font-semibold font-serif leading-[1.15]">{post.title}</h1>
+          <div className="flex items-center gap-2 mt-4 text-sm text-muted-foreground">
+            <time dateTime={post.date} className="font-medium tabular-nums">
               {format(new Date(post.date), dateFormat, dateLocale)}
             </time>
             <span aria-hidden="true">&middot;</span>
             <span>{localizeReadingTime(post.readingTime, locale)}</span>
           </div>
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-4">
-              {post.tags.map((tag) => (
-                <Link key={tag} href={localePath(locale, `/tags/${tag}`)}>
-                  <Badge variant="secondary" className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
-                    {tag}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          )}
         </header>
 
         <MDXContent source={post.content} />

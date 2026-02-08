@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation"
 import { Globe, Check } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,17 +35,12 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-9 w-9 sm:w-auto sm:px-2.5 sm:gap-1.5"
+        <button
+          className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           aria-label="Switch language"
         >
           <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline text-xs font-medium tracking-wide uppercase">
-            {locale}
-          </span>
-        </Button>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[140px]">
         {locales.map((l) => (

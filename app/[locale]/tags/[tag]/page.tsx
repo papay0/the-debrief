@@ -51,7 +51,7 @@ export default async function TagPage({
   const posts = getPostsByTag(tag, false, locale);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-4 pb-8 sm:py-10">
+    <div className="mx-auto max-w-2xl px-4 sm:px-6 pt-8 sm:pt-14 pb-16 sm:pb-20">
       <TagFilter tags={allTags} activeTag={tag} locale={locale} />
       <TagPageHeader tag={tag} count={posts.length} locale={locale} />
       <div className="sm:mt-6">
