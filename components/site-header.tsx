@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { TypewriterTitle } from "@/components/typewriter-title"
 import { localePath } from "@/lib/i18n"
 import type { Locale } from "@/lib/i18n"
 
@@ -18,9 +19,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             height={24}
             className="rounded"
           />
-          <span className="text-base font-semibold font-serif text-foreground">
-            The Debrief
-          </span>
+          <TypewriterTitle />
         </Link>
         <div className="flex items-center gap-0.5 shrink-0">
           <Button

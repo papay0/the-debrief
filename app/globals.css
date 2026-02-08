@@ -135,6 +135,67 @@
   }
 }
 
+/* ─── Typewriter animation ─── */
+
+.typewriter-title {
+  position: relative;
+  min-height: 1.2em;
+}
+
+/* The moment a key strikes: brief bold flash + micro-shift simulating mechanical impact */
+.typewriter-letter--strike {
+  animation: keystrike 0.15s ease-out;
+}
+
+@keyframes keystrike {
+  0% {
+    opacity: 0;
+    transform: translateY(1.5px) scale(1.04);
+    text-shadow: 0 0 0 currentColor;
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-0.5px) scale(1.01);
+    text-shadow: 0 0 2px currentColor;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    text-shadow: none;
+  }
+}
+
+/* Block cursor: thick editorial caret */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 1px;
+  margin-bottom: -1px;
+  background: currentColor;
+  vertical-align: baseline;
+  transition: opacity 0.08s;
+}
+
+.typewriter-cursor--on {
+  opacity: 0.9;
+}
+
+.typewriter-cursor--off {
+  opacity: 0;
+}
+
+/* Fade-out when typing is done */
+.typewriter-cursor--done {
+  animation: cursor-fade 0.4s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes cursor-fade {
+  from { opacity: 0.9; }
+  to { opacity: 0; }
+}
+
 /* Prose styles for MDX content */
 .prose-debrief h1 {
   font-family: var(--font-serif);
