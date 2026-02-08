@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# video generator audio files (local TTS output)
+/public/audio/
+
+# whisper.cpp (auto-installed by @remotion/install-whisper-cpp)
+/whisper.cpp/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
