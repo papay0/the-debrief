@@ -46,94 +46,132 @@ interface SlideData {
 
 // --- Slide rendering (inline styles for html2canvas) ---
 
-const FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-const BG = "#1b2340";
+// Editorial palette: warm cream background, deep ink text, refined serif typography
+const SLIDE_BG = "#FAFAF7";
+const SLIDE_INK = "#1A1A18";
+const SLIDE_MUTED = "#8A8A82";
+const SLIDE_ACCENT = "#2B2B6E"; // Deep editorial blue
+const SLIDE_RULE = "#D4D4CC";
+const SERIF = '"Source Serif 4", "Georgia", "Times New Roman", serif';
+const SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 
 function SlideTitle({ slide }: { slide: SlideData }) {
   const titleLen = slide.title?.length || 0;
-  const fontSize = titleLen > 60 ? 64 : titleLen > 45 ? 72 : 80;
+  const fontSize = titleLen > 60 ? 66 : titleLen > 45 ? 76 : 84;
 
   return (
     <div
       style={{
         width: 1080,
         height: 1080,
-        background: BG,
+        background: SLIDE_BG,
         position: "relative",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        padding: "90px 90px 120px",
-        fontFamily: FONT,
+        padding: "100px 100px 140px",
+        fontFamily: SERIF,
       }}
     >
+      {/* Masthead */}
       <div
         style={{
           position: "absolute",
-          top: -120,
-          right: -120,
-          width: 500,
-          height: 500,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.03)",
+          top: 48,
+          left: 100,
+          right: 100,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
-      />
+      >
+        <div
+          style={{
+            fontSize: 15,
+            fontFamily: SANS,
+            fontWeight: 600,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase" as const,
+            color: SLIDE_INK,
+          }}
+        >
+          The Debrief
+        </div>
+        <div
+          style={{
+            fontSize: 14,
+            fontFamily: SANS,
+            fontWeight: 400,
+            color: SLIDE_MUTED,
+            letterSpacing: "0.04em",
+          }}
+        >
+          the-debrief.ai
+        </div>
+      </div>
+
+      {/* Thin rule under masthead */}
       <div
         style={{
           position: "absolute",
-          bottom: -200,
-          left: -100,
-          width: 600,
-          height: 600,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.02)",
+          top: 90,
+          left: 100,
+          right: 100,
+          height: 1,
+          background: SLIDE_RULE,
         }}
       />
-      <div
-        style={{
-          width: 60,
-          height: 5,
-          background: "rgba(255,255,255,0.3)",
-          borderRadius: 3,
-          marginBottom: 48,
-        }}
-      />
+
+      {/* Title */}
       <div
         style={{
           fontSize,
-          fontWeight: 800,
-          color: "white",
-          lineHeight: 1.15,
-          letterSpacing: "-0.025em",
-          marginBottom: 36,
+          fontWeight: 700,
+          color: SLIDE_INK,
+          lineHeight: 1.12,
+          letterSpacing: "-0.02em",
+          marginBottom: 32,
+          maxWidth: 830,
         }}
       >
         {slide.title}
       </div>
+
+      {/* Description */}
       {slide.description && (
         <div
           style={{
-            fontSize: 36,
-            color: "rgba(255,255,255,0.5)",
-            lineHeight: 1.5,
-            maxWidth: 860,
+            fontSize: 34,
+            fontFamily: SANS,
+            color: SLIDE_MUTED,
+            lineHeight: 1.55,
+            maxWidth: 780,
           }}
         >
           {slide.description}
         </div>
       )}
+
+      {/* Tags */}
       {slide.tags && slide.tags.length > 0 && (
-        <div style={{ display: "flex", gap: 12, marginTop: 48 }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 10,
+            marginTop: 44,
+          }}
+        >
           {slide.tags.map((tag) => (
             <div
               key={tag}
               style={{
-                padding: "10px 22px",
-                background: "rgba(255,255,255,0.07)",
+                padding: "8px 20px",
+                border: `1px solid ${SLIDE_RULE}`,
                 borderRadius: 100,
-                fontSize: 24,
-                color: "rgba(255,255,255,0.55)",
+                fontSize: 20,
+                fontFamily: SANS,
+                color: SLIDE_MUTED,
                 fontWeight: 500,
               }}
             >
@@ -142,58 +180,31 @@ function SlideTitle({ slide }: { slide: SlideData }) {
           ))}
         </div>
       )}
+
+      {/* Bottom bar */}
       <div
         style={{
           position: "absolute",
-          bottom: 50,
-          left: 90,
+          bottom: 54,
+          left: 100,
+          right: 100,
           display: "flex",
           alignItems: "center",
-          gap: 14,
+          justifyContent: "space-between",
         }}
       >
         <div
           style={{
-            width: 40,
-            height: 40,
-            borderRadius: 10,
-            background: "rgba(255,255,255,0.08)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 12,
-            fontWeight: 800,
-            color: "rgba(255,255,255,0.6)",
-          }}
-        >
-          TD
-        </div>
-        <span
-          style={{
-            fontSize: 20,
-            color: "rgba(255,255,255,0.3)",
-            fontWeight: 500,
+            fontSize: 16,
+            fontFamily: SANS,
+            color: SLIDE_MUTED,
+            fontWeight: 400,
             letterSpacing: "0.04em",
           }}
         >
-          The Debrief
-        </span>
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          bottom: 56,
-          right: 90,
-          fontSize: 18,
-          color: "rgba(255,255,255,0.2)",
-          fontWeight: 500,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        Swipe
-        <span style={{ fontSize: 22 }}>&rarr;</span>
+          Swipe to read &rarr;
+        </div>
+        <div style={{ width: 36, height: 2, background: SLIDE_ACCENT }} />
       </div>
     </div>
   );
@@ -205,86 +216,97 @@ function SlideContent({ slide }: { slide: SlideData }) {
       style={{
         width: 1080,
         height: 1080,
-        background: BG,
+        background: SLIDE_BG,
         position: "relative",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        padding: "90px 90px 120px",
-        fontFamily: FONT,
+        padding: "100px 100px 140px",
+        fontFamily: SERIF,
       }}
     >
+      {/* Top rule */}
       <div
         style={{
           position: "absolute",
-          top: "50%",
-          right: -180,
-          width: 480,
-          height: 480,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.02)",
-          transform: "translateY(-50%)",
+          top: 0,
+          left: 100,
+          right: 100,
+          height: 1,
+          background: SLIDE_RULE,
         }}
       />
+
+      {/* Slide number */}
       <div
         style={{
-          fontSize: 20,
-          color: "rgba(255,255,255,0.2)",
-          fontWeight: 600,
-          letterSpacing: "0.1em",
-          marginBottom: 48,
+          fontSize: 14,
+          fontFamily: SANS,
+          color: SLIDE_MUTED,
+          fontWeight: 500,
+          letterSpacing: "0.15em",
+          textTransform: "uppercase" as const,
+          marginBottom: 44,
         }}
       >
-        {slide.slideNumber} / {slide.totalSlides}
+        {String(slide.slideNumber).padStart(2, "0")} / {String(slide.totalSlides).padStart(2, "0")}
       </div>
+
+      {/* Heading */}
       <div
         style={{
           fontSize: 64,
-          fontWeight: 800,
-          color: "white",
-          lineHeight: 1.12,
-          letterSpacing: "-0.03em",
-          marginBottom: 48,
+          fontWeight: 700,
+          color: SLIDE_INK,
+          lineHeight: 1.14,
+          letterSpacing: "-0.02em",
+          marginBottom: 40,
+          maxWidth: 800,
         }}
       >
         {slide.heading}
       </div>
+
+      {/* Divider */}
       <div
         style={{
-          width: 50,
-          height: 4,
-          background: "rgba(255,255,255,0.2)",
-          borderRadius: 2,
-          marginBottom: 48,
+          width: 40,
+          height: 2,
+          background: SLIDE_ACCENT,
+          marginBottom: 40,
         }}
       />
-      <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
+
+      {/* Bullets */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
         {slide.bullets?.map((bullet, i) => (
           <div
             key={i}
             style={{
               display: "flex",
               alignItems: "flex-start",
-              gap: 22,
+              gap: 20,
             }}
           >
             <div
               style={{
-                width: 12,
-                height: 12,
+                width: 6,
+                height: 6,
                 borderRadius: "50%",
-                background: "rgba(255,255,255,0.3)",
-                marginTop: 17,
+                background: SLIDE_ACCENT,
+                marginTop: 18,
                 flexShrink: 0,
               }}
             />
             <div
               style={{
                 fontSize: 36,
-                color: "rgba(255,255,255,0.75)",
-                lineHeight: 1.5,
-                maxWidth: 840,
+                fontFamily: SANS,
+                color: SLIDE_INK,
+                lineHeight: 1.55,
+                maxWidth: 820,
+                opacity: 0.8,
               }}
             >
               {bullet}
@@ -292,66 +314,48 @@ function SlideContent({ slide }: { slide: SlideData }) {
           </div>
         ))}
       </div>
+
+      {/* Bottom bar */}
       <div
         style={{
           position: "absolute",
-          bottom: 50,
-          left: 90,
+          bottom: 54,
+          left: 100,
+          right: 100,
           display: "flex",
           alignItems: "center",
-          gap: 14,
+          justifyContent: "space-between",
         }}
       >
         <div
           style={{
-            width: 40,
-            height: 40,
-            borderRadius: 10,
-            background: "rgba(255,255,255,0.08)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 12,
-            fontWeight: 800,
-            color: "rgba(255,255,255,0.6)",
-          }}
-        >
-          TD
-        </div>
-        <span
-          style={{
-            fontSize: 20,
-            color: "rgba(255,255,255,0.3)",
-            fontWeight: 500,
-            letterSpacing: "0.04em",
+            fontSize: 14,
+            fontFamily: SANS,
+            fontWeight: 600,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase" as const,
+            color: SLIDE_MUTED,
+            opacity: 0.6,
           }}
         >
           The Debrief
-        </span>
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          bottom: 58,
-          right: 90,
-          display: "flex",
-          gap: 8,
-        }}
-      >
-        {Array.from({ length: slide.totalSlides || 0 }).map((_, i) => (
-          <div
-            key={i}
-            style={{
-              width: i + 1 === slide.slideNumber ? 24 : 8,
-              height: 8,
-              borderRadius: 4,
-              background:
-                i + 1 === slide.slideNumber
-                  ? "rgba(255,255,255,0.5)"
-                  : "rgba(255,255,255,0.12)",
-            }}
-          />
-        ))}
+        </div>
+        {/* Progress dots */}
+        <div style={{ display: "flex", gap: 6 }}>
+          {Array.from({ length: slide.totalSlides || 0 }).map((_, i) => (
+            <div
+              key={i}
+              style={{
+                width: i + 1 === slide.slideNumber ? 20 : 6,
+                height: 6,
+                borderRadius: 3,
+                background:
+                  i + 1 === slide.slideNumber ? SLIDE_ACCENT : SLIDE_RULE,
+                transition: "width 0.2s",
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -363,72 +367,41 @@ function SlideCTA({ slide }: { slide: SlideData }) {
       style={{
         width: 1080,
         height: 1080,
-        background: BG,
+        background: SLIDE_BG,
         position: "relative",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: 90,
-        fontFamily: FONT,
+        padding: 100,
+        fontFamily: SERIF,
       }}
     >
+      {/* Masthead */}
       <div
         style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          width: 700,
-          height: 700,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.03)",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          width: 480,
-          height: 480,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.02)",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-      <div
-        style={{
-          width: 88,
-          height: 88,
-          borderRadius: 20,
-          background: "rgba(255,255,255,0.07)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 56,
+          fontSize: 15,
+          fontFamily: SANS,
+          fontWeight: 600,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase" as const,
+          color: SLIDE_INK,
+          marginBottom: 64,
         }}
       >
-        <span
-          style={{
-            fontSize: 24,
-            fontWeight: 800,
-            color: "rgba(255,255,255,0.6)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          TD
-        </span>
+        The Debrief
       </div>
+
+      {/* CTA text */}
       <div
         style={{
-          fontSize: 58,
-          fontWeight: 800,
-          color: "white",
-          textAlign: "center",
-          lineHeight: 1.2,
-          letterSpacing: "-0.025em",
+          fontSize: 68,
+          fontWeight: 700,
+          color: SLIDE_INK,
+          textAlign: "center" as const,
+          lineHeight: 1.15,
+          letterSpacing: "-0.02em",
           marginBottom: 28,
         }}
       >
@@ -436,62 +409,81 @@ function SlideCTA({ slide }: { slide: SlideData }) {
         <br />
         full article
       </div>
+
+      {/* Divider */}
       <div
         style={{
-          fontSize: 30,
-          color: "rgba(255,255,255,0.35)",
-          fontWeight: 500,
-          marginBottom: 64,
+          width: 48,
+          height: 2,
+          background: SLIDE_ACCENT,
+          marginBottom: 32,
+        }}
+      />
+
+      {/* URL */}
+      <div
+        style={{
+          fontSize: 28,
+          fontFamily: SANS,
+          color: SLIDE_MUTED,
+          fontWeight: 400,
+          marginBottom: 56,
+          letterSpacing: "0.02em",
         }}
       >
         the-debrief.ai
       </div>
+
+      {/* Arrow up icon */}
       <div
         style={{
-          width: 60,
-          height: 60,
+          width: 56,
+          height: 56,
           borderRadius: "50%",
-          border: "2px solid rgba(255,255,255,0.12)",
+          border: `1.5px solid ${SLIDE_RULE}`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 26,
-          color: "rgba(255,255,255,0.35)",
+          fontSize: 24,
+          color: SLIDE_MUTED,
         }}
       >
         &uarr;
       </div>
+
       <div
         style={{
-          fontSize: 16,
-          color: "rgba(255,255,255,0.18)",
+          fontSize: 13,
+          fontFamily: SANS,
+          color: SLIDE_MUTED,
           marginTop: 14,
           fontWeight: 500,
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
+          letterSpacing: "0.14em",
+          textTransform: "uppercase" as const,
+          opacity: 0.6,
         }}
       >
         Link in bio
       </div>
+
+      {/* Bottom progress dots */}
       <div
         style={{
           position: "absolute",
-          bottom: 58,
+          bottom: 54,
           display: "flex",
-          gap: 8,
+          gap: 6,
         }}
       >
         {Array.from({ length: slide.totalSlides || 0 }).map((_, i) => (
           <div
             key={i}
             style={{
-              width: i + 1 === slide.slideNumber ? 24 : 8,
-              height: 8,
-              borderRadius: 4,
+              width: i + 1 === slide.slideNumber ? 20 : 6,
+              height: 6,
+              borderRadius: 3,
               background:
-                i + 1 === slide.slideNumber
-                  ? "rgba(255,255,255,0.5)"
-                  : "rgba(255,255,255,0.12)",
+                i + 1 === slide.slideNumber ? SLIDE_ACCENT : SLIDE_RULE,
             }}
           />
         ))}
@@ -539,7 +531,7 @@ function SlidePreview({
 
   return (
     <div className="group relative">
-      <div className="text-xs text-white/20 mb-2 font-medium">
+      <div className="text-xs text-muted-foreground mb-2 font-medium">
         {slide.type === "title"
           ? "Cover"
           : slide.type === "cta"
@@ -548,7 +540,7 @@ function SlidePreview({
       </div>
       <div
         ref={containerRef}
-        className="relative rounded-xl overflow-hidden border border-white/[0.06] bg-[#1b2340] aspect-square"
+        className="relative rounded-lg overflow-hidden border border-border bg-background aspect-square"
       >
         <div
           className="absolute inset-0 origin-top-left"
@@ -562,10 +554,10 @@ function SlidePreview({
         </div>
         <button
           onClick={() => onDownload(index)}
-          className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer"
+          className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer"
         >
-          <div className="bg-white/10 backdrop-blur-sm rounded-full p-3 border border-white/20">
-            <Download className="w-5 h-5 text-white" />
+          <div className="bg-background/90 backdrop-blur-sm rounded-full p-3 border border-border shadow-sm">
+            <Download className="w-5 h-5 text-foreground" />
           </div>
         </button>
       </div>
@@ -594,7 +586,7 @@ function CarouselSlidePreview({ slide }: { slide: SlideData }) {
   return (
     <div
       ref={containerRef}
-      className="relative rounded-2xl overflow-hidden bg-[#1b2340] aspect-square"
+      className="relative rounded-lg overflow-hidden bg-background border border-border aspect-square"
     >
       <div
         className="absolute inset-0 origin-top-left"
@@ -624,7 +616,7 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="flex items-center gap-1.5 text-xs text-white/30 hover:text-white/60 transition-colors cursor-pointer"
+      className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground/60 transition-colors cursor-pointer"
     >
       {copied ? (
         <>
@@ -663,7 +655,7 @@ function FullscreenCarousel({
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center">
       <button
         onClick={onClose}
         className="absolute top-6 right-6 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
@@ -710,7 +702,7 @@ function SlideEditorMiniPreview({ slide }: { slide: SlideData }) {
   return (
     <div
       ref={containerRef}
-      className="relative rounded-lg overflow-hidden bg-[#1b2340] aspect-square w-full"
+      className="relative rounded overflow-hidden bg-background border border-border aspect-square w-full"
     >
       <div
         className="absolute inset-0 origin-top-left"
@@ -750,10 +742,10 @@ function SlideEditor({
         return (
           <div
             key={i}
-            className={`group/card rounded-xl border overflow-hidden transition-all duration-300 ${
+            className={`group/card rounded-lg border overflow-hidden transition-all duration-200 ${
               isOpen
-                ? "bg-white/[0.04] border-white/[0.1] shadow-lg shadow-black/20"
-                : "bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.03] hover:border-white/[0.08]"
+                ? "bg-muted/50 border-border shadow-sm"
+                : "bg-background border-border hover:bg-muted/30"
             }`}
           >
             {/* Header row */}
@@ -762,34 +754,29 @@ function SlideEditor({
               className="w-full flex items-center gap-4 px-4 py-3 text-left cursor-pointer transition-colors"
             >
               {/* Mini preview thumbnail */}
-              <div className="w-10 h-10 shrink-0 rounded-lg overflow-hidden border border-white/[0.08] shadow-sm shadow-black/20">
+              <div className="w-10 h-10 shrink-0 rounded overflow-hidden border border-border">
                 <SlideEditorMiniPreview slide={slide} />
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/30">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
                     {label}
                   </span>
-                  {slide.type === "title" && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-400/10 text-amber-400/60 font-medium">
-                      Cover
-                    </span>
-                  )}
                 </div>
-                <p className="text-sm text-white/60 truncate mt-0.5 leading-snug">
+                <p className="text-sm text-foreground/85 truncate mt-0.5 leading-snug">
                   {previewText || "Untitled"}
                 </p>
               </div>
 
               <div
-                className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
+                className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 ${
                   isOpen
-                    ? "bg-white/[0.08] rotate-180"
-                    : "bg-transparent group-hover/card:bg-white/[0.04]"
+                    ? "bg-muted rotate-180"
+                    : "bg-transparent group-hover/card:bg-muted"
                 }`}
               >
-                <ChevronDown className="w-3.5 h-3.5 text-white/30" />
+                <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
               </div>
             </button>
 
@@ -803,7 +790,7 @@ function SlideEditor({
               <div className="overflow-hidden">
                 <div className="px-4 pb-4 pt-1">
                   {/* Subtle divider */}
-                  <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-4" />
+                  <div className="h-px bg-border mb-4" />
 
                   {/* Two-column: fields + live preview */}
                   <div className="flex gap-4">
@@ -813,11 +800,11 @@ function SlideEditor({
                         <>
                           <div>
                             <div className="flex items-center gap-1.5 mb-1.5">
-                              <Type className="w-3 h-3 text-white/20" />
-                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/25">
+                              <Type className="w-3 h-3 text-muted-foreground" />
+                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                                 Title
                               </label>
-                              <span className="ml-auto text-[10px] text-white/15 tabular-nums">
+                              <span className="ml-auto text-[10px] text-muted-foreground/50 tabular-nums">
                                 {(slide.title || "").length}
                               </span>
                             </div>
@@ -827,17 +814,17 @@ function SlideEditor({
                               onChange={(e) =>
                                 onUpdateSlide(i, { title: e.target.value })
                               }
-                              className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-white/80 text-sm focus:outline-none focus:border-white/[0.15] focus:bg-white/[0.05] focus:ring-1 focus:ring-white/[0.06] transition-all duration-200 placeholder:text-white/15"
+                              className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground/85 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 placeholder:text-muted-foreground/50"
                               placeholder="Enter slide title..."
                             />
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5 mb-1.5">
-                              <AlignLeft className="w-3 h-3 text-white/20" />
-                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/25">
+                              <AlignLeft className="w-3 h-3 text-muted-foreground" />
+                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                                 Description
                               </label>
-                              <span className="ml-auto text-[10px] text-white/15 tabular-nums">
+                              <span className="ml-auto text-[10px] text-muted-foreground/50 tabular-nums">
                                 {(slide.description || "").length}
                               </span>
                             </div>
@@ -849,7 +836,7 @@ function SlideEditor({
                                 })
                               }
                               rows={2}
-                              className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-white/80 text-sm focus:outline-none focus:border-white/[0.15] focus:bg-white/[0.05] focus:ring-1 focus:ring-white/[0.06] transition-all duration-200 resize-none placeholder:text-white/15"
+                              className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground/85 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 resize-none placeholder:text-muted-foreground/50"
                               placeholder="Brief description..."
                             />
                           </div>
@@ -860,11 +847,11 @@ function SlideEditor({
                         <>
                           <div>
                             <div className="flex items-center gap-1.5 mb-1.5">
-                              <Type className="w-3 h-3 text-white/20" />
-                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/25">
+                              <Type className="w-3 h-3 text-muted-foreground" />
+                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                                 Heading
                               </label>
-                              <span className="ml-auto text-[10px] text-white/15 tabular-nums">
+                              <span className="ml-auto text-[10px] text-muted-foreground/50 tabular-nums">
                                 {(slide.heading || "").length}
                               </span>
                             </div>
@@ -874,17 +861,17 @@ function SlideEditor({
                               onChange={(e) =>
                                 onUpdateSlide(i, { heading: e.target.value })
                               }
-                              className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-white/80 text-sm focus:outline-none focus:border-white/[0.15] focus:bg-white/[0.05] focus:ring-1 focus:ring-white/[0.06] transition-all duration-200 placeholder:text-white/15"
+                              className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground/85 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 placeholder:text-muted-foreground/50"
                               placeholder="Slide heading..."
                             />
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5 mb-2">
-                              <AlignLeft className="w-3 h-3 text-white/20" />
-                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/25">
+                              <AlignLeft className="w-3 h-3 text-muted-foreground" />
+                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                                 Key Points
                               </label>
-                              <span className="ml-auto text-[10px] text-white/15">
+                              <span className="ml-auto text-[10px] text-muted-foreground/50">
                                 {(slide.bullets || []).length} items
                               </span>
                             </div>
@@ -894,7 +881,7 @@ function SlideEditor({
                                   key={bi}
                                   className="group/bullet flex items-center gap-1.5"
                                 >
-                                  <GripVertical className="w-3 h-3 text-white/[0.08] shrink-0 group-hover/bullet:text-white/20 transition-colors" />
+                                  <GripVertical className="w-3 h-3 text-border shrink-0 group-hover/bullet:text-muted-foreground transition-colors" />
                                   <div className="relative flex-1">
                                     <input
                                       type="text"
@@ -908,7 +895,7 @@ function SlideEditor({
                                           bullets: newBullets,
                                         });
                                       }}
-                                      className="w-full pl-3 pr-8 py-1.5 rounded-md bg-white/[0.02] border border-white/[0.05] text-white/70 text-sm focus:outline-none focus:border-white/[0.12] focus:bg-white/[0.04] focus:ring-1 focus:ring-white/[0.06] transition-all duration-200 placeholder:text-white/15"
+                                      className="w-full pl-3 pr-8 py-1.5 rounded-md bg-background border border-border text-foreground/80 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 placeholder:text-muted-foreground/50"
                                       placeholder={`Point ${bi + 1}...`}
                                     />
                                     <button
@@ -920,7 +907,7 @@ function SlideEditor({
                                           bullets: newBullets,
                                         });
                                       }}
-                                      className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1 rounded opacity-0 group-hover/bullet:opacity-100 hover:bg-red-500/10 text-white/20 hover:text-red-400/70 transition-all cursor-pointer"
+                                      className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1 rounded opacity-0 group-hover/bullet:opacity-100 hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all cursor-pointer"
                                       title="Remove point"
                                     >
                                       <Trash2 className="w-3 h-3" />
@@ -936,9 +923,9 @@ function SlideEditor({
                                   ];
                                   onUpdateSlide(i, { bullets: newBullets });
                                 }}
-                                className="flex items-center gap-1.5 text-[11px] text-white/25 hover:text-white/50 transition-colors cursor-pointer ml-[18px] mt-1 group/add"
+                                className="flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-foreground/60 transition-colors cursor-pointer ml-[18px] mt-1 group/add"
                               >
-                                <span className="w-4 h-4 rounded-full border border-dashed border-white/15 group-hover/add:border-white/30 flex items-center justify-center transition-colors">
+                                <span className="w-4 h-4 rounded-full border border-dashed border-border group-hover/add:border-muted-foreground flex items-center justify-center transition-colors">
                                   <Plus className="w-2.5 h-2.5" />
                                 </span>
                                 Add point
@@ -952,10 +939,10 @@ function SlideEditor({
                     {/* Live mini preview */}
                     <div className="w-28 shrink-0 hidden sm:block">
                       <div className="sticky top-0">
-                        <div className="text-[9px] uppercase tracking-[0.15em] text-white/15 font-semibold mb-1.5 text-center">
+                        <div className="text-[9px] uppercase tracking-[0.15em] text-muted-foreground/50 font-semibold mb-1.5 text-center">
                           Preview
                         </div>
-                        <div className="rounded-lg overflow-hidden border border-white/[0.06] shadow-md shadow-black/30">
+                        <div className="rounded overflow-hidden border border-border shadow-sm">
                           <SlideEditorMiniPreview slide={slide} />
                         </div>
                       </div>
@@ -1090,7 +1077,7 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
       height: 1080,
       scale: 1,
       useCORS: true,
-      backgroundColor: BG,
+      backgroundColor: SLIDE_BG,
     });
 
     const link = document.createElement("a");
@@ -1113,7 +1100,7 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
         height: 1080,
         scale: 1,
         useCORS: true,
-        backgroundColor: BG,
+        backgroundColor: SLIDE_BG,
       });
 
       const link = document.createElement("a");
@@ -1133,46 +1120,46 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
       <div className="relative mb-8 max-w-lg">
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="w-full flex items-center justify-between gap-3 px-5 py-4 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-white/[0.12] transition-colors text-left cursor-pointer"
+          className="w-full flex items-center justify-between gap-3 px-5 py-4 rounded-lg bg-muted/50 border border-border hover:border-foreground/20 transition-colors text-left cursor-pointer shadow-sm"
         >
           <div className="flex items-center gap-3 min-w-0">
-            <div className="h-9 w-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-              <ImageIcon className="w-4 h-4 text-white/30" />
+            <div className="h-9 w-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
+              <ImageIcon className="w-4 h-4 text-muted-foreground" />
             </div>
             <div className="min-w-0">
-              <div className="text-xs text-white/30 mb-0.5">Article</div>
-              <div className="text-sm text-white/80 truncate">
+              <div className="text-xs text-muted-foreground mb-0.5">Article</div>
+              <div className="text-sm text-foreground/85 truncate font-serif">
                 {selectedPost?.title || "Select an article..."}
               </div>
             </div>
           </div>
           <ChevronDown
-            className={`w-4 h-4 text-white/30 shrink-0 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+            className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
           />
         </button>
 
         {dropdownOpen && (
-          <div className="absolute z-50 mt-2 w-full rounded-xl bg-[#141520] border border-white/[0.08] shadow-2xl shadow-black/50 overflow-hidden">
+          <div className="absolute z-50 mt-2 w-full rounded-lg bg-background border border-border shadow-lg overflow-hidden">
             <div className="max-h-80 overflow-y-auto">
               {posts.map((post) => (
                 <button
                   key={post.slug}
                   onClick={() => handleSelectArticle(post.slug)}
-                  className={`w-full text-left px-5 py-3.5 hover:bg-white/[0.04] transition-colors border-b border-white/[0.04] last:border-0 cursor-pointer ${
-                    post.slug === selectedSlug ? "bg-white/[0.06]" : ""
+                  className={`w-full text-left px-5 py-3.5 hover:bg-muted/50 transition-colors border-b border-border last:border-0 cursor-pointer ${
+                    post.slug === selectedSlug ? "bg-muted/70" : ""
                   }`}
                 >
-                  <div className="text-sm text-white/80 font-medium">
+                  <div className="text-sm text-foreground/85 font-serif font-semibold leading-snug">
                     {post.title}
                   </div>
-                  <div className="text-xs text-white/30 mt-1 flex items-center gap-2">
-                    <span>{post.date}</span>
-                    <span className="text-white/10">|</span>
+                  <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                    <span className="tabular-nums">{post.date}</span>
+                    <span className="text-border">&middot;</span>
                     {post.tags.slice(0, 2).map((tag) => (
                       <span key={tag}>{tag}</span>
                     ))}
                     {post.draft && (
-                      <span className="text-amber-400/60 font-medium">
+                      <span className="text-destructive font-medium">
                         Draft
                       </span>
                     )}
@@ -1186,7 +1173,7 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
 
       {/* Loading */}
       {loading && (
-        <div className="flex items-center gap-3 text-white/40 py-20">
+        <div className="flex items-center gap-3 text-muted-foreground py-20">
           <Sparkles className="w-5 h-5 animate-pulse" />
           <span className="text-sm">Generating your Instagram post...</span>
         </div>
@@ -1198,14 +1185,14 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
           {/* === Carousel Preview === */}
           <section>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white/80">
+              <h2 className="text-lg font-semibold font-serif text-foreground">
                 Carousel Preview
               </h2>
               <div className="flex items-center gap-2">
                 <Button
                   onClick={() => setFullscreen(true)}
                   variant="ghost"
-                  className="text-white/40 hover:text-white/70 hover:bg-white/[0.06] cursor-pointer"
+                  className="text-muted-foreground hover:text-foreground cursor-pointer"
                 >
                   <Maximize2 className="w-4 h-4 mr-2" />
                   Fullscreen
@@ -1213,7 +1200,7 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
                 <Button
                   onClick={handleRegenerate}
                   variant="ghost"
-                  className="text-white/40 hover:text-white/70 hover:bg-white/[0.06] cursor-pointer"
+                  className="text-muted-foreground hover:text-foreground cursor-pointer"
                 >
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Regenerate
@@ -1221,7 +1208,7 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
                 <Button
                   onClick={downloadAll}
                   disabled={exporting}
-                  className="bg-white/[0.08] hover:bg-white/[0.12] text-white/80 border border-white/[0.06] cursor-pointer"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
                 >
                   {exporting ? (
                     <>
@@ -1248,8 +1235,8 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="bg-white/10 border-white/10 text-white hover:bg-white/20 hover:text-white" />
-                <CarouselNext className="bg-white/10 border-white/10 text-white hover:bg-white/20 hover:text-white" />
+                <CarouselPrevious className="border-border text-foreground hover:bg-muted hover:text-foreground" />
+                <CarouselNext className="border-border text-foreground hover:bg-muted hover:text-foreground" />
               </Carousel>
             </div>
           </section>
@@ -1258,10 +1245,10 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold text-white/80">
+                <h2 className="text-lg font-semibold font-serif text-foreground">
                   Edit Content
                 </h2>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.04] text-white/20 font-medium">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
                   {slides.filter((s) => s.type !== "cta").length} editable
                 </span>
               </div>
@@ -1272,14 +1259,14 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
           {/* === Caption & Hashtags === */}
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {/* Caption */}
-            <div className="rounded-xl bg-white/[0.02] border border-white/[0.05] p-5 hover:border-white/[0.08] transition-colors group/caption">
+            <div className="rounded-lg bg-background border border-border p-5 hover:border-foreground/20 transition-colors">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <MessageSquare className="w-3.5 h-3.5 text-white/20" />
-                  <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-[0.15em]">
+                  <MessageSquare className="w-3.5 h-3.5 text-muted-foreground" />
+                  <h3 className="text-[10px] font-semibold text-muted-foreground uppercase tracking-[0.15em]">
                     Caption
                   </h3>
-                  <span className="text-[10px] text-white/15 tabular-nums">
+                  <span className="text-[10px] text-muted-foreground/50 tabular-nums">
                     {caption.length}
                   </span>
                 </div>
@@ -1289,20 +1276,20 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
                 value={caption}
                 onChange={(e) => setCaption(e.target.value)}
                 rows={4}
-                className="w-full text-white/70 text-sm leading-relaxed bg-white/[0.03] border border-white/[0.05] rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-white/[0.15] focus:bg-white/[0.05] focus:ring-1 focus:ring-white/[0.06] transition-all duration-200 resize-none placeholder:text-white/15"
+                className="w-full text-foreground/85 text-sm leading-relaxed bg-muted/30 border border-border rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 resize-none placeholder:text-muted-foreground/50"
                 placeholder="Write your caption..."
               />
             </div>
 
             {/* Hashtags */}
-            <div className="rounded-xl bg-white/[0.02] border border-white/[0.05] p-5 hover:border-white/[0.08] transition-colors group/hashtags">
+            <div className="rounded-lg bg-background border border-border p-5 hover:border-foreground/20 transition-colors">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Hash className="w-3.5 h-3.5 text-blue-400/30" />
-                  <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-[0.15em]">
+                  <Hash className="w-3.5 h-3.5 text-primary" />
+                  <h3 className="text-[10px] font-semibold text-muted-foreground uppercase tracking-[0.15em]">
                     Hashtags
                   </h3>
-                  <span className="text-[10px] text-white/15 tabular-nums">
+                  <span className="text-[10px] text-muted-foreground/50 tabular-nums">
                     {hashtags.split(/\s+/).filter(Boolean).length} tags
                   </span>
                 </div>
@@ -1312,7 +1299,7 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
                 value={hashtags}
                 onChange={(e) => setHashtags(e.target.value)}
                 rows={3}
-                className="w-full text-blue-400/60 text-sm leading-relaxed bg-white/[0.03] border border-white/[0.05] rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-blue-400/20 focus:bg-white/[0.05] focus:ring-1 focus:ring-blue-400/10 transition-all duration-200 resize-none placeholder:text-white/15"
+                className="w-full text-primary text-sm leading-relaxed bg-muted/30 border border-border rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 resize-none placeholder:text-muted-foreground/50"
                 placeholder="#hashtags..."
               />
             </div>
@@ -1321,16 +1308,16 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
           {/* === All Slides Grid === */}
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-lg font-semibold text-white/80">
+              <h2 className="text-lg font-semibold font-serif text-foreground">
                 All Slides
               </h2>
               <Badge
                 variant="secondary"
-                className="bg-white/[0.06] text-white/50 border-0 px-3 py-1"
+                className="bg-muted text-muted-foreground border-0 px-3 py-1"
               >
                 {slides.length} slides
               </Badge>
-              <span className="text-xs text-white/20">
+              <span className="text-xs text-muted-foreground">
                 1080 &times; 1080px
               </span>
             </div>
@@ -1350,12 +1337,12 @@ export function IGGenerator({ posts }: { posts: PostMetadata[] }) {
 
       {/* Empty state */}
       {!loading && slides.length === 0 && !selectedSlug && (
-        <div className="flex flex-col items-center justify-center py-32 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
-            <Sparkles className="w-7 h-7 text-white/15" />
+        <div className="flex flex-col items-center justify-center py-20 text-center border border-dashed border-border rounded-lg">
+          <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center mb-4">
+            <Sparkles className="w-6 h-6 text-muted-foreground" />
           </div>
-          <p className="text-white/25 text-sm">
-            Select an article to generate your Instagram post.
+          <p className="text-muted-foreground text-sm">
+            Select an article above to generate your Instagram post.
           </p>
         </div>
       )}
