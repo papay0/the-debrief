@@ -1,3 +1,4 @@
+import { Instagram } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import type { Locale } from "@/lib/i18n"
@@ -12,13 +13,34 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <LanguageSwitcher locale={locale} />
             <ThemeToggle />
           </div>
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} The Debrief
-          </p>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://instagram.com/the.debrief.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
+            <p className="text-sm text-muted-foreground">
+              &copy; {new Date().getFullYear()} The Debrief
+            </p>
+          </div>
         </div>
-        {/* Desktop: just copyright */}
-        <div className="hidden sm:block text-center text-sm text-muted-foreground">
+        {/* Desktop: copyright + instagram */}
+        <div className="hidden sm:flex items-center justify-center gap-3 text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} The Debrief</p>
+          <span className="text-border">·</span>
+          <a
+            href="https://instagram.com/the.debrief.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
+          >
+            <Instagram className="w-3.5 h-3.5" />
+            Instagram
+          </a>
         </div>
       </div>
     </footer>
