@@ -37,7 +37,7 @@ export function TypewriterTitle() {
       timeoutRef.current = setTimeout(() => typeNext(index + 1), delay)
     }
 
-    timeoutRef.current = setTimeout(() => typeNext(1), 400)
+    typeNext(1)
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
