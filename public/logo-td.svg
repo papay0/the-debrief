@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <clipPath id="rounded">
+      <rect width="1080" height="1080" rx="160" ry="160"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <rect width="1080" height="1080" fill="#1b2340"/>
+    <circle cx="540" cy="540" r="440" fill="#1f2a4d" opacity="0.25"/>
+    <text x="540" y="700" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="800" font-size="580" fill="white" letter-spacing="-30">TD</text>
+  </g>
+</svg>
