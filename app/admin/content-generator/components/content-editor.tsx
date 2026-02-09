@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   ChevronDown,
   Type,
+  Hash,
   AlignLeft,
   GripVertical,
   Plus,
@@ -179,6 +180,26 @@ export function ContentEditor({
                     <div className="flex-1 space-y-3 min-w-0">
                       {slide.type === "title" && (
                         <>
+                          <div>
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Hash className="w-3 h-3 text-muted-foreground" />
+                              <label className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                                Keyword
+                              </label>
+                              <span className="ml-auto text-[10px] text-muted-foreground/50 tabular-nums">
+                                {(slide.keyword || "").length}
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              value={slide.keyword || ""}
+                              onChange={(e) =>
+                                onUpdateSlide(i, { keyword: e.target.value })
+                              }
+                              className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground/85 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 placeholder:text-muted-foreground/50"
+                              placeholder="Bold keyword for thumbnail (e.g. OpenClaw)..."
+                            />
+                          </div>
                           <div>
                             <div className="flex items-center gap-1.5 mb-1.5">
                               <Type className="w-3 h-3 text-muted-foreground" />

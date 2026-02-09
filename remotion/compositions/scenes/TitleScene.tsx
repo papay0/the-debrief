@@ -21,13 +21,17 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
   const mastheadOpacity = useFadeIn(0, 12);
   const ruleScale = useDrawAcross(8, 18);
 
-  // Title: word-by-word spring entrance
-  const titleWords = scene.title.split(" ");
+  // Keyword: word-by-word spring entrance
+  const keyword = scene.keyword || scene.title;
+  const keywordWords = keyword.split(" ");
 
-  const titleLen = scene.title.length;
-  const fontSize = titleLen > 60 ? 66 : titleLen > 45 ? 76 : 84;
+  const keywordLen = keyword.length;
+  const fontSize = keywordLen > 20 ? 80 : keywordLen > 12 ? 110 : 140;
 
-  const padding = isVertical ? "100px 80px 200px" : "100px 100px 140px";
+  const padding = isVertical ? "100px 80px 200px" : "100px";
+
+  // URL fade-in
+  const urlOpacity = useFadeIn(40, 15);
 
   return (
     <div
@@ -39,6 +43,7 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         justifyContent: "center",
         padding,
         fontFamily: FONTS.serif,
@@ -51,9 +56,11 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
           top: 48,
           left: isVertical ? 80 : 100,
           right: isVertical ? 80 : 100,
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        <Masthead opacity={mastheadOpacity} />
+        <Masthead opacity={mastheadOpacity} centered />
       </div>
 
       {/* Rule under masthead */}
@@ -70,22 +77,23 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
         }}
       />
 
-      {/* Title - word by word */}
+      {/* Bold keyword - word by word */}
       <div
         style={{
           fontSize,
           fontWeight: 700,
           color: COLORS.ink,
-          lineHeight: 1.12,
-          letterSpacing: "-0.02em",
-          marginBottom: 32,
-          maxWidth: 830,
+          lineHeight: 1.1,
+          letterSpacing: "-0.03em",
+          textAlign: "center",
+          maxWidth: 880,
           display: "flex",
           flexWrap: "wrap",
+          justifyContent: "center",
           gap: "0 14px",
         }}
       >
-        {titleWords.map((word, i) => {
+        {keywordWords.map((word, i) => {
           const startFrame = 18 + i * 3;
           const { opacity, translateY } = useSpringSlideUp(startFrame, 20);
           return (
@@ -103,50 +111,32 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
         })}
       </div>
 
-      {/* Description */}
-      {scene.description && (
-        <AnimatedText startFrame={40} distance={30}>
-          <div
-            style={{
-              fontSize: isVertical ? 36 : 34,
-              fontFamily: FONTS.sans,
-              color: COLORS.muted,
-              lineHeight: 1.55,
-              maxWidth: 780,
-            }}
-          >
-            {scene.description}
-          </div>
-        </AnimatedText>
-      )}
+      {/* Accent divider */}
+      <AnimatedText startFrame={30} distance={20}>
+        <div
+          style={{
+            width: 48,
+            height: 3,
+            background: COLORS.accent,
+            marginTop: 36,
+            marginBottom: 28,
+          }}
+        />
+      </AnimatedText>
 
-      {/* Tags */}
-      {scene.tags && scene.tags.length > 0 && (
-        <div style={{ display: "flex", gap: 10, marginTop: 44 }}>
-          {scene.tags.map((tag, i) => {
-            const tagStart = 55 + i * 6;
-            const { opacity, translateY } = useSpringSlideUp(tagStart, 15);
-            return (
-              <div
-                key={tag}
-                style={{
-                  padding: "8px 20px",
-                  border: `1px solid ${COLORS.rule}`,
-                  borderRadius: 100,
-                  fontSize: 20,
-                  fontFamily: FONTS.sans,
-                  color: COLORS.muted,
-                  fontWeight: 500,
-                  opacity,
-                  transform: `translateY(${translateY}px)`,
-                }}
-              >
-                {tag}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      {/* URL */}
+      <div
+        style={{
+          fontSize: 22,
+          fontFamily: FONTS.sans,
+          color: COLORS.muted,
+          fontWeight: 400,
+          letterSpacing: "0.04em",
+          opacity: urlOpacity,
+        }}
+      >
+        the-debrief.ai
+      </div>
 
       {/* Audio */}
       {scene.audio?.audioUrl && (

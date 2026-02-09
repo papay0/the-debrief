@@ -4,6 +4,11 @@ import { anthropic } from "@ai-sdk/anthropic";
 import { z } from "zod";
 
 const outputSchema = z.object({
+  keyword: z
+    .string()
+    .describe(
+      "The single most eye-catching keyword or short phrase (1-3 words) for the article thumbnail. Should be the main topic name, product name, or concept. Examples: 'OpenClaw', 'Claude Code', 'Vibe Coding', 'GPT-5'. No articles or filler words."
+    ),
   slides: z.array(
     z.object({
       heading: z.string().describe("Short punchy heading, max 6 words"),

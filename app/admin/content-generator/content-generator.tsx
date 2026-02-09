@@ -41,6 +41,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
 
   // Article metadata for title slide
   const [articleTitle, setArticleTitle] = useState("");
+  const [articleKeyword, setArticleKeyword] = useState("");
   const [articleDescription, setArticleDescription] = useState("");
   const [articleTags, setArticleTags] = useState<string[]>([]);
 
@@ -60,6 +61,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
     all.push({
       type: "title",
       title: articleTitle,
+      keyword: articleKeyword,
       description: articleDescription,
       tags: articleTags,
     });
@@ -81,7 +83,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
     });
 
     return all;
-  }, [generatedSlides, articleTitle, articleDescription, articleTags]);
+  }, [generatedSlides, articleTitle, articleKeyword, articleDescription, articleTags]);
 
   // --- Derived: video scenes (for Remotion player) ---
   const videoScenes: Scene[] = useMemo(() => {
@@ -92,6 +94,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
     scenes.push({
       type: "title" as const,
       title: articleTitle,
+      keyword: articleKeyword,
       description: articleDescription,
       tags: articleTags.slice(0, 3),
       narration: titleNarration,
@@ -122,6 +125,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
   }, [
     generatedSlides,
     articleTitle,
+    articleKeyword,
     articleDescription,
     articleTags,
     titleNarration,
@@ -191,6 +195,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
       setLoading(true);
       setLoadingStep("Fetching article...");
       setGeneratedSlides([]);
+      setArticleKeyword("");
       setTitleNarration("");
       setCtaNarration("");
       setHashtags("");
@@ -228,6 +233,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
         const cNarration: string = data.ctaNarration || "";
 
         setGeneratedSlides(slides);
+        setArticleKeyword(data.keyword || post.tags?.[0] || "");
         setTitleNarration(tNarration);
         setCtaNarration(cNarration);
         setHashtags(data.hashtags || "");
@@ -272,6 +278,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
       // Title slide (index 0): update article metadata
       if (index === 0) {
         if (patch.title !== undefined) setArticleTitle(patch.title);
+        if (patch.keyword !== undefined) setArticleKeyword(patch.keyword);
         if (patch.description !== undefined)
           setArticleDescription(patch.description);
         if (patch.tags !== undefined) setArticleTags(patch.tags);

@@ -3,6 +3,7 @@
 export interface SlideData {
   type: "title" | "content" | "cta";
   title?: string;
+  keyword?: string;
   description?: string;
   tags?: string[];
   heading?: string;
@@ -21,8 +22,9 @@ export const SERIF = '"Source Serif 4", "Georgia", "Times New Roman", serif';
 export const SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 
 export function SlideTitle({ slide }: { slide: SlideData }) {
-  const titleLen = slide.title?.length || 0;
-  const fontSize = titleLen > 60 ? 66 : titleLen > 45 ? 76 : 84;
+  const keyword = slide.keyword || slide.title || "";
+  const keywordLen = keyword.length;
+  const fontSize = keywordLen > 20 ? 80 : keywordLen > 12 ? 110 : 140;
 
   return (
     <div
@@ -34,8 +36,9 @@ export function SlideTitle({ slide }: { slide: SlideData }) {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         justifyContent: "center",
-        padding: "100px 100px 140px",
+        padding: 100,
         fontFamily: SERIF,
       }}
     >
@@ -48,7 +51,7 @@ export function SlideTitle({ slide }: { slide: SlideData }) {
           right: 100,
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
         }}
       >
         <div
@@ -62,17 +65,6 @@ export function SlideTitle({ slide }: { slide: SlideData }) {
           }}
         >
           The Debrief
-        </div>
-        <div
-          style={{
-            fontSize: 14,
-            fontFamily: SANS,
-            fontWeight: 400,
-            color: SLIDE_MUTED,
-            letterSpacing: "0.04em",
-          }}
-        >
-          the-debrief.ai
         </div>
       </div>
 
@@ -88,63 +80,44 @@ export function SlideTitle({ slide }: { slide: SlideData }) {
         }}
       />
 
-      {/* Title */}
+      {/* Bold keyword */}
       <div
         style={{
           fontSize,
           fontWeight: 700,
           color: SLIDE_INK,
-          lineHeight: 1.12,
-          letterSpacing: "-0.02em",
-          marginBottom: 32,
-          maxWidth: 830,
+          lineHeight: 1.1,
+          letterSpacing: "-0.03em",
+          textAlign: "center" as const,
+          maxWidth: 880,
         }}
       >
-        {slide.title}
+        {keyword}
       </div>
 
-      {/* Description */}
-      {slide.description && (
-        <div
-          style={{
-            fontSize: 34,
-            fontFamily: SANS,
-            color: SLIDE_MUTED,
-            lineHeight: 1.55,
-            maxWidth: 780,
-          }}
-        >
-          {slide.description}
-        </div>
-      )}
+      {/* Accent divider */}
+      <div
+        style={{
+          width: 48,
+          height: 3,
+          background: SLIDE_ACCENT,
+          marginTop: 36,
+          marginBottom: 28,
+        }}
+      />
 
-      {/* Tags */}
-      {slide.tags && slide.tags.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: 10,
-            marginTop: 44,
-          }}
-        >
-          {slide.tags.map((tag) => (
-            <div
-              key={tag}
-              style={{
-                padding: "8px 20px",
-                border: `1px solid ${SLIDE_RULE}`,
-                borderRadius: 100,
-                fontSize: 20,
-                fontFamily: SANS,
-                color: SLIDE_MUTED,
-                fontWeight: 500,
-              }}
-            >
-              {tag}
-            </div>
-          ))}
-        </div>
-      )}
+      {/* URL */}
+      <div
+        style={{
+          fontSize: 22,
+          fontFamily: SANS,
+          color: SLIDE_MUTED,
+          fontWeight: 400,
+          letterSpacing: "0.04em",
+        }}
+      >
+        the-debrief.ai
+      </div>
 
       {/* Bottom bar */}
       <div

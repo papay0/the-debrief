@@ -15,6 +15,7 @@ export const sceneAudioSchema = z.object({
 export const sceneTitleSchema = z.object({
   type: z.literal("title"),
   title: z.string(),
+  keyword: z.string().optional(),
   description: z.string(),
   tags: z.array(z.string()),
   narration: z.string().optional(),

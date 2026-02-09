@@ -25,8 +25,9 @@ export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
   const wordmarkOpacity = useFadeIn(35, 15);
   const descriptionOpacity = useFadeIn(38, 15);
 
-  // Split title into lines for line-by-line entrance
-  const titleLines = splitIntoLines(scene.title, 20);
+  // Use keyword if available, otherwise fall back to title
+  const keyword = scene.keyword || scene.title;
+  const titleLines = splitIntoLines(keyword, 20);
 
   return (
     <div
