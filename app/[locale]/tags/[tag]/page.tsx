@@ -1,5 +1,6 @@
 import { getAllTags, getPostsByTag } from "@/lib/posts";
 import { ArticleList } from "@/components/article-list";
+import { PageViewTracker } from "@/components/page-view-tracker";
 import { TagFilter } from "@/components/tag-filter";
 import { TagPageHeader } from "@/components/tag-page-header";
 import { locales, isValidLocale, t } from "@/lib/i18n";
@@ -51,12 +52,15 @@ export default async function TagPage({
   const posts = getPostsByTag(tag, false, locale);
 
   return (
-    <div className="mx-auto max-w-2xl px-4 sm:px-6 pt-8 sm:pt-14 pb-16 sm:pb-20">
-      <TagFilter tags={allTags} activeTag={tag} locale={locale} />
-      <TagPageHeader tag={tag} count={posts.length} locale={locale} />
-      <div className="sm:mt-6">
-        <ArticleList posts={posts} locale={locale} />
+    <>
+      <PageViewTracker slug={tag} locale={locale} pageType="tag" />
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 pt-8 sm:pt-14 pb-16 sm:pb-20">
+        <TagFilter tags={allTags} activeTag={tag} locale={locale} />
+        <TagPageHeader tag={tag} count={posts.length} locale={locale} />
+        <div className="sm:mt-6">
+          <ArticleList posts={posts} locale={locale} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

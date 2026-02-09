@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, BarChart3, ArrowRight } from "lucide-react";
 
 export default function AdminPage() {
   return (
@@ -65,6 +65,32 @@ export default function AdminPage() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   One AI call generates carousel slides, video narration,
                   caption, and hashtags. Edit once, export as PNG or MP4.
+                </p>
+              </div>
+              <ArrowRight className="w-4 h-4 text-border group-hover:text-muted-foreground transition-colors shrink-0 mt-1" />
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/analytics"
+            className="group block rounded-xl border border-border bg-background p-6 hover:border-foreground/15 hover:shadow-sm transition-all"
+          >
+            <div className="flex items-start gap-5">
+              <div className="h-11 w-11 rounded-lg bg-muted flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+                <BarChart3 className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2.5 mb-1.5">
+                  <h2 className="text-base font-semibold font-serif text-foreground leading-snug">
+                    Analytics
+                  </h2>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium shrink-0">
+                    Page Views
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Track page views per article, language, and page type.
+                  Daily trends and all-time totals.
                 </p>
               </div>
               <ArrowRight className="w-4 h-4 text-border group-hover:text-muted-foreground transition-colors shrink-0 mt-1" />

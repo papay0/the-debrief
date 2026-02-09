@@ -6,6 +6,7 @@ import { MDXContent } from "@/components/mdx-content";
 import { ReadingProgress } from "@/components/reading-progress";
 import { ScrollToAnchor } from "@/components/scroll-to-anchor";
 import { AskChatGPT } from "@/components/ask-chatgpt";
+import { PageViewTracker } from "@/components/page-view-tracker";
 import { locales, isValidLocale, localizeReadingTime } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/config";
@@ -83,6 +84,7 @@ export default async function PostPage({
 
   return (
     <>
+      <PageViewTracker slug={slug} locale={locale} pageType="post" />
       <ReadingProgress />
       <ScrollToAnchor />
       <article className="mx-auto max-w-2xl px-4 sm:px-6 pt-8 sm:pt-12 pb-12 sm:pb-16">
