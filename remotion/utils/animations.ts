@@ -99,3 +99,35 @@ export function useTypewriter(
   const elapsed = Math.max(0, frame - startFrame);
   return Math.min(Math.floor(elapsed * charsPerFrame), text.length);
 }
+
+/**
+ * Slide from left animation. Returns translateX value (pixels).
+ * Starts at -distance and moves to 0.
+ */
+export function useSlideFromLeft(
+  startFrame: number,
+  distance = 60
+): { opacity: number; translateX: number } {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const progress = spring({
+    frame: frame - startFrame,
+    fps,
+    config: { damping: 200, stiffness: 100, mass: 0.5 },
+  });
+
+  return {
+    opacity: progress,
+    translateX: interpolate(progress, [0, 1], [-distance, 0]),
+  };
+}
+
+/**
+ * Sine-wave glow pulse for CTA elements.
+ * Returns a value oscillating between 0 and 1.
+ */
+export function useGlowPulse(cycleFrames = 60): number {
+  const frame = useCurrentFrame();
+  return (Math.sin((frame / cycleFrames) * Math.PI * 2) + 1) / 2;
+}

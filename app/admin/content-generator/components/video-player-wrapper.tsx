@@ -22,7 +22,7 @@ export function VideoPlayerWrapper({ props }: VideoPlayerWrapperProps) {
       ? { width: VERTICAL.width, height: VERTICAL.height }
       : { width: SQUARE.width, height: SQUARE.height };
 
-  const durationInFrames = calculateTotalDuration(props.scenes);
+  const durationInFrames = calculateTotalDuration(props.scenes, props.format);
 
   const isVertical = props.format === "vertical";
   const maxWidth = isVertical ? 400 : 600;
@@ -42,6 +42,7 @@ export function VideoPlayerWrapper({ props }: VideoPlayerWrapperProps) {
     <div className="mx-auto" style={{ maxWidth }}>
       {PlayerComponent && (
         <PlayerComponent
+          key={props.format}
           component={LazyComponent}
           inputProps={props}
           durationInFrames={Math.max(1, durationInFrames)}

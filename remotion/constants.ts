@@ -40,3 +40,33 @@ export const SUBTITLE = {
   wordColor: "#FFFFFF",
   activeWordColor: "#FFD700",
 } as const;
+
+// Reel (9:16 vertical) design tokens - cinematic dark style
+export const REEL_COLORS = {
+  bg: "#0A0A0F",
+  surface: "#14141F",
+  ink: "#F5F5F0",
+  muted: "#7A7A8A",
+  accent: "#4A6CF7",
+  accentGlow: "rgba(74, 108, 247, 0.15)",
+} as const;
+
+export const REEL_FONTS = {
+  serif: '"Source Serif 4", "Georgia", "Times New Roman", serif',
+  sans: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+} as const;
+
+export const REEL_SUBTITLE = {
+  fontSize: 44,
+  lineHeight: 1.4,
+  padding: 20,
+  bottomOffset: 200,
+  maxWidth: 920,
+  highlightColor: "#FFFFFF",
+  bgColor: "rgba(10, 10, 15, 0.5)",
+  wordColor: "#FFFFFF",
+  activeWordColor: "#4A6CF7",
+  backdropBlur: "blur(8px)",
+} as const;
+
+export const REEL_TRANSITION_FRAMES = 10; // 0.33s at 30fps

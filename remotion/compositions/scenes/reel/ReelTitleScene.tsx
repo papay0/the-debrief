@@ -1,0 +1,204 @@
+import React from "react";
+import { Audio, staticFile } from "remotion";
+import { REEL_COLORS, REEL_FONTS } from "../../../constants";
+import {
+  useFadeIn,
+  useDrawAcross,
+  useSpringSlideUp,
+} from "../../../utils/animations";
+import { NoiseOverlay } from "../../components/reel/NoiseOverlay";
+import { AmbientGlow } from "../../components/reel/AmbientGlow";
+import { SubtitleOverlay } from "../../components/SubtitleOverlay";
+import type { SceneTitle } from "../../../schemas";
+
+interface ReelTitleSceneProps {
+  scene: SceneTitle;
+  format: "square" | "vertical";
+}
+
+export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
+  scene,
+  format,
+}) => {
+  // Animation timeline
+  const accentLineScale = useDrawAcross(8, 15);
+  const wordmarkOpacity = useFadeIn(35, 15);
+  const descriptionOpacity = useFadeIn(38, 15);
+
+  // Split title into lines for line-by-line entrance
+  const titleLines = splitIntoLines(scene.title, 20);
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: REEL_COLORS.bg,
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        fontFamily: REEL_FONTS.serif,
+      }}
+    >
+      <NoiseOverlay />
+      <AmbientGlow startFrame={5} top="35%" />
+
+      {/* Title area - centered at ~35% from top */}
+      <div
+        style={{
+          position: "absolute",
+          top: "25%",
+          left: 80,
+          right: 80,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          zIndex: 2,
+        }}
+      >
+        {/* Accent line above title */}
+        <div
+          style={{
+            width: 60,
+            height: 2,
+            background: REEL_COLORS.accent,
+            marginBottom: 40,
+            transform: `scaleX(${accentLineScale})`,
+            transformOrigin: "center",
+          }}
+        />
+
+        {/* Title - line by line */}
+        <div
+          style={{
+            textAlign: "center",
+            marginBottom: 0,
+          }}
+        >
+          {titleLines.map((line, i) => {
+            const startFrame = 10 + i * 5;
+            const { opacity, translateY } = useSpringSlideUp(startFrame, 30);
+            return (
+              <div
+                key={i}
+                style={{
+                  fontSize: 96,
+                  fontWeight: 800,
+                  color: REEL_COLORS.ink,
+                  lineHeight: 1.1,
+                  letterSpacing: "-0.03em",
+                  opacity,
+                  transform: `translateY(${translateY}px)`,
+                }}
+              >
+                {line}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Bottom area - wordmark + description (above the bottom 20% subtitle zone) */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 420,
+          left: 80,
+          right: 80,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          zIndex: 2,
+        }}
+      >
+        {/* Description */}
+        {scene.description && (
+          <div
+            style={{
+              fontSize: 38,
+              fontFamily: REEL_FONTS.sans,
+              color: REEL_COLORS.muted,
+              lineHeight: 1.45,
+              textAlign: "center",
+              maxWidth: 860,
+              marginBottom: 32,
+              opacity: descriptionOpacity,
+            }}
+          >
+            {scene.description}
+          </div>
+        )}
+
+        {/* Wordmark with flanking rules */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            opacity: wordmarkOpacity,
+          }}
+        >
+          <div
+            style={{
+              width: 32,
+              height: 1,
+              background: REEL_COLORS.muted,
+              opacity: 0.4,
+            }}
+          />
+          <div
+            style={{
+              fontSize: 14,
+              fontFamily: REEL_FONTS.sans,
+              fontWeight: 600,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase" as const,
+              color: REEL_COLORS.muted,
+            }}
+          >
+            The Debrief
+          </div>
+          <div
+            style={{
+              width: 32,
+              height: 1,
+              background: REEL_COLORS.muted,
+              opacity: 0.4,
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Audio */}
+      {scene.audio?.audioUrl && (
+        <Audio
+          src={
+            scene.audio.audioUrl.startsWith("/")
+              ? scene.audio.audioUrl
+              : staticFile(scene.audio.audioUrl)
+          }
+        />
+      )}
+
+      {/* Subtitles */}
+      {scene.audio?.captions && scene.audio.captions.length > 0 && (
+        <SubtitleOverlay captions={scene.audio.captions} format={format} />
+      )}
+    </div>
+  );
+};
+
+/**
+ * Split a title string into lines of roughly `maxWordsPerLine` words.
+ */
+function splitIntoLines(text: string, maxWordsPerLine: number): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  for (let i = 0; i < words.length; i += maxWordsPerLine) {
+    lines.push(words.slice(i, i + maxWordsPerLine).join(" "));
+  }
+  return lines;
+}

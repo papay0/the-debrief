@@ -76,7 +76,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="ArticleVideoSquare"
         component={ArticleVideo}
-        durationInFrames={calculateTotalDuration(sampleScenes)}
+        durationInFrames={calculateTotalDuration(sampleScenes, "square")}
         fps={FPS}
         width={SQUARE.width}
         height={SQUARE.height}
@@ -84,14 +84,14 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ ...defaultProps, format: "square" }}
         calculateMetadata={async ({ props }) => {
           return {
-            durationInFrames: calculateTotalDuration(props.scenes),
+            durationInFrames: calculateTotalDuration(props.scenes, props.format),
           };
         }}
       />
       <Composition
         id="ArticleVideoVertical"
         component={ArticleVideo}
-        durationInFrames={calculateTotalDuration(sampleScenes)}
+        durationInFrames={calculateTotalDuration(sampleScenes, "vertical")}
         fps={FPS}
         width={VERTICAL.width}
         height={VERTICAL.height}
@@ -99,7 +99,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ ...defaultProps, format: "vertical" }}
         calculateMetadata={async ({ props }) => {
           return {
-            durationInFrames: calculateTotalDuration(props.scenes),
+            durationInFrames: calculateTotalDuration(props.scenes, props.format),
           };
         }}
       />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import type { Caption } from "../../schemas";
-import { SUBTITLE, FONTS } from "../../constants";
+import { SUBTITLE, REEL_SUBTITLE, FONTS } from "../../constants";
 
 interface SubtitleOverlayProps {
   captions: Caption[];
@@ -34,7 +34,9 @@ export const SubtitleOverlay: React.FC<SubtitleOverlayProps> = ({
 
   if (!activeChunk) return null;
 
-  const bottomOffset = format === "vertical" ? 200 : SUBTITLE.bottomOffset;
+  const isReel = format === "vertical";
+  const style = isReel ? REEL_SUBTITLE : SUBTITLE;
+  const bottomOffset = isReel ? REEL_SUBTITLE.bottomOffset : SUBTITLE.bottomOffset;
 
   return (
     <div
@@ -45,19 +47,22 @@ export const SubtitleOverlay: React.FC<SubtitleOverlayProps> = ({
         right: 0,
         display: "flex",
         justifyContent: "center",
-        padding: `0 ${SUBTITLE.padding}px`,
+        padding: `0 ${style.padding}px`,
       }}
     >
       <div
         style={{
-          background: SUBTITLE.bgColor,
+          background: style.bgColor,
           borderRadius: 12,
           padding: "16px 28px",
-          maxWidth: SUBTITLE.maxWidth,
+          maxWidth: style.maxWidth,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
           gap: "4px 8px",
+          ...(isReel
+            ? { backdropFilter: REEL_SUBTITLE.backdropBlur, WebkitBackdropFilter: REEL_SUBTITLE.backdropBlur }
+            : {}),
         }}
       >
         {activeChunk.map((caption, i) => {
@@ -71,15 +76,15 @@ export const SubtitleOverlay: React.FC<SubtitleOverlayProps> = ({
               key={`${caption.startMs}-${i}`}
               style={{
                 fontFamily: FONTS.sans,
-                fontSize: SUBTITLE.fontSize,
+                fontSize: style.fontSize,
                 fontWeight: isActive ? 700 : 500,
-                lineHeight: SUBTITLE.lineHeight,
+                lineHeight: style.lineHeight,
                 color: isActive
-                  ? SUBTITLE.activeWordColor
+                  ? style.activeWordColor
                   : isPast
-                    ? SUBTITLE.highlightColor
+                    ? style.highlightColor
                     : "rgba(255,255,255,0.6)",
-                transition: "none", // Remotion uses frames, not CSS transitions
+                transition: "none",
               }}
             >
               {caption.text.trim()}

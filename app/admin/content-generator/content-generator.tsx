@@ -141,7 +141,12 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
 
   const generateAudioForScenes = useCallback(
     async (scenes: { narration?: string }[]) => {
+      // Each generation gets a unique ID so audio URLs are never stale
+      const sessionId = Date.now().toString(36);
       const newAudio: (SceneAudio | undefined)[] = [];
+
+      // Clean up previous audio files first
+      await fetch("/api/admin/audio/cleanup", { method: "POST" });
 
       for (let i = 0; i < scenes.length; i++) {
         const narration = scenes[i].narration;
@@ -159,7 +164,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             text: narration,
-            sceneId: `scene-${i}`,
+            sceneId: `${sessionId}-scene-${i}`,
             voice: "af_heart",
             speed: 0.95,
             language: "en-us",
