@@ -7,6 +7,7 @@ import {
   Smartphone,
   Download,
   RefreshCw,
+  ImageIcon,
 } from "lucide-react";
 import { VideoPlayerWrapper } from "./video-player-wrapper";
 import type { ArticleVideoProps } from "@/remotion/schemas";
@@ -22,6 +23,7 @@ export function VideoSection({
   onFormatChange,
   onRegenerateTTS,
   onRenderVideo,
+  onDownloadCover,
 }: {
   videoProps: ArticleVideoProps;
   format: Format;
@@ -31,6 +33,7 @@ export function VideoSection({
   onFormatChange: (f: Format) => void;
   onRegenerateTTS: () => void;
   onRenderVideo: (f: "square" | "vertical" | "both") => void;
+  onDownloadCover?: (f: "square" | "vertical") => void;
 }) {
   return (
     <section>
@@ -64,6 +67,29 @@ export function VideoSection({
               9:16
             </button>
           </div>
+
+          {onDownloadCover && (
+            <>
+              <Button
+                onClick={() => onDownloadCover("square")}
+                variant="outline"
+                size="sm"
+                className="cursor-pointer"
+              >
+                <ImageIcon className="w-3.5 h-3.5 mr-1.5" />
+                Cover 1:1
+              </Button>
+              <Button
+                onClick={() => onDownloadCover("vertical")}
+                variant="outline"
+                size="sm"
+                className="cursor-pointer"
+              >
+                <ImageIcon className="w-3.5 h-3.5 mr-1.5" />
+                Cover 9:16
+              </Button>
+            </>
+          )}
 
           {hasAudio && (
             <>

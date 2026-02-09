@@ -273,7 +273,11 @@
 }
 
 .prose-debrief img {
-  @apply rounded-lg my-8 w-full;
+  @apply rounded-lg my-8;
+  max-width: 384px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 /* End-of-article marker */

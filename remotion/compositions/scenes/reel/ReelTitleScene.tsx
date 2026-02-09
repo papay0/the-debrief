@@ -8,7 +8,7 @@ import {
 } from "../../../utils/animations";
 import { NoiseOverlay } from "../../components/reel/NoiseOverlay";
 import { AmbientGlow } from "../../components/reel/AmbientGlow";
-import { SubtitleOverlay } from "../../components/SubtitleOverlay";
+import { NarrationText } from "../../components/NarrationText";
 import type { SceneTitle } from "../../../schemas";
 
 interface ReelTitleSceneProps {
@@ -115,21 +115,15 @@ export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
           zIndex: 2,
         }}
       >
-        {/* Description */}
-        {scene.description && (
-          <div
-            style={{
-              fontSize: 38,
-              fontFamily: REEL_FONTS.sans,
-              color: REEL_COLORS.muted,
-              lineHeight: 1.45,
-              textAlign: "center",
-              maxWidth: 860,
-              marginBottom: 32,
-              opacity: descriptionOpacity,
-            }}
-          >
-            {scene.description}
+        {/* Narration with word-by-word highlighting (replaces static description) */}
+        {(scene.narration || scene.description) && (
+          <div style={{ marginBottom: 32, opacity: descriptionOpacity }}>
+            <NarrationText
+              narration={scene.narration || scene.description}
+              captions={scene.audio?.captions || []}
+              format={format}
+              theme="dark"
+            />
           </div>
         )}
 
@@ -184,10 +178,6 @@ export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
         />
       )}
 
-      {/* Subtitles */}
-      {scene.audio?.captions && scene.audio.captions.length > 0 && (
-        <SubtitleOverlay captions={scene.audio.captions} format={format} />
-      )}
     </div>
   );
 };

@@ -2,16 +2,14 @@ import React from "react";
 import { Audio, staticFile } from "remotion";
 import { REEL_COLORS, REEL_FONTS } from "../../../constants";
 import {
-  useFadeIn,
   useDrawAcross,
-  useSpringSlideUp,
   useSlideFromLeft,
 } from "../../../utils/animations";
 import { NoiseOverlay } from "../../components/reel/NoiseOverlay";
 import { AmbientGlow } from "../../components/reel/AmbientGlow";
 import { GhostNumber } from "../../components/reel/GhostNumber";
 import { ProgressBar } from "../../components/reel/ProgressBar";
-import { SubtitleOverlay } from "../../components/SubtitleOverlay";
+import { NarrationText } from "../../components/NarrationText";
 import type { SceneContent } from "../../../schemas";
 
 interface ReelContentSceneProps {
@@ -29,7 +27,6 @@ export const ReelContentScene: React.FC<ReelContentSceneProps> = ({
 
   // Build narration text from bullets or narration field
   const narrationText = scene.narration || scene.bullets.join(". ") + ".";
-  const sentences = splitIntoSentences(narrationText);
 
   return (
     <div
@@ -93,35 +90,16 @@ export const ReelContentScene: React.FC<ReelContentSceneProps> = ({
         }}
       />
 
-      {/* Narration - sentence by sentence */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 24,
-          zIndex: 2,
-        }}
-      >
-        {sentences.map((sentence, i) => {
-          const startFrame = 12 + i * 20;
-          const { opacity, translateY } = useSpringSlideUp(startFrame, 25);
-          return (
-            <div
-              key={i}
-              style={{
-                fontSize: 52,
-                fontWeight: 500,
-                color: REEL_COLORS.ink,
-                lineHeight: 1.35,
-                opacity,
-                transform: `translateY(${translateY}px)`,
-                maxWidth: 900,
-              }}
-            >
-              {sentence}
-            </div>
-          );
-        })}
+      {/* Narration with word-by-word highlighting */}
+      <div style={{ zIndex: 2 }}>
+        {narrationText && (
+          <NarrationText
+            narration={narrationText}
+            captions={scene.audio?.captions || []}
+            format={format}
+            theme="dark"
+          />
+        )}
       </div>
 
       {/* Progress bar */}
@@ -142,20 +120,7 @@ export const ReelContentScene: React.FC<ReelContentSceneProps> = ({
         />
       )}
 
-      {/* Subtitles */}
-      {scene.audio?.captions && scene.audio.captions.length > 0 && (
-        <SubtitleOverlay captions={scene.audio.captions} format={format} />
-      )}
     </div>
   );
 };
 
-/**
- * Split text into sentences. Handles common sentence endings.
- */
-function splitIntoSentences(text: string): string[] {
-  return text
-    .split(/(?<=[.!?])\s+/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0);
-}

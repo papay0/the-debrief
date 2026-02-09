@@ -5,7 +5,12 @@ import type { PostMetadata } from "@/lib/posts";
 import { Sparkles } from "lucide-react";
 import type { Scene, SceneAudio, ArticleVideoProps } from "@/remotion/schemas";
 import type { SlideData } from "./components/slide-renderer";
-import { SlideRenderer, SLIDE_BG } from "./components/slide-renderer";
+import {
+  SlideRenderer,
+  SLIDE_BG,
+  VideoCoverSquare,
+  VideoCoverVertical,
+} from "./components/slide-renderer";
 import { ArticleSelector } from "./components/article-selector";
 import { ContentEditor } from "./components/content-editor";
 import { CarouselSection } from "./components/carousel-section";
@@ -49,6 +54,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
   const [sceneAudio, setSceneAudio] = useState<(SceneAudio | undefined)[]>([]);
 
   const slidesRef = useRef<HTMLDivElement>(null);
+  const coversRef = useRef<HTMLDivElement>(null);
 
   const selectedPost = posts.find((p) => p.slug === selectedSlug);
 
@@ -349,6 +355,32 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
     setExporting(false);
   }, []);
 
+  // --- Cover image export ---
+
+  const downloadCover = useCallback(async (fmt: "square" | "vertical") => {
+    const container = coversRef.current;
+    if (!container) return;
+
+    const isSquare = fmt === "square";
+    const index = isSquare ? 0 : 1;
+    const coverEl = container.children[index] as HTMLElement;
+    if (!coverEl) return;
+
+    const html2canvas = (await import("html2canvas-pro")).default;
+    const canvas = await html2canvas(coverEl, {
+      width: 1080,
+      height: isSquare ? 1080 : 1920,
+      scale: 1,
+      useCORS: true,
+      backgroundColor: isSquare ? SLIDE_BG : "#0A0A0F",
+    });
+
+    const link = document.createElement("a");
+    link.download = `cover-${isSquare ? "1x1" : "9x16"}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }, []);
+
   // --- TTS (regenerate) ---
 
   const regenerateTTS = useCallback(async () => {
@@ -480,6 +512,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
             onFormatChange={setFormat}
             onRegenerateTTS={regenerateTTS}
             onRenderVideo={renderVideo}
+            onDownloadCover={downloadCover}
           />
 
           {/* Caption & Hashtags */}
@@ -523,6 +556,20 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
             <SlideRenderer slide={slide} />
           </div>
         ))}
+      </div>
+
+      {/* Hidden cover images for PNG export */}
+      <div
+        ref={coversRef}
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", top: 0 }}
+      >
+        <div>
+          <VideoCoverSquare keyword={articleKeyword} />
+        </div>
+        <div>
+          <VideoCoverVertical keyword={articleKeyword} />
+        </div>
       </div>
     </div>
   );

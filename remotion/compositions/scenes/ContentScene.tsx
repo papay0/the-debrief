@@ -1,10 +1,9 @@
 import React from "react";
-import { Audio, staticFile, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
+import { Audio, staticFile } from "remotion";
 import { COLORS, FONTS } from "../../constants";
-import { useFadeIn, useDrawAcross, useSpringSlideUp } from "../../utils/animations";
+import { useFadeIn, useDrawAcross } from "../../utils/animations";
 import { AnimatedText } from "../components/AnimatedText";
-import { AnimatedBullet } from "../components/AnimatedBullet";
-import { SubtitleOverlay } from "../components/SubtitleOverlay";
+import { NarrationText } from "../components/NarrationText";
 import type { SceneContent } from "../../schemas";
 
 interface ContentSceneProps {
@@ -13,7 +12,6 @@ interface ContentSceneProps {
 }
 
 export const ContentScene: React.FC<ContentSceneProps> = ({ scene, format }) => {
-  const frame = useCurrentFrame();
   const isVertical = format === "vertical";
 
   // Animation timeline
@@ -97,19 +95,14 @@ export const ContentScene: React.FC<ContentSceneProps> = ({ scene, format }) => 
         }}
       />
 
-      {/* Bullets with stagger */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-        {scene.bullets?.map((bullet, i) => (
-          <AnimatedBullet
-            key={i}
-            text={bullet}
-            index={i}
-            baseStartFrame={35}
-            staggerFrames={15}
-            isVertical={isVertical}
-          />
-        ))}
-      </div>
+      {/* Narration with word-by-word highlighting */}
+      {(scene.narration || scene.bullets?.length > 0) && (
+        <NarrationText
+          narration={scene.narration || scene.bullets.join(". ") + "."}
+          captions={scene.audio?.captions || []}
+          format={format}
+        />
+      )}
 
       {/* Bottom bar */}
       <div
@@ -158,10 +151,6 @@ export const ContentScene: React.FC<ContentSceneProps> = ({ scene, format }) => 
         <Audio src={scene.audio.audioUrl.startsWith("/") ? scene.audio.audioUrl : staticFile(scene.audio.audioUrl)} />
       )}
 
-      {/* Subtitles */}
-      {scene.audio?.captions && scene.audio.captions.length > 0 && (
-        <SubtitleOverlay captions={scene.audio.captions} format={format} />
-      )}
     </div>
   );
 };
