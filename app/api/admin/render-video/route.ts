@@ -65,52 +65,34 @@ export async function POST(request: Request) {
       },
     });
 
-    const formats =
-      format === "both" ? (["square", "vertical"] as const) : [format as "square" | "vertical"];
+    const compositionId =
+      format === "square" ? "ArticleVideoSquare" : "ArticleVideoVertical";
 
-    const outputPaths: string[] = [];
+    const inputProps = convertAudioUrlsForRendering({
+      ...props,
+      format,
+    });
 
-    for (const fmt of formats) {
-      const compositionId =
-        fmt === "square" ? "ArticleVideoSquare" : "ArticleVideoVertical";
+    const composition = await selectComposition({
+      serveUrl: bundleLocation,
+      id: compositionId,
+      inputProps,
+    });
 
-      const inputProps = convertAudioUrlsForRendering({
-        ...props,
-        format: fmt,
-      });
+    const outputPath = path.join("/tmp", `${compositionId}-${Date.now()}.mp4`);
 
-      const composition = await selectComposition({
-        serveUrl: bundleLocation,
-        id: compositionId,
-        inputProps,
-      });
+    await renderMedia({
+      composition,
+      serveUrl: bundleLocation,
+      codec: "h264",
+      outputLocation: outputPath,
+      inputProps,
+    });
 
-      const outputPath = path.join("/tmp", `${compositionId}-${Date.now()}.mp4`);
+    const fileBuffer = await readFile(outputPath);
+    unlink(outputPath).catch(() => {});
 
-      await renderMedia({
-        composition,
-        serveUrl: bundleLocation,
-        codec: "h264",
-        outputLocation: outputPath,
-        inputProps,
-      });
-
-      outputPaths.push(outputPath);
-    }
-
-    // Return the first file (or we could zip both)
-    const filePath = outputPaths[0];
-    const fileBuffer = await readFile(filePath);
-
-    // Clean up temp files
-    for (const p of outputPaths) {
-      unlink(p).catch(() => {});
-    }
-
-    const filename =
-      format === "both"
-        ? "article-video-square.mp4"
-        : `article-video-${format}.mp4`;
+    const filename = `article-video-${format === "square" ? "1x1" : "9x16"}.mp4`;
 
     return new NextResponse(fileBuffer, {
       headers: {

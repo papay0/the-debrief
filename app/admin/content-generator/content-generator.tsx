@@ -359,41 +359,47 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
 
   // --- Video render ---
 
+  const renderSingleVideo = useCallback(
+    async (fmt: "square" | "vertical") => {
+      const res = await fetch("/api/admin/render-video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          props: { scenes: videoScenes, format: fmt },
+          format: fmt,
+        }),
+      });
+
+      if (!res.ok) throw new Error(await res.text());
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `video-${fmt === "square" ? "1x1" : "9x16"}.mp4`;
+      a.click();
+      URL.revokeObjectURL(url);
+    },
+    [videoScenes]
+  );
+
   const renderVideo = useCallback(
     async (renderFormat: "square" | "vertical" | "both") => {
       setRenderingFormat(renderFormat);
       try {
-        const res = await fetch("/api/admin/render-video", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            props: {
-              scenes: videoScenes,
-              format: renderFormat === "both" ? "square" : renderFormat,
-            },
-            format: renderFormat,
-          }),
-        });
-
-        if (!res.ok) {
-          console.error("Render failed:", await res.text());
-          return;
+        if (renderFormat === "both") {
+          await renderSingleVideo("square");
+          await renderSingleVideo("vertical");
+        } else {
+          await renderSingleVideo(renderFormat);
         }
-
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `video-${renderFormat}.mp4`;
-        a.click();
-        URL.revokeObjectURL(url);
       } catch (err) {
         console.error("Render failed:", err);
       } finally {
         setRenderingFormat(null);
       }
     },
-    [videoScenes]
+    [renderSingleVideo]
   );
 
   // --- Render ---
