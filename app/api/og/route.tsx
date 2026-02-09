@@ -13,8 +13,18 @@ export async function GET(request: Request) {
       searchParams.get("description") || ""
     );
 
-    // Is this the homepage/default OG (no article title)?
     const isDefault = !searchParams.get("title");
+
+    // Adaptive font size based on title length
+    const titleSize = isDefault
+      ? "82px"
+      : title.length > 70
+        ? "48px"
+        : title.length > 50
+          ? "56px"
+          : title.length > 30
+            ? "66px"
+            : "78px";
 
     return new ImageResponse(
       (
@@ -24,109 +34,119 @@ export async function GET(request: Request) {
             width: "100%",
             display: "flex",
             position: "relative",
-            background: "#0a1628",
+            background: "#FAFAF7",
           }}
         >
-          {/* Ambient gradient — fills center for warmth */}
+          {/* Left accent rule — thick enough to see at thumbnail */}
           <div
             style={{
               position: "absolute",
-              top: "10%",
-              left: "20%",
-              width: "900px",
-              height: "700px",
-              background:
-                "radial-gradient(ellipse, rgba(59, 130, 246, 0.18) 0%, transparent 65%)",
-              filter: "blur(60px)",
-              display: "flex",
-            }}
-          />
-          {/* Edge highlight — top right corner glow */}
-          <div
-            style={{
-              position: "absolute",
-              top: "-10%",
-              right: "-5%",
-              width: "500px",
-              height: "500px",
-              background:
-                "radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)",
-              filter: "blur(50px)",
+              top: "0",
+              left: "0",
+              bottom: "0",
+              width: "8px",
+              background: "#2B2B6E",
               display: "flex",
             }}
           />
 
-          {/* Content — vertically centered, maximum title prominence */}
+          {/* Content */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               width: "100%",
               height: "100%",
-              padding: "60px 80px",
-              justifyContent: "center",
-              gap: "0",
+              padding: "60px 72px 60px 56px",
+              justifyContent: "space-between",
             }}
           >
-            {/* Brand — small, muted, above the title */}
+            {/* Top: Brand — big enough to read at thumbnail */}
             <div
               style={{
                 display: "flex",
-                fontSize: "22px",
-                fontWeight: 600,
-                color: "#3b82f6",
-                letterSpacing: "0.05em",
-                textTransform: "uppercase" as const,
-                marginBottom: "28px",
+                alignItems: "center",
+                gap: "16px",
               }}
             >
-              The Debrief
-            </div>
-
-            {/* Title — DOMINANT, fills the card */}
-            <div
-              style={{
-                fontSize: isDefault ? "88px" : title.length > 50 ? "64px" : title.length > 30 ? "76px" : "88px",
-                fontWeight: "bold",
-                lineHeight: 1.05,
-                color: "#ffffff",
-                display: "flex",
-                letterSpacing: "-0.03em",
-                maxWidth: "1050px",
-              }}
-            >
-              {isDefault ? "AI news, explained simply." : title}
-            </div>
-
-            {/* Description — only if present and short enough to matter at thumbnail */}
-            {!isDefault && description && description.length <= 100 && (
               <div
                 style={{
-                  fontSize: "30px",
-                  color: "#7a8ba8",
                   display: "flex",
-                  lineHeight: 1.35,
-                  maxWidth: "900px",
-                  marginTop: "24px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "52px",
+                  height: "52px",
+                  borderRadius: "10px",
+                  background: "#1b2340",
+                  color: "#ffffff",
+                  fontSize: "22px",
+                  fontWeight: 800,
+                  fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                  letterSpacing: "-1px",
                 }}
               >
-                {description}
+                TD
               </div>
-            )}
-          </div>
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: "28px",
+                  fontWeight: 700,
+                  color: "#1A1A18",
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase" as const,
+                  fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                }}
+              >
+                The Debrief
+              </div>
+            </div>
 
-          {/* Bottom bar — thin accent line */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: "0",
-              left: "0",
-              right: "0",
-              height: "4px",
-              background: "linear-gradient(90deg, #3b82f6 0%, #6366f1 50%, #3b82f6 100%)",
-              display: "flex",
-            }}
-          />
+            {/* Title — massive, fills the card */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: titleSize,
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  color: "#1A1A18",
+                  display: "flex",
+                  letterSpacing: "-0.03em",
+                  maxWidth: "1060px",
+                  fontFamily: "Georgia, Times New Roman, serif",
+                }}
+              >
+                {isDefault ? "AI news, explained simply." : title}
+              </div>
+            </div>
+
+            {/* Bottom: domain — readable at small size */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "24px",
+                  color: "#8A8A82",
+                  fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                  letterSpacing: "0.02em",
+                  display: "flex",
+                }}
+              >
+                the-debrief.ai
+              </div>
+            </div>
+          </div>
         </div>
       ),
       {
