@@ -17,7 +17,7 @@ const outputSchema = z.object({
   instagramCaption: z
     .string()
     .describe(
-      "Full Instagram caption with this structure: 1) Open with a hook statement (the headline rephrased as a sentence), 2) 2-3 sentences of value/context from the article, 3) An engagement question to drive comments, 4) 'Full breakdown on the-debrief.ai (link in bio)'. About 100-200 words. No hashtags (they go in a separate field)."
+      "Short Instagram caption, MAX 60 words. Use newlines (\\n) to separate sections for readability. Structure:\\n1) Hook sentence (the headline as a sentence)\\n\\n2) 1-2 short sentences of context\\n\\n3) Engagement question\\n\\n4) 'Full breakdown on the-debrief.ai (link in bio)'. Keep it punchy. Nobody reads long captions. No hashtags."
     ),
   hashtags: z
     .string()
@@ -56,12 +56,18 @@ HEADLINE: Write a bold 3-8 word headline. CRITICAL: Always include the specific 
 
 TLDR: Write exactly 2 SHORT sentences that fit on ~3 lines of a phone screen. First: what happened. Second: why it matters. Each sentence MUST be under 15 words. Total under 25 words. Be ruthlessly concise. No jargon.
 
-INSTAGRAM CAPTION: Write a full caption:
-1. Open with the headline as a sentence
-2. 2-3 sentences of value from the article
-3. An engagement question
-4. "Full breakdown on the-debrief.ai (link in bio)"
-No hashtags in the caption.
+INSTAGRAM CAPTION: Keep it SHORT. Max 60 words. Nobody reads long captions.
+Use \\n\\n between sections so it's scannable on mobile. Structure:
+
+Hook sentence (headline as a sentence)
+
+1-2 short sentences of context (the juiciest facts only)
+
+Engagement question (one line)
+
+Full breakdown on the-debrief.ai (link in bio)
+
+No hashtags in the caption. No walls of text.
 
 STYLE: Match the article's conversational tone. Short sentences. Direct. No em-dashes. No generic AI phrases like "Here's what you need to know."`,
   });
