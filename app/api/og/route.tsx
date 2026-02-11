@@ -6,12 +6,8 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
 
-    const title = decodeURIComponent(
-      searchParams.get("title") || "The Debrief"
-    );
-    const description = decodeURIComponent(
-      searchParams.get("description") || ""
-    );
+    const title = searchParams.get("title") || "The Debrief";
+    const description = searchParams.get("description") || "";
 
     const isDefault = !searchParams.get("title");
 
