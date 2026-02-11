@@ -16,9 +16,9 @@ export const FPS = 30;
 
 // Scene durations in seconds
 export const SCENE_DURATIONS = {
-  title: 5,
-  content: 8,
-  cta: 4,
+  title: 4,
+  content: 6,
+  cta: 3,
 } as const;
 
 // Transition duration in frames

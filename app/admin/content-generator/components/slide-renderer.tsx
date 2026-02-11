@@ -21,17 +21,30 @@ export const SLIDE_RULE = "#D4D4CC";
 export const SERIF = '"Source Serif 4", "Georgia", "Times New Roman", serif';
 export const SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 
+// Dark cover palette
+const COVER_BG = "#0A0A0F";
+const COVER_INK = "#F5F5F0";
+const COVER_MUTED = "#6A6A7A";
+const COVER_ACCENT = "#4A6CF7";
+
+function hookFontSize(len: number): number {
+  if (len > 60) return 56;
+  if (len > 45) return 68;
+  if (len > 30) return 80;
+  if (len > 20) return 96;
+  return 110;
+}
+
 export function SlideTitle({ slide }: { slide: SlideData }) {
-  const keyword = slide.keyword || slide.title || "";
-  const keywordLen = keyword.length;
-  const fontSize = keywordLen > 20 ? 80 : keywordLen > 12 ? 110 : 140;
+  const hookText = slide.keyword || slide.title || "";
+  const fontSize = hookFontSize(hookText.length);
 
   return (
     <div
       style={{
         width: 1080,
         height: 1080,
-        background: SLIDE_BG,
+        background: COVER_BG,
         position: "relative",
         overflow: "hidden",
         display: "flex",
@@ -42,11 +55,26 @@ export function SlideTitle({ slide }: { slide: SlideData }) {
         fontFamily: SERIF,
       }}
     >
-      {/* Masthead */}
+      {/* Hook text - large and centered */}
+      <div
+        style={{
+          fontSize,
+          fontWeight: 700,
+          color: COVER_INK,
+          lineHeight: 1.15,
+          letterSpacing: "-0.03em",
+          textAlign: "center" as const,
+          maxWidth: 880,
+        }}
+      >
+        {hookText}
+      </div>
+
+      {/* Small branding at bottom */}
       <div
         style={{
           position: "absolute",
-          top: 48,
+          bottom: 54,
           left: 100,
           right: 100,
           display: "flex",
@@ -56,93 +84,16 @@ export function SlideTitle({ slide }: { slide: SlideData }) {
       >
         <div
           style={{
-            fontSize: 15,
+            fontSize: 14,
             fontFamily: SANS,
             fontWeight: 600,
             letterSpacing: "0.18em",
             textTransform: "uppercase" as const,
-            color: SLIDE_INK,
+            color: COVER_MUTED,
           }}
         >
           The Debrief
         </div>
-      </div>
-
-      {/* Thin rule under masthead */}
-      <div
-        style={{
-          position: "absolute",
-          top: 90,
-          left: 100,
-          right: 100,
-          height: 1,
-          background: SLIDE_RULE,
-        }}
-      />
-
-      {/* Bold keyword */}
-      <div
-        style={{
-          fontSize,
-          fontWeight: 700,
-          color: SLIDE_INK,
-          lineHeight: 1.1,
-          letterSpacing: "-0.03em",
-          textAlign: "center" as const,
-          maxWidth: 880,
-        }}
-      >
-        {keyword}
-      </div>
-
-      {/* Accent divider */}
-      <div
-        style={{
-          width: 48,
-          height: 3,
-          background: SLIDE_ACCENT,
-          marginTop: 36,
-          marginBottom: 28,
-        }}
-      />
-
-      {/* URL */}
-      <div
-        style={{
-          fontSize: 22,
-          fontFamily: SANS,
-          color: SLIDE_MUTED,
-          fontWeight: 400,
-          letterSpacing: "0.04em",
-        }}
-      >
-        the-debrief.ai
-      </div>
-
-      {/* Bottom bar */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 54,
-          left: 100,
-          right: 100,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 16,
-            fontFamily: SANS,
-            color: SLIDE_MUTED,
-            fontWeight: 400,
-            letterSpacing: "0.04em",
-          }}
-        >
-          Swipe to read &rarr;
-        </div>
-        <div style={{ width: 36, height: 2, background: SLIDE_ACCENT }} />
       </div>
     </div>
   );
@@ -444,22 +395,15 @@ export function SlideRenderer({ slide }: { slide: SlideData }) {
 
 // --- Video cover image components ---
 
-// Reel palette (dark theme for vertical covers)
-const REEL_BG = "#0A0A0F";
-const REEL_INK = "#F5F5F0";
-const REEL_MUTED = "#8A8A92";
-const REEL_ACCENT = "#4A6CF7";
-
 export function VideoCoverSquare({ keyword }: { keyword: string }) {
-  const keywordLen = keyword.length;
-  const fontSize = keywordLen > 20 ? 80 : keywordLen > 12 ? 110 : 140;
+  const fontSize = hookFontSize(keyword.length);
 
   return (
     <div
       style={{
         width: 1080,
         height: 1080,
-        background: SLIDE_BG,
+        background: COVER_BG,
         position: "relative",
         overflow: "hidden",
         display: "flex",
@@ -470,11 +414,26 @@ export function VideoCoverSquare({ keyword }: { keyword: string }) {
         fontFamily: SERIF,
       }}
     >
-      {/* Masthead */}
+      {/* Hook text */}
+      <div
+        style={{
+          fontSize,
+          fontWeight: 700,
+          color: COVER_INK,
+          lineHeight: 1.15,
+          letterSpacing: "-0.03em",
+          textAlign: "center" as const,
+          maxWidth: 880,
+        }}
+      >
+        {keyword}
+      </div>
+
+      {/* Small branding at bottom */}
       <div
         style={{
           position: "absolute",
-          top: 48,
+          bottom: 54,
           left: 100,
           right: 100,
           display: "flex",
@@ -484,82 +443,30 @@ export function VideoCoverSquare({ keyword }: { keyword: string }) {
       >
         <div
           style={{
-            fontSize: 15,
+            fontSize: 14,
             fontFamily: SANS,
             fontWeight: 600,
             letterSpacing: "0.18em",
             textTransform: "uppercase" as const,
-            color: SLIDE_INK,
+            color: COVER_MUTED,
           }}
         >
           The Debrief
         </div>
-      </div>
-
-      {/* Thin rule under masthead */}
-      <div
-        style={{
-          position: "absolute",
-          top: 90,
-          left: 100,
-          right: 100,
-          height: 1,
-          background: SLIDE_RULE,
-        }}
-      />
-
-      {/* Bold keyword */}
-      <div
-        style={{
-          fontSize,
-          fontWeight: 700,
-          color: SLIDE_INK,
-          lineHeight: 1.1,
-          letterSpacing: "-0.03em",
-          textAlign: "center" as const,
-          maxWidth: 880,
-        }}
-      >
-        {keyword}
-      </div>
-
-      {/* Accent divider */}
-      <div
-        style={{
-          width: 48,
-          height: 3,
-          background: SLIDE_ACCENT,
-          marginTop: 36,
-          marginBottom: 28,
-        }}
-      />
-
-      {/* URL */}
-      <div
-        style={{
-          fontSize: 22,
-          fontFamily: SANS,
-          color: SLIDE_MUTED,
-          fontWeight: 400,
-          letterSpacing: "0.04em",
-        }}
-      >
-        the-debrief.ai
       </div>
     </div>
   );
 }
 
 export function VideoCoverVertical({ keyword }: { keyword: string }) {
-  const keywordLen = keyword.length;
-  const fontSize = keywordLen > 20 ? 80 : keywordLen > 12 ? 110 : 140;
+  const fontSize = hookFontSize(keyword.length);
 
   return (
     <div
       style={{
         width: 1080,
         height: 1920,
-        background: REEL_BG,
+        background: COVER_BG,
         position: "relative",
         overflow: "hidden",
         display: "flex",
@@ -570,13 +477,13 @@ export function VideoCoverVertical({ keyword }: { keyword: string }) {
         fontFamily: SERIF,
       }}
     >
-      {/* Bold keyword */}
+      {/* Hook text */}
       <div
         style={{
           fontSize,
           fontWeight: 700,
-          color: REEL_INK,
-          lineHeight: 1.1,
+          color: COVER_INK,
+          lineHeight: 1.15,
           letterSpacing: "-0.03em",
           textAlign: "center" as const,
           maxWidth: 920,
@@ -585,44 +492,30 @@ export function VideoCoverVertical({ keyword }: { keyword: string }) {
         {keyword}
       </div>
 
-      {/* Accent line */}
+      {/* Small branding at bottom */}
       <div
         style={{
-          width: 48,
-          height: 3,
-          background: REEL_ACCENT,
-          marginTop: 40,
-          marginBottom: 32,
-        }}
-      />
-
-      {/* Branding */}
-      <div
-        style={{
-          fontSize: 15,
-          fontFamily: SANS,
-          fontWeight: 600,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase" as const,
-          color: REEL_MUTED,
-          marginBottom: 12,
+          position: "absolute",
+          bottom: 80,
+          left: 80,
+          right: 80,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        The Debrief
-      </div>
-
-      {/* URL */}
-      <div
-        style={{
-          fontSize: 22,
-          fontFamily: SANS,
-          color: REEL_MUTED,
-          fontWeight: 400,
-          letterSpacing: "0.04em",
-          opacity: 0.6,
-        }}
-      >
-        the-debrief.ai
+        <div
+          style={{
+            fontSize: 14,
+            fontFamily: SANS,
+            fontWeight: 600,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase" as const,
+            color: COVER_MUTED,
+          }}
+        >
+          The Debrief
+        </div>
       </div>
     </div>
   );

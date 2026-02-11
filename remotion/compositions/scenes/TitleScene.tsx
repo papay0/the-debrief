@@ -21,12 +21,13 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
   const mastheadOpacity = useFadeIn(0, 12);
   const ruleScale = useDrawAcross(8, 18);
 
-  // Keyword: word-by-word spring entrance
+  // Keyword (hook text): word-by-word spring entrance
   const keyword = scene.keyword || scene.title;
   const keywordWords = keyword.split(" ");
 
+  // Font sizing adjusted for longer hook text
   const keywordLen = keyword.length;
-  const fontSize = keywordLen > 20 ? 80 : keywordLen > 12 ? 110 : 140;
+  const fontSize = keywordLen > 60 ? 56 : keywordLen > 45 ? 68 : keywordLen > 30 ? 80 : keywordLen > 20 ? 96 : 110;
 
   const padding = isVertical ? "100px 80px 200px" : "100px";
 
@@ -94,8 +95,8 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
         }}
       >
         {keywordWords.map((word, i) => {
-          const startFrame = 18 + i * 3;
-          const { opacity, translateY } = useSpringSlideUp(startFrame, 20);
+          const startFrame = 5 + i * 2;
+          const { opacity, translateY } = useSpringSlideUp(startFrame, 15);
           return (
             <span
               key={i}

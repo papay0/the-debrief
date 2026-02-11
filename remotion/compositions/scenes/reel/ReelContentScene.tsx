@@ -21,9 +21,9 @@ export const ReelContentScene: React.FC<ReelContentSceneProps> = ({
   scene,
   format,
 }) => {
-  // Animation timeline
-  const headingSlide = useSlideFromLeft(5, 40);
-  const accentUnderlineScale = useDrawAcross(8, 12);
+  // Animation timeline - compressed for faster entrance
+  const headingSlide = useSlideFromLeft(2, 25);
+  const accentUnderlineScale = useDrawAcross(4, 10);
 
   // Build narration text from bullets or narration field
   const narrationText = scene.narration || scene.bullets.join(". ") + ".";

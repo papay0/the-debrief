@@ -33,7 +33,7 @@ export function CaptionSection({
         <textarea
           value={caption}
           onChange={(e) => onCaptionChange(e.target.value)}
-          rows={4}
+          rows={8}
           className="w-full text-foreground/85 text-sm leading-relaxed bg-muted/30 border border-border rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all duration-200 resize-none placeholder:text-muted-foreground/50"
           placeholder="Write your caption..."
         />

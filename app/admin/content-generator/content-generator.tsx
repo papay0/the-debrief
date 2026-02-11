@@ -16,6 +16,10 @@ import { ContentEditor } from "./components/content-editor";
 import { CarouselSection } from "./components/carousel-section";
 import { VideoSection } from "./components/video-section";
 import { CaptionSection } from "./components/caption-section";
+import {
+  PostingStrategySection,
+  type PostingStep,
+} from "./components/posting-strategy-section";
 import { FullscreenCarousel } from "./components/fullscreen-carousel";
 
 interface GeneratedSlide {
@@ -43,6 +47,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
   const [ctaNarration, setCtaNarration] = useState("");
   const [hashtags, setHashtags] = useState("");
   const [caption, setCaption] = useState("");
+  const [postingStrategy, setPostingStrategy] = useState<PostingStep[]>([]);
 
   // Article metadata for title slide
   const [articleTitle, setArticleTitle] = useState("");
@@ -139,9 +144,34 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
     sceneAudio,
   ]);
 
+  // For vertical/reel format, use only 2 of 3 content scenes (title + 2 content + CTA = 4 scenes, ~25-35 sec)
+  // Square format keeps all 3 content scenes
+  const activeVideoScenes: Scene[] = useMemo(() => {
+    if (videoScenes.length === 0) return [];
+    if (format === "square") return videoScenes;
+
+    // For vertical: title + first 2 content scenes + CTA
+    const title = videoScenes.filter((s) => s.type === "title");
+    const content = videoScenes.filter((s) => s.type === "content").slice(0, 2);
+    const cta = videoScenes.filter((s) => s.type === "cta");
+    const filtered = [...title, ...content, ...cta];
+
+    // Recalculate slideNumber/totalSlides for the filtered set
+    const totalSlides = filtered.length;
+    return filtered.map((scene, i) => {
+      if (scene.type === "content") {
+        return { ...scene, slideNumber: i + 1, totalSlides };
+      }
+      if (scene.type === "cta") {
+        return { ...scene, slideNumber: totalSlides, totalSlides };
+      }
+      return scene;
+    });
+  }, [videoScenes, format]);
+
   const videoProps: ArticleVideoProps = useMemo(
-    () => ({ scenes: videoScenes, format }),
-    [videoScenes, format]
+    () => ({ scenes: activeVideoScenes, format }),
+    [activeVideoScenes, format]
   );
 
   const hasAudio = sceneAudio.some((a) => a !== undefined);
@@ -206,6 +236,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
       setCtaNarration("");
       setHashtags("");
       setCaption("");
+      setPostingStrategy([]);
       setSceneAudio([]);
 
       try {
@@ -225,6 +256,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
             description: post.description,
             tags: post.tags,
             content: post.content,
+            date: post.date,
           }),
         });
 
@@ -239,13 +271,15 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
         const cNarration: string = data.ctaNarration || "";
 
         setGeneratedSlides(slides);
-        setArticleKeyword(data.keyword || post.tags?.[0] || "");
+        setArticleKeyword(data.hook || data.keyword || post.tags?.[0] || "");
         setTitleNarration(tNarration);
         setCtaNarration(cNarration);
         setHashtags(data.hashtags || "");
         setCaption(
-          `Read the full article at the-debrief.ai (link in bio)\n\n${data.hashtags || ""}`
+          data.instagramCaption ||
+            `Read the full article at the-debrief.ai (link in bio)\n\n${data.hashtags || ""}`
         );
+        setPostingStrategy(data.postingStrategy || []);
 
         // Automatically generate TTS audio for all scenes
         setLoadingStep("Generating narration audio...");
@@ -318,7 +352,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
       height: 1080,
       scale: 1,
       useCORS: true,
-      backgroundColor: SLIDE_BG,
+      backgroundColor: index === 0 ? "#0A0A0F" : SLIDE_BG,
     });
 
     const link = document.createElement("a");
@@ -341,7 +375,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
         height: 1080,
         scale: 1,
         useCORS: true,
-        backgroundColor: SLIDE_BG,
+        backgroundColor: i === 0 ? "#0A0A0F" : SLIDE_BG,
       });
 
       const link = document.createElement("a");
@@ -372,7 +406,7 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
       height: isSquare ? 1080 : 1920,
       scale: 1,
       useCORS: true,
-      backgroundColor: isSquare ? SLIDE_BG : "#0A0A0F",
+      backgroundColor: "#0A0A0F",
     });
 
     const link = document.createElement("a");
@@ -405,11 +439,32 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
 
   const renderSingleVideo = useCallback(
     async (fmt: "square" | "vertical") => {
+      // For vertical, filter to only 2 content scenes (same logic as activeVideoScenes)
+      let scenesForRender = videoScenes;
+      if (fmt === "vertical" && videoScenes.length > 0) {
+        const title = videoScenes.filter((s) => s.type === "title");
+        const content = videoScenes
+          .filter((s) => s.type === "content")
+          .slice(0, 2);
+        const cta = videoScenes.filter((s) => s.type === "cta");
+        const filtered = [...title, ...content, ...cta];
+        const totalSlides = filtered.length;
+        scenesForRender = filtered.map((scene, i) => {
+          if (scene.type === "content") {
+            return { ...scene, slideNumber: i + 1, totalSlides };
+          }
+          if (scene.type === "cta") {
+            return { ...scene, slideNumber: totalSlides, totalSlides };
+          }
+          return scene;
+        });
+      }
+
       const res = await fetch("/api/admin/render-video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          props: { scenes: videoScenes, format: fmt },
+          props: { scenes: scenesForRender, format: fmt },
           format: fmt,
         }),
       });
@@ -522,6 +577,11 @@ export function ContentGenerator({ posts }: { posts: PostMetadata[] }) {
             onCaptionChange={setCaption}
             onHashtagsChange={setHashtags}
           />
+
+          {/* Posting Strategy */}
+          {postingStrategy.length > 0 && (
+            <PostingStrategySection steps={postingStrategy} />
+          )}
         </div>
       )}
 

@@ -17,11 +17,22 @@ import type { ArticleVideoProps, Scene } from "../schemas";
 // Load Source Serif 4 from Google Fonts
 const { fontFamily } = loadFont();
 
-function getSceneDurationInFrames(scene: Scene): number {
+function getSceneDurationInFrames(
+  scene: Scene,
+  format: "square" | "vertical" = "square"
+): number {
+  // In reel (vertical) format, the CTA scene delays audio/subtitles until
+  // after the cross-fade transition completes, preventing audio overlap
+  // between the outgoing content scene and the incoming CTA.
+  const audioDelay =
+    scene.type === "cta" && format === "vertical"
+      ? getTransitionFrames(format)
+      : 0;
+
   // If the scene has audio, use the audio duration
   if (scene.audio?.durationInSeconds) {
     // Add 1s padding for visual animations to settle
-    return Math.ceil((scene.audio.durationInSeconds + 1) * FPS);
+    return Math.ceil((scene.audio.durationInSeconds + 1) * FPS) + audioDelay;
   }
 
   // Otherwise use default durations
@@ -31,7 +42,7 @@ function getSceneDurationInFrames(scene: Scene): number {
     case "content":
       return SCENE_DURATIONS.content * FPS;
     case "cta":
-      return SCENE_DURATIONS.cta * FPS;
+      return SCENE_DURATIONS.cta * FPS + audioDelay;
   }
 }
 
@@ -49,7 +60,7 @@ export const ArticleVideo: React.FC<ArticleVideoProps> = ({
   return (
     <TransitionSeries>
       {scenes.map((scene, i) => {
-        const durationInFrames = getSceneDurationInFrames(scene);
+        const durationInFrames = getSceneDurationInFrames(scene, format);
 
         return (
           <React.Fragment key={i}>
@@ -98,7 +109,7 @@ export function calculateTotalDuration(
   format: "square" | "vertical" = "square"
 ): number {
   const scenesTotal = scenes.reduce(
-    (sum, scene) => sum + getSceneDurationInFrames(scene),
+    (sum, scene) => sum + getSceneDurationInFrames(scene, format),
     0
   );
   const transitionFrames = getTransitionFrames(format);

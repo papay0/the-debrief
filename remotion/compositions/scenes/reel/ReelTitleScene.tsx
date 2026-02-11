@@ -20,14 +20,18 @@ export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
   scene,
   format,
 }) => {
-  // Animation timeline
-  const accentLineScale = useDrawAcross(8, 15);
-  const wordmarkOpacity = useFadeIn(35, 15);
-  const descriptionOpacity = useFadeIn(38, 15);
+  // Animation timeline - compressed for faster reveal
+  const accentLineScale = useDrawAcross(2, 10);
+  const wordmarkOpacity = useFadeIn(20, 12);
+  const descriptionOpacity = useFadeIn(22, 12);
 
-  // Use keyword if available, otherwise fall back to title
+  // Use keyword (hook text) if available, otherwise fall back to title
   const keyword = scene.keyword || scene.title;
-  const titleLines = splitIntoLines(keyword, 20);
+  const titleLines = splitIntoLines(keyword, 5);
+
+  // Font sizing for longer hook text
+  const keywordLen = keyword.length;
+  const fontSize = keywordLen > 60 ? 56 : keywordLen > 45 ? 68 : keywordLen > 30 ? 80 : 96;
 
   return (
     <div
@@ -72,7 +76,7 @@ export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
           }}
         />
 
-        {/* Title - line by line */}
+        {/* Title - visible from frame 0 for instant readability */}
         <div
           style={{
             textAlign: "center",
@@ -80,16 +84,16 @@ export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
           }}
         >
           {titleLines.map((line, i) => {
-            const startFrame = 10 + i * 5;
-            const { opacity, translateY } = useSpringSlideUp(startFrame, 30);
+            const startFrame = i * 2;
+            const { opacity, translateY } = useSpringSlideUp(startFrame, 15);
             return (
               <div
                 key={i}
                 style={{
-                  fontSize: 96,
+                  fontSize,
                   fontWeight: 800,
                   color: REEL_COLORS.ink,
-                  lineHeight: 1.1,
+                  lineHeight: 1.15,
                   letterSpacing: "-0.03em",
                   opacity,
                   transform: `translateY(${translateY}px)`,

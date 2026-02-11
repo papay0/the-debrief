@@ -1,6 +1,6 @@
 import React from "react";
-import { Audio, staticFile, useCurrentFrame } from "remotion";
-import { REEL_COLORS, REEL_FONTS } from "../../../constants";
+import { Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
+import { REEL_COLORS, REEL_FONTS, REEL_TRANSITION_FRAMES } from "../../../constants";
 import {
   useFadeIn,
   useDrawAcross,
@@ -23,14 +23,14 @@ export const ReelCTAScene: React.FC<ReelCTASceneProps> = ({
 }) => {
   const frame = useCurrentFrame();
 
-  // Animation timeline
-  const labelOpacity = useFadeIn(0, 12);
+  // Animation timeline - compressed by ~12 frames
+  const labelOpacity = useFadeIn(0, 8);
   const ctaText = "Read the full article";
-  const charsToShow = useTypewriter(ctaText, 8, 1.2);
-  const dividerScale = useDrawAcross(35, 12);
-  const urlOpacity = useFadeIn(42, 12);
-  const arrowOpacity = useFadeIn(50, 12);
-  const glowPulse = useGlowPulse(50);
+  const charsToShow = useTypewriter(ctaText, 3, 1.5);
+  const dividerScale = useDrawAcross(20, 10);
+  const urlOpacity = useFadeIn(26, 10);
+  const arrowOpacity = useFadeIn(32, 10);
+  const glowPulse = useGlowPulse(35);
 
   // Glow ring spread oscillates 0-20px
   const glowSpread = glowPulse * 20;
@@ -166,21 +166,23 @@ export const ReelCTAScene: React.FC<ReelCTASceneProps> = ({
         Link in bio
       </div>
 
-      {/* Audio */}
-      {scene.audio?.audioUrl && (
-        <Audio
-          src={
-            scene.audio.audioUrl.startsWith("/")
-              ? scene.audio.audioUrl
-              : staticFile(scene.audio.audioUrl)
-          }
-        />
-      )}
+      {/* Audio + Subtitles: delayed past the cross-fade transition so they
+          don't overlap with the previous scene's audio during the fade */}
+      <Sequence from={REEL_TRANSITION_FRAMES} layout="none">
+        {scene.audio?.audioUrl && (
+          <Audio
+            src={
+              scene.audio.audioUrl.startsWith("/")
+                ? scene.audio.audioUrl
+                : staticFile(scene.audio.audioUrl)
+            }
+          />
+        )}
 
-      {/* Subtitles */}
-      {scene.audio?.captions && scene.audio.captions.length > 0 && (
-        <SubtitleOverlay captions={scene.audio.captions} format={format} />
-      )}
+        {scene.audio?.captions && scene.audio.captions.length > 0 && (
+          <SubtitleOverlay captions={scene.audio.captions} format={format} />
+        )}
+      </Sequence>
     </div>
   );
 };
