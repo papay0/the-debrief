@@ -115,7 +115,7 @@ export function AskChatGPT({ slug, locale }: { slug: string; locale: Locale }) {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={handleFocus}
           placeholder={placeholder}
-          className="flex-1 bg-transparent text-sm text-foreground dark:text-foreground placeholder:text-foreground/35 dark:placeholder:text-foreground/35 outline-none min-w-0"
+          className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none min-w-0"
         />
         <button
           type="submit"
