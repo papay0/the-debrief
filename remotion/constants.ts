@@ -70,3 +70,17 @@ export const REEL_SUBTITLE = {
 } as const;
 
 export const REEL_TRANSITION_FRAMES = 10; // 0.33s at 30fps
+
+// Mini Reel (3-4s animated news card) design tokens
+export const MINI_REEL_DURATION = 4; // seconds
+export const MINI_REEL_FRAMES = MINI_REEL_DURATION * FPS; // 120 frames
+
+export const MINI_REEL_GRADIENTS = {
+  ocean: "linear-gradient(145deg, #0a0a2e 0%, #1a1a4e 30%, #0d3b66 60%, #1a535c 100%)",
+  dusk: "linear-gradient(145deg, #1a0a2e 0%, #3d1a4e 30%, #6b2737 60%, #8b4513 100%)",
+  emerald: "linear-gradient(145deg, #0a1a0a 0%, #0d2818 30%, #1a4a2e 60%, #0d3b2e 100%)",
+  midnight: "linear-gradient(145deg, #0A0A0F 0%, #0f1029 30%, #1a1a4e 60%, #0A0A0F 100%)",
+  ember: "linear-gradient(145deg, #1a0a0a 0%, #3d1a1a 30%, #6b3737 60%, #8b5e3f 100%)",
+} as const;
+
+export type MiniReelGradient = keyof typeof MINI_REEL_GRADIENTS;

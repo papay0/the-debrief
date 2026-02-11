@@ -36,7 +36,8 @@ function convertAudioUrlsForRendering(props: Record<string, unknown>) {
 }
 
 export async function POST(request: Request) {
-  const { props, format } = await request.json();
+  const { props, format, compositionId: explicitCompositionId } =
+    await request.json();
 
   try {
     const entryPoint = path.join(process.cwd(), "remotion", "index.tsx");
@@ -66,12 +67,17 @@ export async function POST(request: Request) {
     });
 
     const compositionId =
-      format === "square" ? "ArticleVideoSquare" : "ArticleVideoVertical";
+      explicitCompositionId ||
+      (format === "square" ? "ArticleVideoSquare" : "ArticleVideoVertical");
 
-    const inputProps = convertAudioUrlsForRendering({
-      ...props,
-      format,
-    });
+    // For MiniReel, props are passed directly (no audio URL conversion needed)
+    const inputProps =
+      compositionId === "MiniReel"
+        ? props
+        : convertAudioUrlsForRendering({
+            ...props,
+            format,
+          });
 
     const composition = await selectComposition({
       serveUrl: bundleLocation,

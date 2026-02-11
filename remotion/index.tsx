@@ -1,9 +1,11 @@
 import React from "react";
 import { Composition, registerRoot } from "remotion";
 import { ArticleVideo, calculateTotalDuration } from "./compositions/ArticleVideo";
+import { MiniReel } from "./compositions/MiniReel";
 import { articleVideoPropsSchema } from "./schemas";
+import { miniReelPropsSchema } from "./mini-reel-schemas";
 import type { ArticleVideoProps } from "./schemas";
-import { FPS, SQUARE, VERTICAL } from "./constants";
+import { FPS, SQUARE, VERTICAL, MINI_REEL_FRAMES } from "./constants";
 
 // Sample data for Remotion Studio preview
 const sampleScenes: ArticleVideoProps["scenes"] = [
@@ -101,6 +103,20 @@ export const RemotionRoot: React.FC = () => {
           return {
             durationInFrames: calculateTotalDuration(props.scenes, props.format),
           };
+        }}
+      />
+      <Composition
+        id="MiniReel"
+        component={MiniReel}
+        durationInFrames={MINI_REEL_FRAMES}
+        fps={FPS}
+        width={VERTICAL.width}
+        height={VERTICAL.height}
+        schema={miniReelPropsSchema}
+        defaultProps={{
+          headline: "A Tesla Engineer Just Killed Traditional Coding",
+          tldr: "Tesla's new AI tool writes production code from plain English. Engineers say it cuts development time by 70%.",
+          gradient: "ocean" as const,
         }}
       />
     </>
