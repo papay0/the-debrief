@@ -3,8 +3,10 @@ import Link from "next/link";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { ImageGrid } from "./image-grid";
 
 const components = {
+  ImageGrid,
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
     if (props.className?.includes("anchor")) {
       return <span {...props} />;

@@ -272,7 +272,7 @@
   @apply px-3 sm:px-4 py-2 border-b border-border text-foreground/85;
 }
 
-.prose-debrief img {
+.prose-debrief > img {
   @apply rounded-lg my-8;
   max-width: 384px;
   margin-left: auto;
