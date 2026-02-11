@@ -17,6 +17,7 @@ export function AskChatGPT({ slug, locale }: { slug: string; locale: Locale }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [placeholderWidth, setPlaceholderWidth] = useState(0);
+  const [ready, setReady] = useState(false);
 
   const placeholder = placeholders[locale];
 
@@ -28,6 +29,7 @@ export function AskChatGPT({ slug, locale }: { slug: string; locale: Locale }) {
       ctx.font = `${style.fontSize} ${style.fontFamily}`;
       const measured = ctx.measureText(placeholder);
       setPlaceholderWidth(Math.ceil(measured.width) + 100);
+      setReady(true);
     }
   }, [placeholder]);
 
@@ -97,11 +99,11 @@ export function AskChatGPT({ slug, locale }: { slug: string; locale: Locale }) {
         expanded
           ? "w-[calc(100%-2rem)] max-w-xl"
           : "w-[calc(100%-2rem)]"
-      } ${hidden ? "translate-y-4 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"}`}
+      } ${!ready ? "opacity-0 pointer-events-none" : hidden ? "translate-y-4 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"}`}
     >
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 rounded-lg bg-background/95 backdrop-blur border border-border/50 shadow-lg px-5 py-2.5 cursor-text"
+        className="ask-chatgpt-pill flex items-center gap-2 rounded-full px-5 py-3 cursor-text transition-shadow duration-200"
         onClick={() => {
           inputRef.current?.focus();
         }}
@@ -113,12 +115,12 @@ export function AskChatGPT({ slug, locale }: { slug: string; locale: Locale }) {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={handleFocus}
           placeholder={placeholder}
-          className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none min-w-0"
+          className="flex-1 bg-transparent text-sm text-foreground dark:text-foreground placeholder:text-foreground/35 dark:placeholder:text-foreground/35 outline-none min-w-0"
         />
         <button
           type="submit"
           disabled={!query.trim()}
-          className="flex-shrink-0 h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center transition-opacity disabled:opacity-30"
+          className="flex-shrink-0 h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center transition-all duration-150 disabled:opacity-30 hover:bg-primary/85"
           aria-label="Send question to ChatGPT"
         >
           <ArrowUp className="h-4 w-4" />

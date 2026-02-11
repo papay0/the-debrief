@@ -293,3 +293,34 @@
   background: var(--primary);
   margin-top: 2.5rem;
 }
+
+/* Floating ChatGPT pill */
+.ask-chatgpt-pill {
+  background: oklch(1 0 0);
+  box-shadow:
+    0 0 0 1px oklch(0.75 0.04 255 / 0.4),
+    0 4px 16px -2px oklch(0.3 0.08 255 / 0.16),
+    0 12px 40px -8px oklch(0.25 0.1 255 / 0.12);
+}
+
+.dark .ask-chatgpt-pill {
+  background: oklch(0.24 0.04 255);
+  box-shadow:
+    0 0 0 1px oklch(0.4 0.06 255 / 0.5),
+    0 4px 16px -2px oklch(0 0 0 / 0.4),
+    0 12px 40px -8px oklch(0 0 0 / 0.3);
+}
+
+.ask-chatgpt-pill:hover {
+  box-shadow:
+    0 0 0 1px oklch(0.6 0.08 255 / 0.5),
+    0 6px 20px -2px oklch(0.3 0.1 255 / 0.2),
+    0 16px 48px -8px oklch(0.25 0.12 255 / 0.16);
+}
+
+.dark .ask-chatgpt-pill:hover {
+  box-shadow:
+    0 0 0 1px oklch(0.45 0.08 255 / 0.6),
+    0 6px 20px -2px oklch(0 0 0 / 0.5),
+    0 16px 48px -8px oklch(0 0 0 / 0.4);
+}
