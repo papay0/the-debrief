@@ -39,6 +39,7 @@ export function MDXContent({ source }: MDXContentProps) {
             remarkPlugins: [remarkGfm],
             rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
           },
+          blockJS: false,
         }}
       />
     </div>
