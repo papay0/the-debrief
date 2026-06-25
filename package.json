@@ -10,7 +10,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:daily-article": "node scripts/generate-daily-article.mjs",
     "remotion:preview": "remotion preview remotion/index.tsx",
     "remotion:render:square": "remotion render remotion/index.tsx ArticleVideoSquare",
     "remotion:render:vertical": "remotion render remotion/index.tsx ArticleVideoVertical"
