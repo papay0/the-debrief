@@ -12,6 +12,26 @@ interface TitleSceneProps {
   format: "square" | "vertical";
 }
 
+const AnimatedKeywordWord: React.FC<{
+  word: string;
+  index: number;
+}> = ({ word, index }) => {
+  const startFrame = 5 + index * 2;
+  const { opacity, translateY } = useSpringSlideUp(startFrame, 15);
+
+  return (
+    <span
+      style={{
+        opacity,
+        transform: `translateY(${translateY}px)`,
+        display: "inline-block",
+      }}
+    >
+      {word}
+    </span>
+  );
+};
+
 export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -94,22 +114,9 @@ export const TitleScene: React.FC<TitleSceneProps> = ({ scene, format }) => {
           gap: "0 14px",
         }}
       >
-        {keywordWords.map((word, i) => {
-          const startFrame = 5 + i * 2;
-          const { opacity, translateY } = useSpringSlideUp(startFrame, 15);
-          return (
-            <span
-              key={i}
-              style={{
-                opacity,
-                transform: `translateY(${translateY}px)`,
-                display: "inline-block",
-              }}
-            >
-              {word}
-            </span>
-          );
-        })}
+        {keywordWords.map((word, i) => (
+          <AnimatedKeywordWord key={`${word}-${i}`} word={word} index={i} />
+        ))}
       </div>
 
       {/* Accent divider */}

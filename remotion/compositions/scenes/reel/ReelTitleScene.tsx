@@ -16,6 +16,31 @@ interface ReelTitleSceneProps {
   format: "square" | "vertical";
 }
 
+const AnimatedTitleLine: React.FC<{
+  line: string;
+  index: number;
+  fontSize: number;
+}> = ({ line, index, fontSize }) => {
+  const startFrame = index * 2;
+  const { opacity, translateY } = useSpringSlideUp(startFrame, 15);
+
+  return (
+    <div
+      style={{
+        fontSize,
+        fontWeight: 800,
+        color: REEL_COLORS.ink,
+        lineHeight: 1.15,
+        letterSpacing: "-0.03em",
+        opacity,
+        transform: `translateY(${translateY}px)`,
+      }}
+    >
+      {line}
+    </div>
+  );
+};
+
 export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
   scene,
   format,
@@ -83,26 +108,14 @@ export const ReelTitleScene: React.FC<ReelTitleSceneProps> = ({
             marginBottom: 0,
           }}
         >
-          {titleLines.map((line, i) => {
-            const startFrame = i * 2;
-            const { opacity, translateY } = useSpringSlideUp(startFrame, 15);
-            return (
-              <div
-                key={i}
-                style={{
-                  fontSize,
-                  fontWeight: 800,
-                  color: REEL_COLORS.ink,
-                  lineHeight: 1.15,
-                  letterSpacing: "-0.03em",
-                  opacity,
-                  transform: `translateY(${translateY}px)`,
-                }}
-              >
-                {line}
-              </div>
-            );
-          })}
+          {titleLines.map((line, i) => (
+            <AnimatedTitleLine
+              key={`${line}-${i}`}
+              line={line}
+              index={i}
+              fontSize={fontSize}
+            />
+          ))}
         </div>
       </div>
 

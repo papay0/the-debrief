@@ -1,4 +1,3 @@
-import { Instagram } from "lucide-react"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { NewsletterSubscribe } from "@/components/newsletter-subscribe"
 import type { Locale } from "@/lib/i18n"
@@ -29,7 +28,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               rel="noopener noreferrer"
               className="hover:text-foreground transition-colors"
             >
-              <Instagram className="size-3.5" />
+              <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm8.7 2.35a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+              </svg>
             </a>
             <LanguageSwitcher locale={locale} />
           </div>
