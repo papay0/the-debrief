@@ -1,0 +1,166 @@
+---
+title: "Claude Tag Makes AI Agents Multiplayer"
+date: "2026-06-27"
+description: "Anthropic's new Slack-native Claude agent is not just another chatbot integration. It points to the next big UI shift: shared agents with memory, tools, and initiative."
+tags: ["AI Agents", "Anthropic", "Claude", "Future of Work"]
+draft: false
+---
+
+## The Short Version
+
+Claude just moved into Slack.
+
+On June 23, Anthropic [introduced Claude Tag](https://www.anthropic.com/news/introducing-claude-tag), a new beta for Claude Team and Enterprise customers. You add Claude to selected Slack channels, connect the tools and data you want it to use, then tag `@Claude` when you want it to do something.
+
+That sounds like a Slack bot.
+
+It is not just a Slack bot.
+
+The important part is that Claude becomes shared. Everyone in a channel can see what it is doing, continue the conversation, and reuse the context it has already learned. Anthropic says it is already using an internal version heavily, and claims 65% of its product team's code is created by that internal Claude Tag workflow.
+
+That is the shift.
+
+We have spent the last two years talking to private chatbots. Claude Tag is a move toward multiplayer agents: AI systems that sit inside the places where teams already coordinate, remember the work, and take action in public.
+
+## What Claude Tag actually does
+
+The product starts in Slack.
+
+An admin decides which channels Claude can access, what tools it can use, what data it can see, and how much money it is allowed to spend. Then people in those channels can mention `@Claude` and hand it work.
+
+Simple examples:
+
+- Find the sales number everyone is arguing about.
+- Summarize a long customer thread.
+- Investigate a bug from a support conversation.
+- Write a pull request based on a product discussion.
+- Follow up on a task that went quiet.
+
+Claude breaks the task into stages, works through it asynchronously, and replies in the Slack thread with what it made.
+
+The new pieces are memory and shared context. Anthropic says Claude can learn from the channels it is allowed to read, and even gather relevant facts from other approved channels or data sources. It is also scoped: a Claude configured for sales should not leak memories into engineering, and a Claude configured for engineering should not expose code context to the wrong team.
+
+That scoping matters a lot.
+
+Because once an agent has memory, tools, code access, and initiative, you are no longer just asking a model questions. You are creating a tiny organizational actor.
+
+Very normal sentence to write in 2026. Nothing weird about that.
+
+## Why this is different from chat
+
+The old AI interface was private.
+
+You opened ChatGPT or Claude. You asked a question. The conversation lived with you. Maybe you pasted the answer back into Slack. Maybe you did not.
+
+That works for personal productivity. It is clumsy for team work.
+
+Teams do not operate as clean private conversations. They operate through messy shared context: Slack threads, docs, tickets, bug reports, dashboards, half-finished decisions, "wait what did we decide last week?" moments, and someone named Alex who remembers why the billing system is cursed.
+
+Private chatbots miss most of that.
+
+Claude Tag is interesting because it moves the agent into the shared mess.
+
+Instead of every person maintaining their own private AI conversation, the channel gets one Claude identity. The team can see what it was asked, what it produced, and what context it used. Someone else can pick up the thread later without starting over.
+
+That is why Anthropic keeps using the word "multiplayer." The point is not that Claude can answer inside Slack. Lots of bots can answer inside Slack. The point is that the AI's work becomes part of the team's visible workflow.
+
+This is a subtle UI change, but it matters.
+
+When AI work is private, it becomes invisible labor. You never know if the answer was checked, what context was used, or whether someone hallucinated a confident memo and pasted it into the company brain.
+
+When AI work is visible, the team can review it together.
+
+That does not make it automatically safe. It just makes the risk easier to notice.
+
+## The real product is context
+
+TechCrunch framed Claude Tag as Anthropic trying to make Claude [learn the company one Slack message at a time](https://techcrunch.com/2026/06/23/anthropics-claude-tag-is-learning-your-company-one-slack-message-at-a-time/). That is the right frame.
+
+The model is not the whole product anymore.
+
+The product is the model plus the context layer plus the permission system plus the tools it can operate.
+
+This is exactly where enterprise AI is heading. Microsoft has Graph and Copilot. Google has Workspace. OpenAI has Codex and ChatGPT Enterprise. Anthropic has Claude, Claude Code, Cowork, connectors, and now a Slack-native shared agent.
+
+Everyone is trying to become the place where company context gets turned into action.
+
+That sounds abstract, so make it concrete.
+
+If Claude can read the support channel, the incident thread, the codebase, the customer contract, and the internal dashboard, it can do a very different job than a model sitting in an empty chat box.
+
+It can say: this customer is blocked because the bug in yesterday's release affected their account type, here is the likely code path, here is a draft response, and here is a pull request.
+
+That is useful.
+
+It is also why admins should be slightly terrified.
+
+## The permission problem
+
+Anthropic is clearly aware of the risk. Claude Tag has admin-controlled access, scoped memories, spend limits, and logs of what Claude did and who requested it. The older [Claude Code in Slack docs](https://code.claude.com/docs/en/slack) also warn that Claude may follow directions from messages in the context, so teams should only use it in trusted conversations.
+
+That warning is doing a lot of work.
+
+If an agent reads Slack, Slack becomes part of the prompt.
+
+Every message in the thread is potentially instruction, context, noise, or attack surface. A joking "ignore the previous request" is no longer just office banter if an agent is actually using the thread to decide what to do. A pasted customer email with hidden instructions is not just text. A malicious ticket can become an input to a tool-using system.
+
+This is the same pattern I wrote about with [OpenClaw skills](/en/posts/clawhub-malware): once AI can act, text becomes operational.
+
+The difference is that Claude Tag is inside the company nervous system.
+
+Slack is where secrets leak casually. Slack is where people paste logs. Slack is where permissions are often social rather than formal. Slack is also where work actually happens.
+
+So the product tension is obvious: the more context Claude gets, the more useful it becomes. The more context Claude gets, the more careful you need to be.
+
+That is not a reason to ignore it. It is a reason to roll it out like infrastructure, not like a fun bot.
+
+## What this means for teams
+
+For small teams, the appeal is obvious.
+
+You already run your company in Slack. If Claude can live there, remember the project, chase loose ends, and turn conversations into work, that removes a lot of friction.
+
+The first good use cases are probably not giant autonomous projects. They are the boring ones:
+
+- Turn this thread into a clean decision.
+- Pull the metric we keep asking for.
+- Draft the customer reply.
+- Investigate the bug report.
+- Create the follow-up checklist.
+- Watch this channel for unresolved incidents.
+
+That is where agents become useful: not replacing the whole company, but eating the little coordination costs that make work feel sticky.
+
+For larger companies, the question is governance.
+
+Who owns the Claude identity in a channel? What can it remember? What can it forget? Who reviews its actions? What happens when two departments have different versions of the truth? What happens when a channel's context changes from harmless to sensitive over time?
+
+These are not philosophical questions. They are admin settings, audit logs, procurement reviews, and eventually incidents.
+
+Very glamorous future of work. Lots of permission matrices. Bring snacks.
+
+## The bigger picture
+
+This fits the same pattern as OpenAI's recent [Codex research](https://openai.com/index/how-agents-are-transforming-work/): AI is moving from short answers to delegated work.
+
+But Claude Tag adds another step.
+
+It is not just delegated work. It is shared delegated work.
+
+The agent is no longer hidden in one person's chat history. It sits in the room. It has a name. It has access. It remembers. It follows up. It becomes part of the team's operating system.
+
+That is powerful because most work is not individual genius. Most work is coordination: noticing what changed, remembering why, asking the right person, turning discussion into action, and making sure loose threads do not die quietly.
+
+Agents are getting good at that kind of work.
+
+But the supervision job does not disappear. It moves up a level.
+
+The new skill is not just prompting an AI. It is designing the environment around the AI: which channels it can see, which tools it can use, which tasks it should own, which actions need review, and when a human should step in.
+
+Claude Tag is still a beta. It is Slack-first. It is for paid team and enterprise customers. It will probably be awkward in all the ways early workplace software is awkward.
+
+But the direction is clear.
+
+The next agent interface may not be a blank chat box.
+
+It may be the team channel you already have open all day.
