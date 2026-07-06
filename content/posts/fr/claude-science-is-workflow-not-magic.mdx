@@ -1,0 +1,242 @@
+---
+title: "Claude Science parle de workflow, pas de magie"
+date: "2026-07-06"
+description: "Claude Science n'est pas intéressant parce qu'il prouverait que l'IA peut remplacer les scientifiques. Il l'est parce que les labos de pointe transforment les agents en vrais environnements de travail spécialisés."
+tags: ["AI Agents", "Anthropic", "Science", "AI Workflows"]
+draft: false
+---
+
+## En bref
+
+Claude entre dans le labo.
+
+Le 30 juin, Anthropic a [présenté Claude Science](https://www.anthropic.com/news/claude-science-ai-workbench), un workbench en bêta pour la recherche scientifique. Il tourne sur macOS, Linux, des machines distantes et des noeuds de connexion HPC. Il se connecte aux outils que les chercheurs utilisent déjà, comme PubMed, Jupyter, R, des visualiseurs de biologie structurale, des bases de données génomiques, des outils de chimie et de l'infrastructure de calcul.
+
+Dit comme ça, on dirait un chatbot scientifique.
+
+Ce n'est pas juste un chatbot scientifique.
+
+Le point intéressant, c'est qu'Anthropic ne vend pas surtout un nouveau modèle miracle. Claude Science est un environnement. Il inclut plus de 60 skills et connecteurs, peut lancer des agents spécialisés, produit des artefacts reproductibles avec le code et l'historique des messages, et ajoute un agent de revue qui vérifie les citations et les calculs.
+
+C'est ça, le changement.
+
+Les labos IA ne se battent plus seulement pour savoir qui a le modèle le plus intelligent dans une boîte de texte vide.
+
+Ils se battent pour posséder le workflow.
+
+Dans le logiciel, ça donne Codex, Claude Code, Cursor et tous les agents de code qui vivent dans les repos, terminaux, tickets et pull requests.
+
+Dans la science, ça pourrait donner Claude Science, [Prism](https://openai.com/index/introducing-prism/) d'OpenAI, GPT-Rosalind, la stack bio de DeepMind, et ce qui viendra ensuite.
+
+Le modèle compte toujours.
+
+Mais le produit devient le modèle plus les outils, les données, le calcul, les permissions, les traces d'audit, et une interface spécialisée qui comprend à quoi ressemble le vrai travail.
+
+Très glamour. Nous avons réinventé le cahier de labo avec des sous-agents.
+
+## Pourquoi Claude Science est la bonne histoire
+
+Il y avait une version plus bruyante de cette histoire.
+
+The Verge rapporte qu'Anthropic veut aussi [développer ses propres médicaments](https://www.theverge.com/ai-artificial-intelligence/961311/anthropic-claude-science-ai-drug-development), en commençant par des maladies négligées. C'est plus spectaculaire. C'est aussi plus facile à exagérer.
+
+La découverte de médicaments n'est pas un problème logiciel bien propre. Un modèle peut aider à chercher dans la littérature, proposer des hypothèses, analyser des données, concevoir des molécules et tester des idées sur le papier. Ensuite, la biologie fait ce qu'elle fait le mieux : refuser d'être impressionnée par un billet de lancement.
+
+Les candidats doivent encore passer par des expériences. Les expériences demandent des laboratoires. Les laboratoires demandent de l'argent, des personnes, des contrôles, des essais ratés, des études animales, des essais cliniques, de la fabrication, des régulateurs et du temps. The Verge cite des experts qui rappellent le point ennuyeux : aucun médicament conçu par IA n'a encore passé les essais cliniques et l'approbation de la FDA jusqu'au marché.
+
+Donc oui, l'ambition d'Anthropic dans les médicaments mérite d'être suivie.
+
+Mais l'histoire utile à court terme, c'est le workbench.
+
+Claude Science est intéressant parce qu'il montre où vont les produits IA après le chat. Pas vers un modèle omniscient qui répondrait à toutes les questions scientifiques depuis nulle part, mais vers des agents intégrés dans l'environnement brouillon où le travail scientifique se fait vraiment.
+
+La science, ce n'est pas seulement "connaître la biologie".
+
+C'est lire l'article, vérifier la méthode, trouver le dataset, écrire le script, lancer le pipeline, regarder la figure, remarquer l'effet de batch bizarre, refaire l'analyse, citer la source, expliquer ce qui a changé, et rendre le travail assez reproductible pour que quelqu'un d'autre puisse le démolir plus tard.
+
+Ça, c'est du workflow.
+
+Et le workflow, c'est là où les agents deviennent réels.
+
+## Le produit, c'est l'environnement
+
+Le billet d'Anthropic est très clair sur le problème : les chercheurs vivent dans des outils fragmentés.
+
+PubMed est d'un côté. Jupyter de l'autre. R encore ailleurs. Le cluster a ses propres rituels. Les structures chimiques demandent un visualiseur. Les protéines en demandent un autre. Les pistes génomiques encore un autre. La donnée source a son schéma, l'article a ses références, et la figure finale doit rester défendable six mois plus tard, quand tout le monde aura oublié comment elle a été produite.
+
+C'est exactement le type de travail où un chatbot normal est faible.
+
+Pas parce que le modèle ne sait pas écrire du texte utile.
+
+Parce que le modèle est hors du système.
+
+Il ne sait pas naturellement quel fichier a produit la figure, quel environnement a lancé le code, quelle requête a sorti la liste de gènes, quelle citation soutient l'affirmation, ou si le nombre dans le quatrième paragraphe correspond encore à l'analyse après la dernière exécution.
+
+Claude Science essaie de faire entrer l'agent dans ce système.
+
+Anthropic dit que les sorties incluent le code exact et l'environnement qui ont produit les figures, une explication en langage naturel, et l'historique complet des messages. L'app peut tourner sur l'infrastructure du labo, pour que les données sensibles restent là où elles sont déjà. Elle peut demander avant d'accéder à de nouvelles ressources. Elle peut soumettre des jobs à des systèmes de calcul. Elle peut forker une session pour comparer deux approches.
+
+Ce n'est pas une meilleure boîte à réponses.
+
+C'est une couche opérationnelle.
+
+## L'agent de revue est le détail révélateur
+
+La fonctionnalité la plus importante est peut-être la moins magique : l'agent de revue.
+
+Claude Science inclut un agent séparé qui vérifie les citations, les calculs, et le fait que les figures correspondent bien au code qui les a produites. Anthropic dit qu'il peut signaler et corriger des erreurs pendant que le travail avance.
+
+Très bien.
+
+Mais prudence.
+
+TechCrunch a souligné le point évident mais important : ce vérificateur reste une partie du même système IA, pas une source de vérité indépendante. Un agent de revue peut attraper beaucoup de négligences. Il peut aussi rater les mêmes angles morts, hériter de la même mauvaise hypothèse, ou produire le sentiment rassurant que quelque chose a été vérifié alors qu'il a seulement été vérifié par un autre processus en forme de modèle.
+
+Ça ne le rend pas inutile.
+
+Ça en fait un contrôle, pas une garantie.
+
+C'est la différence entre du théâtre IA et une infrastructure IA utile. Le point n'est pas "Claude a relu, donc c'est vrai". Le point est "le système rend la chaîne de travail plus inspectable, donc les humains peuvent la relire avec moins d'archéologie".
+
+Ça compte.
+
+La science n'a pas besoin de plus de prose confiante.
+
+Elle a besoin de provenance.
+
+D'où vient l'affirmation ? Quel code a produit le résultat ? Quel dataset a été utilisé ? Quelle version du pipeline ? Quelles citations existent vraiment ? Quels nombres ont changé après la dernière analyse ? Quelles hypothèses restent fragiles ?
+
+Si l'IA aide à répondre à ces questions, elle est utile même quand elle ne découvre pas de médicament.
+
+## La course scientifique a plusieurs stratégies
+
+Anthropic n'est pas seule.
+
+OpenAI a lancé [Prism](https://openai.com/index/introducing-prism/) en janvier comme workspace gratuit et natif IA pour écrire et collaborer sur des articles scientifiques, avec GPT-5.2 intégré. Ce produit commence plus près du papier : rédaction, révision, citations, équations, LaTeX, collaboration et contexte du manuscrit.
+
+Puis en avril, OpenAI a présenté [GPT-Rosalind](https://openai.com/index/introducing-gpt-rosalind/), un modèle spécialisé pour les sciences de la vie, la biologie, la découverte de médicaments et la médecine translationnelle, disponible via un programme d'accès de confiance pour des clients qualifiés.
+
+Le pari d'Anthropic a une autre forme.
+
+Claude Science est disponible en bêta pour les utilisateurs Claude Pro, Max, Team et Enterprise. C'est moins "voici un modèle spécial biologie" que "voici un environnement scientifique autour de Claude, des outils, du calcul et des agents".
+
+Google DeepMind a encore un autre avantage : il possède des systèmes scientifiques fondamentaux comme AlphaFold et des modèles bio que les autres entreprises ne peuvent appeler que comme outils.
+
+La compétition n'est donc pas en une seule dimension.
+
+Un labo propose un workspace d'écriture.
+
+Un autre propose un modèle spécialisé.
+
+Un autre possède ses propres modèles scientifiques fondamentaux.
+
+Anthropic propose un environnement de workflow autour d'un modèle généraliste, avec outils de domaine et traces d'audit.
+
+C'est là que l'IA devient plus intéressante que les benchmarks.
+
+Tous les domaines ne voudront pas la même forme de produit. Un avocat, une scientifique, un développeur, une analyste financière, une designer et un médecin peuvent tous utiliser des "agents IA", mais l'agent réel ne devrait pas se ressembler. L'interface, les contraintes, les traces, l'accès aux données, les validations et les modes d'échec changent.
+
+C'est la leçon pour les builders.
+
+Ne mettez pas juste une boîte de chat autour d'un modèle en appelant ça de l'IA verticale.
+
+La verticale, c'est le workflow.
+
+## Le risque, c'est le blanchiment scientifique
+
+Il existe une version sombre de tout ça.
+
+Si le workbench est bon, il peut rendre un travail faible plus professionnel.
+
+Il peut générer des figures propres, des manuscrits fluides, des citations plausibles, des explications soignées et de longues tables de preuves. C'est utile quand le travail de fond est solide. C'est dangereux quand il est mince.
+
+La science récompense déjà souvent le vernis : écriture publiable, visuels propres, narration forte, cadrage confiant. L'IA peut amplifier ça. Un article peut avoir l'air plus complet avant d'être plus vrai.
+
+C'est pour ça que les détails ennuyeux comptent autant.
+
+Code source. Historique d'environnement. Historique des messages. Provenance des données. Vérification des citations. Relecture humaine. Artefacts reproductibles.
+
+Ce ne sont pas des détails administratifs.
+
+C'est tout le modèle de confiance.
+
+Si Claude Science devient une façon plus jolie de produire des affirmations non reproductibles, c'est mauvais.
+
+Si cela devient une façon plus inspectable de traverser le travail scientifique pénible, c'est précieux.
+
+La ligne entre ces deux futurs n'est pas l'intelligence du modèle. C'est le design produit et la culture du labo.
+
+## Ce que ça veut dire pour les builders IA
+
+La conclusion pratique est simple :
+
+Les agents ont besoin d'un lieu.
+
+L'interface de chat vide est utile, mais ce n'est pas là que vit la plupart du travail sérieux. Le travail sérieux vit dans des environnements existants : repos, notebooks, docs, channels, dashboards, tickets, bases de données, clusters, CRM, fichiers de design, dossiers patients, tableurs et outils internes.
+
+Un agent devient plus précieux quand il peut habiter l'un de ces environnements avec les bonnes permissions et la bonne mémoire.
+
+Il devient aussi plus dangereux.
+
+Les questions produit deviennent donc moins glamour et plus concrètes :
+
+- Quels outils l'agent peut-il utiliser ?
+- Quelles données peut-il voir ?
+- Quelles actions demandent une validation ?
+- Qu'est-ce qu'il journalise ?
+- Un humain peut-il reproduire le résultat ?
+- L'utilisateur peut-il retirer l'accès ?
+- L'agent sait-il quand demander de l'aide ?
+- Que se passe-t-il quand l'agent de revue et l'agent de travail ont tous les deux tort ?
+
+Ce ne sont pas des détails secondaires.
+
+C'est le produit.
+
+Pendant des années, l'industrie IA a demandé : "À quel point le modèle est-il intelligent ?"
+
+Claude Science est un signe de plus que la prochaine question est : "Où le modèle travaille-t-il ?"
+
+## Ce que ça veut dire pour les scientifiques
+
+Pour les scientifiques, la bonne posture n'est ni la panique ni l'adoration.
+
+Ne traitez pas Claude Science comme un chercheur autonome.
+
+Ne le balayez pas non plus comme une simple autocomplétion luxueuse.
+
+Traitez-le comme un collaborateur junior aux forces étranges : recherche bibliographique infatigable, scripts corrects, première synthèse rapide, itération utile sur les figures, bonne mémoire de checklist, et parfois une confiance terrifiante.
+
+Donnez-lui du travail où l'auditabilité compte.
+
+Faites-lui montrer son code. Faites-lui citer ses sources. Faites-lui préserver la chaîne entre les données et la figure. Faites-lui expliquer ce qui a changé entre deux exécutions. Faites-lui séparer "j'ai trouvé ceci" de "j'en déduis cela". Rendez facile le moment où un humain sceptique dit non.
+
+C'est la vraie promesse.
+
+Pas remplacer la scientifique.
+
+Réduire la part du travail scientifique qui disparaît dans le brouillard des outils.
+
+## Le fond du sujet
+
+Claude Science ne rendra pas la découverte de médicaments facile.
+
+Il ne supprimera pas le besoin d'expériences. Il ne transformera pas chaque labo en machine autonome de découverte. Il ne fera pas soudainement arrêter la biologie d'être désagréable avec les belles théories.
+
+Mais il montre où vont les produits IA.
+
+Le futur, ce n'est pas seulement des modèles plus gros qui répondent à distance.
+
+C'est des agents qui entrent dans l'environnement de travail, utilisent les outils, préservent la trace d'audit, et aident les gens à traverser des workflows longs et fragiles sans perdre le fil.
+
+Pour le logiciel, cela a donné les agents de code.
+
+Pour la science, cela pourrait être le workbench de labo.
+
+La question importante n'est pas de savoir si l'IA peut parler comme une scientifique.
+
+La question importante est de savoir si elle peut rendre le travail scientifique plus inspectable, plus reproductible, et moins douloureusement fragmenté.
+
+C'est moins magique que "l'IA découvre des médicaments".
+
+C'est aussi beaucoup plus crédible.
