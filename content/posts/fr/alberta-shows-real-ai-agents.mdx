@@ -1,0 +1,296 @@
+---
+title: "L'Alberta montre à quoi ressemblent les vrais agents IA"
+date: "2026-07-07"
+description: "Le gouvernement de l'Alberta dit avoir scanné 466 millions de lignes de code avec Claude Code en 20 heures. La leçon utile n'est pas le gros chiffre. C'est le workflow autour des agents."
+tags: ["AI Agents", "Claude Code", "Cybersecurity", "Government"]
+draft: false
+---
+
+## En bref
+
+L'histoire d'agents IA la plus utile de la semaine n'est pas une sortie de modèle.
+
+C'est une revue de code gouvernementale.
+
+Le 6 juillet, Anthropic a publié un case study expliquant que le [gouvernement de l'Alberta a utilisé Claude Code](https://www.anthropic.com/news/alberta-government-claude-cybersecurity) pour scanner 466 millions de lignes de code public en environ 20 heures. Environ 50 agents ont travaillé en parallèle sur près de 1 280 applications et 3 400 repos. L'objectif : trouver des vulnérabilités, des faiblesses dans l'infrastructure et les processus de déploiement, et des trous de documentation dans les systèmes utilisés par 27 ministères provinciaux.
+
+C'est le chiffre qui attire l'oeil.
+
+Un très gros chiffre.
+
+Mais ce n'est pas le point intéressant.
+
+Le point intéressant, c'est la forme du workflow.
+
+L'Alberta n'a pas juste dit à un modèle IA "sécurise le gouvernement" avant de partir déjeuner. Le scan suivait un processus en deux temps : un moteur de règles signalait des patterns connus, puis Claude relisait les résultats et citait les fichiers et les lignes exactes pour que des développeurs humains puissent vérifier. Quand Claude proposait des corrections, des ingénieurs les relisaient et les validaient avant toute mise en production. Quand un système n'avait pas assez de tests, Claude écrivait d'abord les tests. Quand un vieux système était trop compliqué à patcher proprement, l'équipe utilisait Claude pour le reconstruire dans une forme plus maintenable.
+
+C'est ça, un vrai agent.
+
+Pas de la magie autonome.
+
+Du travail parallèle, des tâches étroites, des preuves au niveau du fichier, des tests, de la relecture et une validation humaine.
+
+Très futuriste. Beaucoup de procédures administratives, juste avec plus de parallélisme.
+
+## Pourquoi c'est la bonne histoire
+
+Il y avait des histoires IA plus spectaculaires.
+
+OpenAI a de nouvelles recherches sur Codex et le travail. Anthropic a Claude Science. Meta a des rumeurs de benchmark et des tensions autour des agents. Google intègre l'usage d'ordinateur dans Gemini. Tout le monde a un graphique. Tout le monde a une démo. Tout le monde a quelque part une phrase sur les "tâches long-horizon".
+
+Ces histoires comptent.
+
+Mais l'Alberta est utile parce que c'est concret.
+
+Le logiciel gouvernemental est probablement l'environnement le moins adapté aux démos propres. C'est vieux. C'est brouillon. Il y a des traces de marchés publics, de prestataires oubliés, de frameworks morts, de documentation absente, et de vrais citoyens à l'autre bout du système. Si quelque chose casse, le problème n'est pas "la slide a une drôle de tête". Ce sont des prestations sociales, la sécurité publique, les données fiscales, les achats publics, les dossiers sociaux, les feux de forêt, et la confiance dans des institutions qui n'ont pas une réserve infinie de confiance à dépenser.
+
+C'est exactement là que le discours sur les agents devient souvent flou.
+
+Les entreprises IA disent que les agents vont transformer le travail.
+
+Très bien.
+
+Quel travail ? Sous quelle autorité ? Sur quels fichiers ? Avec quelle trace d'audit ? Qui valide le patch ? Que se passe-t-il quand l'agent se trompe ? Qui porte le risque ?
+
+Le cas Alberta donne une réponse partielle.
+
+L'agent fait la cartographie et la première réparation.
+
+Le système rend le travail inspectable.
+
+L'humain garde le droit de dire non.
+
+C'est moins glamour que "l'IA remplace les développeurs".
+
+C'est aussi beaucoup plus proche de la façon dont les organisations sérieuses vont vraiment utiliser cette technologie.
+
+## Le gros chiffre demande un petit astérisque
+
+Avant de s'emballer : les chiffres viennent de l'Alberta et d'Anthropic.
+
+Ce n'est pas un audit indépendant. Anthropic vend Claude Code. L'Alberta met en avant un effort de modernisation. Les deux ont intérêt à ce que l'histoire paraisse réussie.
+
+Donc il ne faut pas traiter "466 millions de lignes en 20 heures" comme un benchmark universel.
+
+Cela ne veut pas dire que chaque équipe peut scanner son codebase à cette vitesse. Cela ne veut pas dire que chaque finding était important. Cela ne veut pas dire que chaque correction était facile. Cela ne veut pas dire que Claude a découvert des vulnérabilités qu'aucun humain ou outil n'aurait pu trouver. Cela ne veut pas dire que le problème de sécurité est résolu.
+
+La bonne question n'est pas de savoir si le chiffre impressionne.
+
+C'est de savoir si la méthode peut être copiée.
+
+Et la méthode est beaucoup plus intéressante que la métrique.
+
+L'Alberta dit que Claude a d'abord utilisé un moteur de règles pour signaler des patterns de vulnérabilité connus, puis relu ces signaux en pointant vers le fichier et la ligne exacte de chaque problème. Ce détail compte, parce qu'il transforme le travail humain de "faites confiance au modèle" en "inspectez cette affirmation".
+
+C'est la différence entre automatiser et blanchir.
+
+Si un système IA dit "votre code est vulnérable", ce n'est pas suffisant.
+
+S'il dit "ce fichier, cette ligne, ce pattern, cette conséquence probable, ce test proposé, ce patch proposé", alors un développeur a quelque chose à relire.
+
+L'agent n'a pas supprimé la responsabilité.
+
+Il a rendu la responsabilité plus rapide à atteindre.
+
+## Les agents comme processus industriel
+
+On imagine encore trop les agents comme des assistants personnels.
+
+Une personne, un assistant, une grande tâche.
+
+L'histoire de l'Alberta ressemble plutôt à un processus industriel.
+
+Environ 50 agents ont travaillé en parallèle. Certains ont scanné. Certains ont relu. Certains ont généré des corrections. Certains ont écrit des tests. Le gouvernement a aussi construit des agents de revue continus : un agent red team qui attaque l'application depuis l'extérieur, un agent blue team qui mesure les défenses contre un standard de sécurité, et d'autres agents qui vérifient la qualité du code et les textes visibles par le public.
+
+Ce n'est pas un modèle génial tout seul.
+
+C'est un workflow découpé en passages répétables.
+
+En langage logiciel normal, ça ressemble moins à un stagiaire surdoué qu'à une chaîne CI/CD qui aurait gagné une couche de jugement.
+
+L'intégration continue lance déjà des tests, des linters, des scans de dépendances, des checks sécurité, du typage et des déploiements. La revue agentique ajoute quelque chose de plus flexible : un processus IA capable de lire le résultat, raisonner sur le contexte, proposer une correction, expliquer le compromis, puis rendre le travail à un humain.
+
+L'ancien pipeline dit :
+
+- cette dépendance est vulnérable
+- ce test échoue
+- ce fichier ne respecte pas le format
+
+Le pipeline agentique peut dire :
+
+- cette vulnérabilité compte probablement parce que cette route expose ce chemin de code
+- ce test manquant rend le patch difficile à croire
+- ce vieux module coûte moins cher à reconstruire qu'à patcher
+- voici le fichier et la ligne
+- voici le test ajouté
+- voici le diff qu'un humain doit relire
+
+C'est utile.
+
+C'est aussi dangereux si les gens arrêtent de lire la dernière phrase.
+
+Un humain doit relire.
+
+## La cybersécurité est le cas difficile
+
+Le problème gênant, c'est que trouver des vulnérabilités est dual-use.
+
+La même capacité qui aide l'Alberta à trouver des bugs peut aider un attaquant à trouver des bugs. Le même modèle qui aide un défenseur à moderniser du vieux code peut aider un utilisateur malveillant à comprendre où un système est faible.
+
+Anthropic le sait. La semaine dernière, l'entreprise a publié plus de détails sur les [safeguards cyber de Fable 5 et un framework de sévérité des jailbreaks](https://www.anthropic.com/news/fable-safeguards-jailbreak-framework). La tension centrale est simple : le code sécurisé, le debugging, le patch management, la réponse à incident et la remédiation de vulnérabilités sont utiles. Le développement d'exploits, les malwares, les attaques d'identifiants, la persistance et les workflows offensifs ne le sont pas.
+
+Phrase facile.
+
+Produit difficile.
+
+La cybersécurité est pleine de tâches qui se ressemblent tant qu'on ne connaît pas le contexte. Un pentester et un attaquant peuvent poser des questions techniquement proches. Un défenseur qui essaie de reproduire un bug et un attaquant qui essaie de l'armer peuvent tous les deux demander du détail au niveau du code. La différence, c'est l'autorisation, l'environnement, l'intention et les contrôles.
+
+C'est pour ça que le cas Alberta compte.
+
+C'est exactement le type d'usage que les labs IA veulent autoriser : du travail défensif dans un environnement autorisé, avec revue humaine, logs, et propriétaire clair.
+
+Mais cela montre aussi pourquoi les règles d'accès deviennent une partie du produit.
+
+Si les agents deviennent bons en sécurité, la question n'est pas seulement "le modèle peut-il le faire ?"
+
+C'est :
+
+- Qui demande ?
+- Sur quel système travaille-t-il ?
+- A-t-il l'autorité ?
+- Le travail est-il journalisé ?
+- Les patches sont-ils relus ?
+- Les étapes proches de l'exploitation sont-elles contenues ?
+- L'organisation peut-elle prouver plus tard ce qui s'est passé ?
+
+Voilà le futur ennuyeux de l'IA puissante.
+
+Identité, permissions, logs, validations et traces d'audit.
+
+Le futur devient toujours plus enterprise que la keynote ne l'avait promis.
+
+## Le vrai produit, c'est la vérification
+
+L'expression "human in the loop" est tellement utilisée qu'elle a presque perdu son sens.
+
+Dans cette histoire, elle a un travail concret.
+
+L'humain n'est pas là pour rendre l'IA plus polie.
+
+Il est là pour vérifier les preuves, approuver les patches, juger les compromis et porter le déploiement.
+
+C'est la partie que tous les builders devraient voler.
+
+Si votre agent modifie de vrais systèmes, le produit n'est pas seulement l'agent. Le produit, c'est la surface de revue.
+
+L'utilisateur peut-il voir ce qui a changé ?
+
+Peut-il remonter l'affirmation jusqu'à un fichier, une source, un ticket, un dataset ou un log ?
+
+Peut-il lancer le test ?
+
+Peut-il rejeter une partie sans jeter toute l'exécution ?
+
+Peut-il comparer la suggestion de l'agent à l'ancien comportement ?
+
+Peut-il voir quels identifiants ou outils ont été utilisés ?
+
+Quelqu'un peut-il auditer la décision plus tard ?
+
+C'est pour ça que l'UX des agents va ressembler de moins en moins au chat et de plus en plus à du logiciel d'opérations.
+
+Le chat est bon pour l'intention.
+
+La revue demande de la structure.
+
+Un agent sérieux ne devrait pas seulement produire un paragraphe confiant. Il devrait produire des artefacts : diffs, résultats de tests, citations, logs, notes de risque, options de rollback, et toutes les métadonnées ennuyeuses qui permettent à une autre personne de vérifier le travail.
+
+C'est ça qui rend la délégation supportable.
+
+Pas le fantasme que l'agent a toujours raison.
+
+La capacité de l'attraper quand il a tort.
+
+## Ce que les builders devraient retenir
+
+La leçon pratique n'est pas "achetez Claude Code et scannez 466 millions de lignes".
+
+Peut-être que vous devriez utiliser Claude Code. Peut-être Codex, Cursor, Gemini, un plus petit modèle, votre propre moteur de règles, ou une ingénieure très fatiguée avec un script shell et beaucoup de café.
+
+La leçon produit est plus profonde :
+
+Les agents fonctionnent mieux quand la tâche est découpée.
+
+Donnez-leur un job étroit. Donnez-leur le bon environnement. Associez-les à des outils déterministes quand c'est possible. Faites-les citer leur travail. Faites-les écrire des tests avant de patcher. Gardez les humains dans le chemin de validation. Conservez le log. Mesurez si le travail survit à la revue, pas si la première réponse avait l'air intelligente.
+
+L'agent n'est pas tout le système.
+
+L'agent est un travailleur dans le système.
+
+Pour la cybersécurité, ce système a besoin de scanners, de règles, de sandboxes, de gestion des secrets, de CI, de couverture de tests, de workflows de revue, de contrôles de déploiement et de réponse à incident.
+
+Pour la science, il faut des notebooks, des citations, des datasets, du calcul, de la provenance et de la réplication.
+
+Pour la finance, il faut des données sources, des validations, des traces d'audit et de la conformité.
+
+Pour le marketing, il faut des règles de marque, des canaux, des métriques, et quelqu'un d'assez courageux pour dire que la campagne ressemble à un stand de conférence qui aurait appris à parler.
+
+Domaine différent, même leçon.
+
+La verticale, c'est le workflow.
+
+## Ce que les gouvernements devraient retenir
+
+Les gouvernements doivent être prudents ici.
+
+Les vendeurs IA adorent les case studies du secteur public, parce qu'ils rendent la technologie sérieuse, responsable et inévitable. Une province qui scanne des centaines de millions de lignes sonne mieux qu'une startup qui construit encore un bot de notes de réunion.
+
+Mais les gouvernements ont un devoir différent de celui des startups.
+
+Ils ne peuvent pas avancer vite et casser les systèmes fiscaux.
+
+Ils ne peuvent pas traiter les données citoyennes comme un terrain de jeu.
+
+Ils ne peuvent pas externaliser la responsabilité vers un fournisseur de modèle.
+
+La bonne conclusion n'est donc pas "lâchez l'IA partout".
+
+La bonne conclusion est : utilisez l'IA là où la vérification est la plus forte.
+
+Le vieux code est un bon candidat parce que les constats peuvent être liés à des fichiers et des lignes. Les patches peuvent être testés. Les builds peuvent échouer. Les humains peuvent relire les diffs. Les logs peuvent être conservés. Le travail est brouillon, mais il est inspectable.
+
+C'est un bien meilleur point de départ que demander à une IA de prendre des décisions de politique publique impossibles à relire, d'approuver des prestations, de classer des citoyens, ou de décider qui mérite l'attention d'un service public.
+
+Utilisez les agents là où la chaîne de preuve est visible.
+
+Soyez beaucoup plus prudents quand la preuve est sociale, ambiguë, ou impossible à contester par la personne concernée.
+
+## Le fond du sujet
+
+L'histoire Claude Code de l'Alberta est impressionnante, mais pas parce qu'un gros chiffre est apparu dans un communiqué.
+
+La vraie leçon, c'est que les agents deviennent utiles quand on les place dans un workflow discipliné.
+
+Parallélisez les parties ennuyeuses.
+
+Rendez chaque affirmation inspectable.
+
+Écrivez les tests.
+
+Exigez une validation.
+
+Gardez les logs.
+
+Ne confondez pas vitesse et confiance.
+
+C'est le futur agentique qui fonctionne vraiment.
+
+Pas une IA omnisciente qui fait tout.
+
+Beaucoup d'agents étroits qui font des morceaux du travail, entourés d'assez de structure pour que les humains puissent encore comprendre, vérifier et assumer le résultat.
+
+Moins de magie.
+
+Plus de procédure.
+
+Honnêtement, c'est sans doute comme ça qu'on sait que c'est réel.

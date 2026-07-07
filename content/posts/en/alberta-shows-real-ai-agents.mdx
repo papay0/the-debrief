@@ -1,0 +1,296 @@
+---
+title: "Alberta Shows What Real AI Agents Look Like"
+date: "2026-07-07"
+description: "The Government of Alberta says Claude Code scanned 466 million lines of code in 20 hours. The useful lesson is not the big number. It is the workflow around the agents."
+tags: ["AI Agents", "Claude Code", "Cybersecurity", "Government"]
+draft: false
+---
+
+## The Short Version
+
+The most useful AI agent story this week is not a model release.
+
+It is a government code review.
+
+On July 6, Anthropic published a case study saying the [Government of Alberta used Claude Code](https://www.anthropic.com/news/alberta-government-claude-cybersecurity) to scan 466 million lines of government code in about 20 hours. Around 50 agents worked in parallel across roughly 1,280 applications and 3,400 repositories. The goal was to find vulnerabilities, gaps in infrastructure and deployment processes, and missing documentation across systems used by 27 provincial ministries.
+
+That is the headline.
+
+It is a very large headline.
+
+But the number is not the interesting part.
+
+The interesting part is the shape of the workflow.
+
+Alberta did not just tell an AI model to "secure the government" and go for lunch. The scan used a two-stage process: a rules engine flagged known patterns, then Claude reviewed the findings and cited exact files and lines so human developers could verify them. When Claude proposed fixes, engineers reviewed and approved them before anything shipped. When a system lacked tests, Claude wrote tests first. When old systems were too tangled to patch cleanly, the team used Claude to rebuild them in a more maintainable form.
+
+That is what real agents look like.
+
+Not autonomous magic.
+
+Parallel work, narrow tasks, file-level evidence, tests, review, and human sign-off.
+
+Very futuristic. A lot of it is still paperwork with better parallelism.
+
+## Why this is the right story
+
+There are flashier AI stories available.
+
+OpenAI has new research on Codex and work. Anthropic has Claude Science. Meta has benchmark rumors and agent anxiety. Google has computer-use tools in Gemini. Everyone has a chart. Everyone has a demo. Everyone has a phrase like "long-horizon task" lying around somewhere.
+
+Those stories matter.
+
+But Alberta is useful because it is specific.
+
+Government software is the least demo-friendly environment imaginable. It is old. It is messy. It has weird procurement history, inherited vendors, dead frameworks, forgotten documentation, and real citizens at the other end of the system. If something breaks, the blast radius is not "the slide deck looks odd." It is benefits, public safety, tax records, procurement data, social services files, wildfire response, and trust in institutions that already do not have infinite trust to spend.
+
+This is exactly where agent talk usually gets vague.
+
+AI companies say agents will transform work.
+
+Fine.
+
+What work? Under whose authority? Against which files? With what audit trail? Who approves the patch? What happens when the agent is wrong? Who owns the risk?
+
+The Alberta case gives a partial answer.
+
+The agent does the map-making and first-pass repair.
+
+The system makes the work inspectable.
+
+The human keeps the right to say no.
+
+That is less glamorous than "AI replaces developers."
+
+It is also much closer to how serious organizations will actually use this technology.
+
+## The big number needs a small asterisk
+
+Before we get too excited: the figures come from Alberta and Anthropic.
+
+They are not an independent audit. Anthropic is selling Claude Code. Alberta is promoting a modernization effort. Both have incentives to make the story look good.
+
+So do not treat "466 million lines in 20 hours" as a universal benchmark.
+
+It does not mean every team can scan its codebase at that speed. It does not mean every finding was important. It does not mean every fix was easy. It does not mean Claude discovered vulnerabilities no human or tool could have found. It does not mean the security problem is solved.
+
+The useful question is not whether the number is impressive.
+
+It is whether the method is copyable.
+
+And the method is much more interesting than the metric.
+
+Alberta says Claude first used a rules engine to flag known vulnerability patterns, then reviewed those flags and pointed to the exact file and line for each issue. That matters because it changes the human job from "please trust the model" to "please inspect this claim."
+
+That is the difference between automation and laundering.
+
+If an AI system says "your code is insecure," that is not enough.
+
+If it says "this file, this line, this pattern, this likely consequence, this proposed test, this proposed patch," now a developer has something to review.
+
+The agent did not remove accountability.
+
+It made the accountability faster to reach.
+
+## This is agents as industrial process
+
+The mental model for agents is still too personal.
+
+People imagine one assistant doing one big job.
+
+Alberta's story is closer to industrial process.
+
+About 50 agents worked in parallel. Some scanned. Some reviewed. Some generated fixes. Some wrote tests. The government also built ongoing review agents: a red-team agent that probes an application from the outside, a blue-team agent that assesses defenses against a security standard, and other agents that check code quality and public-facing writing.
+
+That is not one model being brilliant.
+
+That is a workflow decomposed into repeatable passes.
+
+In normal software language, this looks less like a genius intern and more like CI/CD grew a judgment layer.
+
+Continuous integration already runs tests, linters, dependency checks, security scans, type checks, and deployments. Agentic review adds something more flexible: an AI process that can read the result, reason about context, propose a fix, explain the tradeoff, and hand the work back to a human.
+
+The old pipeline says:
+
+- this dependency is vulnerable
+- this test failed
+- this file does not match the formatter
+
+The agentic pipeline can say:
+
+- this vulnerability probably matters because this route exposes the code path
+- this missing test makes the proposed patch hard to trust
+- this legacy module is cheaper to rebuild than patch
+- here is the file and line
+- here is the test I added
+- here is the diff a human should review
+
+That is useful.
+
+It is also dangerous if people stop reading the last sentence.
+
+A human should review.
+
+## Cybersecurity is the hard case
+
+The awkward part is that vulnerability finding is dual-use.
+
+The same capability that helps Alberta find bugs can help an attacker find bugs. The same model that helps a defender modernize old code can help a malicious user understand where a system is weak.
+
+Anthropic knows this. Last week it published more detail on [Fable 5's cyber safeguards and a proposed jailbreak severity framework](https://www.anthropic.com/news/fable-safeguards-jailbreak-framework). The key tension is simple: secure coding, debugging, patch management, incident response, and vulnerability remediation are beneficial. Exploit development, malware, credential attacks, persistence, and other offensive workflows are not.
+
+Easy sentence.
+
+Hard product.
+
+Cybersecurity is full of tasks that look similar until you know the context. A penetration tester and an attacker may ask technically similar questions. A defender trying to reproduce a bug and an attacker trying to weaponize it may both need code-level detail. The difference is authorization, environment, intent, and controls.
+
+That is why the Alberta case matters.
+
+It is the kind of use case AI labs want to allow: defensive work inside an authorized environment, with human review, logs, and a clear owner.
+
+But it also shows why access rules are becoming part of the product.
+
+If agents get good at security work, the question is not only "Can the model do it?"
+
+It is:
+
+- Who is asking?
+- What system are they working on?
+- Do they have authority?
+- Is the work logged?
+- Are patches reviewed?
+- Are exploit-like steps contained?
+- Can the organization prove what happened later?
+
+That is the boring future of powerful AI.
+
+Identity, permissions, logs, approvals, and audit trails.
+
+The future keeps becoming more enterprise than the keynote promised.
+
+## The real product is verification
+
+The phrase "human in the loop" gets thrown around so much that it has almost stopped meaning anything.
+
+In this story, it has a concrete job.
+
+The human is not there to make the AI feel polite.
+
+The human is there to verify evidence, approve patches, judge tradeoffs, and own deployment.
+
+That is the part every builder should steal.
+
+If your agent changes real systems, the product is not just the agent. The product is the review surface.
+
+Can the user see what changed?
+
+Can they trace the claim back to a file, source, ticket, dataset, or log?
+
+Can they run the test?
+
+Can they reject one part without throwing away the whole run?
+
+Can they compare the agent's suggestion to the old behavior?
+
+Can they see which credentials or tools were used?
+
+Can someone audit the decision later?
+
+This is why agent UX is going to look less like chat and more like operations software.
+
+Chat is good for intent.
+
+Review needs structure.
+
+A serious agent should not just produce a confident paragraph. It should produce artifacts: diffs, test results, citations, logs, risk notes, rollback options, and the boring metadata that lets another person check the work.
+
+That is what makes delegation tolerable.
+
+Not the fantasy that the agent is always right.
+
+The ability to catch it when it is wrong.
+
+## What builders should take from Alberta
+
+The practical lesson is not "buy Claude Code and scan 466 million lines."
+
+Maybe you should use Claude Code. Maybe you should use Codex, Cursor, Gemini, a smaller model, your own rules engine, or a very tired engineer with a shell script and strong coffee.
+
+The product lesson is deeper:
+
+Agents work best when the task is decomposed.
+
+Give them a narrow job. Give them the right environment. Pair them with deterministic tools where possible. Make them cite their work. Make them write tests before they patch. Keep humans in the approval path. Preserve the log. Measure whether the work survived review, not whether the first answer sounded smart.
+
+The agent is not the whole system.
+
+The agent is one worker inside a system.
+
+For cybersecurity, that system needs scanners, rules, sandboxes, secrets management, CI, test coverage, review workflows, deployment controls, and incident response.
+
+For science, it needs notebooks, citations, datasets, compute, provenance, and replication.
+
+For finance, it needs source data, approvals, audit trails, and compliance.
+
+For marketing, it needs brand rules, channels, metrics, and someone brave enough to say the campaign sounds like a conference booth learned to speak.
+
+Different domain, same lesson.
+
+The vertical is the workflow.
+
+## What governments should take from Alberta
+
+Governments should be careful here.
+
+AI vendors love public-sector case studies because they make the technology look serious, responsible, and inevitable. A province scanning hundreds of millions of lines sounds better than a startup making another meeting notes bot.
+
+But governments have a different duty than startups.
+
+They cannot move fast and break tax systems.
+
+They cannot treat citizen data as a playground.
+
+They cannot outsource accountability to a model provider.
+
+So the right takeaway is not "let AI loose on everything."
+
+The right takeaway is "use AI where verification is strongest."
+
+Old code is a good candidate because findings can be tied to files and lines. Patches can be tested. Builds can fail. Humans can review diffs. Logs can be preserved. The work is messy, but it is inspectable.
+
+That is a much better starting point than asking an AI system to make unreviewable policy judgments, approve benefits, rank citizens, or decide who deserves attention from public services.
+
+Use agents where the chain of evidence is visible.
+
+Be much more cautious where the evidence is social, ambiguous, or impossible for the affected person to contest.
+
+## The bottom line
+
+Alberta's Claude Code story is impressive, but not because a big number appeared in a press release.
+
+The real lesson is that agents become useful when they are put inside a disciplined workflow.
+
+Parallelize the boring parts.
+
+Make every claim inspectable.
+
+Write the tests.
+
+Require approval.
+
+Keep the logs.
+
+Do not confuse speed with trust.
+
+That is the agent future that actually works.
+
+Not one omniscient AI doing everything.
+
+Many narrow agents doing pieces of the work, wrapped in enough structure that humans can still understand, verify, and own the result.
+
+Less magic.
+
+More operating procedure.
+
+Honestly, that is probably how we know it is real.
