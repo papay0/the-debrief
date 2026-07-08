@@ -1,0 +1,227 @@
+---
+title: "Les promesses de safety ne sont pas une infrastructure"
+date: "2026-07-08"
+description: "Le nouvel AI Safety Index de Future of Life Institute donne des notes moyennes aux meilleurs labs IA. La leçon utile n'est pas le bulletin. C'est la faiblesse des promesses volontaires."
+tags: ["AI Safety", "AI Regulation", "OpenAI", "Anthropic"]
+draft: false
+---
+
+## En bref
+
+L'industrie IA vient de recevoir un nouveau bulletin de notes sur la safety.
+
+Il n'y a pas beaucoup de premiers de la classe.
+
+Le Future of Life Institute a publié cette semaine son [AI Safety Index Summer 2026](https://futureoflife.org/ai-safety-index-summer-2026/), qui évalue neuf grandes entreprises IA sur l'évaluation des risques, les dommages actuels, les frameworks de safety, les risques existentiels, la gouvernance et le partage d'information.
+
+Anthropic arrive en tête avec un C+.
+
+OpenAI et Google DeepMind ont des C.
+
+Meta obtient un D+.
+
+xAI, DeepSeek et Mistral échouent au classement global.
+
+On peut discuter les notes. Il faut même le faire un peu. Un scorecard safety compresse des preuves compliquées dans des lettres propres, et le Future of Life Institute a sa propre vision du sujet. Mistral a dit à [Axios](https://www.axios.com/2026/07/07/report-ai-safety-pledges) que le rapport pénalise les modèles open-weight et donne trop de pouvoir safety à quelques labs fermés.
+
+C'est une objection sérieuse.
+
+Mais l'histoire importante n'est pas de savoir si Anthropic mérite un C+ ou un B-.
+
+L'histoire importante, c'est que le système de safety des modèles frontier reste surtout volontaire.
+
+Et un système volontaire a besoin de dents.
+
+Pour l'instant, elles ont l'air petites.
+
+## Le bulletin compte moins que les promesses
+
+La partie la plus utile de l'index n'est pas le classement.
+
+C'est le pattern en dessous.
+
+FLI dit qu'Anthropic, OpenAI, Google DeepMind et Meta ont affaibli ou vidé des engagements précédents de faire pause si certains seuils de danger étaient approchés. Le rapport parle d'un problème de "moving goalpost". Il dit aussi que les frameworks de safety manquent souvent de seuils quantitatifs, d'audits indépendants et d'une autorité de décision claire.
+
+C'est tout le sujet.
+
+Un framework de safety est facile à annoncer quand le modèle inquiétant est encore hypothétique.
+
+Il est beaucoup plus difficile à respecter quand le modèle est presque prêt, que la facture de calcul est énorme, que les concurrents avancent, que les clients attendent, que les équipes veulent voir leur travail utilisé, et que l'entreprise a passé des mois à expliquer aux investisseurs que la prochaine sortie change tout.
+
+C'est là que le framework devient réel.
+
+Pas quand il est publié.
+
+Quand il peut dire non.
+
+## Ce n'est pas juste une histoire de panique IA
+
+La version facile de cet article serait : "les entreprises IA ont de mauvaises notes de safety, panique générale".
+
+Ce n'est pas très utile.
+
+La question pratique est plus précise :
+
+Les institutions autour des modèles frontier peuvent-elles avancer aussi vite que les modèles ?
+
+La réponse ressemble encore à non.
+
+La [preview GPT-5.6 Sol](https://openai.com/index/previewing-gpt-5-6-sol/) d'OpenAI montre bien la nouvelle forme du problème. OpenAI dit que le modèle progresse en code, en biologie et en cybersécurité, introduit un mode `ultra` qui utilise des sous-agents, et devient son modèle le plus capable pour la cybersécurité. OpenAI dit aussi que le modèle démarre par une preview limitée auprès de partenaires de confiance partagés avec le gouvernement américain, avant une disponibilité plus large.
+
+Ce n'est pas un lancement logiciel normal.
+
+C'est un lancement de capacité frontier.
+
+Le même post dit qu'OpenAI ne veut pas qu'un processus d'accès gouvernemental devienne la norme à long terme. Je le crois. Ce serait mauvais pour les utilisateurs, les développeurs, les entreprises, les cyberdéfenseurs et les partenaires internationaux si chaque modèle important devenait un labyrinthe privé d'autorisations.
+
+Mais la raison de ce changement est évidente.
+
+Les modèles deviennent une infrastructure dual-use.
+
+Ils peuvent aider des défenseurs à trouver et corriger des vulnérabilités. Ils peuvent aider des scientifiques à analyser des données biologiques brouillonnes. Ils peuvent aider des développeurs à mener de longs workflows de code. Ils peuvent utiliser des outils, coordonner des sous-agents et agir à travers des systèmes.
+
+Très bien.
+
+Et aussi : compliqué.
+
+Plus le modèle devient bon dans le vrai travail, plus il est difficile de traiter la safety comme un PDF.
+
+## La promesse doit survivre au meeting de lancement
+
+C'est la partie que tous les builders devraient regarder.
+
+La safety IA paraît souvent abstraite jusqu'au moment où on la traduit en langage produit.
+
+Un framework sérieux doit répondre à des questions opérationnelles ennuyeuses :
+
+- Qui a l'autorité de bloquer une sortie ?
+- Quel seuil de capacité déclenche une escalade ?
+- Le seuil est-il mesurable avant le lancement ?
+- Qui audite l'évaluation ?
+- La direction peut-elle contourner l'équipe safety ?
+- Qu'est-ce qui est signalé aux régulateurs ?
+- Qu'est-ce qui est expliqué aux utilisateurs ?
+- Que se passe-t-il si le modèle change après la dernière évaluation ?
+- Que se passe-t-il si un concurrent sort son modèle avant ?
+
+Ce ne sont pas des détails philosophiques.
+
+Ce sont des contrôles de lancement.
+
+Si personne ne peut arrêter la sortie, le framework est du branding.
+
+Si les seuils sont flous, le framework est une ambiance.
+
+Si l'audit est interne, le framework est une note "faites-nous confiance".
+
+Si la direction peut contourner le processus sans responsabilité publique, le framework est un ralentisseur avec une voie spéciale PDG juste à côté.
+
+Gouvernance très avancée. Beaucoup de PDF élégants. Merci d'admirer l'en-tête.
+
+## Les modèles ouverts compliquent l'argument
+
+La réponse de Mistral compte, parce que la safety des labs fermés n'est pas le seul modèle possible.
+
+Les modèles open-weight créent d'autres risques et d'autres bénéfices. Ils peuvent être inspectés, adaptés, lancés localement, fine-tunés pour de plus petites langues, et utilisés par des gens qui ne veulent pas que toute la capacité IA soit médiée par quelques entreprises américaines. Ils peuvent aussi être modifiés pour retirer des garde-fous, réhébergés après publication et utilisés hors des systèmes de monitoring.
+
+L'[International AI Safety Report](https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026) le disait clairement plus tôt cette année : une fois les poids publiés, il est très difficile de revenir en arrière.
+
+Cela ne veut pas dire "fermé égale sûr" et "ouvert égale dangereux".
+
+Les modèles fermés peuvent être détournés. Les entreprises fermées peuvent cacher les problèmes. L'accès fermé peut devenir du gatekeeping. Quelques labs qui décident ce que le monde peut utiliser, ce n'est pas un régime safety neutre.
+
+Mais les sorties ouvertes ont leur propre irréversibilité.
+
+La conversation safety cherche toujours un axe moral propre.
+
+Il n'y en a pas.
+
+Le vrai axe est : quelles preuves existent, qui peut les inspecter, qui a l'autorité, qu'est-ce qui peut être annulé, et qui paie quand quelque chose se passe mal ?
+
+C'est moins satisfaisant que choisir un camp.
+
+C'est aussi plus proche du vrai problème d'ingénierie.
+
+## Le virage militaire est la partie que personne ne veut vraiment porter
+
+L'Index signale aussi le mouvement de l'industrie vers les usages défense et militaires.
+
+C'est là que le langage devient très prudent.
+
+Les entreprises ne disent presque jamais : "nous avons changé d'avis parce que le marché défense est gros et que la pression de sécurité nationale est intense." Elles parlent d'usages légaux, de déploiement responsable, de valeurs démocratiques, de résilience de la supply chain, de cyberdéfense et de compétition stratégique.
+
+Une partie de tout ça est réelle.
+
+L'IA sera utilisée par les gouvernements. Elle sera utilisée pour la cyberdéfense. Elle sera utilisée dans la logistique, l'analyse de renseignement, la réponse aux catastrophes, les achats publics et la protection d'infrastructures. Faire semblant que non serait enfantin.
+
+Mais le glissement compte quand même.
+
+Plusieurs entreprises qui traçaient auparavant des lignes plus larges autour des usages militaires travaillent maintenant beaucoup plus près de clients défense. Anthropic, OpenAI, Google DeepMind, Meta, xAI et Mistral ne font pas tous les mêmes choix, mais la direction générale se voit.
+
+Cela ne veut pas automatiquement dire robots tueurs.
+
+Cela veut dire que la promesse de safety doit maintenant survivre à la géopolitique.
+
+C'est un test beaucoup plus dur que survivre à un blog post.
+
+Quand le client est un ministère, une armée ou un contractant lié au renseignement, "move fast and learn" devient une phrase très différente.
+
+## Ce que les utilisateurs et builders devraient en faire
+
+Il ne faut pas traiter les notes de FLI comme un guide d'achat précis.
+
+Ce serait trop propre.
+
+Il faut les traiter comme une invitation à faire de la due diligence.
+
+Si vous construisez sur des modèles frontier, demandez les éléments qui rendent la safety inspectable :
+
+- system cards publiées
+- changelogs clairs des modèles et des politiques
+- reporting d'incidents
+- détails d'évaluation externe
+- règles de conservation des données
+- contrôles enterprise
+- audit logs
+- accès par rôle
+- modèles de fallback
+- routage entre modèles
+- comportements safety que vous pouvez tester vous-même
+
+La question n'est pas : "Est-ce que cette entreprise parle de safety ?"
+
+Elles en parlent toutes.
+
+La question est : "Que se passe-t-il quand la safety entre en conflit avec le shipping ?"
+
+C'est la question à laquelle un communiqué de presse ne peut pas répondre.
+
+## Le bottom line
+
+L'industrie IA n'a pas un problème de bulletin de notes.
+
+Elle a un problème d'engagement.
+
+Les grands labs publient plus de frameworks, plus de system cards, plus d'évals et plus de langage prudent qu'avant. C'est bien. C'est mieux que rien.
+
+Mais une promesse qui peut être affaiblie quand la course chauffe n'est pas une infrastructure.
+
+Une infrastructure a de l'autorité.
+
+Une infrastructure a des mesures.
+
+Une infrastructure a des logs.
+
+Une infrastructure a de la revue extérieure.
+
+Une infrastructure peut arrêter la machine.
+
+C'est le standard vers lequel l'IA frontier avance, que les labs l'aiment ou non.
+
+Parce que les modèles ne sont plus seulement des chatbots avec de meilleurs adjectifs.
+
+Ils deviennent des outils pour le code, la science, la cyberdéfense, le travail enterprise, et bientôt beaucoup de morceaux de gouvernement.
+
+À ce stade, la safety ne peut pas être une valeur de marque.
+
+Elle doit devenir une surface de contrôle.
