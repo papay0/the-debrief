@@ -1,0 +1,293 @@
+---
+title: "Frontier AI Wants a FINRA Moment"
+date: "2026-07-14"
+description: "Demis Hassabis wants a US-led standards body to test frontier AI models before release. The interesting part is not the AGI rhetoric. It is the attempt to turn model safety from promises into market infrastructure."
+tags: ["AI Regulation", "Google DeepMind", "AI Safety", "AI Models"]
+draft: false
+---
+
+## The Short Version
+
+Demis Hassabis wants AI to get its own watchdog.
+
+Not a vibes committee.
+
+Not another tasteful PDF.
+
+A real standards body.
+
+On July 14, the Google DeepMind CEO published [a framework for frontier AI](https://demishassabis.substack.com/p/a-framework-for-frontier-ai-and-the-dawning-of-a-new-age), arguing that the U.S. should lead a public-private standards body for the most powerful AI models. The model he points to is FINRA, the industry-funded Wall Street regulator overseen by the SEC.
+
+That comparison is the story.
+
+Not the AGI poetry.
+
+Hassabis says AGI may be only a few years away. He talks about the foothills of the singularity, a transformation bigger and faster than the Industrial Revolution, and a future where AI helps solve medicine, energy, materials, and abundance.
+
+Fine.
+
+The more useful part is much less cinematic:
+
+Who tests the model before release?
+
+Who writes the dangerous-capability evals?
+
+Who has enough compute to run them?
+
+Who sees the results?
+
+Who can tell a frontier lab to wait?
+
+And what happens when the lab does not want to?
+
+That is the real question.
+
+Frontier AI is trying to move from voluntary promises and emergency phone calls into pre-release market infrastructure.
+
+The hard part is making sure the infrastructure has teeth, independence, and technical competence.
+
+Otherwise we do not get AI's FINRA.
+
+We get a very expensive suggestion box with GPUs.
+
+## This is the next version of the safety-pledge story
+
+Last week, I wrote that [safety pledges are not safety infrastructure](/en/posts/safety-pledges-are-not-safety-infrastructure).
+
+Hassabis is now describing what one version of that infrastructure could look like.
+
+His proposal is fairly concrete. A U.S.-initiated body would define which models count as "Frontier-class" using benchmarks that are updated as capabilities change. Labs that build those models would become "Frontier Labs." They would be expected to publish technical model cards, maintain strong cybersecurity, vet key personnel, and properly fund safety and security work.
+
+At first, frontier labs would share models voluntarily up to 30 days before release. The body would test them for national-security-relevant capabilities, including cyber, biological threats, deception, and agentic behavior. If the protocol works, formal rules could follow, meaning frontier models would need to pass before being deployed in the U.S. market.
+
+That is a big step.
+
+It turns the model launch from:
+
+"Trust us, we ran evals."
+
+Into:
+
+"Here is the outside test regime the model had to survive."
+
+In theory.
+
+The phrase "in theory" is doing a lot of work there.
+
+## The useful thing is not the metaphor
+
+FINRA is an interesting comparison because it is not a normal government agency.
+
+It is an industry-funded self-regulatory organization under federal oversight. In finance, that model exists because the market is technical, fast-moving, and full of firms that understand the machinery better than most ordinary regulators.
+
+That sounds familiar.
+
+Frontier AI has the same problem, but with stranger failure modes.
+
+The government needs technical capacity. The labs have talent, models, tools, eval harnesses, and compute. The public needs something more trustworthy than "the company checked its own homework." A standards body could sit between those needs.
+
+That is the best version.
+
+The worst version is also obvious.
+
+The labs fund the body.
+
+The labs help design the tests.
+
+The labs know the test shape.
+
+The labs optimize for passing.
+
+The body becomes prestigious enough to bless releases, but not independent enough to stop them.
+
+Very elegant. We have invented regulatory capture, but with better eval dashboards.
+
+That is why the design details matter more than the headline.
+
+## The tests have to stay alive
+
+The most important technical phrase in Hassabis's proposal is not "AGI."
+
+It is "regularly updated."
+
+AI evals decay.
+
+They get saturated. They leak. They become targets. Models overfit to them. Labs learn the shape of the test. Benchmarks that once measured the frontier become marketing wallpaper.
+
+If a standards body is going to matter, it cannot be a static exam.
+
+It needs held-out tests.
+
+It needs red teams.
+
+It needs third-party auditors.
+
+It needs enough compute to run serious evaluations.
+
+It needs access to model internals when necessary.
+
+It needs to test agents in realistic tool environments, not just ask a model scary questions in a chat window.
+
+It needs incident response after release, because the real world will find failure modes the pre-release suite missed.
+
+It needs to be able to say: this benchmark is dead, replace it.
+
+That is uncomfortable for everyone.
+
+Companies like stable targets. Regulators like stable checklists. Markets like a clean pass/fail signal.
+
+Frontier AI will not give them one.
+
+The test regime has to be alive because the thing being tested is alive in practice: new models, new tools, new scaffolds, new jailbreaks, new open-weight releases, new agent patterns, new deployment surfaces.
+
+This is less like inspecting a toaster.
+
+It is more like trying to certify a moving software organism that keeps discovering new hobbies.
+
+Very normal industry. Nothing to see here.
+
+## Open models are the pressure test
+
+Hassabis says the framework should apply to frontier-class models no matter where they come from, and whether they are open or closed.
+
+That sentence is where the politics begins.
+
+Closed labs can be forced, pressured, licensed, audited, or denied market access. They have headquarters, customers, cloud contracts, bank accounts, and executives who can receive unpleasant letters.
+
+Open-weight models are harder.
+
+Once the weights are out, the model can be copied, modified, hosted elsewhere, stripped of safeguards, and deployed in places that do not care what a U.S. standards body thinks.
+
+That does not mean open models should be ignored.
+
+It means the pre-release model does not fit them cleanly.
+
+If the watchdog only applies to closed U.S. labs, it may slow the most visible players while pushing capability toward less accountable channels.
+
+If it tries to cover every open frontier model globally, it may become unenforceable theater.
+
+If it blocks open releases too aggressively, it concentrates power in closed labs and governments.
+
+If it does nothing, it leaves the most irreversible releases outside the regime.
+
+There is no clean answer.
+
+That is the point.
+
+The open-model question is not a footnote. It is the test of whether the framework is a real governance system or just a release gate for companies that already answer calls from Washington.
+
+## This also solves a government problem
+
+The recent Anthropic and OpenAI episodes are the subtext.
+
+Anthropic had to suspend access to Fable 5 and Mythos 5 after a U.S. export-control directive. OpenAI's GPT-5.6 rollout moved through government-vetted access before broader availability. Both stories created the same product problem:
+
+Nobody had a clean playbook.
+
+That is bad for labs.
+
+It is also bad for government.
+
+Ad hoc intervention sounds powerful until you have to run it. Then you need thresholds, definitions, technical tests, appeals, timelines, responsibilities, communications, international coordination, and people who understand the model well enough not to regulate a benchmark from last year.
+
+Surprise shutdowns are not a governance system.
+
+Private calls are not a governance system.
+
+"Trusted partners" is not a governance system.
+
+Hassabis is basically saying: build the boring machinery before the next emergency.
+
+That is correct.
+
+The question is whether the machinery should be FINRA-like, FAA-like, NIST-like, a new agency, an international body, or some hybrid nobody can explain at dinner.
+
+Probably the hybrid.
+
+Unfortunately, reality loves ugly org charts.
+
+## The labs are asking to be regulated
+
+There is a strange dynamic now.
+
+The heads of major AI labs keep asking for oversight.
+
+They do not all want the same kind. Anthropic's Dario Amodei has pushed for binding rules and a model closer to aviation-style authority. Hassabis is arguing for a public-private standards body. OpenAI has talked for years about frontier oversight while also trying to avoid a permanent government preclearance maze.
+
+But the direction is visible.
+
+The leading labs want a regime.
+
+Partly because they believe the risks are real.
+
+Partly because they want predictability.
+
+Partly because a serious certification regime can become a moat.
+
+If it costs enormous money, compute, expertise, and compliance work to be a "Frontier Lab," the companies that already have those things will be fine. Smaller challengers may not be.
+
+That does not make regulation bad.
+
+It means the design has to remember that safety infrastructure can also become market structure.
+
+Every rule about frontier thresholds, testing access, model cards, cybersecurity, personnel vetting, and release approval also decides who gets to compete.
+
+This is why "the industry agrees" is not enough.
+
+Of course the industry agrees on some version of oversight.
+
+The argument is over the version.
+
+## What builders should watch
+
+If you build on frontier models, do not treat this as abstract policy theater.
+
+It will shape the product surface.
+
+A real standards body could affect:
+
+- which models launch first
+- which capabilities appear in which countries
+- which agent modes require extra review
+- which open models can be distributed through major clouds
+- which eval results vendors must disclose
+- which enterprise customers get proof of testing
+- which fallback models you need when a release pauses
+
+In other words, model selection will become more like infrastructure procurement.
+
+Not just "which model is smartest?"
+
+"Which model is certified, available, audited, supported, allowed for this user, and unlikely to vanish during a policy fight?"
+
+Very glamorous. The future of AI is a dropdown with compliance metadata.
+
+But that is what happens when software becomes infrastructure.
+
+## The bottom line
+
+Hassabis's proposal is important because it is not just another warning.
+
+It is a sketch of machinery.
+
+The sketch may be wrong. FINRA may be the wrong analogy. A U.S.-led body may be politically fragile. Industry funding may create bad incentives. Open models may break the whole shape. The tests may be too weak. The labs may learn to pass them.
+
+All fair.
+
+But the need is real.
+
+Frontier AI cannot keep moving through voluntary pledges, internal evals, surprise export directives, and private-access negotiations forever.
+
+The more these models become agents for code, science, cyber, enterprise work, defense, and government, the more release itself becomes a public-interest event.
+
+That does not mean every model needs permission from a priesthood.
+
+It means the most powerful systems need a testing regime that is technical enough to matter, independent enough to be trusted, and strong enough to stop a launch when stopping is the right answer.
+
+That is the bar.
+
+Not a pledge.
+
+Not a manifesto.
+
+Infrastructure.
