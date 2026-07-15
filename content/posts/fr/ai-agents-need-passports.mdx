@@ -1,0 +1,255 @@
+---
+title: "Les agents IA ont besoin de passeports"
+date: "2026-07-15"
+description: "L'arrivée de Vint Cerf dans un effort de standardisation de l'identité des agents est un signal utile : le prochain goulot d'étranglement ne sera pas seulement l'intelligence des modèles. Ce sera de savoir quel agent agit, qui l'a créé, et quelle autorité il possède sur l'internet ouvert."
+tags: ["AI Agents", "Internet", "AI Infrastructure", "Security"]
+draft: false
+---
+
+## En bref
+
+Les agents IA vont bientôt rencontrer un très vieux problème d'internet.
+
+Les noms.
+
+L'identité.
+
+La confiance.
+
+Le 15 juillet, TechCrunch a rapporté que Vint Cerf, l'un des architectes de TCP/IP, [conseillait Innovation Labs](https://techcrunch.com/2026/07/15/vint-cerf-is-working-on-a-plan-to-unleash-ai-agents-on-the-open-internet/) sur une architecture ouverte permettant aux agents IA de s'identifier. Innovation Labs, une division d'Identity Digital, pousse DNSid, une [proposition d'identité ancrée dans le DNS](https://datatracker.ietf.org/doc/draft-ihsanullah-dnsid/) pour les agents.
+
+Cela paraît profondément peu glamour.
+
+Parfait.
+
+La partie glamour des agents, c'est la démo : le modèle réserve le voyage, négocie le remboursement, écrit la pull request, appelle l'API, relance la facture, parle à un autre agent, puis revient avec le travail terminé.
+
+La question ennuyeuse, c'est :
+
+Qui a fait tout ça exactement ?
+
+Qui possède cet agent ?
+
+Quelle autorité avait-il ?
+
+Qui lui a délégué cette autorité ?
+
+Une autre entreprise peut-elle le vérifier ?
+
+La trace survit-elle si l'agent est mis à jour, retiré, transféré ou compromis ?
+
+Si nous ne répondons pas à ces questions, "l'internet agentique" devient simplement une manière plus élégante de dire trafic de bots avec budget achats.
+
+Les agents n'ont pas seulement besoin de mieux raisonner.
+
+Ils ont besoin de passeports.
+
+## Ce n'est pas juste une connexion
+
+La plupart des agents IA vivent encore dans des surfaces contrôlées.
+
+ChatGPT a l'identité du compte. Claude Tag a le contexte du canal Slack. Copilot a Microsoft Graph. Les agents internes ont du SSO, des clés API, des comptes de service, des logs et des panneaux d'administration.
+
+C'est une identité locale.
+
+Elle fonctionne parce que la plateforme définit la pièce.
+
+Le vrai problème commence quand les agents sortent de la pièce.
+
+Un agent d'une entreprise appelle l'API d'un fournisseur. Un autre agent négocie avec lui. Un troisième réserve quelque chose, signe quelque chose, modifie un enregistrement, envoie un message ou crée un livrable qui survivra au processus qui l'a généré.
+
+À ce moment-là, une simple connexion ne suffit plus.
+
+Les humains ont des comptes. Les entreprises ont des domaines. Les serveurs ont des certificats. Les services ont des clés. Les agents sont plus étranges. Ils peuvent être créés à bas coût, mis à jour silencieusement, délégués partiellement, enveloppés par d'autres agents et déplacés d'un cloud à l'autre.
+
+La question d'identité n'est donc pas seulement :
+
+"Cet agent peut-il s'authentifier ?"
+
+C'est :
+
+"Quelle entité responsable se tient derrière cet agent, dans le temps et entre les systèmes ?"
+
+C'est pour ça que l'angle DNS est intéressant.
+
+Pas parce que le DNS serait magiquement sûr.
+
+Parce qu'internet utilise déjà les noms de domaine comme couche de coordination pour la propriété, le routage, la confiance et la responsabilité institutionnelle. DNSid essaie de dire : si les agents doivent agir sur l'internet ouvert, ils ont besoin d'une ancre d'identité durable que d'autres systèmes peuvent résoudre sans rejoindre le club privé d'un fournisseur.
+
+C'est la bonne catégorie de problème.
+
+Que DNSid soit ou non la réponse finale est une autre question.
+
+## La proposition est volontairement étroite
+
+Le point important chez DNSid, c'est ce qu'il ne prétend pas faire.
+
+Innovation Labs dit avoir soumis la proposition à l'IETF en juin pour établir une propriété durable et vérifiable des agents. L'[Internet-Draft](https://datatracker.ietf.org/doc/draft-ihsanullah-dnsid/) décrit une primitive minimale : donner à un agent un nom de domaine pleinement qualifié, le lier à une entité responsable qui contrôle un domaine DNS, puis publier des pointeurs vers des clés, un statut et un historique.
+
+Cela n'authentifie pas l'agent à lui seul.
+
+Cela n'émet pas de credentials.
+
+Cela n'applique pas de politique.
+
+Cela ne décide pas si l'agent a le droit de dépenser de l'argent, de lire la base de données ou d'écrire à votre client.
+
+Cette retenue compte.
+
+Dans les standards IA, la tentation est forte de faire dévorer toute la pile à chaque nouvelle proposition : identité, authentification, autorisation, mémoire, outils, provenance, audits, paiements, safety, gouvernance, ambiance et logo.
+
+Ça finit rarement bien.
+
+DNSid est plus modeste. Il veut être la couche de propriété responsable sous les systèmes qui font l'authentification runtime, l'autorisation, l'usage d'outils et la communication entre agents.
+
+En clair :
+
+Ce n'est pas tout le modèle de sécurité de l'agent.
+
+C'est l'endroit vers lequel pointer quand on veut savoir qui est censé être responsable de l'agent.
+
+C'est moins excitant qu'une sortie de modèle.
+
+C'est aussi plus important que ça en a l'air.
+
+## Le passeport ne rend pas le voyageur fiable
+
+Le piège évident consiste à confondre identité et sécurité.
+
+Un passeport ne prouve pas que vous êtes quelqu'un de bien.
+
+Il prouve qu'un État accepte de dire qui vous êtes.
+
+L'identité des agents fonctionne de la même manière.
+
+Savoir qu'un agent appartient à `acme.example` ne prouve pas qu'il est honnête, compétent, sécurisé ou autorisé à faire ce qu'il demande. Cela ne prouve pas que le prompt était propre. Cela ne prouve pas que l'appel d'outil est sûr. Cela ne prouve pas que la sortie est vraie.
+
+Cela donne une poignée aux autres systèmes.
+
+Cette poignée peut ensuite servir aux choses utiles :
+
+- règles d'autorisation
+- scopes
+- révocation
+- journaux d'audit
+- réputation
+- responsabilité juridique
+- réponse à incident
+- limites de débit
+- escalade humaine
+- contrats entre organisations
+
+C'est ici que la conversation sur les agents doit devenir adulte.
+
+Le langage des démos est rempli de verbes : les agents vont réserver, acheter, naviguer, négocier, coder, appeler, déployer et décider.
+
+Chaque verbe a besoin d'une politique.
+
+Chaque politique a besoin d'une identité.
+
+Chaque identité a besoin d'une manière d'être vérifiée par quelqu'un d'extérieur à l'application qui l'a créée.
+
+Sinon, l'internet ouvert se remplit d'acteurs logiciels capables de produire du travail utile, sans que personne puisse répondre proprement à la première question sérieuse :
+
+"Qui vous envoie ?"
+
+## Pourquoi le nom de Cerf compte
+
+La présence de Cerf ne prouve pas que DNSid va gagner.
+
+L'histoire d'internet est pleine de brouillons élégants, de standards morts, de batailles politiques, de capture par les vendeurs et de technologies manifestement meilleures jusqu'au moment où personne ne les adopte.
+
+Mais sa présence est un signal utile parce qu'elle recadre les agents comme un problème d'architecture internet, pas seulement comme un problème de produit IA.
+
+L'[annonce d'Innovation Labs](https://www.globenewswire.com/news-release/2026/07/15/3327863/0/en/Internet-Architect-Vint-Cerf-Joins-Innovation-Labs-to-Advance-Open-Architecture-for-AI-Agent-Accountability.html) rend l'analogie avec TCP/IP explicite : internet a grandi parce que des systèmes indépendants pouvaient interopérer grâce à une infrastructure partagée. Cerf a expliqué à TechCrunch que l'identité des agents soulève désormais des questions d'autorité, de délégation de cette autorité, de responsabilité et de confiance.
+
+C'est exactement le bon vocabulaire.
+
+La course aux agents a surtout dépensé son énergie sur les capacités.
+
+Le modèle peut-il utiliser un navigateur ?
+
+Peut-il écrire du code ?
+
+Peut-il chaîner des outils ?
+
+Peut-il se souvenir ?
+
+Peut-il agir de manière asynchrone ?
+
+Questions utiles.
+
+Mais dès que les agents agissent entre organisations, la capacité cesse d'être le seul goulot d'étranglement. Le système a aussi besoin d'une grammaire sociale et technique de la responsabilité.
+
+Cette grammaire est généralement ennuyeuse.
+
+TCP/IP aussi, jusqu'à ce que tout en dépende.
+
+## La tentation plateforme est évidente
+
+Il existe une voie beaucoup plus simple que les standards ouverts.
+
+Chaque hyperscaler peut inventer sa propre couche d'identité agentique.
+
+Les agents OpenAI peuvent avoir des identifiants OpenAI. Les agents Google peuvent avoir des identifiants Google. Les agents Microsoft peuvent avoir des identifiants Microsoft. Les agents Anthropic peuvent avoir des identifiants Anthropic. Les fournisseurs d'identité entreprise peuvent rattacher les agents aux systèmes IAM existants. Les marketplaces peuvent certifier leurs propres agents de confiance.
+
+Une partie de cela arrivera.
+
+Une partie devrait arriver.
+
+L'identité locale est utile. L'application au niveau plateforme est utile. Les contrôles entreprise sont utiles. Personne ne veut attendre cinq ans qu'un organisme de standards soit d'accord avant d'empêcher un agent malveillant de toucher à la paie.
+
+Mais si toute la pile devient propriétaire, l'économie ouverte des agents se fragmente avant même d'exister.
+
+On obtient des agents qui fonctionnent très bien dans le jardin d'un fournisseur et deviennent étranges à la frontière. On obtient des systèmes de confiance doublonnés, des audits doublonnés, des credentials incompatibles et "connectez-vous avec six clouds différents pour que ce petit agent puisse demander à un autre petit agent si la facture est vraie".
+
+Très futuriste. Très SaaS aussi.
+
+C'est pour ça que la couche ouverte compte.
+
+Elle ne remplace pas les plateformes.
+
+Elle leur donne quelque chose de commun vers lequel pointer.
+
+## Ce que les builders devraient faire maintenant
+
+DNSid reste un brouillon.
+
+Ne reconstruisez pas votre roadmap autour d'une seule proposition parce qu'un architecte célèbre d'internet rejoint un advisory council.
+
+Ce serait ridicule.
+
+Mais prenez le problème sous-jacent au sérieux.
+
+Si vous construisez des agents, l'identité ne doit pas être un nettoyage sécurité après la démo.
+
+Elle doit faire partie de la forme du produit dès le départ.
+
+Posez des questions simples :
+
+- Cet agent a-t-il une identité stable ?
+- Une partie tierce peut-elle vérifier qui le possède ?
+- Ses credentials sont-ils limités à la tâche ?
+- Peut-on déléguer de l'autorité sans lui remettre toute l'entreprise ?
+- Ses actions restent-elles auditables après une mise à jour ?
+- Peut-on révoquer l'agent rapidement ?
+- Les sous-agents et les appels d'outils sont-ils visibles, ou disparaissent-ils dans un seul bloc ?
+- Une autre organisation peut-elle décider de lui faire confiance sans écrire à votre équipe commerciale ?
+
+Ce ne sont pas des questions abstraites de gouvernance.
+
+Ce sont des exigences produit.
+
+Les meilleurs produits agentiques ne seront pas seulement ceux qui agissent de manière plus autonome. Ce seront ceux qui rendent cette autonomie assez lisible pour que d'autres systèmes puissent répondre oui, non, peut-être, ou prouvez-le plus tard.
+
+C'est le travail d'infrastructure discret sous toutes les démos d'agents.
+
+La prochaine interface ne sera peut-être pas une autre boîte de chat.
+
+Ce sera peut-être un nom, un credential, un scope, une politique et un journal d'audit.
+
+Pas romantique.
+
+Absolument nécessaire.
+
+Avant que les agents obtiennent des visas pour parcourir l'internet ouvert, ils ont besoin de passeports.
