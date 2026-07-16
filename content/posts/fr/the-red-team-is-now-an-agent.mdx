@@ -1,0 +1,281 @@
+---
+title: "La red team devient un agent"
+date: "2026-07-16"
+description: "GPT-Red d'OpenAI n'est pas juste un nouveau benchmark de safety. C'est le signe que la sécurité des agents devient un workflow automatisé et adversarial : des modèles qui attaquent des modèles avant qu'internet ne le fasse."
+tags: ["AI Agents", "OpenAI", "AI Safety", "Security"]
+draft: false
+---
+
+## En bref
+
+OpenAI a entraîné un modèle IA pour attaquer des agents IA.
+
+Voilà une phrase d'ouverture très rassurante pour une industrie responsable.
+
+C'est aussi probablement nécessaire.
+
+Le 15 juillet, OpenAI a publié une recherche sur [GPT-Red](https://openai.com/index/unlocking-self-improvement-gpt-red/), un modèle de red teaming automatisé conçu pour trouver des failles dans les agents qui utilisent des outils. L'entreprise dit avoir utilisé GPT-Red avant la sortie de GPT-5.6, pour tester des systèmes agentiques face aux injections de prompt, aux attaques dans le navigateur, au mauvais usage d'outils et à d'autres situations où la safety d'un simple chat ne suffit plus.
+
+Le point important est là :
+
+La red team devient elle aussi un agent.
+
+Pas parce que les chercheurs sécurité humains seraient obsolètes.
+
+Ils ne le sont pas.
+
+Mais parce que la surface d'attaque devient trop grande, trop dynamique et trop bizarre pour une checklist statique.
+
+Les agents lisent des sites web.
+
+Les agents lisent des emails.
+
+Les agents lisent des documents.
+
+Les agents appellent des outils.
+
+Les agents passent d'un contexte à l'autre.
+
+Les agents peuvent être piégés par du texte qui n'était jamais censé être une instruction.
+
+Si votre système IA peut agir sur le monde, alors le monde devient une partie du prompt.
+
+La safety ne peut donc plus se limiter à :
+
+"Le modèle répond-il à une mauvaise question ?"
+
+Elle doit devenir :
+
+"Tout le workflow agentique peut-il survivre à des environnements adversariaux avant que les utilisateurs le mettent en production ?"
+
+GPT-Red est OpenAI qui dit tout haut la partie ennuyeuse :
+
+La sécurité des agents devient du test adversarial continu.
+
+Très glamour. Votre IA a maintenant besoin de sa propre IA attaquante.
+
+## Pourquoi le red teaming classique craque
+
+Les red teams humaines restent essentielles.
+
+Elles inventent des attaques. Elles comprennent le contexte. Elles repèrent les incitations étranges. Elles trouvent le mode d'échec qu'aucun auteur de benchmark n'avait pensé à encoder.
+
+Mais les systèmes agentiques créent un problème d'échelle.
+
+Un chatbot a une conversation.
+
+Un agent a une chaîne d'approvisionnement.
+
+L'entrée peut être une page web, une invitation calendrier, un tableur, un ticket support, une issue GitHub, un PDF, un fil Slack, une réponse d'API ou un fichier dont l'utilisateur a oublié l'existence. L'instruction dangereuse peut être visible. Elle peut être cachée. Elle peut être indirecte. Elle peut ne compter qu'après que l'agent a combiné trois sources et décidé d'agir.
+
+C'est un autre problème de test.
+
+On ne peut pas tester manuellement chaque état de navigateur, permission d'outil, chemin de fichier, page tierce, hiérarchie d'instructions et petit "ignore les instructions précédentes" que l'internet peut produire.
+
+OpenAI présente GPT-Red comme une réponse à ce goulot d'étranglement. Le modèle peut générer beaucoup de scénarios adversariaux, chercher les échecs et créer des données d'entraînement qui améliorent le modèle défendu.
+
+Cette dernière étape compte.
+
+Ce n'est pas seulement du red teaming comme rapport.
+
+C'est du red teaming comme boucle d'entraînement.
+
+Le modèle attaquant trouve une faille.
+
+Le modèle défenseur en tire une leçon.
+
+Le prochain attaquant réessaie.
+
+C'est beaucoup plus proche de la vraie sécurité : pas un examen propre avec réussite ou échec, mais une course aux armements avec des logs.
+
+## L'injection de prompt est la bonne cible
+
+Le focus le plus utile ici est l'injection de prompt.
+
+Pas parce que c'est le seul risque des agents.
+
+Parce que c'est le risque le plus natif aux agents.
+
+L'injection de prompt arrive quand du texte extérieur essaie de devenir une instruction. Une page malveillante dit à l'agent navigateur de divulguer des données. Un document dit au résumeur d'ignorer l'utilisateur. Un ticket dit à l'agent de code d'exécuter une commande. Une invitation calendrier cache des instructions dans un endroit que l'utilisateur ne lit jamais.
+
+Les vieux logiciels traitaient le texte comme de la donnée.
+
+Les logiciels agentiques traitent le texte comme une intention possible.
+
+C'est une très belle idée produit et un mal de tête sécurité dans la même veste.
+
+OpenAI dit que GPT-Red a aidé à générer des exemples d'injections directes et indirectes, notamment dans des scénarios de navigateur et d'agent de code. Sur un benchmark, l'entreprise dit que GPT-5.6 avait six fois moins d'échecs qu'un modèle de production vieux de quatre mois sur les tests les plus difficiles d'injection directe.
+
+Très bien.
+
+Mais remarquez ce que cela implique.
+
+Le benchmark n'a pas résolu le problème simplement en existant.
+
+La boucle de red team a rendu le benchmark plus dur, produit de meilleures attaques et nourri l'entraînement.
+
+C'est la leçon pour les builders.
+
+Si votre agent touche du contenu tiers, l'injection de prompt n'est pas un cas limite.
+
+C'est la météo.
+
+On ne répare pas la météo. On conçoit pour elle.
+
+## Le distributeur automatique est drôle jusqu'au moment où il ne l'est plus
+
+L'un des exemples les plus mémorables du billet d'OpenAI est un distributeur automatique simulé.
+
+Le projet, appelé Vendy, confie à un agent une petite entreprise avec fournisseurs, revenus, dépenses, stock, emails et interactions client. La red team essaie ensuite de faire échouer l'agent : lui faire perdre de l'argent, mal gérer des données clients ou opérer n'importe comment.
+
+C'est drôle parce que c'est un distributeur.
+
+Ça l'est moins parce que c'est une entreprise miniature.
+
+L'agent a des objectifs. Il a des outils. Il reçoit des messages. Il a des contraintes. Il peut être manipulé par son environnement. Il peut prendre des décisions localement raisonnables et globalement mauvaises.
+
+C'est exactement là que vont les agents.
+
+Pas "réponds à cette question".
+
+Fais tourner ce processus.
+
+Surveille cette boîte mail.
+
+Gère ce workflow.
+
+Maintiens ce système en mouvement.
+
+Le setup du distributeur est utile parce qu'il transforme une safety agentique vague en quelque chose d'opérationnel. On peut demander :
+
+- L'agent a-t-il préservé l'argent ?
+- A-t-il protégé les données ?
+- A-t-il suivi la politique ?
+- A-t-il résisté à la manipulation ?
+- A-t-il récupéré après un mauvais message ?
+- A-t-il demandé à un humain quand la situation dépassait son autorité ?
+
+C'est beaucoup mieux que de demander si le modèle a l'air raisonnable dans une fenêtre de chat.
+
+Le monde réel n'est pas une fenêtre de chat.
+
+Le monde réel est un distributeur automatique avec des emails hostiles et un bilan comptable.
+
+Apparemment.
+
+## Codex est l'exemple le plus inquiétant
+
+OpenAI a aussi testé des scénarios d'agents de code.
+
+C'est là que l'histoire devient moins mignonne.
+
+Un agent de code peut lire des fichiers, exécuter des commandes, installer des paquets, modifier du code, appeler des outils réseau et créer des artefacts qui finiront peut-être en production. Si un attaquant peut influencer son contexte, le problème d'injection de prompt devient un problème d'opérations.
+
+Le mauvais résultat n'est pas seulement :
+
+"Le modèle a dit quelque chose de dangereux."
+
+C'est :
+
+"L'agent a modifié le repo, divulgué un secret, installé quelque chose de suspect ou produit un patch dont le risque était caché dans un diff plausible."
+
+C'est pour ça que le futur de la sécurité des agents ressemble plus à de la CI qu'à de la modération de contenu.
+
+Il faut du sandboxing.
+
+Il faut des scopes d'outils.
+
+Il faut des contrôles réseau.
+
+Il faut des logs.
+
+Il faut des portes d'approbation.
+
+Il faut des tests qui exercent tout le workflow de manière adversariale, pas seulement la réponse finale.
+
+Il faut pouvoir demander :
+
+"Qu'est-ce qu'une page web, une issue, une dépendance, un README, un email ou un ticket support malveillant essaierait de faire faire à cet agent ?"
+
+Puis il faut reposer la question demain, parce que l'agent a changé, les outils ont changé et les attaquants ont lu le même billet de blog.
+
+Catégorie produit très relaxante.
+
+## Cela ne retire pas les humains
+
+Il y a une histoire tentante ici :
+
+L'IA attaque l'IA.
+
+L'IA corrige l'IA.
+
+Les humains rentrent chez eux.
+
+Non.
+
+OpenAI prend soin de dire que GPT-Red ne remplace pas les experts humains, les évaluations tierces ou les mitigations en couches. C'est la bonne réserve.
+
+Le red teaming automatisé est puissant, mais il peut aussi optimiser pour les failles qu'il sait déjà exprimer. Il peut manquer le contexte social. Il peut manquer l'impact business. Il peut produire des attaques synthétiques impressionnantes qui ne ressemblent pas aux abus réels. Il peut créer une fausse impression de couverture.
+
+Et, évidemment, le modèle attaquant est dual-use.
+
+Si vous entraînez un système à découvrir les failles d'agents, vous avez construit quelque chose qui ne devrait pas devenir un jouet public.
+
+La version saine n'est donc pas "laissons les modèles se réguler eux-mêmes".
+
+La version saine est :
+
+Utiliser des red teams automatisées pour élargir la couverture.
+
+Utiliser des experts humains pour définir ce qui compte.
+
+Utiliser les incidents réels pour mettre les tests à jour.
+
+Utiliser des contrôles produit pour limiter les dégâts.
+
+Utiliser une revue externe quand les enjeux sont élevés.
+
+Utiliser les logs pour que quelqu'un puisse prouver ce qui s'est passé une fois l'éclat de la démo dissipé.
+
+L'agent red team est un outil.
+
+Pas un prêtre.
+
+## Ce que les builders devraient voler
+
+La leçon pratique n'est pas "attendez GPT-Red".
+
+La plupart des builders n'auront pas le modèle interne de red team d'OpenAI, sa boucle d'entraînement ou son infrastructure d'évaluation.
+
+Très bien.
+
+Le pattern reste copiable.
+
+Si vous construisez des agents, votre processus de safety doit devenir adversarial et continu.
+
+Pour un vrai produit, cela veut dire :
+
+- nourrir vos tests avec des exemples d'injection de prompt
+- inclure des attaques indirectes venues de sites, docs, emails, tickets et fichiers
+- lancer les scénarios d'attaque contre tout le workflow, pas seulement contre la réponse du modèle
+- garder les permissions d'outils étroites
+- logger quelles sources ont influencé une action
+- exiger une revue avant les changements à fort impact
+- tester si l'agent peut refuser les instructions venues de contenu non fiable
+- relancer la suite quand les prompts, modèles, outils ou permissions changent
+
+C'est ennuyeux.
+
+C'est souvent le signe que ça appartient à la production.
+
+Le boom des agents a poussé tout le monde à parler d'autonomie.
+
+GPT-Red montre le côté moins romantique de l'autonomie :
+
+Si les agents doivent agir davantage, nous avons besoin de meilleurs systèmes pour les attaquer avant que les attaquants ne le fassent.
+
+Le futur, ce n'est pas seulement des agents qui travaillent.
+
+C'est des agents qui testent les agents qui travaillent.
+
+Et au milieu, un humain doit encore décider ce qu'un échec veut vraiment dire.

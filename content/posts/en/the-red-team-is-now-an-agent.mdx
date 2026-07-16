@@ -1,0 +1,281 @@
+---
+title: "The Red Team Is Now an Agent"
+date: "2026-07-16"
+description: "OpenAI's GPT-Red is not just another safety benchmark. It is a sign that agent security is becoming an automated, adversarial workflow: models attacking models before the internet does."
+tags: ["AI Agents", "OpenAI", "AI Safety", "Security"]
+draft: false
+---
+
+## The Short Version
+
+OpenAI trained an AI model to attack AI agents.
+
+That sounds like the opening sentence of a very responsible industry.
+
+It is also probably necessary.
+
+On July 15, OpenAI published research on [GPT-Red](https://openai.com/index/unlocking-self-improvement-gpt-red/), an automated red-teaming model designed to find failures in tool-using agents. The company says GPT-Red was used before GPT-5.6 shipped, testing agentic systems against prompt injection, browser-based attacks, tool misuse, and other messy situations where normal chat safety is not enough.
+
+This is the important part:
+
+The red team is becoming an agent too.
+
+Not because human security researchers are obsolete.
+
+They are not.
+
+Because the attack surface is getting too big, too dynamic, and too weird for a static checklist.
+
+Agents read websites.
+
+Agents read emails.
+
+Agents read docs.
+
+Agents call tools.
+
+Agents move between contexts.
+
+Agents can be tricked by text that was never meant to be an instruction.
+
+If your AI system can act on the world, then the world becomes part of the prompt.
+
+That means safety can no longer be only:
+
+"Did the model answer a bad question?"
+
+It has to become:
+
+"Can the whole agentic workflow survive adversarial environments before users put it in production?"
+
+GPT-Red is OpenAI saying the quiet part out loud:
+
+Agent safety is becoming continuous adversarial testing.
+
+Very glamorous. Your AI now needs its own AI attacker.
+
+## Why normal red teaming breaks
+
+Human red teams are still essential.
+
+They invent attacks. They understand context. They notice weird incentives. They find the failure mode that no benchmark writer thought to encode.
+
+But agentic systems create a scaling problem.
+
+A chatbot has a conversation.
+
+An agent has a supply chain.
+
+The input might be a webpage, a calendar invite, a spreadsheet, a support ticket, a GitHub issue, a PDF, a Slack thread, an API response, or a file the user forgot existed. The dangerous instruction might be visible. It might be hidden. It might be indirect. It might only matter after the agent combines three sources and decides to act.
+
+That is a different kind of testing problem.
+
+You cannot manually test every browser state, tool permission, file path, third-party page, instruction hierarchy, and weird little "please ignore previous instructions" note that the internet can produce.
+
+OpenAI frames GPT-Red as a response to that bottleneck. It can generate many adversarial scenarios, search for failures, and create training data that improves the defended model.
+
+That last step matters.
+
+This is not only red teaming as a report.
+
+It is red teaming as a training loop.
+
+The attacker model finds a failure.
+
+The defender model learns from it.
+
+The next attacker tries again.
+
+This is much closer to how security actually works: not a clean pass/fail exam, but an arms race with logs.
+
+## Prompt injection is the right target
+
+The most useful focus here is prompt injection.
+
+Not because it is the only agent risk.
+
+Because it is the most agent-native one.
+
+Prompt injection is what happens when outside text tries to become an instruction. A malicious webpage tells the browsing agent to leak data. A document tells the summarizer to ignore the user. A ticket tells the coding agent to run a command. A calendar invite hides instructions in a place the user never reads.
+
+Old software treated text as data.
+
+Agentic software treats text as possible intent.
+
+That is a beautiful product idea and a security headache wearing the same jacket.
+
+OpenAI says GPT-Red helped generate direct and indirect prompt-injection examples, including browser and coding-agent scenarios. In one benchmark, the company says GPT-5.6 had six times fewer failures than a production model from four months earlier on the hardest direct prompt-injection tests.
+
+Good.
+
+Also: notice what this implies.
+
+The benchmark did not fix the problem by existing.
+
+The red-team loop made the benchmark sharper, produced harder attacks, and fed the training process.
+
+That is the lesson for builders.
+
+If your agent touches third-party content, prompt injection is not an edge case.
+
+It is weather.
+
+You do not fix weather. You design for it.
+
+## The vending machine is funny until it is not
+
+One of the more memorable examples in OpenAI's post is a simulated vending machine.
+
+The project, called Vendy, puts an agent in charge of a tiny business with suppliers, revenue, expenses, inventory, emails, and customer interactions. The red team then tries to make the agent fail: lose money, mishandle customer data, or operate badly.
+
+It is funny because it is a vending machine.
+
+It is not funny because it is a miniature company.
+
+The agent has goals. It has tools. It receives messages. It has constraints. It can be manipulated by the environment. It can make decisions that look locally reasonable and globally bad.
+
+That is exactly where agents are going.
+
+Not "answer this question."
+
+Run this process.
+
+Watch this inbox.
+
+Manage this workflow.
+
+Keep this system moving.
+
+The vending-machine setup is useful because it turns vague agent safety into something operational. You can ask:
+
+- Did the agent preserve money?
+- Did it protect data?
+- Did it follow policy?
+- Did it resist manipulation?
+- Did it recover after a bad message?
+- Did it ask a human when the situation exceeded its authority?
+
+That is much better than asking whether the model seems sensible in a chat window.
+
+The real world is not a chat window.
+
+The real world is a vending machine with hostile emails and a balance sheet.
+
+Apparently.
+
+## Codex is the scarier example
+
+OpenAI also tested coding-agent scenarios.
+
+That is where the story gets less cute.
+
+A coding agent can read files, run commands, install packages, edit code, call network tools, and create artifacts that may eventually ship. If an attacker can influence its context, the prompt-injection problem becomes an operations problem.
+
+The bad outcome is not only:
+
+"The model said something unsafe."
+
+It is:
+
+"The agent modified the repo, leaked a secret, installed something suspicious, or produced a patch whose risk was hidden inside a plausible diff."
+
+This is why the future of agent security looks more like CI than content moderation.
+
+You need sandboxing.
+
+You need tool scopes.
+
+You need network controls.
+
+You need logs.
+
+You need approval gates.
+
+You need tests that adversarially exercise the workflow, not just the final answer.
+
+You need a way to ask:
+
+"What would a malicious webpage, issue, dependency, README, email, or support ticket try to make this agent do?"
+
+Then you need to run that question again tomorrow, because the agent changed, the tools changed, and the attackers read the same blog post.
+
+Very relaxing product category.
+
+## This does not remove humans
+
+There is a tempting story here:
+
+AI attacks AI.
+
+AI fixes AI.
+
+Humans go home.
+
+No.
+
+OpenAI is careful to say GPT-Red does not replace human experts, third-party evaluation, or layered mitigations. That is the right caveat.
+
+Automated red teaming is powerful, but it can also optimize for the failures it already knows how to express. It can miss social context. It can miss business impact. It can produce synthetic attacks that look impressive but do not match real abuse. It can create a false sense of coverage.
+
+And, of course, the attacker model is dual-use.
+
+If you train a system to discover agent failures, you have built something that should not casually become a public toy.
+
+So the sane version is not "let the models regulate themselves."
+
+The sane version is:
+
+Use automated red teams to expand coverage.
+
+Use human experts to define what matters.
+
+Use real incidents to update the tests.
+
+Use product controls to limit damage.
+
+Use outside review when the stakes are high.
+
+Use logs so someone can prove what happened after the demo glow wears off.
+
+The red-team agent is a tool.
+
+Not a priest.
+
+## What builders should steal
+
+The practical lesson is not "wait for GPT-Red."
+
+Most builders will not have OpenAI's internal red-team model, training pipeline, or eval infrastructure.
+
+Fine.
+
+The pattern is still copyable.
+
+If you are building agents, your safety process should start looking adversarial and continuous.
+
+For a real product, that means:
+
+- seed your tests with prompt-injection examples
+- include indirect attacks from websites, docs, emails, tickets, and files
+- run attack scenarios against the whole workflow, not just the model response
+- keep tool permissions narrow
+- log which sources influenced an action
+- require review before high-impact changes
+- test whether the agent can refuse instructions from untrusted content
+- rerun the suite when prompts, models, tools, or permissions change
+
+This is boring.
+
+That is usually a sign it belongs in production.
+
+The agent boom has made everyone talk about autonomy.
+
+GPT-Red points to the less romantic side of autonomy:
+
+If agents are going to act more, we need better systems for attacking them before attackers do.
+
+The future is not just agents doing work.
+
+It is agents testing agents that do work.
+
+And somewhere in the middle, a human still has to decide what failure actually means.
