@@ -1,0 +1,206 @@
+---
+title: "Free AI Still Has a Bill"
+date: "2026-07-19"
+description: "The most important AI pricing story is not the sticker price. It is the meter underneath it: credits, usage limits, data rules, workflow costs, and the moment the subsidy disappears."
+tags: ["AI Strategy", "Startups", "Enterprise AI", "AI Agents"]
+draft: false
+---
+
+## The Short Version
+
+The AI market is having a very normal software moment:
+
+Everyone is giving things away.
+
+How generous.
+
+Google is now explaining Gemini access in terms of [usage limits and compute resources](https://support.google.com/gemini/answer/16275805?hl=en), not just a clean number of prompts. [Wired notes](https://www.wired.com/story/how-googles-new-gemini-rates-work-and-how-to-track-your-usage/) that the same subscription can behave differently depending on whether you use text, image generation, video, research, or heavier reasoning features.
+
+OpenAI, meanwhile, just published a guide on [managing AI investments in the agentic era](https://openai.com/index/managing-ai-investments-in-agentic-era/). That is the grown-up version of the same story: once AI moves from chat into workflows, the question stops being "can we try it?" and becomes "what does this cost when it becomes part of the company?"
+
+And on the startup side, the market is full of credits, programs, and discounted access. OpenAI has a [startup program](https://openai.com/startups/) with API credits. Anthropic has [Claude for Startups](https://claude.com/programs/startups). Google Cloud advertises [startup credits](https://cloud.google.com/startup) that can be used to build on its infrastructure and AI stack.
+
+None of that is bad.
+
+Free credits are useful. Subsidized experiments are useful. Usage limits are more honest than pretending every AI request costs the same.
+
+But the useful takeaway is simple:
+
+Free AI is not free.
+
+It is a customer acquisition strategy, a product-learning loop, and sometimes a way to make a team build around one vendor before it has developed the discipline to measure the bill.
+
+The dangerous part is not that AI companies charge money.
+
+Of course they do.
+
+The dangerous part is that the real bill usually arrives after the workflow has already changed.
+
+## Credits are distribution, not charity
+
+In software, "free" often means "we are still deciding who captures the value."
+
+AI makes that bargain more complicated because the marginal unit is not just a seat. It can be tokens, images, video generations, tool calls, retrieval, memory, long-running agents, evaluations, latency guarantees, compliance features, and human review time.
+
+That is why credits matter.
+
+Credits let a startup test a model without worrying about every experiment. They also make one provider the default during the most formative part of the product. The first architecture is often the stickiest one. The first eval set becomes the scorecard. The first model's quirks become product behavior. The first successful workflow becomes the thing customers expect.
+
+By the time procurement shows up, the "free" part may be over.
+
+But the dependency remains.
+
+This is not a conspiracy. It is distribution.
+
+Cloud companies did this. SaaS companies did this. Developer platforms did this. AI labs are doing it with a more expensive raw material and a more intimate role inside the workflow.
+
+The difference is that AI does not just host the product.
+
+It can shape the product.
+
+## The meter is getting more honest
+
+Google's Gemini usage page is a small but useful signal because it makes the abstraction visible.
+
+A prompt is not a prompt.
+
+Asking a model to summarize an email is not the same economic object as generating video, running deep research, using a reasoning-heavy model, or letting an agent take many tool-backed steps.
+
+That sounds obvious until a team tries to budget for it.
+
+The old consumer mental model was:
+
+I pay for the AI subscription, then I use AI.
+
+The new model is:
+
+I pay for access to a changing basket of capabilities, and each capability consumes a different amount of scarce compute.
+
+That is a much better description of reality.
+
+It is also less comfortable.
+
+Because it means AI pricing will keep moving toward meters, quotas, priority lanes, model tiers, and "fair use" language that depends on what the model is actually doing.
+
+For consumers, that means the product may feel less magical when the meter appears.
+
+For companies, it means the finance and engineering teams need to understand the same dashboard.
+
+Good luck, everyone.
+
+## The data question is not one question
+
+There is another bill hiding behind the credit conversation:
+
+data terms.
+
+Teams often ask one vague question: "Do they train on our data?"
+
+That is necessary.
+
+It is not sufficient.
+
+OpenAI says on its [enterprise privacy page](https://openai.com/enterprise-privacy/) that it does not train on business data by default. Anthropic says in its [privacy center](https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training) that it does not use commercial Claude inputs or outputs to train its models by default, unless the customer opts in or provides feedback in a way covered by its policy.
+
+Those controls matter.
+
+But buyers still need to ask more precise questions:
+
+- What counts as customer content?
+- What counts as metadata?
+- What is retained?
+- Can logs be disabled or shortened?
+- Are prompts, outputs, files, tool traces, evals, or feedback treated differently?
+- Can the company export usage history?
+- Can the team prove which model handled which request?
+- What changes when a product moves from a free program to a paid enterprise plan?
+
+The answer may be completely reasonable.
+
+But "reasonable" is not the same as "understood."
+
+Most teams do not get hurt because a vendor secretly does something cartoonishly evil.
+
+They get hurt because nobody wrote down the boring operational details before the workflow became important.
+
+## ROI arrives after the pilot
+
+The awkward truth is that free credits can make AI look better than it is.
+
+Not because the model is fake.
+
+Because the pilot is fake.
+
+A pilot usually ignores half the cost:
+
+- integration work
+- prompt and eval maintenance
+- security review
+- human approval loops
+- failed runs
+- context management
+- vendor switching costs
+- internal support
+- model upgrades that change behavior
+- governance for who can use what
+
+That is fine when the goal is exploration.
+
+It is dangerous when the pilot becomes the business case.
+
+Agentic AI makes this worse because agents turn one user request into many model calls. A workflow that feels like one action may include planning, file search, web access, tool calls, retries, code execution, summarization, and review.
+
+The user sees one button.
+
+The invoice sees a small expedition.
+
+That is why OpenAI's investment-management framing is more interesting than the usual launch blog. The market is moving from "try AI" to "operate AI." That means usage controls, internal chargebacks, approval gates, evals, data policies, and model routing are no longer enterprise theater.
+
+They are the product.
+
+## The buyer checklist
+
+If you are a startup, free credits are great.
+
+Take them.
+
+Just do not let them do the thinking for you.
+
+Before a team builds a real workflow around subsidized AI, it should know:
+
+- What happens when the credits expire?
+- Which features are included in the free or startup tier?
+- Are data protections the same across free, startup, team, and enterprise plans?
+- Can the workflow run on another model without rewriting the product?
+- Are prompts, evals, traces, and usage logs portable?
+- What is the cost per successful task, not per prompt?
+- Which tasks need the expensive model?
+- Which tasks can use a cheaper model or local system?
+- Who can approve higher-cost runs?
+- What user-facing behavior changes when the quota is hit?
+
+That last one is underrated.
+
+Users do not care that your quota model is economically sophisticated.
+
+They care that the feature worked yesterday and now it does not.
+
+## Free is a phase, not a strategy
+
+The AI market is still in land-grab mode.
+
+Model companies want usage. Cloud companies want workloads. Startups want runway. Enterprises want productivity without admitting they do not yet know how to measure it.
+
+So the market will keep producing discounts, bundles, pilots, credits, free tiers, and confusingly generous offers.
+
+Use them.
+
+But treat them as a temporary pricing environment, not a permanent law of physics.
+
+The real AI bill is not only the invoice.
+
+It is the meter, the data policy, the workflow dependency, the switching cost, the eval burden, the human review loop, and the moment a subsidized experiment becomes infrastructure.
+
+Free AI can be a very good deal.
+
+Just make sure you know what you are buying before the price appears.
