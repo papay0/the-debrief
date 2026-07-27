@@ -1,0 +1,267 @@
+---
+title: "Defenders Need Models They Control"
+date: "2026-07-27"
+description: "NVIDIA's Open Secure AI Alliance is not just another open-model manifesto. It points to a practical security problem: when AI is part of incident response, defenders need models and agent tools they can inspect, adapt, run locally, and trust under pressure."
+tags: ["AI Security", "AI Agents", "Open Source", "NVIDIA"]
+draft: false
+---
+
+## The Short Version
+
+AI security has a control problem.
+
+Not only a capability problem.
+
+Not only a regulation problem.
+
+A control problem.
+
+On July 27, NVIDIA [announced the Open Secure AI Alliance](https://blogs.nvidia.com/blog/open-secure-ai-alliance/), a coalition with Microsoft, IBM, Hugging Face, the Linux Foundation, Cloudflare, CrowdStrike, Palantir, Cisco, Adobe, DoorDash, Salesforce, SpaceXAI, Thinking Machines Lab, and a long list of other founding members. The alliance says it will build and share open technologies, techniques, and tools to safeguard software and agents in the age of AI.
+
+That sounds like standard industry-consortium language.
+
+There is always a consortium.
+
+But this one has a sharper reason to exist.
+
+NVIDIA points directly to the recent [Hugging Face security incident](https://huggingface.co/blog/security-incident-july-2026). Hugging Face says it responded to an intrusion driven end to end by an autonomous AI agent system. To reconstruct what happened, it ran LLM-driven analysis over more than 17,000 recorded actions. The awkward part: when Hugging Face first tried commercial frontier APIs, the requests were blocked because incident response required submitting exploit payloads, attack commands, and command-and-control artifacts.
+
+So Hugging Face used an open-weight model, GLM 5.2, on its own infrastructure.
+
+That is the story.
+
+Not "open models good, closed models bad."
+
+Not "safety filters are stupid."
+
+The useful lesson is more operational:
+
+If AI is going to help defend systems, defenders need some AI they can actually control during the incident.
+
+Very inconvenient. The emergency tool cannot require the emergency to look polite.
+
+## Guardrails can create asymmetry
+
+Hosted frontier models need safety systems.
+
+That is not optional.
+
+If a general-purpose model can help with exploit chains, malware analysis, phishing infrastructure, credential abuse, lateral movement, and vulnerability discovery, the provider cannot simply let anyone submit anything and hope the user is a defender.
+
+The problem is that incident response looks a lot like offense from the model's point of view.
+
+A security team may need to paste attacker commands.
+
+It may need to analyze exploit code.
+
+It may need to reconstruct how credentials moved.
+
+It may need to summarize malicious infrastructure.
+
+It may need to ask, "What did this payload do, and what should we rotate?"
+
+Those are exactly the kinds of requests safety filters are trained to treat carefully.
+
+That creates a weird asymmetry:
+
+The attacker does not care about provider policy.
+
+The defender does.
+
+Hugging Face described this clearly. Its forensic analysis required feeding real attack artifacts into models. Commercial tools could not reliably distinguish attacker from responder, so the defender's workflow was blocked while the attacker had no equivalent constraint.
+
+That does not mean providers should remove guardrails.
+
+It means serious security teams need a fallback: local models, audited tools, approved internal harnesses, and a playbook that works when the hosted model says no.
+
+In a breach, "please rephrase your malicious payload" is not a workflow.
+
+## The alliance is really about the agent stack
+
+The most interesting part of NVIDIA's post is not the founding-member list.
+
+It is this line of argument:
+
+An AI agent is not just a model.
+
+It is models, harnesses, identity, permissions, isolation, guardrails, logs, evaluations, scanners, model formats, patch flows, and secure coding workflows.
+
+That is the right frame.
+
+The old open-versus-closed debate often gets stuck on weights. Can you download the model? Can you inspect it? Can you fine-tune it? Can you revoke it? Can someone strip out the safeguards?
+
+Those questions matter.
+
+But agent security is bigger than weights.
+
+If a coding agent can read a repo, run commands, install packages, open network connections, call APIs, and write patches, then security lives in the whole harness around it. If a defensive agent can analyze telemetry, rotate keys, file tickets, patch code, and isolate workloads, then the model is only one part of the trust boundary.
+
+That is why the alliance is talking about things like identity, safe model formats, multi-model scanning, red-teaming tools, and agent harness research.
+
+NVIDIA says it is contributing open models, weights, data, and agent harness research. Hugging Face is pointing to Safetensors. HPE is contributing around SPIFFE/SPIRE identity. Microsoft is contributing its MDASH multi-model agentic scanning harness. IBM and Red Hat are contributing supply-chain security work.
+
+This is not just "make a chatbot open source."
+
+It is "make parts of the AI defense stack inspectable."
+
+That is much more useful.
+
+## Closed models are still necessary
+
+There is a dumb version of this story that says:
+
+"Closed labs failed. Open models saved the day."
+
+Please do not publish that deck.
+
+Closed frontier models are still going to matter for security. They may be stronger at some forms of reasoning, code analysis, vulnerability chaining, summarization, and tool use. They may have better enterprise controls, logging, abuse monitoring, support, legal commitments, and model updates. Many companies will not want to run their own frontier models for every workflow, because most companies do not want to become model infrastructure operators in the middle of a crisis.
+
+Hosted models can be extremely useful.
+
+OpenAI's own [incident post](https://openai.com/index/hugging-face-model-evaluation-security-incident/) says it is bringing Hugging Face into its trusted-access program and supporting its teams in using OpenAI model capabilities to improve defenses. That is a real path too.
+
+The point is not replacement.
+
+The point is resilience.
+
+You do not want one model provider, one policy layer, one API, one refusal behavior, one logging regime, and one external dependency to become your whole incident-response plan.
+
+Security people already understand this. You do not build a serious response program around one vendor button.
+
+AI should not be different.
+
+Use closed frontier models where they help.
+
+Use open and local models where control matters.
+
+Build the playbook before the breach.
+
+## Open models are not magically safe
+
+Now the other caveat.
+
+Open models can absolutely make the world more dangerous.
+
+They can be modified.
+
+They can be fine-tuned.
+
+They can be run without provider monitoring.
+
+They can be used by attackers, not only defenders.
+
+They can spread faster than institutions can react.
+
+Anthropic's warning about increasingly capable open-weight models is not imaginary. Once weights are out, you cannot revoke them like an API key. A model that helps a defender analyze attack infrastructure may also help an attacker automate reconnaissance or debug an exploit chain.
+
+That is real.
+
+NVIDIA's argument is not that open models are harmless. Its post explicitly says open models can be misused and that the risks must be managed wherever advanced AI is deployed.
+
+Good.
+
+That is the only serious position.
+
+The question is not whether open models are safe in the abstract.
+
+The question is whether a security ecosystem that denies defenders inspectable, adaptable AI tools is safer than one that gives them controlled access to those tools.
+
+For cybersecurity, the answer is probably no.
+
+Attackers already collaborate.
+
+Defenders need more than a help desk ticket to a frontier lab.
+
+## What this means for builders
+
+If you are building software that uses agents, this should change your security checklist.
+
+Do not only ask:
+
+"Which model is best?"
+
+Ask:
+
+What happens during an incident?
+
+Can the security team analyze malicious prompts, tool calls, logs, files, generated code, and attack payloads without being blocked by the model layer?
+
+Can sensitive attacker data stay inside your environment?
+
+Can you run a vetted local model if external APIs are unavailable, too slow, too expensive, or too restrictive?
+
+Do your agent logs show which model did what, which tools it called, which permissions it used, and which external content influenced it?
+
+Can an incident responder replay the agent's actions?
+
+Can you isolate an agent identity the same way you isolate a compromised service account?
+
+Can you rotate the secrets the agent touched?
+
+Can you prove a model artifact did not execute arbitrary code when loaded?
+
+Can your red-team harness test the whole workflow, not just the final answer?
+
+These are boring questions.
+
+Excellent.
+
+Boring is what security looks like when it works.
+
+## The policy lesson is subtle
+
+This also matters for regulators.
+
+Yesterday I wrote that [the AI race has entered its super PAC era](/en/posts/ai-race-has-entered-super-pac-era), and open-weight AI is already one of the policy fights underneath that money.
+
+The Open Secure AI Alliance gives the open-model side a sharper argument:
+
+Do not regulate open models only as proliferation risk.
+
+Regulate them also as defensive infrastructure.
+
+That does not mean "no rules."
+
+It means blanket restrictions can backfire. If a hospital, cloud provider, utility, AI platform, defense contractor, or state agency cannot run capable local AI during an incident, it may become more dependent on a few closed providers at the exact moment speed, privacy, and auditability matter most.
+
+That is not obviously safer.
+
+The better policy work is narrower:
+
+- provenance rules for models and datasets
+- safety evaluations for high-risk deployments
+- legal consequences for malicious use
+- support for defensive open datasets and red-team tools
+- secure model formats and supply-chain checks
+- incident-reporting norms for agent failures
+- trusted-access paths that do not leave smaller defenders outside the gate
+
+That is harder than "open good" or "open bad."
+
+So naturally it will fit beautifully on social media.
+
+## The bottom line
+
+The Open Secure AI Alliance may become important.
+
+It may also become another logo wall with a few useful projects underneath it.
+
+Both outcomes are possible.
+
+But the reason it exists is real.
+
+AI agents are becoming part of both attack and defense. That means the security stack has to change. Defenders need models they can inspect, adapt, run locally, govern, log, and trust when the system is already on fire.
+
+Hosted frontier models will be part of that stack.
+
+Open models will be part of that stack too.
+
+The hard part is not choosing a tribe.
+
+The hard part is building a defensive ecosystem where the agent can help without becoming the next thing nobody can audit.
+
+Security does not get better because the model is closed.
+
+It does not get better because the model is open.
+
+It gets better when defenders can verify what happened, control what runs, and respond faster than the attacker.
