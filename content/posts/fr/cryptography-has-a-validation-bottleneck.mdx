@@ -1,0 +1,306 @@
+---
+title: "La cryptographie a un goulot de validation"
+date: "2026-07-29"
+description: "Anthropic dit que Claude Mythos Preview a trouvé de nouvelles attaques contre HAWK et une version réduite d'AES. La leçon pratique n'est pas que la crypto de production est cassée. C'est que l'IA peut produire de la recherche sérieuse plus vite que les humains ne peuvent la valider."
+tags: ["AI Security", "Anthropic", "AI Research", "Cryptography"]
+draft: false
+---
+
+## La version courte
+
+Claude n'a pas cassé Internet.
+
+C'est la première chose à dire.
+
+Le 28 juillet, Anthropic a publié une recherche sur [la découverte de faiblesses cryptographiques avec Claude](https://www.anthropic.com/research/discovering-cryptographic-weaknesses). En utilisant Claude Mythos Preview, des chercheurs d'Anthropic ont trouvé une attaque améliorée contre HAWK, un candidat de signature post-quantique examiné dans le processus du NIST, et une attaque plus rapide contre une version réduite d'AES.
+
+Anthropic est explicite sur la limite : ces résultats n'affectent pas les systèmes de production aujourd'hui. HAWK est un schéma candidat, pas une plomberie déjà déployée sur Internet. Le résultat AES concerne une version de recherche affaiblie à 7 tours, pas l'AES-128 complet à 10 tours dont les systèmes dépendent réellement.
+
+Très bien.
+
+Mais l'histoire reste importante.
+
+Pas parce qu'il faut paniquer sur les mots de passe.
+
+Pas parce que Claude serait soudain un magicien avec un crochet de serrurier.
+
+La leçon utile est plus simple, et plus gênante :
+
+L'IA rend la production de résultats de recherche moins chère que leur validation.
+
+Anthropic dit que l'attaque contre HAWK a demandé environ 60 heures de travail assisté par Claude, et que chacun des deux principaux résultats a coûté à peu près 100 000 dollars en coûts d'API. Le résultat sur l'AES réduit a pris environ une semaine à Mythos pour être découvert, mais les chercheurs ont ensuite passé des centaines d'heures à apprendre assez de cryptographie pour le valider. Anthropic dit que deux chercheurs ont eu besoin de presque un mois pour prendre confiance dans le résultat AES.
+
+C'est ça, le vrai changement produit.
+
+Le modèle peut proposer, chercher, coder, tester, abandonner, puis proposer encore.
+
+L'humain doit toujours savoir si quelque chose est vrai.
+
+Très futuriste. On a automatisé la partie difficile et découvert une partie encore plus difficile derrière.
+
+## C'est de l'accélération de recherche, pas de la magie
+
+La cryptographie est un bon endroit pour rester discipliné sur les affirmations.
+
+Le domaine suppose déjà une revue adversariale. Un nouveau chiffrement est proposé, attaqué, révisé, débattu, benchmarké, cassé, défendu, puis parfois standardisé après des années d'examen. L'échec n'est pas embarrassant de la même manière que dans un lancement produit. L'échec fait partie de la méthode.
+
+C'est pour cela que le résultat d'Anthropic sur HAWK n'est pas seulement un titre inquiétant.
+
+HAWK était dans un processus de revue conçu précisément pour faire apparaître ce genre de faiblesse avant le déploiement. Anthropic dit que Claude Mythos a trouvé une symétrie non exploitée jusque-là dans la structure de réseau utilisée par HAWK, puis l'a utilisée pour accélérer la récupération de clé. L'effet immédiat est que certaines tailles de clés proposées pour HAWK semblent beaucoup plus faibles que prévu, au point qu'il faudrait les doubler pour retrouver le même niveau de sécurité.
+
+C'est important pour ce candidat.
+
+Cela ne veut pas dire que la cryptographie post-quantique est cassée.
+
+Cela ne veut pas dire que tous les schémas à base de réseaux sont condamnés.
+
+Cela veut dire que le processus de revue vient de recevoir un nouvel attaquant.
+
+C'est exactement le fonctionnement normal de la cryptographie.
+
+Le résultat AES est encore plus facile à mal lire. Anthropic dit que Mythos a amélioré des attaques contre une version AES-128 à 7 tours, en réduisant le travail d'une attaque meet-in-the-middle existante d'environ 200 à 800 fois selon la manière dont on mesure le temps d'exécution.
+
+Là encore : AES-128 complet a 10 tours.
+
+Les chercheurs étudient des versions réduites pour comprendre les marges, pas parce que votre banque utilise secrètement un AES jouet.
+
+La bonne conclusion n'est donc pas :
+
+"L'IA a cassé le chiffrement."
+
+C'est :
+
+"L'IA devient utile dans le type de recherche adversariale technique dont dépend la cryptographie."
+
+Moins spectaculaire.
+
+Plus important.
+
+## La boucle agentique est l'instrument
+
+La partie la plus intéressante n'est pas que Claude ait répondu à une question de cryptographie.
+
+C'est la manière dont le travail s'est déroulé.
+
+Anthropic décrit un harness proche de Claude Code, avec plusieurs agents de travail, des outils sandboxés, Python, Sage, l'accès à des travaux cryptographiques publiés, et assez d'autonomie pour lancer des expériences de calcul. Pour HAWK, l'opérateur humain n'était pas expert en cryptographie à base de réseaux. Anthropic dit que l'humain donnait surtout une forme de gestion de projet : garder la trace des idées, utiliser telle bibliothèque, vérifier telle affirmation.
+
+C'est différent de demander à un chatbot :
+
+"Trouve une faiblesse cryptographique."
+
+Le modèle ne produisait pas seulement du texte. Il lisait des papiers, formulait des hypothèses, écrivait du code, testait des idées, rejetait des pistes, coordonnait des sous-agents et construisait des pipelines de vérification.
+
+C'est le même motif que l'on retrouve partout dans les agents IA :
+
+Le modèle compte.
+
+Le harness compte autant.
+
+Les outils comptent.
+
+Les logs comptent.
+
+La capacité à lancer beaucoup d'essais compte.
+
+La capacité à conserver des idées partielles compte.
+
+L'utilisateur est moins un rédacteur de prompt qu'un chef de projet de recherche.
+
+Ce dernier point est inconfortable, parce qu'il sonne à la fois puissant et très facile à exagérer. Une personne non experte avec un modèle fort et un bon échafaudage agentique peut pousser dans un territoire d'experts, mais le dernier kilomètre appartient toujours à l'expertise. L'histoire AES d'Anthropic le prouve elle-même. Le modèle a trouvé l'idée rapidement. Les humains ont ensuite dû faire le travail lent : décider si l'idée était réelle.
+
+Ce n'est pas une note de bas de page.
+
+C'est le goulot.
+
+## La vérification devient la compétence rare
+
+L'industrie IA parle beaucoup de "scientifiques IA".
+
+Voilà à quoi cette expression ressemble quand elle arrête d'être un slogan.
+
+Le résultat n'est pas une réponse polie.
+
+C'est une pile d'hypothèses, d'expériences, de code, de logs, de pistes abandonnées, de preuves partielles et d'un résultat étrangement intéressant.
+
+Quelqu'un doit le valider.
+
+Quelqu'un doit connaître la littérature.
+
+Quelqu'un doit reproduire l'attaque.
+
+Quelqu'un doit vérifier les hypothèses.
+
+Quelqu'un doit distinguer le nouveau du redécouvert.
+
+Quelqu'un doit décider si le résultat compte dans un vrai modèle de menace.
+
+Quelqu'un doit coordonner la divulgation.
+
+Quelqu'un doit prévenir le NIST, les auteurs, les vendeurs, les gouvernements ou les utilisateurs sans transformer par accident un résultat de recherche en tutoriel d'exploitation.
+
+Voici le futur moins glamour de la science accélérée par IA :
+
+la file de revue s'allonge.
+
+Si les modèles peuvent produire de la recherche plausible plus vite que les humains ne peuvent la valider, la question institutionnelle clé n'est pas seulement de créer plus de découvertes. C'est de savoir comment les trier sans se noyer.
+
+Cela dépasse largement la cryptographie.
+
+Découverte de médicaments.
+
+Matériaux.
+
+Démonstration de théorèmes.
+
+Recherche sécurité.
+
+Biologie.
+
+Design de puces.
+
+Chaque domaine où un système IA peut proposer à bas coût des milliers d'affirmations techniques aura besoin d'une meilleure machine de validation.
+
+Le goulot se déplace de l'imagination vers la vérification.
+
+Magnifique. La revue par les pairs était trop rapide et trop reposante de toute façon.
+
+## Ne confondez pas confiance et exactitude
+
+Un des détails les plus étranges du billet d'Anthropic est que Claude a d'abord résisté au travail sur AES.
+
+Anthropic dit que les premiers essais faisaient conclure à Claude qu'améliorer les attaques contre AES était globalement trop difficile. Les chercheurs l'ont poussé à continuer, à chercher un résultat publiable, et à ne pas fuir vers des cibles plus simples. Mythos a finalement produit l'idée de Möbius Bridge derrière l'attaque améliorée sur AES réduit.
+
+C'est fascinant.
+
+C'est aussi un avertissement.
+
+Le modèle peut avoir tort quand il est trop pessimiste.
+
+Le modèle peut avoir tort quand il est trop confiant.
+
+Le modèle peut avoir raison pour des raisons difficiles à auditer.
+
+Le modèle peut créer assez de matière technique pour que l'humain se retrouve en retard.
+
+C'est pour cela que "le modèle pense avoir trouvé quelque chose" n'est pas un résultat.
+
+C'est une piste.
+
+En ingénierie logicielle, une piste peut souvent être testée vite. Le test passe-t-il ? L'exploit se reproduit-il ? Le patch marche-t-il ? Même là, c'est désordonné.
+
+En cryptographie, l'objet est plus abstrait. Une preuve peut cacher une mauvaise hypothèse. Une attaque peut dépendre de ressources impossibles. Un résultat peut être mathématiquement valide et pratiquement sans effet. Un raccourci peut être une vieille littérature avec un nouveau nom.
+
+Donc l'interface de la recherche IA ne devrait pas être un écran de victoire.
+
+Elle devrait être une salle de preuves.
+
+Montrez le raisonnement.
+
+Montrez le code.
+
+Montrez les tentatives ratées.
+
+Montrez les étapes de reproduction.
+
+Montrez les hypothèses.
+
+Montrez où le modèle devine.
+
+Montrez ce qu'un expert humain doit encore vérifier.
+
+Si le lab IA ne peut pas produire cela, il n'a pas produit de recherche. Il a produit une affirmation avec une jolie typographie.
+
+## Le double usage devient plus tranchant
+
+La cryptanalyse est à double usage par nature.
+
+Trouver une faiblesse peut rendre le monde plus sûr si cela arrive avant le déploiement, avant que des attaquants l'exploitent, et avant qu'un standard fragile ne soit verrouillé.
+
+Trouver une faiblesse peut aussi rendre le monde moins sûr si elle touche un système déployé et se diffuse plus vite que les défenseurs ne peuvent patcher ou migrer.
+
+Anthropic dit avoir suivi des procédures de divulgation responsable, consulté des universitaires, partagé des copies en avance avec des partenaires gouvernementaux et industriels américains, et coordonné la divulgation HAWK avec les auteurs du schéma et la liste publique du NIST.
+
+C'est la bonne forme.
+
+C'est aussi l'aperçu d'un problème beaucoup plus dur.
+
+Que se passe-t-il quand un modèle trouve une faiblesse pratique dans un cryptosystème déployé ?
+
+Que se passe-t-il quand il en trouve dix ?
+
+Que se passe-t-il quand un modèle ouvert plus faible peut reproduire la méthode ?
+
+Que se passe-t-il quand les mainteneurs concernés manquent de ressources, que le chemin de migration est lent, et que les attaquants peuvent lancer la même recherche ?
+
+C'est là que l'histoire "l'IA pour la défense" cesse d'être simplement rassurante.
+
+Oui, les modèles capables peuvent aider les défenseurs.
+
+Ils peuvent aussi compresser le temps entre découverte et exploitation.
+
+La réponse saine n'est pas de prétendre que la capacité n'existe pas. La réponse saine est de construire les processus de divulgation, de triage, de contrôle d'accès, de logs et de remédiation d'urgence avant le premier résultat vraiment pratique.
+
+La cryptographie possède déjà une partie de cette culture.
+
+La plupart des industries, non.
+
+## Ce que les builders doivent en tirer
+
+La plupart des équipes produit ne conçoivent pas de signatures post-quantiques.
+
+Cette histoire devrait quand même changer leur manière de penser l'IA dans le travail technique.
+
+Si vous utilisez l'IA pour la recherche sécurité, la revue de code, le design de protocoles, l'analyse compliance, le travail scientifique ou n'importe quel domaine où l'exactitude compte, demandez :
+
+- Le système conserve-t-il assez de preuves pour qu'un humain puisse auditer le résultat ?
+- Peut-il reproduire la découverte depuis un environnement propre ?
+- Peut-il séparer les pistes spéculatives des affirmations vérifiées ?
+- Peut-il suivre quelle source ou quelle expérience a changé son avis ?
+- Plusieurs agents peuvent-ils être en désaccord utilement au lieu de converger vers la même erreur ?
+- Un expert humain peut-il inspecter le travail sans lire un milliard de tokens ?
+- L'organisation peut-elle trier les résultats générés par modèle selon la gravité, la nouveauté et le niveau de confiance ?
+- La divulgation peut-elle arriver avant que l'excitation publique devienne un risque opérationnel ?
+
+Ce sont des questions produit.
+
+Pas seulement des questions de recherche.
+
+Les outils IA pour domaines experts ne seront pas jugés seulement sur le nombre d'idées qu'ils génèrent. Ils seront jugés sur leur capacité à aider les humains à vérifier, prioriser et agir prudemment sur ces idées.
+
+Le prochain assistant de recherche ne devrait pas seulement dire :
+
+"J'ai trouvé quelque chose."
+
+Il devrait dire :
+
+"Voici l'affirmation, voici les preuves, voici ce qui a échoué, voici ce qui pourrait la falsifier, voici qui doit la relire, et voici pourquoi il ne faut pas encore publier le communiqué."
+
+Pénible ?
+
+Oui.
+
+Utile ?
+
+Extrêmement.
+
+## Le fond de l'histoire
+
+Le résultat cryptographique d'Anthropic est un signal clair parce qu'il est excitant et limité à la fois.
+
+Pas de panique sur la crypto de production.
+
+Pas de remplacement instantané des experts.
+
+Pas de preuve que chaque modèle devrait recevoir chaque chiffrement.
+
+Mais pas non plus de rejet facile.
+
+Un modèle de pointe, placé dans le bon échafaudage agentique, semble capable de faire de la recherche adversariale sérieuse dans un domaine où l'exactitude est difficile, les enjeux élevés, et l'expertise humaine rare.
+
+Cela devrait rendre les builders moins impressionnés par la production brute et beaucoup plus obsédés par la validation.
+
+Le prochain goulot n'est pas de savoir si l'IA peut produire plus d'affirmations.
+
+Elle le peut.
+
+Le goulot est de savoir si les humains, les institutions et les outils peuvent distinguer quelles affirmations méritent de devenir réalité.

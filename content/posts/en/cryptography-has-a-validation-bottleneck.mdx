@@ -1,0 +1,306 @@
+---
+title: "Cryptography Has a Validation Bottleneck"
+date: "2026-07-29"
+description: "Anthropic says Claude Mythos Preview found new attacks on HAWK and a reduced version of AES. The practical lesson is not that production crypto is broken. It is that AI can generate serious research faster than humans can validate it."
+tags: ["AI Security", "Anthropic", "AI Research", "Cryptography"]
+draft: false
+---
+
+## The Short Version
+
+Claude did not break the internet.
+
+That is the first thing to say.
+
+On July 28, Anthropic published research on [discovering cryptographic weaknesses with Claude](https://www.anthropic.com/research/discovering-cryptographic-weaknesses). Using Claude Mythos Preview, Anthropic researchers found an improved attack on HAWK, a post-quantum digital-signature candidate being reviewed in the NIST process, and a faster attack on a reduced-round version of AES.
+
+Anthropic is explicit about the caveat: these findings do not currently affect production systems. HAWK is a candidate scheme, not deployed internet plumbing. The AES result applies to a weakened research version with 7 rounds, not the full 10-round AES-128 people actually depend on.
+
+Good.
+
+But the story is still important.
+
+Not because everyone should panic about passwords.
+
+Not because Claude is now a wizard with a lockpick.
+
+The useful lesson is simpler and more awkward:
+
+AI is making research output cheaper than research validation.
+
+Anthropic says the HAWK attack took about 60 hours of Claude-assisted work, and that each of the two main results cost roughly $100,000 in API spend. The reduced-round AES result took about a week for Mythos to discover, but researchers then spent hundreds of hours learning enough cryptography to validate it. Anthropic says two researchers needed nearly a month to gain confidence in the AES result.
+
+That is the real product shift.
+
+The model can propose, search, code, test, discard, and propose again.
+
+The human still has to know whether the thing is true.
+
+Very futuristic. We automated the hard part and discovered an even harder part behind it.
+
+## This is research acceleration, not magic
+
+Cryptography is a good place to be disciplined about claims.
+
+The field already assumes adversarial review. A new cipher is proposed, attacked, revised, debated, benchmarked, broken, defended, and sometimes standardized only after years of scrutiny. Failure is not embarrassing in the same way it might be in a product launch. Failure is the method.
+
+That is why Anthropic's HAWK result is not simply a scary headline.
+
+HAWK was in a review process designed to surface exactly this kind of weakness before deployment. Anthropic says Claude Mythos found a previously unexploited symmetry in the lattice structure behind HAWK and used it to speed up key recovery. The immediate effect is that some proposed HAWK key sizes appear much weaker than expected, enough that doubling key sizes would be needed to reach the same security level.
+
+That matters for the candidate.
+
+It does not mean post-quantum cryptography is broken.
+
+It does not mean every lattice scheme is doomed.
+
+It means the review process got a new attacker.
+
+That is how cryptography is supposed to work.
+
+The AES result is even easier to misread. Anthropic says Mythos improved attacks on a 7-round version of AES-128, reducing the work of a prior meet-in-the-middle attack by roughly 200 to 800 times depending on how the runtime is measured.
+
+Again: full AES-128 has 10 rounds.
+
+Researchers study reduced-round variants to understand margins, not because your bank is secretly using toy AES.
+
+So the right takeaway is not:
+
+"AI broke encryption."
+
+It is:
+
+"AI is becoming useful at the kind of technical adversarial search that cryptography depends on."
+
+Less dramatic.
+
+More important.
+
+## The agent loop is the instrument
+
+The most interesting part is not that Claude answered a cryptography question.
+
+It is how the work happened.
+
+Anthropic describes a Claude Code-like harness with multiple worker agents, sandboxed tools, Python, Sage, access to published cryptographic work, and enough autonomy to run computational experiments. For HAWK, the human operator was not a lattice-cryptography expert. Anthropic says the human mostly gave project-management guidance: keep track of ideas, use this library, verify the claim.
+
+That is different from asking a chatbot:
+
+"Please find a cryptographic weakness."
+
+The model was not only producing text. It was reading papers, forming hypotheses, writing code, testing ideas, rejecting paths, coordinating sub-agents, and building verification pipelines.
+
+This is the same pattern showing up across AI agents:
+
+The model matters.
+
+The harness matters as much.
+
+The tools matter.
+
+The logs matter.
+
+The ability to run many attempts matters.
+
+The ability to preserve partial ideas matters.
+
+The user is less a prompt writer than a research manager.
+
+That last part is uncomfortable, because it sounds both powerful and extremely easy to overstate. A non-expert with a strong model and a good scaffold can push into expert territory, but the last mile still belongs to expertise. Anthropic's own AES story proves it. The model found the idea quickly. The humans then had to do the slow work of deciding whether the idea was real.
+
+That is not a footnote.
+
+That is the bottleneck.
+
+## Verification becomes the scarce skill
+
+The AI industry keeps talking about "AI scientists."
+
+This is what that phrase looks like when it stops being a slogan.
+
+The output is not a polished answer.
+
+It is a pile of hypotheses, experiments, code, logs, partial proofs, wrong turns, and one suspiciously interesting result.
+
+Someone has to validate it.
+
+Someone has to know the literature.
+
+Someone has to reproduce the attack.
+
+Someone has to check the assumptions.
+
+Someone has to distinguish "new" from "rediscovered."
+
+Someone has to decide whether the result matters under real threat models.
+
+Someone has to coordinate disclosure.
+
+Someone has to tell NIST, authors, vendors, governments, or users without accidentally turning a research finding into an exploit tutorial.
+
+This is the less glamorous future of AI-accelerated science:
+
+the review queue gets longer.
+
+If models can generate plausible research faster than humans can validate it, then the key institutional question is not only how to create more discoveries. It is how to triage them without drowning.
+
+That applies far beyond cryptography.
+
+Drug discovery.
+
+Materials science.
+
+Theorem proving.
+
+Security research.
+
+Biology.
+
+Chip design.
+
+Every field where an AI system can cheaply propose thousands of technical claims will need stronger validation machinery.
+
+The bottleneck moves from imagination to verification.
+
+Beautiful. Peer review was too fast and relaxing anyway.
+
+## Do not confuse confidence with correctness
+
+One of the stranger details in Anthropic's post is that Claude initially resisted the AES work.
+
+Anthropic says early runs had Claude deciding that improving attacks on AES was basically too hard. The researchers pushed it to keep trying, to look for publishable research, and to stop retreating to easier targets. Eventually Mythos produced the Möbius Bridge idea behind the improved reduced-round AES attack.
+
+That is fascinating.
+
+It is also a warning.
+
+The model can be wrong when it is too pessimistic.
+
+The model can be wrong when it is too confident.
+
+The model can be right for reasons that are hard to audit.
+
+The model can create enough technical material that the human feels behind.
+
+This is why "the model thinks it found something" is not a result.
+
+It is a lead.
+
+In software engineering, a lead can often be tested quickly. Does the test pass? Does the exploit reproduce? Does the patch work? Even there, it is messy.
+
+In cryptography, the object is more abstract. A proof can hide a bad assumption. An attack can rely on impossible resources. A result can be mathematically valid and practically irrelevant. A shortcut can be old literature wearing a new name.
+
+So the interface for AI research should not be a victory screen.
+
+It should be an evidence room.
+
+Show the chain of reasoning.
+
+Show the code.
+
+Show failed attempts.
+
+Show reproduction steps.
+
+Show assumptions.
+
+Show where the model is guessing.
+
+Show what a human expert still has to check.
+
+If the AI lab cannot produce that, it has not produced research. It has produced a claim with nice typography.
+
+## The dual-use problem gets sharper
+
+Cryptanalysis is inherently dual-use.
+
+Finding a weakness can make the world safer if it happens before deployment, before attackers exploit it, and before a weak standard gets locked in.
+
+Finding a weakness can also make the world less safe if it applies to a deployed system and spreads faster than defenders can patch or migrate.
+
+Anthropic says it followed responsible disclosure, consulted academics, shared advance copies with U.S. government and industry partners, and coordinated the HAWK disclosure with the scheme authors and the public NIST mailing list.
+
+That is the right shape.
+
+It is also a preview of a much harder problem.
+
+What happens when a model finds a practical weakness in a deployed cryptosystem?
+
+What happens when it finds ten?
+
+What happens when a weaker open model can reproduce the method?
+
+What happens when the relevant maintainers are under-resourced, the migration path is slow, and attackers can run the same search?
+
+This is where the "AI for defense" story stops being comforting.
+
+Yes, capable models can help defenders.
+
+They can also compress the time between discovery and weaponization.
+
+The safe answer is not to pretend the capability does not exist. The safe answer is to build disclosure, triage, access control, logging, and emergency remediation processes before the first truly practical result lands.
+
+Cryptography already has some of this culture.
+
+Most industries do not.
+
+## What builders should take from this
+
+Most product teams are not designing post-quantum signatures.
+
+Still, this story should change how they think about AI in technical work.
+
+If you are using AI for security research, code review, protocol design, compliance analysis, scientific work, or any domain where correctness matters, ask:
+
+- Can the system preserve enough evidence for a human to audit the result?
+- Can it reproduce the finding from a clean environment?
+- Can it separate speculative leads from verified claims?
+- Can it track which source or experiment changed its mind?
+- Can multiple agents disagree productively instead of converging on the same mistake?
+- Can a human expert inspect the work without reading a billion tokens?
+- Can the organization triage model-generated findings by severity, novelty, and confidence?
+- Can disclosure happen before public excitement turns into operational risk?
+
+These are product questions.
+
+Not only research questions.
+
+AI tools for expert domains will not be judged only by how many ideas they generate. They will be judged by how well they help humans verify, prioritize, and safely act on those ideas.
+
+The next research assistant should not only say:
+
+"I found something."
+
+It should say:
+
+"Here is the claim, here is the evidence, here is what failed, here is what would falsify it, here is who should review it, and here is why we should not ship a press release yet."
+
+Annoying?
+
+Yes.
+
+Useful?
+
+Extremely.
+
+## The bottom line
+
+Anthropic's cryptography result is a clean signal because it is exciting and limited at the same time.
+
+No production crypto panic.
+
+No instant replacement of experts.
+
+No proof that every model should be handed every cipher.
+
+But also no easy dismissal.
+
+A frontier model, placed in the right agentic scaffold, appears capable of doing serious adversarial research in a field where correctness is hard, stakes are high, and human expertise is scarce.
+
+That should make builders less impressed by raw output and more obsessed with validation.
+
+The next bottleneck is not whether AI can produce more claims.
+
+It can.
+
+The bottleneck is whether humans, institutions, and tools can tell which claims deserve to become reality.
