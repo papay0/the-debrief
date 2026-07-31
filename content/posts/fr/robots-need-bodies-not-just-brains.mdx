@@ -1,0 +1,270 @@
+---
+title: "Les robots ont besoin d'un corps, pas juste d'un cerveau"
+date: "2026-07-31"
+description: "Gemini Robotics 2 de Google DeepMind n'est pas seulement une meilleure démo humanoïde. C'est un rappel que l'IA physique a besoin de contrôle du corps entier, de suivi de progression, d'inférence locale, d'adaptation au matériel et de sécurité quand le modèle peut vraiment bouger des objets."
+tags: ["Robotics", "Google DeepMind", "AI Agents", "Physical AI"]
+draft: false
+---
+
+## La version courte
+
+La façon la plus simple de mal lire une démo robotique, c'est de regarder seulement le robot.
+
+Regarder les mains.
+
+Regarder la marche.
+
+Regarder l'arrosoir.
+
+Normal. Le corps fait le spectacle.
+
+Mais ce qu'il faut retenir de l'annonce [Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/) de Google, publiée le 30 juillet, ce n'est pas seulement qu'un robot Apptronik Apollo 2 peut marcher, s'accroupir, atteindre une étagère, prendre des objets, utiliser des mains à cinq doigts ou collaborer avec un autre robot.
+
+Le point utile, c'est que l'IA physique commence à ressembler à une stack d'agents.
+
+Google ne présente pas un cerveau magique unique pour robots. Il décrit trois couches :
+
+- Gemini Robotics 2, un modèle vision-langage-action qui transforme la vision et le langage en contrôle moteur.
+- Gemini Robotics ER 2, un modèle de raisonnement incarné qui planifie des tâches, regarde de la vidéo, appelle des outils, suit la progression et coordonne des robots.
+- Gemini Robotics On-Device 2, un modèle local qui peut s'adapter à de nouveaux corps robotiques avec quelques heures de données.
+
+Cette stack compte plus que la démo sur étagère.
+
+Parce que lorsqu'un agent IA quitte le navigateur et entre dans un corps, les anciennes questions produit deviennent plus lourdes.
+
+La latence n'est pas seulement de l'expérience utilisateur.
+
+C'est de la sécurité.
+
+Le suivi de progression n'est pas seulement de l'observabilité.
+
+C'est ce qui permet au robot de savoir si l'ampoule est vraiment vissée, si le sac est vraiment noué, si l'objet a glissé, ou s'il doit demander à un humain avant de deviner.
+
+La qualité du modèle compte toujours.
+
+Mais en robotique, le modèle ne peut pas être seulement intelligent.
+
+Il doit être situé.
+
+Très contrariant. Le monde réel refuse toujours d'être un benchmark.
+
+## Ce n'est pas un chatbot avec des jambes
+
+Le titre facile serait :
+
+"Google a donné un corps à Gemini."
+
+Mignon.
+
+Assez faux pour être important.
+
+Un chatbot peut rester utile tout en étant flou sur le monde. Il peut produire un plan, résumer une réunion, écrire du code, se tromper, puis attendre que quelqu'un le corrige.
+
+Un robot doit fermer la boucle.
+
+Il voit.
+
+Il décide.
+
+Il bouge.
+
+Le monde change.
+
+Il vérifie.
+
+Si le mouvement est mauvais, l'échec n'est pas un mauvais paragraphe. Cela peut être une collision, un liquide renversé, un objet cassé, un chemin bloqué, un doigt pincé, ou une personne surprise.
+
+C'est pour cela que Gemini Robotics 2 est intéressant même si l'on reste sceptique devant le langage de "physical AGI". L'annonce compte moins comme preuve que les robots domestiques généralistes sont soudain arrivés que comme carte de ce que les agents physiques exigent.
+
+Ils exigent des corps.
+
+Ils exigent des interfaces de contrôle.
+
+Ils exigent de la compréhension vidéo.
+
+Ils exigent du timing.
+
+Ils exigent des arrêts de sécurité.
+
+Ils exigent une façon de savoir quand une tâche est terminée.
+
+Ils exigent une adaptation au matériel.
+
+Ils exigent l'humilité de demander de l'aide.
+
+C'est un problème d'ingénierie très différent d'un modèle qui sonne intelligent.
+
+## Le corps fait partie de l'intelligence
+
+Google dit que Gemini Robotics 2 peut maintenant contrôler des robots humanoïdes entiers, "des pieds jusqu'au bout des doigts", ainsi que d'autres systèmes à deux bras. Le modèle peut gérer le mouvement du corps entier, l'usage avancé de pinces, et des tâches plus fines avec des mains à cinq doigts.
+
+C'est une vraie avancée.
+
+Ce n'est pas magique pour autant.
+
+Les propres graphiques de Google racontent mieux l'histoire que n'importe quelle phrase de lancement. Le système affiche des taux de réussite moyens à élevés sur certaines tâches de corps entier et de dextérité avec pince, tandis que la dextérité multi-doigts reste irrégulière. Dans un exemple officiel, dévisser une ampoule semble beaucoup plus facile que la visser. Nouer un sac poubelle, utiliser une pelle à poussière ou fermer un sac ziplock restent dans la zone des choses encore compliquées.
+
+Très bien.
+
+C'est à cela que ressemble une robotique honnête.
+
+Le corps n'est pas un périphérique stupide qui attend l'arrivée de l'intelligence. La main, la pince, le bras, la caméra, l'équilibre, le contrôleur, le moteur, les capteurs et l'environnement physique influencent tous ce que le "même" modèle peut faire.
+
+C'est pour cela que l'adaptation on-device compte. Google dit que Gemini Robotics On-Device 2 peut s'adapter à de nouveaux robots à deux bras avec quelques heures d'adaptation et en général moins de 200 exemples.
+
+Si cela tient hors des démos Google, c'est important.
+
+La robotique ne passera pas à l'échelle si chaque nouveau corps robotique exige de reconstruire toute la couche d'intelligence. Il y aura des humanoïdes, des robots roulants, des bras, des systèmes d'entrepôt, des dispositifs d'assistance, des machines industrielles, des drones et des machines bizarres conçues pour des contraintes très précises.
+
+Le modèle doit voyager.
+
+Mais il ne peut pas voyager comme un logiciel texte.
+
+Il doit apprendre le corps qu'il a.
+
+C'est la version robotique de la portabilité de plateforme.
+
+## Le suivi de progression est la vraie pièce discrète
+
+La partie la moins spectaculaire de l'annonce est peut-être la plus utile.
+
+Le post [Gemini Robotics ER 2](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/gemini-robotics-er-2/) de Google insiste sur la classification de progression et l'identification de moments précis.
+
+Cela a l'air sec.
+
+Ça ne l'est pas.
+
+Pour un agent physique, savoir quand quelque chose s'est produit est une capacité centrale. L'outil est-il entré dans l'emplacement ? La tasse commence-t-elle à déborder ? Le nœud est-il vraiment serré ? Le robot a-t-il terminé l'étape, ou a-t-il seulement effectué un mouvement qui ressemble à l'étape ?
+
+Google dit que Gemini Robotics ER 2 peut classer la progression d'une tâche à partir de vidéo et identifier des moments clés avec 91,3% de précision et une distance moyenne inférieure à une seconde dans ses évaluations. Il faut traiter ces chiffres comme des évaluations fournisseur, parce que ce sont des évaluations fournisseur.
+
+Mais la catégorie est exactement la bonne.
+
+Les agents logiciels ont déjà besoin d'une surveillance au niveau de la trajectoire. On apprend sans cesse qu'un appel d'outil n'est pas la bonne unité d'analyse. La vraie question est de savoir si toute la boucle se rapproche du but sans dériver, cacher un échec ou créer un risque.
+
+Les agents physiques ont besoin de la même chose, avec moins de tolérance.
+
+Un robot ne peut pas simplement dire :
+
+"Terminé."
+
+Il lui faut des preuves.
+
+Il doit remarquer une exécution partielle.
+
+Il doit réessayer sans aggraver la situation.
+
+Il doit s'arrêter avant qu'une petite erreur devienne un problème physique.
+
+C'est pour cela que "moment finding" est plus qu'un nom de benchmark. C'est la différence entre un robot qui effectue des mouvements et un robot qui comprend l'état d'une tâche.
+
+Très glamour. Le futur de la robotique, ce sont des barres de progression enfin vraies.
+
+## L'API rend l'histoire concrète
+
+Ce n'est pas seulement une démo de laboratoire.
+
+Google dit que Gemini Robotics ER 2 est disponible via [l'API Gemini et Google AI Studio](https://ai.google.dev/gemini-api/docs/changelog), avec un endpoint de streaming en preview pour les agents robotiques à faible latence. Les notes de version de l'API parlent d'entrées texte, image, vidéo et audio, de function calling, d'orchestration d'outils en plusieurs étapes, d'identification de moments vidéo, de classification de progression et de coordination multi-robots.
+
+C'est important parce que la robotique commence à ressembler au reste de l'écosystème agentique.
+
+Les développeurs déclarent des contrôles bas niveau comme outils.
+
+Le modèle raisonne sur une entrée multimodale.
+
+Le robot agit via des API ou des modèles VLA.
+
+L'état revient dans la boucle en streaming.
+
+L'agent planifie pendant que le corps bouge encore.
+
+C'est l'architecture que l'on voit déjà dans les agents logiciels, mais avec des moteurs.
+
+L'opportunité est évidente : entrepôts, laboratoires, usines, hôpitaux, agriculture, maintenance, aide aux personnes âgées, secours, dispositifs d'assistance. Beaucoup de tâches sont physiques, répétitives, variables et coûteuses à couvrir humainement.
+
+La contrainte est tout aussi évidente :
+
+La robotique ne pardonne pas le théâtre d'intégration.
+
+Une belle API ne résout pas la disponibilité du matériel, la certification de sécurité, la maintenance, la responsabilité, le support de déploiement, le calibrage, le nettoyage, les pièces cassées, la confidentialité, le compute local, les coupures réseau, ni le fait que chaque lieu de travail est physiquement différent.
+
+La stack agentique peut devenir plus simple.
+
+La stack de déploiement reste très réelle.
+
+## La sécurité ne peut pas être une page de politique
+
+Google a raison de mettre la sécurité au premier plan. L'entreprise introduit ASIMOV-Agentic, un benchmark pour l'orchestration agentique sûre et la résolution d'incertitude décrit dans son [lancement de Gemini Robotics ER 2](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/gemini-robotics-er-2/), et dit que Gemini Robotics ER 2 détecte mieux les humains proches, déclenche des appels d'outils de sécurité et peut mettre un robot à l'arrêt.
+
+C'est la bonne forme de sécurité.
+
+Pas seulement :
+
+"Le modèle refuse du mauvais texte."
+
+Mais :
+
+"Le système comprend les contraintes physiques, l'incertitude, le risque des outils, la proximité humaine, la faisabilité d'une tâche et le moment où il faut demander de l'aide."
+
+La fiche modèle est aussi utilement directe. Pour Gemini Robotics ER 2, Google dit que les utilisateurs doivent faire preuve de discrétion avant d'utiliser les modèles robotiques en production, dans des environnements commerciaux ou publics, et ne doivent pas les utiliser pour des applications critiques de sécurité comme la santé ou le transport, où un dysfonctionnement pourrait raisonnablement causer des dommages graves.
+
+Cette réserve n'est pas embarrassante.
+
+C'est le sujet.
+
+L'IA physique sera jugée sur le pire mode d'échec plausible, pas sur la plus belle démo.
+
+Si un chatbot hallucine, la correction passe souvent par une vérification, une citation ou une revue humaine. Si un robot hallucine un chemin sûr, la correction doit arriver avant le mouvement ou pendant le mouvement.
+
+Cela veut dire sécurité en couches :
+
+- vérifications sémantiques dans la couche de raisonnement
+- contraintes d'outils dans la couche d'orchestration
+- planification de mouvement sans collision dans la couche contrôleur
+- limites de force, d'équilibre et de proximité dans le matériel
+- logs et revue dans la couche de déploiement
+- override humain partout où cela compte
+
+C'est pour cela que la sécurité robotique clarifie si bien le reste de l'IA.
+
+Elle enlève beaucoup de rhétorique.
+
+Un agent qui agit a besoin de freins.
+
+Un agent qui agit physiquement a besoin de freins qui fonctionnent en physique.
+
+## Ce que les builders doivent retenir
+
+La plupart des équipes logicielles ne construiront pas de robots humanoïdes le trimestre prochain.
+
+Bonne nouvelle.
+
+La leçon voyage quand même.
+
+À mesure que les agents IA deviennent plus capables, le produit se déplace de la qualité de réponse vers la qualité de boucle.
+
+Le système observe-t-il le vrai état de la tâche ?
+
+Sait-il distinguer progression et mouvement ?
+
+Peut-il s'adapter à l'environnement où il se trouve vraiment ?
+
+Peut-il fonctionner assez près de l'utilisateur ou de la machine pour éviter une dépendance cloud fragile ?
+
+Peut-il demander de l'aide quand l'incertitude est haute ?
+
+Peut-il s'arrêter ?
+
+Peut-il prouver après coup ce qui s'est passé ?
+
+Ces questions valent pour les agents de code, les agents financiers, les agents de sécurité, les workflows enterprise, les robots d'assistance et, un jour, les machines qui partageront un espace avec des humains.
+
+Gemini Robotics 2 est une annonce de robotique.
+
+Mais le signal plus large concerne l'agence elle-même.
+
+L'industrie passe de modèles qui répondent à des systèmes qui agissent. Une fois que les systèmes agissent, l'intelligence ne suffit pas. Le produit utile, c'est toute la boucle : modèle, outils, corps, capteurs, mémoire, latence, contrôle, sécurité, preuves et récupération.
+
+Le robot du futur ne sera pas impressionnant parce qu'il a un cerveau.
+
+Il sera utile quand le cerveau, le corps et les freins se comporteront enfin comme un seul système.
