@@ -1,0 +1,216 @@
+---
+title: "Robots Are Becoming Border-Controlled Devices"
+date: "2026-08-01"
+description: "The FCC's new restrictions on foreign-made advanced robotic devices are not just about humanoids or robot vacuums. They show that physical AI is becoming a supply-chain, sensor, firmware, and sovereignty problem."
+tags: ["Robotics", "AI Policy", "China", "AI Security"]
+draft: false
+---
+
+## The Short Version
+
+Yesterday's robotics story was about bodies.
+
+Today's is about borders.
+
+On July 28, the FCC updated its [Covered List](https://docs.fcc.gov/public/attachments/DOC-423682A1.pdf) to include foreign-produced "advanced robotic devices" and connected power inverters. The agency defines the robot category as mobile robots, including humanoids and quadrupeds, and says the action follows national-security determinations by executive-branch agencies.
+
+The immediate effect is narrow but important: new covered device models generally cannot receive FCC equipment authorization to be imported, marketed, or sold in the United States. Existing devices and previously authorized models are not suddenly illegal. Producers can apply for conditional approval.
+
+Still, this is a big signal.
+
+The U.S. government is no longer treating robots as cute hardware, factory equipment, or sci-fi props.
+
+It is treating them as networked, sensor-rich, mobile computers that can map spaces, collect data, receive commands, carry payloads, and touch the physical world.
+
+That is exactly the shift I wrote about yesterday in [Robots Need Bodies, Not Just Brains](/en/posts/robots-need-bodies-not-just-brains). Once AI gets a body, the security model changes. A compromised chatbot is bad. A compromised robot is a camera, microphone, actuator, mapmaker, and remote-controlled object in the same package.
+
+The lazy takeaway is:
+
+"The government thinks robot vacuums are spies."
+
+Too silly.
+
+The better takeaway is:
+
+Physical AI is becoming a controlled supply chain.
+
+The robot is not only the model. It is the sensors, firmware, radio, factory, update channel, cloud account, training data, spare parts, and jurisdiction behind it.
+
+Very normal. The Roomba has entered geopolitics.
+
+## The ban is broader than humanoids
+
+[The AP frames](https://apnews.com/article/china-us-humanoid-robots-ban-tech-c9f5e3c94d91d00eff3b61b141fab366) the move as a ban on new foreign-made humanoid and quadruped robots, plus power inverters, and notes that it targets China in practice because Chinese firms dominate the category. AP cites estimates that China has roughly 85% of the global humanoid robot market, and reports that Unitree and AGIBOT each shipped more than 5,000 humanoid robots in 2025 while U.S. counterparts like Tesla and Figure shipped a few hundred or less.
+
+That market context matters.
+
+But the regulatory category is broader than the headline.
+
+[The Verge reports](https://www.theverge.com/tech/972259/us-foreign-robots-power-inverter-ban) that the FCC's FAQ defines an advanced robotic device by capabilities: ground movement, obstacle avoidance or navigation, sensors that perceive the environment, network connectivity, and a weight threshold. By that logic, some future robot vacuums and lawn robots can get pulled into the same policy bucket as humanoids and quadrupeds.
+
+That sounds absurd until you look at the underlying concern.
+
+The FCC's fact sheet says the national-security determination cited risks from networked robotic systems that can manipulate data and physical operation, collect data that could be used for surveillance, and potentially be remotely commandeered.
+
+Again, the point is not that every household robot is a national-security crisis.
+
+The point is that physical autonomy collapses categories.
+
+A robot vacuum is not a humanoid.
+
+A warehouse robot is not a military quadruped.
+
+A solar inverter is not a robot.
+
+But all three can be connected devices embedded into physical infrastructure. They can see, move, route power, update software, and depend on suppliers. That is enough to make regulators think in systems rather than gadgets.
+
+## Robotics has a cheap-hardware problem
+
+The hardest part of the story is that the security concern is not fake.
+
+It is also not free.
+
+[Business Insider's reporting](https://www.businessinsider.com/fcc-robot-ban-silicon-valley-debate-startups-china-unitree-2026-7) captures the split well: some U.S. robotics companies welcome the restriction as protection from subsidized foreign hardware, while startups and university researchers warn that losing access to cheap Chinese robots could slow American development.
+
+That tension is real.
+
+If a small robotics lab needs a quadruped or humanoid platform, affordable hardware matters. A cheap body lets researchers test perception, manipulation, navigation, teleoperation, reinforcement learning, safety systems, and data collection without waiting for a domestic platform that may be expensive, unavailable, or still in prototype mode.
+
+Ban the cheap body, and you may protect the domestic market.
+
+You may also reduce the number of people learning how to build useful robotics software.
+
+This is the awkward lesson from open models all over again.
+
+The most secure stack is not always the stack builders can afford.
+
+The most accessible stack is not always the stack institutions can trust.
+
+Policy has to deal with both.
+
+If the U.S. wants trusted robotics, it needs more than restrictions. It needs domestic hardware capacity, certification paths, university access, testbeds, procurement standards, security audits, and prices that do not turn robotics into a hobby for only the largest labs.
+
+Otherwise, the result is not sovereignty.
+
+It is scarcity with a flag on it.
+
+## The security layer should be more specific
+
+The FCC move is blunt in a way that should make builders uneasy.
+
+The Covered List is a supply-chain tool. It controls authorization based on categories of equipment and national-security determinations. That can make sense when the concern is who makes the device, who controls the firmware, and whether the hardware can be trusted inside sensitive environments.
+
+But robotics risk is not only country of production.
+
+It is:
+
+- what sensors the robot has
+- where maps and video go
+- who can push firmware
+- whether updates are signed and auditable
+- whether cloud control can be disabled
+- whether the robot can run locally
+- whether logs expose private spaces
+- whether the device has safe physical limits
+- whether a customer can inspect or replace software
+- whether the robot keeps working if foreign cloud services are cut off
+- whether operators know which components came from which supplier
+
+A broad import restriction may reduce one kind of risk.
+
+It does not automatically create good robotics security.
+
+The Verge makes a related point: waiver applications appear to focus heavily on where devices are designed and manufactured, not necessarily on requiring better device security. That is the dangerous gap.
+
+If the policy answer to insecure robots is only "build them here," the U.S. may end up with domestic robots that are still insecure.
+
+Nationality is not a substitute for architecture.
+
+## Power inverters are not a side quest
+
+The power-inverter part of the FCC action may look unrelated.
+
+It is not.
+
+Connected power inverters convert electricity for solar systems, data centers, buildings, and other infrastructure. The FCC says the new Covered List category includes connected power inverters produced in foreign countries, citing supply-chain and critical-infrastructure risks.
+
+That belongs in the same story as robots because AI is becoming physical infrastructure in two directions at once.
+
+On one side, AI needs bodies: robots, cameras, sensors, actuators, vehicles, drones, factory systems, assistive devices.
+
+On the other side, AI needs power: data centers, grid equipment, inverters, transformers, cooling, backup systems, memory, chips.
+
+The AI stack is no longer just:
+
+model plus cloud.
+
+It is:
+
+model plus cloud plus grid plus factory plus robot plus update channel.
+
+This is why AI policy keeps spreading into strange places. A model release becomes an export-control question. A chatbot becomes an OS-access question. A data center becomes a power-grid question. A robot vacuum becomes a national-security question.
+
+The categories are merging because the systems are merging.
+
+## What builders should do now
+
+Most builders are not going to lobby the FCC this week.
+
+Good.
+
+The practical lesson is closer to procurement hygiene.
+
+If your product or research depends on robots, sensors, drones, cameras, edge devices, or AI-connected hardware, you need to know the supply chain before it becomes a crisis.
+
+Not someday.
+
+Now.
+
+Ask boring questions early:
+
+- Where is the device produced?
+- Which components are foreign-produced?
+- Who signs firmware updates?
+- Can the device run without the vendor cloud?
+- Where do maps, video, audio, telemetry, and logs go?
+- Can customers disable remote access?
+- What happens if the device loses FCC authorization for a new model?
+- Is there a domestic or allied alternative?
+- Can you swap hardware without rewriting the whole stack?
+- Do regulated customers have procurement rules that will block it?
+
+That sounds tedious because it is.
+
+It is also where physical AI products will either become credible or get stuck.
+
+The robot demo is no longer enough. The model demo is no longer enough. The procurement story, update story, security story, and continuity story are now part of the product.
+
+If you sell software agents, you need trust boundaries.
+
+If you sell physical agents, you need trust boundaries with motors.
+
+## The real lesson is not fear
+
+It would be easy to turn this into a simple anti-China story.
+
+That would be lazy.
+
+Chinese robotics companies are moving fast. They are producing cheaper hardware. They are collecting real-world data. They are giving researchers and startups platforms they can actually buy. Ignoring that would be foolish.
+
+It would also be foolish to pretend that networked robots are ordinary consumer electronics. A device that sees your building, maps your rooms, connects to the internet, and can move through space deserves a stronger security model than a Bluetooth speaker.
+
+Both things are true.
+
+That is the uncomfortable part.
+
+The U.S. cannot ban its way into robotics leadership.
+
+But it also cannot sleepwalk into dependence on foreign-controlled bodies, sensors, and update channels.
+
+The useful path is harder: build domestic and allied hardware, make security certification specific and technical, keep research access alive, demand local-control options, require signed updates and auditability, and treat physical AI as infrastructure before it quietly becomes infrastructure.
+
+Robots are becoming border-controlled devices because they are becoming real.
+
+The toy phase is ending.
+
+The trust phase is starting.
