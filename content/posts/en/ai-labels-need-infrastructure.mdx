@@ -1,0 +1,324 @@
+---
+title: "AI Labels Need Infrastructure, Not Stickers"
+date: "2026-08-02"
+description: "The EU AI Act's new transparency rules are now enforceable. The useful question is not whether chatbots and deepfakes get labels. It is whether those labels become reliable product metadata, audit trails, and trust infrastructure instead of another banner people learn to ignore."
+tags: ["AI Regulation", "EU AI Act", "AI Safety", "AI Products"]
+draft: false
+---
+
+## The Short Version
+
+AI transparency just became a product requirement in Europe.
+
+Not a slogan.
+
+Not a trust-and-safety blog post.
+
+A requirement.
+
+From August 2, 2026, the European Commission's AI Office and national authorities [begin enforcing the AI Act](https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august). On the same date, new Article 50 transparency rules start to apply. Certain AI systems must tell people when they are interacting with AI. Deepfakes have to be labelled. AI-generated or altered content must carry machine-readable marks so it can be detected more easily.
+
+That sounds simple.
+
+It is not.
+
+The easy version of the story is:
+
+"Europe is making companies label AI content."
+
+True, but too small.
+
+The better version is:
+
+AI disclosure is moving from vibes into infrastructure.
+
+If this works, a user should know when they are dealing with a model, a platform should be able to trace which system generated content, and a regulator should be able to ask for evidence instead of accepting a press release.
+
+If it fails, we get cookie banners for synthetic media.
+
+Lots of labels.
+
+Little trust.
+
+Very European future. The chatbot now has paperwork.
+
+## This is not the whole AI Act
+
+First, the important caveat.
+
+August 2 is not the day every AI system in Europe becomes fully regulated in one clean swoop.
+
+The Commission's own [enforcement page](https://digital-strategy.ec.europa.eu/en/policies/enforcement-ai-act) is careful about timing. Enforcement powers now apply for several important areas: prohibited AI practices, obligations for providers of general-purpose AI models, and transparency requirements for certain AI systems. But other pieces come later. The AI Omnibus moved many high-risk system obligations to [December 2, 2027](https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force), and high-risk AI embedded in regulated physical products to August 2, 2028.
+
+That matters because a lot of AI Act commentary treats the law like one giant switch.
+
+It is more like a control panel.
+
+Some breakers are on.
+
+Some are delayed.
+
+Some only apply to particular actors.
+
+Some apply to providers.
+
+Some apply to deployers.
+
+Some apply to general-purpose model companies.
+
+Some apply to ordinary businesses using AI in front of customers.
+
+That messiness is annoying, but it is also the real story for builders. AI regulation is not going to arrive as one legal memo. It is going to arrive as a set of product, compliance, documentation, logging, disclosure, and procurement requirements that land at different times.
+
+Very glamorous. The future of AI governance is calendar management.
+
+## Article 50 is where users actually feel it
+
+Article 50 is the consumer-facing part.
+
+The Commission's [guidelines](https://digital-strategy.ec.europa.eu/en/policies/guidelines-transparency-ai-generated-content) say the rules apply to transparency obligations for interactive AI systems, generative AI outputs, deepfakes, AI-generated text on matters of public interest, emotion recognition, and biometric categorisation.
+
+In plain English:
+
+- If a person is talking directly to an AI system, they usually need to be told.
+- If a system generates or manipulates synthetic audio, image, video, or text, providers need machine-readable marking.
+- If a deployer shows people deepfake content, the disclosure has to be clear to the person, not only hidden in metadata.
+- If AI-generated text is published to inform the public on matters of public interest, it may need labelling unless it had human review or editorial control.
+- If people are exposed to emotion recognition or biometric categorisation, they need to be informed.
+
+This is bigger than "put a badge on images."
+
+It touches chatbots, customer-support agents, AI avatars, synthetic ads, political content, public-interest text, generated video, automated call centers, social platforms, commerce flows, and any business that lets AI speak to humans under its authority.
+
+The rule is trying to answer a basic question:
+
+Does the person know what kind of system they are dealing with?
+
+That sounds basic because it is.
+
+It is also exactly where AI products have been slippery.
+
+## A sticker is not enough
+
+The danger is that companies treat transparency like visual decoration.
+
+Add a tiny badge.
+
+Add a disclaimer.
+
+Add "AI-generated" in grey text.
+
+Add one modal at signup.
+
+Move on.
+
+That would technically solve some surface problems and fail the deeper one.
+
+Useful AI labels need to answer operational questions:
+
+- Which model or system produced this?
+- Was it generated, edited, translated, summarised, or merely formatted?
+- Did a human review it?
+- Who had editorial responsibility?
+- What metadata survived export, screenshotting, reposting, compression, and platform transfer?
+- Can the label be verified later?
+- Can the system prove compliance if a regulator asks?
+- Can a user tell the difference between "AI helped" and "AI invented"?
+
+That is why machine-readable marks matter.
+
+Not because metadata is magic.
+
+Metadata can be stripped. Watermarks can fail. Screenshots can launder content. Bad actors can ignore the rule. Cross-platform propagation is miserable. The internet is very good at turning provenance into soup.
+
+Still, machine-readable marking is the right direction because AI disclosure has to travel through systems, not only eyeballs.
+
+A visible label helps a person.
+
+A durable mark helps platforms, auditors, search engines, archives, moderation systems, and regulators.
+
+The useful transparency stack needs both.
+
+Otherwise we get stickers on the front door and no building inspection behind them.
+
+## The human-review exemption is the product trap
+
+The Commission's Q&A has a detail that builders should read twice: AI-generated public-interest text does not need to be labelled if it has undergone human review or editorial control.
+
+That sounds obvious.
+
+It is also where the product design gets real.
+
+What counts as human review?
+
+The Commission says human review means a deliberate examination of the substance by people with relevant knowledge and professional judgment. Editorial control means a responsible editorial entity can approve, alter, or reject the substance. Superficial checks like spell-checking or grammar correction do not count.
+
+Good.
+
+That means a company cannot simply run a generated article through a typo pass and call it human-reviewed.
+
+But it also means AI products need review workflows that are legible:
+
+- assignment
+- reviewer identity
+- review scope
+- edits
+- approval
+- rejection
+- escalation
+- audit trail
+- final responsibility
+
+This is where regulation quietly becomes software architecture.
+
+The question is not only:
+
+"Did a human look at it?"
+
+It is:
+
+"Can you prove the right human reviewed the right thing for the right reason before publication?"
+
+That is not a label.
+
+That is a workflow.
+
+## The AI Office now has teeth
+
+The transparency rules are only one part of the enforcement start.
+
+The AI Office now has investigative and sanctioning tools. The Commission says it can send requests for information, require model access for evaluations, ask providers to take measures, and in some cases restrict public availability of a model. It has also launched complaint and whistleblower tools.
+
+For general-purpose AI model providers, fines for many breaches can reach €15 million or 3% of worldwide annual turnover. Prohibited AI practices can reach €35 million or 7%. AP reports that the AI Office is expanding with additional staff and will monitor companies from startups to major U.S. and Chinese AI providers.
+
+This is the part that moves the AI Act out of PDF territory.
+
+The old AI governance question was:
+
+"What should companies disclose?"
+
+The new question is:
+
+"What happens when the regulator asks for the evidence?"
+
+That is a different world.
+
+Policies, model cards, labels, incident reports, evaluations, training-data summaries, security controls, and downstream complaints all become part of an evidence environment.
+
+Companies that already have strong internal records will complain about burden but survive.
+
+Companies that have been improvising will discover that improvisation has a retention policy problem.
+
+Beautiful. The compliance database was the real frontier model all along.
+
+## Label fatigue is the enemy
+
+The bad version of this future is easy to imagine.
+
+Every chatbot says "I am AI."
+
+Every generated image has a tiny icon.
+
+Every app adds a warning.
+
+Every customer-support flow buries disclosure in a banner.
+
+Every user clicks through.
+
+Nobody learns anything.
+
+That is the cookie-banner failure mode.
+
+[The Guardian reports](https://www.theguardian.com/technology/2026/jul/31/ai-labels-to-be-compulsory-on-authentic-looking-content-under-eu-rules) the same tension: labels can protect users from deception, but too many generic warnings can become background noise. The cookie-banner comparison is too neat, but useful.
+
+Cookie banners did create awareness and some control.
+
+They also taught users to swat compliance UI out of the way.
+
+AI labels cannot afford that exact failure.
+
+The stakes are different. The point is not only consent. It is epistemic hygiene: knowing whether a voice, image, video, agent, ad, review, support rep, political message, or public-interest text came from a person, a model, or a hybrid workflow.
+
+If everything gets the same generic label, the label stops informing.
+
+Good labels need context:
+
+- "AI customer-support agent"
+- "AI-generated image"
+- "AI-edited video"
+- "AI-translated text, human reviewed"
+- "AI-generated public-interest summary, editorially reviewed"
+- "Synthetic voice"
+- "Emotion-recognition system active"
+
+That is harder than one icon.
+
+Also much more useful.
+
+## What builders should do now
+
+If you ship AI products into Europe, the practical takeaway is not to panic.
+
+It is to inventory the moments where AI touches people.
+
+Start with boring questions:
+
+- Does the system directly interact with natural persons?
+- Is it obvious that the interaction is with AI?
+- Does the system generate or alter audio, image, video, or text?
+- Does generated content need machine-readable marking?
+- Are deployers relying on your system to label deepfakes or public-interest content?
+- Is there human review, or only human rubber-stamping?
+- Who owns editorial responsibility?
+- What survives export, download, copy-paste, screenshot, and reposting?
+- Can you produce evidence if the AI Office or a national authority asks?
+
+That is not only legal housekeeping.
+
+It is product hygiene.
+
+If a user cannot tell when AI is acting, the product is already confusing.
+
+If your own team cannot trace when AI generated something, the product is already fragile.
+
+If compliance depends on a tiny badge that disappears when content leaves your app, the product is pretending the internet is nicer than it is.
+
+It is not.
+
+## Transparency has to become an interface primitive
+
+The AI Act will be criticized from both sides.
+
+Some companies will say it slows innovation.
+
+Some safety advocates will say it is not enough.
+
+Some users will ignore the labels.
+
+Some bad actors will route around them.
+
+All true.
+
+Still, the direction is right.
+
+AI is becoming too embedded to rely on intuition. People cannot be expected to guess when a support agent is synthetic, when a video is generated, when a public-interest text was written by a model, or when an emotion-recognition system is running in the background.
+
+The interface has to say it.
+
+The metadata has to carry it.
+
+The workflow has to prove it.
+
+The regulator has to be able to inspect it.
+
+That is the useful lesson of August 2.
+
+AI labels are not the destination.
+
+They are the visible edge of a trust system.
+
+If Europe gets that right, disclosure becomes infrastructure.
+
+If it gets it wrong, we get stickers.
+
+And the internet already has enough stickers.
