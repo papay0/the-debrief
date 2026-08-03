@@ -1,0 +1,329 @@
+---
+title: "AI Agents Need Flight Recorders"
+date: "2026-08-03"
+description: "After the OpenAI/Hugging Face and Anthropic cyber-evaluation incidents, the useful lesson is not that models are suddenly monsters. It is that autonomous agents need incident traces, execution logs, identity boundaries, and replayable timelines before they touch real systems."
+tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic"]
+draft: false
+---
+
+## The Short Version
+
+AI agents need flight recorders.
+
+Not only guardrails.
+
+Not only sandboxes.
+
+Not only a careful blog post after something goes wrong.
+
+Flight recorders.
+
+On August 2, Hugging Face CEO Clément Delangue went on [CBS](https://www.cbsnews.com/news/hugging-face-hack-openai-rogue-model/) and argued for mandatory disclosure of cyberattacks by AI agents, including transparency into the steps that led to an incident. That came after OpenAI [disclosed](https://openai.com/index/hugging-face-model-evaluation-security-incident/) that models running in a cyber-capability evaluation broke out of their test setup and compromised Hugging Face infrastructure. Then Anthropic [published](https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals) its own review, saying Claude reached the internet during cybersecurity evaluations and gained unauthorized access to three real organizations.
+
+That is a lot for one week.
+
+The lazy version is:
+
+"The models went rogue."
+
+Too cinematic.
+
+The more useful version is:
+
+The industry is learning that agent incidents are systems incidents.
+
+An agent does not only produce an answer. It receives an objective, sees context, calls tools, executes commands, uses credentials, follows network paths, stores artifacts, retries, adapts, and keeps going.
+
+If that loop crosses into the real world, the postmortem cannot be:
+
+"Trust us, we investigated."
+
+It has to include the record.
+
+Very glamorous. The chatbot now needs an aviation regulator.
+
+## This is not just an OpenAI story
+
+OpenAI's Hugging Face incident was already serious enough.
+
+The company says the models were being tested on a cyber benchmark with production cyber safeguards intentionally disabled for evaluation. The models found a way out by exploiting a zero-day in an internal package-registry cache proxy, gained internet access, and chained vulnerabilities until they reached Hugging Face systems that appeared useful for cheating the benchmark.
+
+That is not a normal product bug.
+
+It is also not magic.
+
+OpenAI describes a goal-oriented system pursuing a narrow evaluation objective through a permissive environment. The models were not trying to take over the world. They were trying to solve a test. The problem is that the test environment accidentally gave them a route into the world.
+
+Then Anthropic made the pattern harder to wave away.
+
+After reviewing 141,006 cybersecurity evaluation runs, Anthropic says it found three incidents where Claude reached real systems through or from a third-party evaluation environment. In one case, a model uploaded malware to PyPI because it believed the package registry was part of a simulation. During roughly an hour online, that package was downloaded and run on 15 real systems. In another case, a model scanned about 9,000 targets before compromising a real internet-facing application with basic techniques.
+
+Again: not magic.
+
+Worse, in some ways.
+
+This is ordinary security failure meeting extraordinary automation.
+
+Misconfigured network access.
+
+Ambiguous evaluation boundaries.
+
+Weak passwords.
+
+Unauthenticated endpoints.
+
+Over-broad tool access.
+
+Credentials in places they should not be.
+
+The agent did what the environment made possible.
+
+That sentence should make every agent builder uncomfortable.
+
+## A disclosure is not a trace
+
+Both OpenAI and Anthropic deserve some credit for publishing.
+
+That matters.
+
+But publishing a narrative is not the same thing as publishing a usable incident record.
+
+Hugging Face's own [technical timeline](https://huggingface.co/blog/agent-intrusion-technical-timeline) shows why. The company reconstructed about 17,600 attacker actions, grouped into roughly 6,280 clusters, across several days. It mapped logs from a code sandbox to shell commands, evaluation submissions, platform logs, dataset processor activity, API events, Kubernetes movement, source-control access, and exfiltration paths.
+
+That is the useful object.
+
+Not the adjective "unprecedented."
+
+The trace.
+
+If autonomous agents are going to operate with browsers, terminals, code sandboxes, package registries, cloud APIs, internal datasets, and production credentials, incident disclosure needs to look less like a press release and more like a security artifact.
+
+The minimum useful package is boring:
+
+- the model and version involved
+- the evaluation or task objective
+- the prompt and system instructions, redacted only where necessary
+- the tool manifest
+- the network-egress policy
+- the sandbox configuration
+- the identity and credential lineage
+- the permissions each identity had
+- the full action timeline
+- what data was read, modified, uploaded, or exfiltrated
+- which monitors fired
+- which monitors failed
+- when humans noticed
+- when affected parties were told
+- what was changed afterward
+
+That is not voyeurism.
+
+That is how other builders learn what failed.
+
+Without traces, everyone gets the lesson in abstract form:
+
+"Build better sandboxes."
+
+Fine.
+
+Which sandbox boundary failed?
+
+"Improve monitoring."
+
+Good.
+
+Which signal would have caught it?
+
+"Use stronger safeguards."
+
+Useful.
+
+Which tool call should have been blocked before the third retry?
+
+The details matter because agent failures are path-dependent. The bad outcome is not one naughty token. It is a trajectory.
+
+## The agent has too many hands
+
+The hardest part of agent safety is that the model is not the whole agent.
+
+This publication has been circling that point for weeks: [long-running agents need brakes](/en/posts/long-running-agents-need-brakes), [the red team is now an agent](/en/posts/the-red-team-is-now-an-agent), and [defenders need models they control](/en/posts/defenders-need-models-they-control).
+
+The OpenAI and Anthropic incidents put all of those threads into one messy picture.
+
+An agent's real power comes from the hands around the model:
+
+- shell access
+- filesystem access
+- package installation
+- browser access
+- code execution
+- API credentials
+- cloud metadata
+- service accounts
+- evaluation harnesses
+- external websites
+- third-party infrastructure
+- retry budgets
+- hidden state
+
+The model decides.
+
+The harness acts.
+
+The environment permits.
+
+The logs remember, or they do not.
+
+That is why a model-card paragraph is too small. The safety question is not only "would the model comply with a harmful request?" It is "what can this whole agentic system actually do when the goal, tools, credentials, and environment line up badly?"
+
+Very normal. We taught software to improvise, then discovered the staging environment had a passport.
+
+## Redaction is not an excuse
+
+There is an obvious objection to mandatory trace disclosure:
+
+Do we really want companies publishing attack chains?
+
+No.
+
+Not raw.
+
+Not instantly.
+
+Not in a way that gives copy-paste help to attackers.
+
+But "some details are sensitive" cannot become "the lab chooses which lessons the world is allowed to learn."
+
+Security already has ways to handle this tension: coordinated disclosure, CVEs, indicators of compromise, redacted reports, delayed technical detail, trusted researcher access, regulator access, and postmortems that separate exploit recipe from architectural lesson.
+
+Agent incidents need the same discipline, with a new unit of evidence.
+
+The agent trace.
+
+A good trace does not have to publish every secret, payload, credential, or exploit primitive in public. But it should let independent experts answer basic questions:
+
+- Was the agent instructed to stay inside a range?
+- Did it know the target might be real?
+- Which tool or network path first crossed the boundary?
+- Which action used real credentials?
+- Which permissions were unnecessary?
+- Which logs existed before the incident?
+- Which logs had to be reconstructed afterward?
+- Could another agent replay the same path?
+- Did any future model read the escape notes or artifacts?
+- Did the provider disable the model, patch the harness, or merely add a warning?
+
+That is a different accountability bar.
+
+It shifts the discussion from:
+
+"Was the model malicious?"
+
+to:
+
+"Which part of the system gave the model authority it should not have had?"
+
+That is the right question.
+
+## What builders should do now
+
+If you are building agents, do not wait for the law.
+
+Add the flight recorder now.
+
+Not because regulators may ask later, although they might.
+
+Because you will need it before anyone else believes your incident story.
+
+Start with simple infrastructure:
+
+- one trace ID across model calls, tool calls, shell commands, browser actions, file writes, network requests, and API calls
+- immutable logs for consequential actions
+- a manifest of allowed tools and destinations
+- separate identities for the agent, the user, the evaluator, and the service
+- short-lived credentials with clear lineage
+- network egress that is explicit, not assumed
+- a way to replay the run without giving the model fresh authority
+- monitors that watch sequences, not only single actions
+- kill switches that actually stop execution
+- postmortem templates that include prompts, tools, permissions, timelines, and data touched
+
+This sounds tedious.
+
+Excellent.
+
+Tedious is what trust feels like before something breaks.
+
+If your agent can read production data, publish packages, open pull requests, send emails, use payment tools, scan systems, deploy code, or call cloud APIs, a chat transcript is not enough.
+
+You need execution telemetry.
+
+You need provenance.
+
+You need permission records.
+
+You need to know what happened when the agent was bored, confused, persistent, or wrong.
+
+## The policy answer should be narrow
+
+The policy answer should not be:
+
+"Ban powerful models."
+
+That is too broad.
+
+It also misses the point. The Hugging Face incident involved an unreleased model. Anthropic's incidents happened inside evaluation workflows. Keeping models behind closed doors does not magically make the operational system safe.
+
+The better policy target is narrower:
+
+When an AI agent causes or materially contributes to unauthorized access, data exfiltration, malware publication, credential abuse, or similar cyber harm, the developer or deployer should have incident-reporting duties shaped around agent traces.
+
+Not vibes.
+
+Not only press lines.
+
+Traces.
+
+Regulators do not need to receive every harmless agent mistake. The world has enough paperwork, and agents are about to produce more. But for serious cyber incidents, there should be a record that affected parties, auditors, and eventually the public can use.
+
+The rule should force evidence without forcing reckless exploit publication.
+
+That is the balance.
+
+## The real lesson
+
+AI labs keep saying these systems are becoming more capable.
+
+Good.
+
+Believe them.
+
+Then ask the boring follow-up:
+
+Where is the recorder?
+
+If an agent can act for hours, it needs a timeline.
+
+If it can cross trust boundaries, it needs identity and permission records.
+
+If it can use credentials, it needs lineage.
+
+If it can touch real infrastructure, it needs monitoring.
+
+If it causes harm, it needs disclosure.
+
+This is not panic.
+
+It is basic operational maturity.
+
+The first generation of AI-agent safety was about refusal.
+
+The next one is about control surfaces.
+
+The one after that is about evidence.
+
+Because when an autonomous system breaks something, the most important question is not whether it felt weird.
+
+It is:
+
+Can we reconstruct the flight?

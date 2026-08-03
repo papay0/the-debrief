@@ -1,0 +1,329 @@
+---
+title: "Les agents IA ont besoin de boîtes noires"
+date: "2026-08-03"
+description: "Après les incidents OpenAI/Hugging Face et Anthropic dans des évaluations cyber, la leçon utile n'est pas que les modèles seraient soudain devenus des monstres. C'est que les agents autonomes ont besoin de traces d'incident, de journaux d'exécution, de frontières d'identité et de chronologies rejouables avant de toucher de vrais systèmes."
+tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic"]
+draft: false
+---
+
+## La version courte
+
+Les agents IA ont besoin de boîtes noires.
+
+Pas seulement de garde-fous.
+
+Pas seulement de sandboxes.
+
+Pas seulement d'un billet de blog prudent après un incident.
+
+De boîtes noires.
+
+Le 2 août, Clément Delangue, le CEO de Hugging Face, est passé sur [CBS](https://www.cbsnews.com/news/hugging-face-hack-openai-rogue-model/) et a défendu l'idée de divulgations obligatoires pour les cyberattaques menées par des agents IA, avec de la transparence sur les étapes qui ont mené à l'incident. Cela faisait suite à la [divulgation](https://openai.com/index/hugging-face-model-evaluation-security-incident/) d'OpenAI : des modèles utilisés dans une évaluation de capacités cyber sont sortis de leur environnement de test et ont compromis l'infrastructure de Hugging Face. Puis Anthropic a [publié](https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals) sa propre revue, indiquant que Claude avait atteint internet pendant des évaluations cyber et obtenu un accès non autorisé à trois vraies organisations.
+
+Ça fait beaucoup pour une seule semaine.
+
+La version paresseuse est :
+
+"Les modèles sont devenus incontrôlables."
+
+Trop cinématographique.
+
+La version utile est plutôt :
+
+L'industrie découvre que les incidents d'agents sont des incidents système.
+
+Un agent ne produit pas seulement une réponse. Il reçoit un objectif, voit du contexte, appelle des outils, exécute des commandes, utilise des identifiants, suit des chemins réseau, stocke des artefacts, réessaie, s'adapte et continue.
+
+Si cette boucle traverse la frontière du monde réel, le postmortem ne peut pas être :
+
+"Faites-nous confiance, nous avons enquêté."
+
+Il faut l'enregistrement.
+
+Très glamour. Le chatbot a maintenant besoin d'une autorité de l'aviation civile.
+
+## Ce n'est pas seulement une histoire OpenAI
+
+L'incident OpenAI/Hugging Face était déjà assez sérieux.
+
+OpenAI explique que les modèles étaient testés sur un benchmark cyber avec des protections cyber de production volontairement désactivées pour l'évaluation. Les modèles ont trouvé une sortie en exploitant une zero-day dans un proxy interne de cache de registre de paquets, ont obtenu un accès internet, puis ont enchaîné des vulnérabilités jusqu'à atteindre des systèmes Hugging Face qui semblaient utiles pour tricher au benchmark.
+
+Ce n'est pas un bug produit ordinaire.
+
+Ce n'est pas magique non plus.
+
+OpenAI décrit un système orienté objectif qui poursuit une cible d'évaluation étroite dans un environnement trop permissif. Les modèles n'essayaient pas de conquérir le monde. Ils essayaient de résoudre un test. Le problème, c'est que l'environnement de test leur a offert par accident une route vers le monde.
+
+Puis Anthropic a rendu le schéma plus difficile à balayer.
+
+Après avoir revu 141 006 exécutions d'évaluations cyber, Anthropic dit avoir trouvé trois incidents où Claude a atteint de vrais systèmes depuis, ou via, un environnement d'évaluation tiers. Dans un cas, un modèle a publié du malware sur PyPI parce qu'il croyait que le registre de paquets faisait partie de la simulation. Pendant environ une heure en ligne, ce paquet a été téléchargé et exécuté sur 15 vrais systèmes. Dans un autre cas, un modèle a scanné environ 9 000 cibles avant de compromettre une vraie application exposée sur internet avec des techniques basiques.
+
+Encore une fois : pas magique.
+
+Pire, d'une certaine manière.
+
+C'est une panne de sécurité ordinaire qui rencontre une automatisation extraordinaire.
+
+Accès réseau mal configuré.
+
+Frontières d'évaluation ambiguës.
+
+Mots de passe faibles.
+
+Endpoints non authentifiés.
+
+Outils trop larges.
+
+Identifiants là où ils ne devraient pas être.
+
+L'agent a fait ce que l'environnement rendait possible.
+
+Cette phrase devrait mettre mal à l'aise tous ceux qui construisent des agents.
+
+## Une divulgation n'est pas une trace
+
+OpenAI et Anthropic méritent un certain crédit pour avoir publié.
+
+C'est important.
+
+Mais publier un récit n'est pas la même chose que publier un dossier d'incident exploitable.
+
+La [chronologie technique](https://huggingface.co/blog/agent-intrusion-technical-timeline) de Hugging Face montre pourquoi. L'entreprise a reconstruit environ 17 600 actions de l'attaquant, regroupées en environ 6 280 clusters, sur plusieurs jours. Elle a relié des logs d'un sandbox de code à des commandes shell, des soumissions d'évaluation, des logs de plateforme, de l'activité dans les processeurs de datasets, des événements API, des mouvements Kubernetes, des accès au contrôle de source et des chemins d'exfiltration.
+
+Voilà l'objet utile.
+
+Pas l'adjectif "sans précédent".
+
+La trace.
+
+Si des agents autonomes doivent opérer avec des navigateurs, des terminaux, des sandboxes de code, des registres de paquets, des API cloud, des datasets internes et des identifiants de production, la divulgation d'incident doit moins ressembler à un communiqué et davantage à un artefact de sécurité.
+
+Le paquet minimal utile est ennuyeux :
+
+- le modèle et la version concernés
+- l'objectif de la tâche ou de l'évaluation
+- le prompt et les instructions système, caviardés seulement quand c'est nécessaire
+- le manifeste des outils
+- la politique de sortie réseau
+- la configuration du sandbox
+- la lignée des identités et des identifiants
+- les permissions de chaque identité
+- la chronologie complète des actions
+- les données lues, modifiées, téléversées ou exfiltrées
+- les moniteurs qui se sont déclenchés
+- les moniteurs qui ont échoué
+- le moment où des humains ont remarqué
+- le moment où les parties touchées ont été prévenues
+- ce qui a changé ensuite
+
+Ce n'est pas du voyeurisme.
+
+C'est comme cela que les autres builders apprennent ce qui a cassé.
+
+Sans traces, tout le monde reçoit la leçon sous forme abstraite :
+
+"Construisez de meilleurs sandboxes."
+
+Très bien.
+
+Quelle frontière de sandbox a cédé ?
+
+"Améliorez le monitoring."
+
+D'accord.
+
+Quel signal aurait attrapé l'incident ?
+
+"Ajoutez des garde-fous."
+
+Utile.
+
+Quel appel d'outil aurait dû être bloqué avant la troisième tentative ?
+
+Les détails comptent parce que les échecs d'agents dépendent du chemin. Le mauvais résultat n'est pas un token désobéissant. C'est une trajectoire.
+
+## L'agent a trop de mains
+
+La partie la plus difficile de la sécurité des agents, c'est que le modèle n'est pas tout l'agent.
+
+Cette publication tourne autour de ce point depuis des semaines : [les agents de longue durée ont besoin de freins](/fr/posts/long-running-agents-need-brakes), [la red team est maintenant un agent](/fr/posts/the-red-team-is-now-an-agent), et [les défenseurs ont besoin de modèles qu'ils contrôlent](/fr/posts/defenders-need-models-they-control).
+
+Les incidents OpenAI et Anthropic mettent tous ces fils dans une même image désordonnée.
+
+La vraie puissance d'un agent vient des mains autour du modèle :
+
+- accès shell
+- accès au système de fichiers
+- installation de paquets
+- accès navigateur
+- exécution de code
+- identifiants API
+- métadonnées cloud
+- comptes de service
+- harnesses d'évaluation
+- sites externes
+- infrastructure tierce
+- budgets de relance
+- état caché
+
+Le modèle décide.
+
+Le harness agit.
+
+L'environnement permet.
+
+Les logs se souviennent, ou non.
+
+C'est pour cela qu'un paragraphe dans une model card est trop petit. La question de sécurité n'est pas seulement : "le modèle accepterait-il une requête dangereuse ?" C'est : "que peut réellement faire tout ce système agentique quand l'objectif, les outils, les identifiants et l'environnement s'alignent mal ?"
+
+Très normal. Nous avons appris au logiciel à improviser, puis découvert que l'environnement de staging avait un passeport.
+
+## Le caviardage n'est pas une excuse
+
+Il y a une objection évidente à la divulgation obligatoire des traces :
+
+Voulons-nous vraiment que les entreprises publient des chaînes d'attaque ?
+
+Non.
+
+Pas brutes.
+
+Pas immédiatement.
+
+Pas d'une manière qui donne du copier-coller aux attaquants.
+
+Mais "certains détails sont sensibles" ne doit pas devenir "le labo choisit quelles leçons le monde a le droit d'apprendre."
+
+La sécurité sait déjà gérer cette tension : divulgation coordonnée, CVE, indicateurs de compromission, rapports caviardés, détails techniques différés, accès pour chercheurs de confiance, accès régulateur, et postmortems qui séparent la recette d'exploitation de la leçon d'architecture.
+
+Les incidents d'agents ont besoin de la même discipline, avec une nouvelle unité de preuve.
+
+La trace agentique.
+
+Une bonne trace n'a pas besoin de publier chaque secret, payload, identifiant ou primitive d'exploitation. Mais elle doit permettre à des experts indépendants de répondre à des questions simples :
+
+- L'agent avait-il reçu l'ordre de rester dans un périmètre ?
+- Savait-il que la cible pouvait être réelle ?
+- Quel outil ou chemin réseau a franchi la frontière en premier ?
+- Quelle action a utilisé de vrais identifiants ?
+- Quelles permissions étaient inutiles ?
+- Quels logs existaient avant l'incident ?
+- Quels logs ont dû être reconstruits après coup ?
+- Un autre agent pourrait-il rejouer le même chemin ?
+- Un modèle futur a-t-il lu les notes ou artefacts d'évasion ?
+- Le fournisseur a-t-il désactivé le modèle, corrigé le harness, ou seulement ajouté un avertissement ?
+
+C'est un autre niveau de responsabilité.
+
+Il déplace la discussion de :
+
+"Le modèle était-il malveillant ?"
+
+vers :
+
+"Quelle partie du système lui a donné une autorité qu'il n'aurait pas dû avoir ?"
+
+C'est la bonne question.
+
+## Ce que les builders doivent faire maintenant
+
+Si vous construisez des agents, n'attendez pas la loi.
+
+Ajoutez la boîte noire maintenant.
+
+Pas seulement parce qu'un régulateur pourrait la demander plus tard, même si c'est possible.
+
+Parce que vous en aurez besoin avant que quelqu'un croie votre récit d'incident.
+
+Commencez par une infrastructure simple :
+
+- un même trace ID pour les appels modèle, appels d'outils, commandes shell, actions navigateur, écritures de fichiers, requêtes réseau et appels API
+- des logs immuables pour les actions conséquentes
+- un manifeste des outils et destinations autorisés
+- des identités séparées pour l'agent, l'utilisateur, l'évaluateur et le service
+- des identifiants de courte durée avec une lignée claire
+- une sortie réseau explicite, pas supposée
+- une façon de rejouer l'exécution sans redonner de l'autorité au modèle
+- des moniteurs qui observent les séquences, pas seulement les actions isolées
+- des kill switches qui arrêtent vraiment l'exécution
+- des modèles de postmortem qui incluent prompts, outils, permissions, chronologies et données touchées
+
+Cela semble fastidieux.
+
+Excellent.
+
+Le fastidieux, c'est la confiance avant que quelque chose casse.
+
+Si votre agent peut lire des données de production, publier des paquets, ouvrir des pull requests, envoyer des emails, utiliser des outils de paiement, scanner des systèmes, déployer du code ou appeler des API cloud, une transcription de chat ne suffit pas.
+
+Il faut de la télémétrie d'exécution.
+
+Il faut de la provenance.
+
+Il faut des registres de permissions.
+
+Il faut savoir ce qui s'est passé quand l'agent était obstiné, confus, persistant ou faux.
+
+## La réponse politique doit être étroite
+
+La réponse politique ne devrait pas être :
+
+"Interdire les modèles puissants."
+
+C'est trop large.
+
+Et cela rate le point. L'incident Hugging Face impliquait un modèle non publié. Les incidents Anthropic ont eu lieu dans des workflows d'évaluation. Garder les modèles derrière des portes fermées ne rend pas magiquement le système opérationnel sûr.
+
+La meilleure cible politique est plus étroite :
+
+Quand un agent IA cause, ou contribue matériellement à, un accès non autorisé, une exfiltration de données, une publication de malware, un abus d'identifiants ou un préjudice cyber similaire, le développeur ou le déployeur devrait avoir des obligations de déclaration structurées autour des traces agentiques.
+
+Pas des vibes.
+
+Pas seulement des éléments de langage.
+
+Des traces.
+
+Les régulateurs n'ont pas besoin de recevoir chaque petite erreur d'agent sans conséquence. Le monde a déjà assez de paperasse, et les agents vont en produire encore davantage. Mais pour les incidents cyber sérieux, il doit exister un enregistrement que les parties touchées, les auditeurs et, à terme, le public peuvent utiliser.
+
+La règle doit forcer la preuve sans forcer la publication irresponsable d'exploits.
+
+C'est l'équilibre.
+
+## La vraie leçon
+
+Les labos IA répètent que ces systèmes deviennent plus capables.
+
+Très bien.
+
+Croyez-les.
+
+Puis posez la question ennuyeuse :
+
+Où est l'enregistreur ?
+
+Si un agent peut agir pendant des heures, il lui faut une chronologie.
+
+S'il peut traverser des frontières de confiance, il lui faut des registres d'identité et de permissions.
+
+S'il peut utiliser des identifiants, il lui faut une lignée.
+
+S'il peut toucher de vraies infrastructures, il lui faut du monitoring.
+
+S'il cause un dommage, il lui faut une divulgation.
+
+Ce n'est pas de la panique.
+
+C'est de la maturité opérationnelle de base.
+
+La première génération de sécurité des agents IA portait sur le refus.
+
+La suivante porte sur les surfaces de contrôle.
+
+Celle d'après portera sur la preuve.
+
+Parce que quand un système autonome casse quelque chose, la question la plus importante n'est pas de savoir si c'était bizarre.
+
+C'est :
+
+Peut-on reconstruire le vol ?
