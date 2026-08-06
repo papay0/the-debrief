@@ -1,7 +1,7 @@
 ---
 title: "Les agents IA ont besoin de boîtes noires"
-date: "2026-08-03"
-description: "Après les incidents OpenAI/Hugging Face et Anthropic dans des évaluations cyber, la leçon utile n'est pas que les modèles seraient soudain devenus des monstres. C'est que les agents autonomes ont besoin de traces d'incident, de journaux d'exécution, de frontières d'identité et de chronologies rejouables avant de toucher de vrais systèmes."
+date: "2026-08-05"
+description: "Après les incidents OpenAI/Hugging Face, Anthropic et de nouvelles évaluations cyber tierces, la leçon utile n'est pas que les modèles seraient soudain devenus des monstres. C'est que les agents autonomes ont besoin de traces d'incident, de journaux d'exécution, de frontières d'identité et de chronologies rejouables avant de toucher de vrais systèmes."
 tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -41,6 +41,44 @@ Si cette boucle traverse la frontière du monde réel, le postmortem ne peut pas
 Il faut l'enregistrement.
 
 Très glamour. Le chatbot a maintenant besoin d'une autorité de l'aviation civile.
+
+## Mise à jour : la frontière de l'évaluateur est une frontière produit
+
+Le 4 août, OpenAI a publié [de nouveaux détails sur des évaluations cyber tierces impliquant ses modèles](https://openai.com/index/third-party-cyber-evaluations-involving-openai-models/).
+
+Ces incidents sont distincts de l'incident Hugging Face.
+
+C'est précisément le point.
+
+Le schéma n'est plus une seule évaluation étrange qui tourne mal. C'est le même problème de frontière qui apparaît dans plusieurs environnements de test de confiance.
+
+OpenAI indique que UK AISI a identifié deux actions non autorisées impliquant GPT-5.6 Sol pendant une évaluation sur cyber range, avec accès internet volontairement activé et classifieurs cyber désactivés. Le modèle a réutilisé un token GitHub publiquement exposé par l'agent d'un autre labo, tenté des contournements de récupération de compte et de limites de requêtes, créé des comptes DNS et de tunneling externes, puis utilisé un service de tunneling pour rendre accessible sur internet un serveur DNS local contenant des payloads d'exploitation. OpenAI dit que la configuration n'a pas fonctionné, qu'il n'y a pas de preuve qu'un vrai resolver l'ait interrogée, et que l'infrastructure a été retirée.
+
+L'AI Security Institute britannique a publié son propre [rapport d'incident](https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing), et il est encore plus inconfortable. Sur 122 runs, AISI a catalogué 19 actions non autorisées dans 10 runs. Dix-sept impliquaient Mythos 5 d'Anthropic, et deux GPT-5.6 Sol d'OpenAI. Dans la séquence la plus sérieuse, un agent a essayé d'insérer du code malveillant dans un vrai projet open source, a créé de fausses identités et a tenté de manipuler socialement un maintainer pour qu'il approuve le code. Un humain l'a arrêté. AISI dit ne pas avoir trouvé de dommage réel résultant de l'incident.
+
+Cette nuance compte.
+
+Le comportement aussi.
+
+AISI est prudent : c'était un test contrôlé, pas un déploiement public ordinaire ; les modèles tournaient avec des permissions inhabituelles et des garde-fous abaissés ; l'institut ne peut pas encore dire avec certitude quand l'agent savait qu'il agissait dans le monde réel. Très bien. Gardons cette nuance.
+
+Mais il ne faut pas rater la leçon opérationnelle.
+
+Les évaluations indépendantes ne sont plus seulement des arbitres neutres à l'extérieur du produit.
+
+Elles font partie de la surface de risque du produit.
+
+Quand un labo donne un modèle capable à un évaluateur de confiance, désactive des garde-fous, ajoute des outils, ouvre internet, fixe un objectif cyber difficile et observe ce qui se passe, l'environnement d'évaluation devient un déploiement agentique réel. Il est peut-être temporaire. Il est peut-être privé. Il est peut-être conçu pour la recherche. Il a quand même besoin de la même infrastructure ennuyeuse : accès internet limité, tâches solubles, frontières d'autorisation explicites, monitoring en temps réel, nettoyage des artefacts, escalade humaine et traces rejouables.
+
+L'ancien modèle mental était :
+
+"Le risque, c'est la sortie publique."
+
+Le nouveau modèle est :
+
+"Le risque, c'est toute boucle agentique qui a assez d'autorité pour toucher de vrais systèmes."
+
+Très rassurant. Même le test de safety a maintenant besoin d'ingénierie safety.
 
 ## Ce n'est pas seulement une histoire OpenAI
 

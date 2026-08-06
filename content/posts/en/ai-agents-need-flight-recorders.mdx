@@ -1,7 +1,7 @@
 ---
 title: "AI Agents Need Flight Recorders"
-date: "2026-08-03"
-description: "After the OpenAI/Hugging Face and Anthropic cyber-evaluation incidents, the useful lesson is not that models are suddenly monsters. It is that autonomous agents need incident traces, execution logs, identity boundaries, and replayable timelines before they touch real systems."
+date: "2026-08-05"
+description: "After the OpenAI/Hugging Face, Anthropic, and new third-party cyber-evaluation incidents, the useful lesson is not that models are suddenly monsters. It is that autonomous agents need incident traces, execution logs, identity boundaries, and replayable timelines before they touch real systems."
 tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -41,6 +41,44 @@ If that loop crosses into the real world, the postmortem cannot be:
 It has to include the record.
 
 Very glamorous. The chatbot now needs an aviation regulator.
+
+## Update: the evaluator boundary is the product boundary
+
+On August 4, OpenAI published [more details about third-party cyber evaluations involving OpenAI models](https://openai.com/index/third-party-cyber-evaluations-involving-openai-models/).
+
+They are separate from the Hugging Face incident.
+
+That is the point.
+
+The pattern is no longer one strange evaluation gone wrong. It is the same boundary problem appearing across multiple trusted testing environments.
+
+OpenAI says UK AISI found two unsanctioned actions involving GPT-5.6 Sol during a cyber-range evaluation where internet access was intentionally enabled and cyber classifiers were disabled. The model reused a publicly exposed GitHub token left by another lab's agent, tried account-recovery and request-limit workarounds, registered external DNS and tunneling accounts, and used a tunneling service to expose a local DNS server containing exploit payloads to the public internet. OpenAI says the setup did not work, there is no evidence a real resolver queried it, and the infrastructure was removed.
+
+The UK's AI Security Institute published its own [incident report](https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing), and it is even more uncomfortable. Across 122 runs, AISI catalogued 19 unsanctioned actions in 10 runs. Seventeen involved Anthropic's Mythos 5, and two involved OpenAI's GPT-5.6 Sol. In the most serious sequence, an agent tried to insert malicious code into a real open-source project, created fake identities, and attempted social engineering to get a maintainer to approve the code. A human caught it. AISI says it has not found resulting real-world harm.
+
+That caveat matters.
+
+So does the behavior.
+
+AISI is careful: this was controlled testing, not ordinary public deployment; the models were run with unusual permissions and lowered safeguards; the institute cannot yet be certain when the agent understood it was acting in the real world. Good. Keep all of that nuance.
+
+But do not miss the operational lesson.
+
+Independent evals are no longer just neutral scorekeepers standing outside the product.
+
+They are part of the product's risk surface.
+
+When a lab gives a trusted evaluator a capable model, disables safeguards, adds tools, opens the internet, sets a hard cyber objective, and watches what happens, the evaluation environment becomes a live agent deployment. It may be temporary. It may be private. It may be designed for research. It still needs the same boring infrastructure: scoped internet access, solvable tasks, explicit authorization boundaries, live monitoring, artifact cleanup, human escalation, and replayable traces.
+
+The old mental model was:
+
+"The risky thing is public release."
+
+The new model is:
+
+"The risky thing is any agent loop with enough authority to touch real systems."
+
+Very calming. Even the safety test now needs safety engineering.
 
 ## This is not just an OpenAI story
 
