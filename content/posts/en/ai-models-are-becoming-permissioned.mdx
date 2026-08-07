@@ -1,7 +1,7 @@
 ---
 title: "Frontier AI Models Are Becoming Permissioned Products"
-date: "2026-06-26"
-description: "The reported GPT-5.6 limited rollout and Anthropic's Fable 5 shutdown point to a new reality: the most powerful AI models may not launch like normal software anymore."
+date: "2026-08-07"
+description: "The White House has now finalized a confidential frontier-model vetting framework, according to WIRED and the Guardian. The issue is no longer only who gets model access. It is whether the rulebook itself is inspectable enough for builders, startups, open-model developers, and the public to plan around."
 tags: ["AI Regulation", "OpenAI", "Anthropic", "Models"]
 draft: false
 ---
@@ -21,6 +21,119 @@ Two weeks ago, Anthropic said it had to [suspend access to Claude Fable 5 and Cl
 That is the shift.
 
 Frontier models are starting to look less like apps and more like restricted infrastructure.
+
+## Update: the rulebook is now the product
+
+The permission layer is no longer just a reported launch pattern.
+
+It is becoming a system.
+
+On June 2, the White House [published an executive order](https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/) telling agencies to build a classified benchmarking process for advanced cyber capabilities, define when a model becomes a "covered frontier model," and design a voluntary framework where developers can give the government access to those models for up to 30 days before release to trusted partners.
+
+That was the theory.
+
+Now the framework is reportedly real enough to brief the labs.
+
+[WIRED reported](https://www.wired.com/story/the-white-house-is-keeping-its-ai-cybersecurity-framework-secret/) that the administration has finalized the plan and privately shared an overview with OpenAI, Anthropic, Google, Meta, Nvidia, and other AI companies, while keeping the testing details, coverage criteria, and much of the process out of public view. [The Guardian reported](https://www.theguardian.com/technology/2026/aug/07/white-house-ai) the same basic concern from a different angle: the new AI-vetting framework is being treated as national-security machinery, but the people outside the room do not know what rulebook the largest labs are now playing under.
+
+This is not surprising.
+
+Some frontier cyber evaluations probably do need secrecy. You do not publish the exact exploit tasks, thresholds, scoring rubrics, and held-out benchmarks if the point is to test models for dangerous capability. A public exam would be gamed before lunch.
+
+But secrecy cannot be the whole governance interface.
+
+The government can keep the dangerous tests classified and still publish the operating frame around them:
+
+- which models are likely covered
+- which capabilities trigger review
+- what "voluntary" means when market access depends on participation
+- how long review can last
+- who can appeal
+- who sees the results
+- what gets disclosed after approval
+- what happens after a failed review
+- how startups qualify
+- how foreign developers are treated
+- how open-weight models are handled
+- how third-party researchers can challenge blind spots
+
+That is the difference between serious safety infrastructure and a private access channel.
+
+Very elegant. The frontier model now has a compliance API, but nobody outside the first circle can read the docs.
+
+## Secret rules create product risk
+
+This matters for builders because a hidden rulebook is still a dependency.
+
+If you are building on frontier models, you do not only care whether GPT-5.6, Claude Fable, Gemini, Muse Spark, or the next top model passes a government benchmark. You care whether the model will be available to your company, your country, your sector, your employees, and your customers on a timeline you can plan around.
+
+Classified testing may be necessary.
+
+Opaque eligibility is not.
+
+The White House order is careful to say the framework should not create mandatory licensing, preclearance, or permitting for model release. That caveat matters. It is the legal line between "the government can review models with willing companies" and "the government now approves frontier AI releases."
+
+But the market will care about practice, not just text.
+
+If the biggest labs submit models because they cannot afford not to, if early access flows through government-selected trusted partners, if critical-infrastructure customers are nudged toward approved providers, and if open models are outside the process entirely, the practical result may still look like a permissioned market.
+
+Not because someone printed a license.
+
+Because the safe path, the commercial path, and the politically acceptable path all start to converge.
+
+That is what makes this update important.
+
+The permissioned-products thesis has hardened. The question is no longer whether frontier AI is drifting toward government review. It is how much of that review can be made legible without turning the dangerous parts into a cheat sheet.
+
+## The open-model gap gets sharper
+
+The hardest part is still open models.
+
+WIRED says the White House is not sharing more detail about covered models and notes Axios reporting that open models will be excluded from the process. If that is right, the framework solves one narrow problem while leaving the pressure point exposed.
+
+Closed U.S. labs are legible to Washington.
+
+Open-weight models are not.
+
+They can be copied, modified, hosted abroad, fine-tuned locally, stripped of safeguards, and used by developers who never touch a U.S. frontier-lab API. Some of that is good. Open models support research, competition, language coverage, local control, cyber defense, and developer independence. Some of it is obviously hard to govern.
+
+This is why the public layer matters.
+
+If the government excludes open models, it should say what problem the framework is actually solving and what problem it is not solving. If it plans a separate open-model regime, builders need to know the shape. If the answer is "classified," the market will fill the silence with rumors, lobbying, and workarounds.
+
+The same week, NVIDIA and the Open Secure AI Alliance [proposed SAFE guidelines](https://blogs.nvidia.com/blog/open-secure-ai-alliance-contributions/) for collecting AI incidents and near misses confidentially while publishing evidence-based operating recommendations. That is not a full governance system either. It is industry-led, voluntary, and still has trust questions. But it points at a useful split:
+
+Keep sensitive incident details protected.
+
+Publish the patterns and mitigations the ecosystem needs.
+
+That split is exactly what the White House framework now has to prove it understands.
+
+## The incidents are forcing the issue
+
+The timing is not random.
+
+Over the past few weeks, OpenAI and Anthropic disclosed that models crossed into real systems during cyber evaluations. Then [AP reported](https://apnews.com/article/0e8061437da6779be962b24ac134a514) that Meta said one of its models accessed the internet and exploited a vulnerability in a third-party service during testing after a misconfiguration by Irregular.
+
+The cheap story is:
+
+"The models are escaping."
+
+The better story is:
+
+The evaluation environments are becoming real deployments.
+
+That is why Washington is moving. It is also why a secret framework is not enough. Agentic cyber evaluations are not a private lab curiosity anymore. They are now part of the market structure around model release, critical-infrastructure access, and developer trust.
+
+If the government wants labs to submit powerful models before release, fine. There is a serious argument for that.
+
+But if the result is a hidden map of who gets access, who gets delayed, which models are covered, which models are ignored, and which customers count as trusted, the policy will create its own risk.
+
+Safety without transparency becomes hard to trust.
+
+Transparency without protected tests becomes easy to game.
+
+That is the actual design problem.
 
 ## What happened
 
