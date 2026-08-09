@@ -1,7 +1,7 @@
 ---
 title: "Les promesses de safety ne sont pas une infrastructure"
-date: "2026-07-08"
-description: "Le nouvel AI Safety Index de Future of Life Institute donne des notes moyennes aux meilleurs labs IA. La leçon utile n'est pas le bulletin. C'est la faiblesse des promesses volontaires."
+date: "2026-08-09"
+description: "L'AI Safety Index du Future of Life Institute montrait la faiblesse des promesses volontaires. La divulgation d'OpenAI sur Astra donne maintenant le test le plus concret : un framework safety ne compte que s'il peut changer le développement, renforcer les contrôles et mettre du travail en pause avant la sortie."
 tags: ["AI Safety", "AI Regulation", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -33,6 +33,112 @@ L'histoire importante, c'est que le système de safety des modèles frontier res
 Et un système volontaire a besoin de dents.
 
 Pour l'instant, elles ont l'air petites.
+
+## Mise à jour : Astra teste le vrai frein
+
+Un mois plus tard, la question est devenue moins théorique.
+
+Le 7 août, OpenAI a publié une divulgation courte mais importante : [ses dernières évaluations internes d'Astra](https://openai.com/index/responding-next-frontier-critical-cyber-capabilities/), un modèle à venir, montrent assez de progrès en code agentique et en cybersécurité pour que l'entreprise dise ne pas pouvoir exclure une capacité cyber "Critical" selon son Preparedness Framework.
+
+Cette formulation compte.
+
+OpenAI ne dit pas qu'Astra a définitivement franchi le seuil Critical. OpenAI ne dit pas qu'Astra était impliqué dans l'incident Hugging Face. L'entreprise dit que les premiers éléments sont assez forts pour traiter cette catégorie de risque sérieusement avant le déploiement.
+
+C'est la partie intéressante.
+
+C'est ce qu'un framework safety est censé faire.
+
+Pas seulement publier une taxonomie.
+
+Pas seulement produire une model card après le lancement.
+
+Pas seulement créer un PDF élégant pour les décideurs publics.
+
+Changer le comportement avant le meeting de sortie.
+
+OpenAI dit qu'un modèle atteint son seuil cyber Critical s'il peut identifier et développer des exploits zero-day fonctionnels sur beaucoup de systèmes critiques réels et durcis sans intervention humaine, ou mener des attaques end-to-end nouvelles contre des cibles durcies à partir d'un objectif de haut niveau. En réponse aux résultats préliminaires d'Astra, l'entreprise dit renforcer les contrôles autour des modèles les plus capables : environnements de test isolés, accès réseau et outils restreints, protection et chiffrement accrus des poids, monitoring et détection supplémentaires, exécution sandboxée, tests avec des agences gouvernementales et des organisations safety, et recommandations de contrôle pour les évaluateurs tiers.
+
+Elle dit aussi mettre en pause les activités internes liées à Astra qui ne respectent pas encore ces exigences renforcées.
+
+Cette phrase est toute l'histoire.
+
+La promesse safety rencontre enfin le processus de lancement.
+
+Gouvernance très avancée. Le PDF a dû toucher le système de build.
+
+## C'est mieux que des vibes, mais pas suffisant
+
+Il faut reconnaître à OpenAI le mérite de la divulgation publique.
+
+Il aurait été facile de garder l'évaluation d'Astra discrète, surtout après plusieurs semaines difficiles d'incidents d'évaluation cyber impliquant OpenAI, Anthropic, Meta, Hugging Face, UK AISI et d'autres. Au lieu de cela, OpenAI dit publiquement qu'un de ses modèles à venir pourrait être proche de la catégorie cyber la plus élevée dans son propre framework, et que le travail interne doit respecter des contrôles plus stricts.
+
+C'est nettement mieux que :
+
+"Faites-nous confiance, nous nous soucions de la safety."
+
+Mais les questions difficiles restent là.
+
+Qui vérifie qu'Astra reste sous le seuil Critical avant déploiement ?
+
+Quelles agences gouvernementales et organisations safety obtiennent l'accès ?
+
+Que voient-elles exactement ?
+
+Que se passe-t-il si des évaluateurs externes ne sont pas d'accord ?
+
+Quelles "activités internes" peuvent continuer ?
+
+Quels contrôles sont exigés pour les contractants, partenaires et cyber ranges tiers ?
+
+Qu'est-ce qui sera divulgué si Astra sort finalement ?
+
+Quelqu'un en dehors d'OpenAI peut-il auditer si la pause a vraiment changé le risque ?
+
+Ce n'est pas du pinaillage.
+
+C'est la différence entre un framework safety comme discipline interne et un framework safety comme infrastructure publique.
+
+La [couverture du Guardian](https://www.theguardian.com/technology/2026/aug/08/openai-astra-security-concerns) replace correctement Astra dans le contexte des récents incidents de confinement et de tromperie. Le danger, c'est que tout le monde transforme cela soit en panique, soit en hype :
+
+"Le modèle est trop puissant pour sortir."
+
+Peut-être.
+
+Peut-être pas.
+
+La lecture utile est plus étroite :
+
+Le processus interne d'OpenAI a atteint le point où la mesure de capacité modifie les permissions d'ingénierie.
+
+C'est exactement là que la gouvernance frontier devient réelle.
+
+## La pause doit être inspectable
+
+Il y a une raison pour laquelle cette mise à jour appartient à cet article.
+
+L'argument original était que les promesses volontaires ont besoin de dents.
+
+Astra montre une dent possible.
+
+Mais une dent dans une bouche fermée reste difficile à inspecter pour le reste de l'écosystème.
+
+Si OpenAI met du travail en pause en interne, c'est bien.
+
+Si l'entreprise publie aussi assez de détails pour que les autres labs, évaluateurs, régulateurs et clients comprennent le pattern de contrôle, c'est mieux.
+
+L'écosystème n'a pas besoin de chaque benchmark d'exploitation, prompt, cible ou transcript d'évaluation. Les publier serait irresponsable. Mais il a besoin de la leçon opérationnelle :
+
+- quelles activités deviennent trop risquées avec les contrôles ordinaires de développement
+- quelles permissions réseau et outils deviennent inacceptables
+- comment la protection des poids change quand la capacité cyber augmente
+- comment les moniteurs de Chain-of-Thought sont utilisés sans devenir du théâtre de sécurité
+- comment les évaluateurs tiers devraient isoler les runs à haut risque
+- quelles preuves suffisent pour reprendre un travail mis en pause
+- quelle divulgation publique suit un résultat proche du seuil Critical
+
+Sans cette couche, chaque lab reçoit le titre mais pas la méthode.
+
+Et la leçon safety redevient du branding.
 
 ## Le bulletin compte moins que les promesses
 
