@@ -1,7 +1,7 @@
 ---
 title: "Open Models Are Now Foreign Policy"
-date: "2026-07-20"
-description: "Kimi K3 is not just another Chinese model launch. It is a reminder that open-weight AI is becoming infrastructure, distribution strategy, and geopolitical leverage at the same time."
+date: "2026-08-10"
+description: "Kimi K3 made the Chinese side of the open-model fight impossible to ignore. Meta's Muse Glimmer release now makes the American side explicit: open-weight AI is not just a developer preference. It is distribution strategy, local-agent infrastructure, and geopolitical leverage."
 tags: ["AI Policy", "Models", "Open Source", "AI Strategy"]
 draft: false
 ---
@@ -35,6 +35,114 @@ The better question is:
 What happens when the most accessible AI infrastructure in the world is also a strategic asset from a rival country?
 
 Very relaxing. The model card has entered the State Department.
+
+## Update: Meta made the U.S. side explicit
+
+Three weeks later, Meta has put the other half of the argument on the table.
+
+On August 10, Meta released [Muse Glimmer](https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model), a 30-billion-parameter open-weight model under Apache 2.0. The important part is not just that it is open. It is that Meta designed it for local agent workflows: function calling, coding, screenshots and documents, failure recovery, long-horizon task completion, and enough compression to run on consumer hardware with a single GPU.
+
+That is a very different political object from a hosted chatbot.
+
+A local agent model can sit closer to files, calendars, codebases, screenshots, small-business workflows, and personal context without sending every step through a cloud API. It can be customized. It can be mirrored. It can be quantized. It can be embedded in tools that Meta will never directly operate. It can be used by people who do not want their agent stack mediated by OpenAI, Anthropic, Google, or a government-approved frontier-access list.
+
+This is why Meta's release belongs in the same article as Kimi.
+
+The open-model fight is no longer only:
+
+"Should Chinese models be allowed in sensitive U.S. systems?"
+
+It is also:
+
+"Can the United States produce open models good enough that developers choose them voluntarily?"
+
+That is a much harder and more useful question.
+
+## Zuckerberg is turning openness into doctrine
+
+The model release came with a manifesto.
+
+In [The Future is for Everyone](https://www.meta.com/thefutureisforeveryone/), Mark Zuckerberg argues that the key AI question is who gets access to superintelligence: a few institutions, or everyone. He frames Meta's position around individual empowerment, invention, and balance of power. He says Meta will focus on personal superintelligence, free or affordable access, private modes for agents, open source models, and a more distributed AI ecosystem.
+
+You do not have to buy the whole thing.
+
+You especially do not have to forget that this is Meta.
+
+Meta has a long history of turning "empowerment" into distribution, distribution into data, data into ads, and ads into very large buildings full of servers. A local model does not magically solve the trust problem around WhatsApp, Instagram, Facebook, Marketplace, smart glasses, AI training data, or the company's instinct to wrap every useful surface in its own economics.
+
+But the strategic argument is real.
+
+Zuckerberg is not only saying "open source is nice."
+
+He is saying open models are how the U.S. avoids ceding the global developer substrate to China, how individuals avoid dependence on a few closed labs, how defenders can harden more systems, and how Meta can justify a less restrictive release philosophy at the exact moment Washington is building more confidential frontier-model review machinery.
+
+Very subtle. The open-weight model has become a policy memo with a download button.
+
+## Local agents change the open-model stakes
+
+Muse Glimmer is not trying to be the strongest frontier model in the world.
+
+That matters.
+
+The interesting claim is narrower: a smaller model, distilled from a stronger teacher, tuned for agentic work, and cheap enough to run locally may be more useful than a bigger closed model for certain workflows.
+
+For builders, that shifts the question from:
+
+"Which model wins the leaderboard?"
+
+to:
+
+"Which model can I actually place inside the workflow?"
+
+Local agent models are attractive because they can reduce latency, preserve more context on device, keep costs predictable, run offline, support regulated or sensitive environments, and let developers inspect more of the deployment. They are also annoying because the team now owns more of the security, evaluation, update, logging, and failure behavior.
+
+Open weights do not remove governance.
+
+They move it.
+
+Instead of trusting only a frontier lab's API policy, the builder has to answer:
+
+- which quantization is being used
+- where the weights came from
+- whether the model card matches the artifact in production
+- how prompts, files, and tool traces are stored
+- whether local tool access can leak secrets
+- what happens when the model is fine-tuned
+- who patches the model after a safety issue
+- whether the deployment can be reproduced for an audit
+- how users know when the local agent is acting versus suggesting
+
+That is the bargain.
+
+Open models make AI less centralized.
+
+They do not make it less operationally serious.
+
+## The U.S. needs a positive open-model strategy
+
+This is where today's Meta news sharpens the policy point.
+
+A defensive open-model strategy says:
+
+"How do we restrict the models we fear?"
+
+A serious open-model strategy also asks:
+
+"How do we make trusted open models the easiest useful choice?"
+
+Those are not the same.
+
+If American policy only slows closed U.S. frontier releases, classifies more of the rulebook, and debates restrictions on foreign open models, it may accidentally strengthen the very ecosystem it worries about. Developers do not wait for governance philosophy to settle. They route around friction.
+
+Meta is exploiting that tension.
+
+It is offering an answer that is self-interested, imperfect, and still important: release capable open-weight models, make them runnable on ordinary hardware, support the local-agent toolchain, and argue that American leadership requires distribution rather than only control.
+
+That does not mean regulators should wave everything through because someone put "open" in the headline.
+
+It means the policy debate has to stop treating openness as a side issue.
+
+The open layer is becoming where developers, startups, researchers, national-security customers, consumer devices, and local agents negotiate what AI access actually means.
 
 ## Open weights change the policy problem
 
