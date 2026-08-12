@@ -1,7 +1,7 @@
 ---
 title: "ChatGPT Work est le vrai lancement agentique"
-date: "2026-07-10"
-description: "Le lancement de GPT-5.6 compte. Mais ChatGPT Work est le signal le plus clair : la course agentique quitte les réponses intelligentes pour l'interface, les permissions, les fichiers, les tâches planifiées et les validations autour du vrai travail."
+date: "2026-08-12"
+description: "Le lancement de GPT-5.6 comptait. Mais ChatGPT Work était le signal le plus clair : les agents quittaient les réponses pour l'exécution. Les nouveaux Enterprise Signals d'OpenAI donnent maintenant les reçus : les entreprises qui prennent de l'avance ne chatent pas seulement davantage. Elles donnent aux agents du contexte, des outils, de la persistance, des permissions et des boucles de revue."
 tags: ["AI Agents", "OpenAI", "Future of Work", "Developer Tools"]
 draft: false
 ---
@@ -33,6 +33,93 @@ Ce n'est pas une mise à jour de chatbot.
 C'est une interface d'agent.
 
 Et l'interface pourrait compter autant que le modèle.
+
+## Mise à jour : les données enterprise parlent d'exécution, pas de chat
+
+Un mois plus tard, OpenAI met des chiffres derrière l'argument.
+
+Le 12 août, OpenAI a publié [deux rapports sur l'adoption enterprise](https://openai.com/index/how-enterprises-put-ai-to-work/) et une mise à jour de son tableau [Enterprise Signals](https://openai.com/signals/enterprise-data/). Le titre utile n'est pas "plus de gens posent des questions à ChatGPT".
+
+Le titre utile, c'est que l'IA enterprise passe de l'assistance à l'exécution.
+
+OpenAI dit qu'en juin, Codex représentait 64 % des tokens de sortie combinés de Codex et ChatGPT chez ses clients enterprise. Il faut manier les tokens prudemment : ce n'est pas la même chose que la valeur business, et un agent long peut produire beaucoup sans être très utile. Mais c'est un bon signal sur la forme du travail. Une entreprise qui demande à un agent d'inspecter des fichiers, modifier du code, utiliser des outils et finir une tâche en plusieurs étapes produira naturellement plus de sortie qu'une entreprise qui demande un brouillon rapide à un chatbot.
+
+Le chiffre le plus intéressant est l'écart.
+
+OpenAI dit que les frontier firms, les 10 % d'entreprises les plus intensives chaque mois, génèrent maintenant 8,3 fois plus de tokens de sortie par utilisateur actif que les entreprises typiques, contre 2,6 fois en janvier. Elles utilisent aussi davantage les capacités avancées : 21 % des utilisateurs actifs hebdomadaires dans ces entreprises utilisent des Plugins, contre 9 % dans les entreprises typiques, et 19 % utilisent des skills, contre 3 %.
+
+Ce n'est pas seulement de l'adoption.
+
+C'est de la maturité opérationnelle.
+
+Très futuriste. L'avenir du travail ressemble donc à une matrice de permissions avec une meilleure interface.
+
+## L'écart agentique n'est pas un écart d'accès
+
+C'est le point que les dirigeants devraient vraiment regarder.
+
+Les entreprises en avance n'ont pas un modèle magique que les autres n'ont pas.
+
+Elles ont un autre système d'exploitation autour de la même intelligence.
+
+Elles connectent les agents au contexte de l'entreprise. Elles leur donnent des outils. Elles créent des skills réutilisables. Elles les laissent persister sur des tâches. Elles construisent des chemins de revue. Elles partagent les workflows entre équipes au lieu de laisser chaque employé garder une habitude de prompt privée.
+
+C'est exactement pour cela que ChatGPT Work comptait plus que le titre du lancement.
+
+La surface produit est l'endroit où la délégation devient répétable.
+
+Une réponse de chat peut accélérer une personne.
+
+Un workflow agentique peut devenir la manière dont l'équipe fait le travail.
+
+Ce n'est pas la même courbe d'adoption. Il faut des admins, des permissions, des frontières de données, de la formation, de la provenance, de la propriété, et une réponse à la question profondément glamour : qui est responsable quand le workflow du lundi matin se dégrade silencieusement ?
+
+## Les agents sortent de l'ingénierie, dans le bon sens
+
+Le signal le plus utile est que la croissance de Codex n'est plus seulement une histoire d'ingénieurs.
+
+OpenAI dit que les utilisateurs hebdomadaires actifs de Codex en enterprise ont augmenté de 108x dans le juridique, 41x dans les ventes, 41x dans le recrutement et 26x dans le marketing depuis février, contre 5x en ingénierie.
+
+Il y a un peu de bizarrerie de vocabulaire ici. Codex sonne encore comme un produit de code, et OpenAI utilise les tokens Codex comme proxy de l'usage agentique. Mais la direction compte. Le premier foyer stable des agents a été le code parce que le code a des tests, des fichiers, des diffs et du feedback clair. Maintenant, le même pattern entre dans du travail aux critères de réussite plus flous : préparation commerciale, coordination de recrutement, analyse marketing, policy, reporting finance, diligence investisseur.
+
+C'est là que le vrai problème produit commence.
+
+Hors ingénierie, "terminé" est moins évident.
+
+L'agent peut préparer le deck, mais un humain doit encore savoir si l'histoire est politiquement sûre. Il peut analyser des notes de vente, mais quelqu'un doit savoir si le contexte du compte est périmé. Il peut résumer des retours de candidats, mais RH et juridique voudront savoir exactement ce qu'il a lu, inféré et stocké.
+
+L'agent peut déplacer le travail.
+
+L'organisation doit encore gouverner le travail.
+
+## Ce que cela change pour les builders
+
+L'ancienne question enterprise était :
+
+"Les employés ont-ils accès ?"
+
+La nouvelle question est :
+
+"Que peuvent-ils déléguer sans créer un autre problème ?"
+
+Cela veut dire que les builders devraient commencer par la couche ennuyeuse :
+
+- quels systèmes l'agent peut voir
+- quelles actions il peut prendre
+- quels workflows deviennent des skills réutilisables
+- quels livrables exigent une revue humaine
+- quelles traces prouvent ce qui s'est passé
+- quelles équipes peuvent partager un workflow
+- quelles métriques mesurent la profondeur plutôt que la nouveauté
+- quelles tâches doivent rester du chat, et lesquelles doivent devenir de l'exécution
+
+Les données d'OpenAI sont intéressées. Évidemment. C'est un rapport qui rend ses produits agentiques enterprise stratégiquement importants.
+
+Mais la direction colle à ce qu'on voit dans le marché.
+
+La course agentique ne concerne pas seulement le modèle le plus intelligent.
+
+Elle concerne la capacité à transformer le modèle en système de travail gouverné.
 
 ## Le modèle devient le minimum attendu
 

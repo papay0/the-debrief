@@ -1,7 +1,7 @@
 ---
 title: "ChatGPT Work Is the Real Agent Launch"
-date: "2026-07-10"
-description: "OpenAI's GPT-5.6 launch matters. But ChatGPT Work is the clearer signal: the agent race is moving from smarter answers to the interface, permissions, files, schedules, and approvals around real work."
+date: "2026-08-12"
+description: "OpenAI's GPT-5.6 launch mattered. But ChatGPT Work was the clearer signal: agents were moving from answers to execution. OpenAI's new Enterprise Signals now gives the receipts: the firms pulling ahead are not just chatting more. They are giving agents context, tools, persistence, permissions, and review loops."
 tags: ["AI Agents", "OpenAI", "Future of Work", "Developer Tools"]
 draft: false
 ---
@@ -33,6 +33,93 @@ That is not a chatbot upgrade.
 That is an agent interface.
 
 And the interface may matter as much as the model.
+
+## Update: the enterprise data says this is execution, not chat
+
+One month later, OpenAI has put numbers behind the argument.
+
+On August 12, OpenAI published [two enterprise adoption reports](https://openai.com/index/how-enterprises-put-ai-to-work/) and an updated [Enterprise Signals](https://openai.com/signals/enterprise-data/) dashboard. The headline is not "more people are asking ChatGPT questions."
+
+The headline is that enterprise AI is moving from assistance to execution.
+
+OpenAI says Codex generated 64% of combined Codex and ChatGPT output tokens among enterprise customers as of June. Treat tokens carefully: they are not the same as business value, and long agent runs can be verbose without being useful. But they are a decent signal for the shape of work. A company asking an agent to inspect files, edit code, use tools, and finish a multi-step task will naturally produce more output than a company asking a chatbot for a quick draft.
+
+The more interesting number is the gap.
+
+OpenAI says frontier firms, the top 10% of enterprise usage each month, now generate 8.3x as many output tokens per active user as typical firms, up from 2.6x in January. Those firms also use more advanced capabilities: 21% of weekly active users at frontier firms use Plugins, compared with 9% at typical firms, and 19% use skills, compared with 3% at typical firms.
+
+That is not only adoption.
+
+It is operational maturity.
+
+Very exciting. The future of work is apparently a permissions matrix with a better UI.
+
+## The agent gap is not an access gap
+
+This is the part leaders should sit with.
+
+The frontier firms do not have magic models that everyone else lacks.
+
+They have a different operating model around the same underlying intelligence.
+
+They connect agents to company context. They give them tools. They create reusable skills. They let them persist through tasks. They build review paths. They share workflows across teams instead of letting every employee keep a private prompt habit.
+
+That is exactly why ChatGPT Work mattered more than the launch headline.
+
+The product surface is where delegation becomes repeatable.
+
+A chat answer can make one person faster.
+
+An agent workflow can become how the team does the work.
+
+That is a different adoption curve. It needs admins, permissions, data boundaries, training, provenance, ownership, and an answer to the extremely glamorous question: who is responsible when the agent's Monday morning workflow silently gets worse?
+
+## Agents are escaping engineering, in the good way
+
+The most useful data point is that Codex growth is not only an engineering story anymore.
+
+OpenAI says weekly active enterprise Codex users grew 108x in legal, 41x in sales, 41x in recruiting, and 26x in marketing since February, compared with 5x in engineering.
+
+Some of that is naming weirdness. Codex still sounds like a coding product, and OpenAI is using Codex tokens as a proxy for agentic use. But the direction is important. The first stable home for agents was code because code has tests, files, diffs, and clear feedback. Now the same pattern is leaking into work that has messier success criteria: sales prep, recruiting coordination, marketing analysis, policy work, finance reporting, investor diligence.
+
+That is where the harder product problem begins.
+
+Outside engineering, "done" is less obvious.
+
+The agent may draft the deck, but a human still has to know whether the story is politically safe. It may analyze sales notes, but someone has to know whether the account context is stale. It may summarize candidate feedback, but HR and legal will care very much about what it read, inferred, and stored.
+
+The agent can move the work.
+
+The organization still has to govern the work.
+
+## What this changes for builders
+
+The old enterprise AI question was:
+
+"Do employees have access?"
+
+The new question is:
+
+"What can they safely delegate?"
+
+That means builders should design around the boring layer first:
+
+- which company systems the agent can see
+- which actions it can take
+- which workflows become reusable skills
+- which outputs need human review
+- which traces prove what happened
+- which teams are allowed to share a workflow
+- which usage metrics measure depth rather than novelty
+- which tasks should stay chat, and which should become execution
+
+OpenAI's data is self-interested. Of course it is. It is publishing a report that makes its enterprise agent products look strategically important.
+
+But the direction matches what is visible across the market.
+
+The agent race is not only who has the smartest model.
+
+It is who can turn the model into a governed work system.
 
 ## The model is becoming table stakes
 
