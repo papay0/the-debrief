@@ -1,7 +1,7 @@
 ---
 title: "Frontier AI Wants a FINRA Moment"
-date: "2026-07-14"
-description: "Demis Hassabis wants a US-led standards body to test frontier AI models before release. The interesting part is not the AGI rhetoric. It is the attempt to turn model safety from promises into market infrastructure."
+date: "2026-08-13"
+description: "Demis Hassabis's FINRA-for-AI idea is no longer just a manifesto. Reporting now says he pitched it to US officials and AI leaders before stepping away from DeepMind's day-to-day role, while the White House may extend its secret model-review framework to open models. The governance problem is moving from white paper to operating system."
 tags: ["AI Regulation", "Google DeepMind", "AI Safety", "AI Models"]
 draft: false
 ---
@@ -49,6 +49,142 @@ The hard part is making sure the infrastructure has teeth, independence, and tec
 Otherwise we do not get AI's FINRA.
 
 We get a very expensive suggestion box with GPUs.
+
+## Update: the suggestion box is getting closer to the control room
+
+One month later, this is no longer just a manifesto.
+
+On August 13, [The Wall Street Journal reported](https://www.wsj.com/tech/ai/deepminds-hassabis-pitched-ai-oversight-body-before-shake-up-e25b3f71) that Hassabis had discussed the idea with senior Trump administration officials, including Treasury Secretary Scott Bessent and tech adviser Michael Kratsios, before stepping away from day-to-day leadership of Google DeepMind. The Journal also reported that Hassabis discussed the need for a U.S.-led global standards effort at a June G7 summit with world leaders and AI executives.
+
+Separately, [WIRED reported](https://www.wired.com/story/the-white-house-is-going-to-expand-its-ai-policy/) that White House officials are likely to revise the administration's still-private AI framework and eventually extend it beyond closed models from companies like OpenAI and Anthropic to open models that reach similar frontier capabilities.
+
+The important word in both sentences is "reported."
+
+There is still no public rulebook. The White House framework remains voluntary, according to WIRED. The administration has reportedly kept the details private. The line for what counts as a frontier open model is not public. And the gap between "officials are discussing this" and "this is an accountable institution" is wide enough to park a data center in it.
+
+Still, the direction matters.
+
+The FINRA-for-AI idea is moving from essay to policy substrate.
+
+Very healthy. The future of AGI governance is apparently a group chat with national labs, frontier labs, and no public PDF.
+
+## The open-model exemption was never going to hold
+
+The awkward part is that the open-model carveout was always unstable.
+
+If only closed models get pre-release review, the government accidentally creates a market signal:
+
+"Closed models may be approved. Open models are cheaper, but maybe unblessed."
+
+Enterprises will notice.
+
+Insurers will notice.
+
+Cloud platforms will notice.
+
+Procurement teams, whose natural state is already suspicion, will absolutely notice.
+
+That can distort the market even if nobody writes "ban open models" into a rule. A voluntary safety framework can still become a de facto buying framework when customers, boards, and lawyers start asking whether the model was reviewed.
+
+But the opposite path is not clean either.
+
+If open-weight models have to go through the same pre-release review once they cross a frontier threshold, the review system has to answer questions it has mostly avoided:
+
+- who submits the model
+- what happens to a model trained outside the U.S.
+- whether fine-tunes count
+- whether quantized versions count
+- how to review a model that can be copied globally after release
+- whether a 30-day delay kills useful open competition
+- what public evidence buyers get after the review
+- who is liable when an approved open model is modified and abused
+
+This is why the open-model question is not a side quest.
+
+It is the real test.
+
+## Self-regulation is becoming pre-regulation
+
+Hassabis's original proposal was industry-funded, federally overseen, technically staffed, and built around updated dangerous-capability testing. That is a self-regulatory shape.
+
+The White House framework sounds different: federal testing before release, kept largely private, voluntary for now, with possible formal partnerships between leading labs and government testing programs.
+
+But the two roads are starting to meet.
+
+The government needs model access, eval expertise, compute, and technical judgment it does not fully have. The labs need something more credible than "trust us." National labs and AI safety institutes can run serious tests, but they need clear scope, secrecy rules, incident processes, and authority. Open-model developers need a path that does not simply hand the future to closed labs.
+
+That is how self-regulation quietly becomes pre-regulation.
+
+Not law yet.
+
+Not purely voluntary anymore.
+
+Not quite public.
+
+Not quite private.
+
+A soft gate can harden very quickly once customers, clouds, insurers, investors, and procurement teams decide it is the gate that matters.
+
+## What would make this legitimate
+
+If this framework is going to matter, it needs more than prestigious names.
+
+It needs visible governance.
+
+Not every eval can be public. Some cyber and bio tests should not be dumped onto the internet like party favors. But the structure can be public:
+
+- who sits on the body
+- who pays for it
+- which model classes fall inside it
+- how thresholds are updated
+- how open models are treated
+- how conflicts of interest are managed
+- what a lab can appeal
+- what gets disclosed after a review
+- what happens after a post-release incident
+- when a voluntary process becomes mandatory
+
+Without that, the public gets the worst of both worlds: secret review that is powerful enough to shape the market, but not transparent enough to trust.
+
+The point is not that every model launch needs a press conference with benchmark spoilers.
+
+The point is that AI governance cannot be only a private negotiation among the companies most affected by it.
+
+That is not infrastructure.
+
+That is deal flow.
+
+## What builders should do now
+
+For builders, the practical lesson is simple:
+
+Start treating model governance as part of the dependency.
+
+Not as a policy hobby.
+
+As product risk.
+
+If your product depends on a frontier model, you should know:
+
+- whether the model is closed, open-weight, hosted, fine-tuned, or local
+- whether its provider is likely to be inside a pre-release review framework
+- whether your customer will care about that review
+- whether your fallback model has a different governance status
+- whether your open model can be modified in ways that break its safety assumptions
+- whether your logs and evals can prove what happened after a model update
+- whether a regulator, insurer, or enterprise buyer will ask for evidence you do not have
+
+The question is no longer only:
+
+"Which model is best?"
+
+It is:
+
+"Which model can survive the approval, audit, procurement, and incident process around the work we are giving it?"
+
+That is less fun than a benchmark chart.
+
+It is also where frontier AI is going.
 
 ## This is the next version of the safety-pledge story
 

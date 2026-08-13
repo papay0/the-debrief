@@ -1,7 +1,7 @@
 ---
 title: "L'IA frontier veut son moment FINRA"
-date: "2026-07-14"
-description: "Demis Hassabis veut un organisme américain pour tester les modèles IA frontier avant leur sortie. Le point intéressant n'est pas la rhétorique AGI. C'est la tentative de transformer la safety des modèles en infrastructure de marché."
+date: "2026-08-13"
+description: "L'idée FINRA-pour-l'IA de Demis Hassabis n'est plus seulement un manifeste. Des reportings disent maintenant qu'il l'a présentée à des responsables américains et à des dirigeants IA avant de quitter la gestion quotidienne de DeepMind, pendant que la Maison-Blanche pourrait étendre son framework secret de revue aux modèles ouverts. Le problème de gouvernance passe du white paper au système d'exploitation."
 tags: ["AI Regulation", "Google DeepMind", "AI Safety", "AI Models"]
 draft: false
 ---
@@ -49,6 +49,142 @@ La difficulté, c'est de s'assurer que cette infrastructure ait des dents, de l'
 Sinon, nous n'obtiendrons pas la FINRA de l'IA.
 
 Nous obtiendrons une boîte à suggestions très chère avec des GPU.
+
+## Mise à jour : la boîte à suggestions se rapproche de la salle de contrôle
+
+Un mois plus tard, ce n'est plus seulement un manifeste.
+
+Le 13 août, [The Wall Street Journal a rapporté](https://www.wsj.com/tech/ai/deepminds-hassabis-pitched-ai-oversight-body-before-shake-up-e25b3f71) que Hassabis avait discuté de l'idée avec de hauts responsables de l'administration Trump, dont le secrétaire au Trésor Scott Bessent et le conseiller tech Michael Kratsios, avant de quitter la direction quotidienne de Google DeepMind. Le Journal rapporte aussi que Hassabis a défendu le besoin d'un effort mondial de standards mené par les États-Unis lors d'un sommet du G7 en juin avec des dirigeants politiques et des exécutifs IA.
+
+Séparément, [WIRED a rapporté](https://www.wired.com/story/the-white-house-is-going-to-expand-its-ai-policy/) que des responsables de la Maison-Blanche devraient probablement réviser le framework IA encore privé de l'administration et l'étendre, à terme, au-delà des modèles fermés d'entreprises comme OpenAI et Anthropic, vers les modèles ouverts qui atteindraient des capacités frontier comparables.
+
+Le mot important dans les deux phrases est "rapporté".
+
+Il n'y a toujours pas de rulebook public. Le framework de la Maison-Blanche reste volontaire, selon WIRED. L'administration garderait les détails privés. Le seuil qui ferait d'un modèle ouvert un modèle frontier n'est pas public. Et l'écart entre "des responsables en discutent" et "c'est une institution responsable" est assez large pour y garer un data center.
+
+Mais la direction compte.
+
+L'idée FINRA-pour-l'IA quitte l'essai pour entrer dans le substrat politique.
+
+Très sain. Le futur de la gouvernance AGI ressemble donc à un group chat entre labs nationaux, frontier labs et aucun PDF public.
+
+## L'exemption des modèles ouverts ne pouvait pas tenir
+
+La partie gênante, c'est que l'exception pour les modèles ouverts était instable dès le départ.
+
+Si seuls les modèles fermés passent par une revue avant lancement, le gouvernement crée accidentellement un signal de marché :
+
+"Les modèles fermés peuvent être approuvés. Les modèles ouverts sont moins chers, mais peut-être non bénis."
+
+Les entreprises vont le voir.
+
+Les assureurs vont le voir.
+
+Les clouds vont le voir.
+
+Les équipes procurement, dont l'état naturel est déjà la suspicion, vont absolument le voir.
+
+Cela peut déformer le marché même si personne n'écrit "interdire les modèles ouverts" dans une règle. Un framework safety volontaire peut devenir un framework d'achat de facto dès que les clients, les boards et les juristes demandent si le modèle a été revu.
+
+Mais le chemin inverse n'est pas propre non plus.
+
+Si les modèles open-weight doivent passer par la même revue avant sortie dès qu'ils franchissent un seuil frontier, le système doit répondre à des questions qu'il a surtout évitées :
+
+- qui soumet le modèle
+- que se passe-t-il pour un modèle entraîné hors des États-Unis
+- si les fine-tunes comptent
+- si les versions quantisées comptent
+- comment revoir un modèle qui peut être copié globalement après publication
+- si un délai de 30 jours tue une concurrence ouverte utile
+- quelles preuves publiques les acheteurs reçoivent après la revue
+- qui est responsable quand un modèle ouvert approuvé est modifié puis abusé
+
+C'est pour cela que la question des modèles ouverts n'est pas une quête secondaire.
+
+C'est le vrai test.
+
+## L'autorégulation devient de la pré-régulation
+
+La proposition originale de Hassabis était financée par l'industrie, supervisée par le fédéral, techniquement compétente et construite autour de tests de capacités dangereuses mis à jour. C'est une forme d'autorégulation.
+
+Le framework de la Maison-Blanche semble différent : tests fédéraux avant sortie, largement privés, volontaires pour l'instant, avec la possibilité de partenariats formels entre les grands labs et les programmes de test gouvernementaux.
+
+Mais les deux routes commencent à se rejoindre.
+
+Le gouvernement a besoin d'accès aux modèles, d'expertise en evals, de compute et de jugement technique qu'il ne possède pas encore pleinement. Les labs ont besoin de quelque chose de plus crédible que "faites-nous confiance". Les labs nationaux et instituts de safety peuvent lancer des tests sérieux, mais ils ont besoin de périmètres clairs, de règles de secret, de processus d'incident et d'autorité. Les développeurs de modèles ouverts ont besoin d'un chemin qui ne donne pas simplement le futur aux labs fermés.
+
+C'est ainsi que l'autorégulation devient discrètement de la pré-régulation.
+
+Pas encore de loi.
+
+Plus vraiment volontaire.
+
+Pas tout à fait public.
+
+Pas tout à fait privé.
+
+Une barrière souple peut durcir très vite quand les clients, les clouds, les assureurs, les investisseurs et les achats décident que c'est la barrière qui compte.
+
+## Ce qui rendrait cela légitime
+
+Si ce framework doit compter, il lui faut plus que des noms prestigieux.
+
+Il lui faut une gouvernance visible.
+
+Toutes les evals ne peuvent pas être publiques. Certains tests cyber ou bio ne devraient pas être jetés sur internet comme des confettis. Mais la structure peut être publique :
+
+- qui siège dans l'organisme
+- qui le finance
+- quelles classes de modèles entrent dans le périmètre
+- comment les seuils sont mis à jour
+- comment les modèles ouverts sont traités
+- comment les conflits d'intérêts sont gérés
+- ce qu'un lab peut contester
+- ce qui est publié après une revue
+- ce qui se passe après un incident post-lancement
+- quand un processus volontaire devient obligatoire
+
+Sans cela, le public obtient le pire des deux mondes : une revue secrète assez puissante pour structurer le marché, mais pas assez transparente pour être digne de confiance.
+
+Le point n'est pas que chaque lancement de modèle doive avoir une conférence de presse avec spoilers de benchmarks.
+
+Le point est que la gouvernance IA ne peut pas être seulement une négociation privée entre les entreprises les plus concernées.
+
+Ce n'est pas de l'infrastructure.
+
+C'est du deal flow.
+
+## Ce que les builders devraient faire maintenant
+
+Pour les builders, la leçon pratique est simple :
+
+commencez à traiter la gouvernance du modèle comme une partie de la dépendance.
+
+Pas comme un hobby de policy.
+
+Comme un risque produit.
+
+Si votre produit dépend d'un modèle frontier, vous devriez savoir :
+
+- si le modèle est fermé, open-weight, hébergé, fine-tuné ou local
+- si son fournisseur risque d'entrer dans un framework de revue avant sortie
+- si vos clients vont se soucier de cette revue
+- si votre modèle de secours a un autre statut de gouvernance
+- si votre modèle ouvert peut être modifié d'une manière qui casse ses hypothèses safety
+- si vos logs et evals peuvent prouver ce qui s'est passé après une mise à jour modèle
+- si un régulateur, assureur ou acheteur enterprise demandera des preuves que vous n'avez pas
+
+La question n'est plus seulement :
+
+"Quel modèle est le meilleur ?"
+
+C'est :
+
+"Quel modèle peut survivre au processus d'approbation, d'audit, d'achat et d'incident autour du travail qu'on lui confie ?"
+
+C'est moins drôle qu'un graphique de benchmarks.
+
+C'est aussi là que va l'IA frontier.
 
 ## C'est la suite de l'histoire des promesses safety
 
