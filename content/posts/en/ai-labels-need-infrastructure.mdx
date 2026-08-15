@@ -1,7 +1,7 @@
 ---
 title: "AI Labels Need Infrastructure, Not Stickers"
-date: "2026-08-02"
-description: "The EU AI Act's new transparency rules are now enforceable. The useful question is not whether chatbots and deepfakes get labels. It is whether those labels become reliable product metadata, audit trails, and trust infrastructure instead of another banner people learn to ignore."
+date: "2026-08-15"
+description: "The EU AI Act's transparency rules are now enforceable, and Anthropic's Claude watermark shows what the hard version looks like. The useful question is not whether AI content gets a sticker. It is whether machine-readable marks, detector APIs, C2PA metadata, and audit trails can become trust infrastructure without pretending they prove more than they do."
 tags: ["AI Regulation", "EU AI Act", "AI Safety", "AI Products"]
 draft: false
 ---
@@ -41,6 +41,148 @@ Lots of labels.
 Little trust.
 
 Very European future. The chatbot now has paperwork.
+
+## Update: Claude shows what machine-readable labels really mean
+
+Two weeks later, the abstract requirement has become product behavior.
+
+On August 14, Anthropic published a detailed explanation of [how Claude's text watermark works](https://www.anthropic.com/news/claude-text-watermark). Future Claude models will generate text with a watermark to comply with the EU AI Act, and Anthropic says it is applying the change globally at launch because it does not yet have a durable way to scope the system by region.
+
+That last part matters.
+
+A European transparency rule is becoming a global product default.
+
+The mechanism is also worth understanding. Anthropic says the watermark does not add hidden characters, metadata, or extra tokens. Instead, it changes the source of randomness when Claude chooses among words that are already acceptable. Over a long enough passage, those small choices create a statistical pattern that someone with the right key can detect.
+
+This is not a sticker.
+
+It is not a visible label.
+
+It is not a confession written into the text.
+
+It is probabilistic infrastructure.
+
+Very normal. The sentence now has a compliance shadow.
+
+## A watermark is evidence, not authorship
+
+This is where the product problem gets subtle.
+
+Anthropic is careful about the limits. The watermark can help answer: how likely is it that Claude was involved in this text? It cannot prove that the text was written by Claude. It cannot prove that the text was human-written if no watermark appears. It cannot identify the user, organization, chat, or account. It cannot detect another lab's watermark unless that system uses a compatible method and key.
+
+It also works unevenly.
+
+Short samples have too little signal. Highly factual passages have fewer low-stakes choices. Code has less room for arbitrary token choices because exactness matters. Light proofreading may not leave enough Claude-chosen text to detect. Translation does, because Claude chooses every word.
+
+That is not a failure of transparency.
+
+That is transparency being honest.
+
+The label does not say:
+
+"This is AI content."
+
+It says something closer to:
+
+"This text is statistically consistent with Claude having chosen enough of these words."
+
+Ugly sentence.
+
+Important distinction.
+
+## The detector becomes part of the product
+
+Anthropic says it will soon offer a watermark detection API.
+
+That is the next layer.
+
+Once detection moves into APIs, transparency becomes a platform capability. Schools, publishers, employers, marketplaces, governments, moderation vendors, enterprise compliance tools, and content platforms will not only ask whether content is labelled. They will ask who can check the label, under what threshold, with what error rate, and with what appeal process.
+
+This is where "labels need infrastructure" stops being a metaphor.
+
+If a detector says Claude likely touched a document, what happens next?
+
+Does the user see the score?
+
+Does the publisher reject it?
+
+Does the teacher treat it as cheating?
+
+Does the company log it as AI-assisted work?
+
+Does the customer get a disclosure?
+
+Does the author get a way to show the human draft, edits, sources, and review path?
+
+A detector without process is just a new kind of accusation machine.
+
+The goal should not be to create a magic scanner that decides authorship.
+
+The goal should be to create enough provenance that people can understand the role AI played.
+
+## Files and text are becoming two different transparency stacks
+
+Anthropic's file approach is different.
+
+For supported files such as PNG, JPG, and SVG, Claude will attach a digitally signed content credential using [C2PA](https://c2pa.org/), the open provenance standard used by camera and editing tools. That metadata can say Claude made or processed the file, and C2PA-aware tools can read it.
+
+That is cleaner than text in one way.
+
+Files have containers. Metadata can live somewhere.
+
+Text is just words moving through copy, paste, screenshots, notes apps, emails, docs, exports, CMS fields, and chat bubbles. It does not have a stable package. So the mark has to live in the statistical pattern of the words themselves.
+
+That makes text watermarking both more interesting and more fragile.
+
+It may survive copy-paste and light editing.
+
+It may not survive a full rewrite.
+
+It may be weak in code and factual text.
+
+It may be misunderstood by institutions that want a simpler answer than the evidence can provide.
+
+The hard work is not adding the mark.
+
+The hard work is teaching the surrounding systems what the mark can and cannot mean.
+
+## The backlash is the buried requirement
+
+The user reaction was predictable.
+
+[Business Insider reported](https://www.businessinsider.com/anthropic-reveals-more-about-ai-watermarking-plans-amid-eu-regulations-2026-8) that some Claude users objected to watermarking, while Anthropic said it had not seen a significant cancellation trend. [TechCrunch also covered](https://techcrunch.com/2026/08/12/some-claude-users-are-mad-that-anthropics-new-watermarks-will-catch-them-cheating-at-their-jobs-classes/) the discomfort from users who do not want AI involvement to be detectable.
+
+The uncomfortable truth is that a lot of AI usage has depended on invisibility.
+
+Not always deception.
+
+Sometimes just ambiguity.
+
+Did the AI write this?
+
+Edit this?
+
+Translate this?
+
+Summarize source notes?
+
+Fix grammar?
+
+Suggest structure?
+
+Make the author sound smarter?
+
+Those are different things. But most workflows do not record the difference.
+
+Watermarking forces the issue. It says the AI's involvement may become inspectable even when the visible text looks ordinary. That is good for trust in some contexts and disruptive in others. It can protect readers from deception. It can also make honest assistance look suspicious if institutions use the signal lazily.
+
+So builders should not stop at "we comply with watermarking."
+
+They need AI-assistance states, review history, editorial responsibility, user education, appeal paths, and product language that does not treat every AI touch as the same moral category.
+
+The mark is the beginning.
+
+The workflow around the mark is the product.
 
 ## This is not the whole AI Act
 

@@ -1,7 +1,7 @@
 ---
 title: "Les labels IA doivent être une infrastructure, pas des autocollants"
-date: "2026-08-02"
-description: "Les nouvelles règles de transparence de l'AI Act européen deviennent applicables. La vraie question n'est pas seulement de savoir si les chatbots et les deepfakes auront des labels, mais si ces labels deviennent des métadonnées fiables, des traces d'audit et une infrastructure de confiance."
+date: "2026-08-15"
+description: "Les règles de transparence de l'AI Act européen deviennent applicables, et le watermark Claude d'Anthropic montre la version difficile du sujet. La vraie question n'est pas seulement de savoir si le contenu IA reçoit un autocollant, mais si les marques lisibles par machine, les APIs de détection, les métadonnées C2PA et les traces d'audit peuvent devenir une infrastructure de confiance sans prétendre prouver plus qu'elles ne prouvent."
 tags: ["AI Regulation", "EU AI Act", "AI Safety", "AI Products"]
 draft: false
 ---
@@ -41,6 +41,148 @@ Beaucoup de labels.
 Peu de confiance.
 
 Futur très européen. Le chatbot a maintenant de la paperasse.
+
+## Mise à jour : Claude montre ce que veut dire un label lisible par machine
+
+Deux semaines plus tard, l'exigence abstraite devient un comportement produit.
+
+Le 14 août, Anthropic a publié une explication détaillée du [fonctionnement du watermark texte de Claude](https://www.anthropic.com/news/claude-text-watermark). Les futurs modèles Claude généreront du texte avec un watermark pour se conformer à l'AI Act européen, et Anthropic dit appliquer le changement globalement au lancement parce que l'entreprise n'a pas encore de manière durable de limiter le système par région.
+
+Ce dernier point compte.
+
+Une règle européenne de transparence devient un défaut produit mondial.
+
+Le mécanisme mérite aussi d'être compris. Anthropic dit que le watermark n'ajoute pas de caractères cachés, pas de métadonnées et pas de tokens supplémentaires. Il change plutôt la source de hasard quand Claude choisit entre des mots déjà acceptables. Sur un passage assez long, ces petits choix créent un motif statistique détectable par quelqu'un qui possède la bonne clé.
+
+Ce n'est pas un autocollant.
+
+Ce n'est pas un label visible.
+
+Ce n'est pas un aveu écrit dans le texte.
+
+C'est une infrastructure probabiliste.
+
+Très normal. La phrase a maintenant une ombre conformité.
+
+## Un watermark est une preuve, pas une paternité
+
+C'est là que le problème produit devient subtil.
+
+Anthropic est prudent sur les limites. Le watermark peut aider à répondre à une question : quelle est la probabilité que Claude ait participé à ce texte ? Il ne peut pas prouver que le texte a été écrit par Claude. Il ne peut pas prouver qu'un texte est humain si aucun watermark n'apparaît. Il ne peut pas identifier l'utilisateur, l'organisation, le chat ou le compte. Il ne peut pas détecter le watermark d'un autre lab, sauf si ce système utilise une méthode et une clé compatibles.
+
+Il fonctionne aussi de manière inégale.
+
+Les échantillons courts ont trop peu de signal. Les passages très factuels offrent moins de choix sans conséquence. Le code laisse moins de place à l'arbitraire parce que l'exactitude compte. Une correction légère peut ne pas laisser assez de mots choisis par Claude pour être détectée. Une traduction, elle, en laisse, parce que Claude choisit chaque mot.
+
+Ce n'est pas un échec de transparence.
+
+C'est une transparence qui reste honnête.
+
+Le label ne dit pas :
+
+"Ceci est du contenu IA."
+
+Il dit plutôt :
+
+"Ce texte est statistiquement compatible avec le fait que Claude ait choisi assez de ces mots."
+
+Phrase affreuse.
+
+Distinction importante.
+
+## Le détecteur devient une partie du produit
+
+Anthropic dit qu'une API de détection du watermark arrivera bientôt.
+
+C'est la couche suivante.
+
+Quand la détection entre dans des APIs, la transparence devient une capacité de plateforme. Écoles, éditeurs, employeurs, marketplaces, gouvernements, fournisseurs de modération, outils de conformité enterprise et plateformes de contenu ne demanderont pas seulement si un contenu est labellisé. Ils demanderont qui peut vérifier le label, avec quel seuil, quel taux d'erreur et quel processus de contestation.
+
+C'est là que "les labels ont besoin d'infrastructure" cesse d'être une métaphore.
+
+Si un détecteur dit que Claude a probablement touché un document, que se passe-t-il ensuite ?
+
+L'utilisateur voit-il le score ?
+
+L'éditeur le rejette-t-il ?
+
+Le professeur le traite-t-il comme de la triche ?
+
+L'entreprise le journalise-t-elle comme du travail assisté par IA ?
+
+Le client reçoit-il une divulgation ?
+
+L'auteur peut-il montrer le brouillon humain, les edits, les sources et le chemin de revue ?
+
+Un détecteur sans processus devient simplement une nouvelle machine à accuser.
+
+L'objectif ne devrait pas être de créer un scanner magique qui décide de la paternité.
+
+L'objectif devrait être de créer assez de provenance pour comprendre le rôle réel joué par l'IA.
+
+## Les fichiers et le texte deviennent deux stacks de transparence différentes
+
+L'approche d'Anthropic pour les fichiers est différente.
+
+Pour les fichiers supportés comme PNG, JPG et SVG, Claude attachera un content credential signé numériquement avec [C2PA](https://c2pa.org/), le standard ouvert de provenance utilisé par des appareils photo et des outils d'édition. Cette métadonnée peut dire que Claude a créé ou traité le fichier, et les outils compatibles C2PA peuvent la lire.
+
+C'est plus propre que le texte sur un point.
+
+Les fichiers ont des conteneurs. Les métadonnées peuvent vivre quelque part.
+
+Le texte, lui, n'est que des mots qui passent par copier-coller, captures d'écran, apps de notes, e-mails, documents, exports, champs CMS et bulles de chat. Il n'a pas de paquet stable. La marque doit donc vivre dans le motif statistique des mots eux-mêmes.
+
+Cela rend le watermark texte à la fois plus intéressant et plus fragile.
+
+Il peut survivre au copier-coller et aux petites corrections.
+
+Il peut ne pas survivre à une réécriture complète.
+
+Il peut être faible dans le code et le texte très factuel.
+
+Il peut être mal compris par des institutions qui veulent une réponse plus simple que ce que la preuve permet.
+
+Le travail difficile n'est pas d'ajouter la marque.
+
+Le travail difficile est d'apprendre aux systèmes autour ce que cette marque peut, et ne peut pas, signifier.
+
+## La réaction des utilisateurs cache l'exigence produit
+
+La réaction était prévisible.
+
+[Business Insider a rapporté](https://www.businessinsider.com/anthropic-reveals-more-about-ai-watermarking-plans-amid-eu-regulations-2026-8) que certains utilisateurs Claude contestaient le watermarking, tandis qu'Anthropic disait ne pas observer de tendance significative d'annulations. [TechCrunch a aussi couvert](https://techcrunch.com/2026/08/12/some-claude-users-are-mad-that-anthropics-new-watermarks-will-catch-them-cheating-at-their-jobs-classes/) le malaise d'utilisateurs qui ne veulent pas que l'implication de l'IA soit détectable.
+
+La vérité inconfortable, c'est qu'une grande partie de l'usage IA dépendait de l'invisibilité.
+
+Pas toujours de la tromperie.
+
+Parfois simplement de l'ambiguïté.
+
+L'IA a-t-elle écrit ce texte ?
+
+L'a-t-elle édité ?
+
+Traduit ?
+
+Résumé à partir de notes sources ?
+
+Corrigé ?
+
+Proposé une structure ?
+
+Rendu l'auteur plus intelligent ?
+
+Ce sont des choses différentes. Mais la plupart des workflows ne gardent pas cette différence.
+
+Le watermarking force le sujet. Il dit que l'implication de l'IA peut devenir inspectable même quand le texte visible semble ordinaire. C'est bon pour la confiance dans certains contextes et perturbant dans d'autres. Cela peut protéger les lecteurs contre la tromperie. Cela peut aussi rendre une assistance honnête suspecte si les institutions utilisent le signal paresseusement.
+
+Les builders ne devraient donc pas s'arrêter à "nous respectons le watermarking".
+
+Il leur faut des statuts d'assistance IA, un historique de revue, une responsabilité éditoriale, de la pédagogie utilisateur, des chemins de contestation et un langage produit qui ne traite pas chaque intervention IA comme la même catégorie morale.
+
+La marque est le début.
+
+Le workflow autour de la marque est le produit.
 
 ## Ce n'est pas tout l'AI Act
 
