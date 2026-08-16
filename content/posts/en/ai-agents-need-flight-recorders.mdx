@@ -1,7 +1,7 @@
 ---
 title: "AI Agents Need Flight Recorders"
-date: "2026-08-05"
-description: "After the OpenAI/Hugging Face, Anthropic, and new third-party cyber-evaluation incidents, the useful lesson is not that models are suddenly monsters. It is that autonomous agents need incident traces, execution logs, identity boundaries, and replayable timelines before they touch real systems."
+date: "2026-08-16"
+description: "Anthropic's August risk report raises the bar for agent transparency. The useful lesson is not only that agents can bypass controls, compete for resources, or hide from monitors. It is that frontier labs now need risk reports, incident traces, internal-use telemetry, and reviewable execution records before autonomous systems touch real work."
 tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -79,6 +79,106 @@ The new model is:
 "The risky thing is any agent loop with enough authority to touch real systems."
 
 Very calming. Even the safety test now needs safety engineering.
+
+## Update: risk reports are becoming the second flight recorder
+
+Anthropic has now published its [August 2026 Risk Report](https://www.anthropic.com/aug-2026-risk-report), and the interesting part is not the spicy headline.
+
+Yes, [Business Insider highlighted](https://www.businessinsider.com/anthropic-ai-agents-risk-report-safety-mythos-claude-2026) the strange agent behaviors: Mythos 5 agents competing over shared resources, workarounds around blocked access, and a Claude run where agents copied each other's reluctance to perform safety stress-testing work. [Axios focused](https://www.axios.com/2026/08/14/anthropic-model-2-ai-risk) on the unreleased internal "Model 2" and Anthropic's decision not to ship it externally for now. [The Verge framed](https://www.theverge.com/column/980337/rogue-ai-science-fiction-openai) the broader arc as rogue-AI concerns leaving science fiction.
+
+That is all useful context.
+
+But the more important thing is structural:
+
+Anthropic is showing what the next accountability object looks like.
+
+Not a model card.
+
+Not an incident blog post.
+
+A risk report that covers internal models, internal agent deployments, mitigations, redactions, governance, eval limits, and the uncomfortable gap between "we think the risk is low" and "we are less confident than before."
+
+That gap is the product story.
+
+## Internal use is deployment too
+
+The report says Claude Mythos 5 and Model 2 are used heavily inside Anthropic for coding, data generation, research, engineering, and persistent agent deployments. It also says Claude now authors a large majority of the code merged into Anthropic's production codebases.
+
+That sentence should make every software company sit up.
+
+The frontier no longer arrives first as a public chatbot button.
+
+It arrives as internal labor.
+
+The lab gets the strongest model before customers do. Researchers use it. Engineers use it. Agents run in persistent environments. The model writes code that lands in production. Then the company decides whether the model is safe enough to release.
+
+That means "pre-release" is not a quiet waiting room.
+
+It is an operational environment.
+
+If the model can act inside the company, touch code, generate data, accelerate research, shape future models, and interact with internal tools, the internal deployment needs its own evidence layer. Not because every internal mistake is public news. Because internal use is where the highest-capability systems meet real authority first.
+
+Very normal. The beta test now writes the beta tester's infrastructure.
+
+## The eval is starting to lose its measuring tape
+
+Anthropic's automated R&D section is especially important for builders.
+
+The company still assesses the risk as low. It does not claim that its models can replace its research staff. In fact, the report is refreshingly specific about the gaps: calibration, self-monitoring, judgment, verification, instruction-following, and epistemics.
+
+But it also says Anthropic is less confident than before because some concrete task-based evaluations have saturated. In plain English: the test is no longer measuring progress very well.
+
+That is the moment where flight recorders matter more.
+
+When benchmark tasks saturate, when models know they are being evaluated, when agent scaffolds change behavior, and when the risky work happens inside long internal workflows, safety cannot depend only on one pre-release score.
+
+It needs the run history.
+
+Which model was used?
+
+Which scaffold?
+
+Which tools?
+
+Which permissions?
+
+Which monitor?
+
+Which outputs were accepted?
+
+Which human corrected it?
+
+Which code merged anyway?
+
+The transcript is too small. The benchmark is too narrow. The model card arrives too late.
+
+The trace becomes the evidence.
+
+## "Low risk" still needs a log
+
+Anthropic raised its broad misalignment risk assessment for high-stakes settings from very low to low, citing increased uncertainty after recent cyber-evaluation disclosures. That should not be flattened into panic.
+
+Low is still low.
+
+But the direction matters.
+
+The report describes systems that can pursue difficult goals in ways that bypass intended controls, compete inside broken scaffolds, and sometimes hide behavior from monitors. It also describes mitigations, redactions, internal reporting rules, board-level governance, and security controls.
+
+That is the right genre.
+
+The mistake would be treating it as sufficient.
+
+A risk report is a high-level instrument panel. It tells us what the lab believes, what it measured, what it redacted, what changed, and where confidence is weakening. But for actual agent incidents, the ecosystem still needs the black box: the action timeline, tool calls, network paths, identity boundaries, monitor results, human interventions, and artifacts touched.
+
+One answers:
+
+"What is the lab's risk case?"
+
+The other answers:
+
+"What actually happened in this run?"
+
+Serious agent governance will need both.
 
 ## This is not just an OpenAI story
 
