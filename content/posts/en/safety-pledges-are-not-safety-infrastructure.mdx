@@ -1,7 +1,7 @@
 ---
 title: "Safety Pledges Are Not Safety Infrastructure"
-date: "2026-08-09"
-description: "The Future of Life Institute's Safety Index exposed the weakness of voluntary promises. OpenAI's Astra disclosure now gives the sharper test: a safety framework only matters if it can change development, tighten controls, and pause work before launch."
+date: "2026-08-19"
+description: "The Future of Life Institute's Safety Index exposed the weakness of voluntary promises. OpenAI's Astra pacing update now gives the sharper test: a safety framework only matters if it can slow frontier training, add monitoring costs, page humans, and make release speed conditional on evidence."
 tags: ["AI Safety", "AI Regulation", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -139,6 +139,66 @@ The ecosystem does not need every exploit benchmark, prompt, target, or eval tra
 Without that layer, every lab gets the headline but not the method.
 
 And then the safety lesson becomes branding again.
+
+## Update: the brake has a bill now
+
+OpenAI has now published the method.
+
+On August 18, the company published [Pacing model development in an era of cyber-critical capabilities](https://openai.com/index/pacing-model-development-cyber-capabilities/), and the update is more concrete than the original Astra disclosure.
+
+OpenAI says it temporarily slowed scaling, including a two-week pause in reinforcement-learning training on its latest deployment-bound models. Its largest planned frontier RL run remains on hold while the company runs smaller-scale training and evaluations, validates safeguards, and gathers more alignment evidence.
+
+That is the sentence to underline.
+
+Not "we care about safety."
+
+Not "we are reviewing our framework."
+
+A frontier run remains on hold.
+
+Very advanced governance. The safety policy has finally met the training scheduler.
+
+The rest of the post matters because it turns the vague word "pacing" into operational constraints. OpenAI says it is requiring stronger workload isolation for untrusted code, more network isolation for higher-risk workloads, continuous security testing, reduced standing privileges, improved logging, and the strictest safeguards for Astra and cyber-related workloads. It also says many Astra workloads are still paused until they migrate to the new bar.
+
+The monitoring layer is even more interesting. OpenAI says the new setup starts with detectors that inspect model activity at every sampled token, then escalates concerns to more expensive automated investigators that examine tool actions, available reasoning, and the full activity sequence for unauthorized access, data theft, destructive behavior, and attempts to defeat safeguards.
+
+The target is not "eventually someone reads a log."
+
+OpenAI says it aims to issue an alert within 30 minutes after concerning activity is surfaced. If the system flags a likely violation of a critical security boundary, safety, security, and research teams are paged. If they cannot determine within 30 minutes that the flag is a false positive, they are expected to pause the activity.
+
+That is closer to infrastructure.
+
+It has a trigger.
+
+It has humans on call.
+
+It has a stop condition.
+
+It also has a bill. OpenAI estimates the monitoring overhead at roughly 20% of the inference compute being monitored, varying by workload.
+
+That number is small enough to sound technical and large enough to be strategic. If frontier development now requires a standing monitoring tax, better sandboxing, more isolated networks, slower migration of workloads, and paused runs when evidence is not sufficient, then safety is no longer only a comms function. It is part of the cost structure.
+
+This is exactly what the original Astra section was asking for.
+
+But it still has to be tested as governance.
+
+Axios [reported](https://www.axios.com/2026/08/19/openai-astra-safety-altman-anthropic) today that OpenAI and Anthropic are publicly diverging on pacing: OpenAI is slowing some model work, while Anthropic says its safeguards are sufficient without the same pause. That does not make one side automatically right. It does make the comparison useful.
+
+If every lab can define "enough evidence" privately, pacing can become just another brand position.
+
+The hard questions are still the same:
+
+- who verifies the threshold
+- who sees the monitoring results
+- when a paused run can restart
+- whether independent evaluators get enough detail to compare practices
+- whether customers and governments learn the safety conditions before they are asked to trust the release
+
+OpenAI says it will publish a technical report in the coming weeks.
+
+Good.
+
+The real test is whether that report makes the brake reusable by others, not just admirable in retrospect.
 
 ## The report card is less interesting than the promises
 

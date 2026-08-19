@@ -1,7 +1,7 @@
 ---
 title: "Les promesses de safety ne sont pas une infrastructure"
-date: "2026-08-09"
-description: "L'AI Safety Index du Future of Life Institute montrait la faiblesse des promesses volontaires. La divulgation d'OpenAI sur Astra donne maintenant le test le plus concret : un framework safety ne compte que s'il peut changer le développement, renforcer les contrôles et mettre du travail en pause avant la sortie."
+date: "2026-08-19"
+description: "L'AI Safety Index du Future of Life Institute montrait la faiblesse des promesses volontaires. La mise à jour d'OpenAI sur Astra donne maintenant le test le plus concret : un framework safety ne compte que s'il peut ralentir l'entraînement frontier, ajouter des coûts de monitoring, réveiller des humains et conditionner la vitesse de sortie à des preuves."
 tags: ["AI Safety", "AI Regulation", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -139,6 +139,66 @@ L'écosystème n'a pas besoin de chaque benchmark d'exploitation, prompt, cible 
 Sans cette couche, chaque lab reçoit le titre mais pas la méthode.
 
 Et la leçon safety redevient du branding.
+
+## Mise à jour : le frein a maintenant une facture
+
+OpenAI a maintenant publié la méthode.
+
+Le 18 août, l'entreprise a publié [Pacing model development in an era of cyber-critical capabilities](https://openai.com/index/pacing-model-development-cyber-capabilities/), et la mise à jour est plus concrète que la première divulgation sur Astra.
+
+OpenAI dit avoir temporairement ralenti le scaling, avec notamment une pause de deux semaines sur l'entraînement par reinforcement learning de ses derniers modèles destinés au déploiement. Son plus gros run RL frontier prévu reste en pause pendant que l'entreprise mène des entraînements et évaluations à plus petite échelle, valide ses garde-fous et rassemble davantage de preuves d'alignement.
+
+C'est la phrase à souligner.
+
+Pas "nous prenons la safety au sérieux".
+
+Pas "nous revoyons notre framework".
+
+Un run frontier reste en pause.
+
+Gouvernance très avancée. La politique safety vient enfin de rencontrer le planning d'entraînement.
+
+Le reste du billet compte parce qu'il transforme le mot flou "pacing" en contraintes opérationnelles. OpenAI dit exiger une isolation plus forte des workloads qui exécutent du code non fiable, davantage d'isolation réseau pour les workloads à risque, des tests de sécurité continus, moins de privilèges permanents, de meilleurs logs, et les garde-fous les plus stricts pour Astra et les workloads liés au cyber. L'entreprise dit aussi que beaucoup de workloads Astra restent en pause tant qu'ils n'ont pas migré vers ce nouveau niveau d'exigence.
+
+La couche de monitoring est encore plus intéressante. OpenAI dit que le nouveau système commence par des détecteurs qui inspectent l'activité du modèle à chaque token échantillonné, puis remonte les signaux inquiétants vers des enquêteurs automatisés plus coûteux qui examinent les actions d'outils, le raisonnement disponible et toute la séquence d'activité pour repérer un accès non autorisé, un vol de données, un comportement destructeur ou des tentatives de contourner les garde-fous.
+
+L'objectif n'est pas "quelqu'un lira peut-être un log plus tard".
+
+OpenAI dit viser une alerte dans les 30 minutes après la remontée d'une activité préoccupante. Si le système signale une violation probable d'une frontière de sécurité critique, les équipes safety, sécurité et recherche reçoivent une alerte d'astreinte. Si elles ne peuvent pas conclure en 30 minutes qu'il s'agit d'un faux positif, elles sont censées mettre l'activité en pause.
+
+Cela ressemble davantage à de l'infrastructure.
+
+Il y a un déclencheur.
+
+Il y a des humains d'astreinte.
+
+Il y a une condition d'arrêt.
+
+Il y a aussi une facture. OpenAI estime que ce monitoring ajoute environ 20 % de compute d'inférence sur ce qui est monitoré, avec un coût qui varie selon les workloads.
+
+Ce chiffre est assez petit pour avoir l'air technique et assez grand pour devenir stratégique. Si le développement frontier exige désormais une taxe de monitoring permanente, de meilleurs sandboxes, des réseaux plus isolés, une migration plus lente des workloads et des runs mis en pause quand les preuves ne suffisent pas, alors la safety n'est plus seulement une fonction de communication. Elle fait partie de la structure de coûts.
+
+C'est exactement ce que demandait la première section sur Astra.
+
+Mais il faut encore tester cela comme de la gouvernance.
+
+Axios [rapportait](https://www.axios.com/2026/08/19/openai-astra-safety-altman-anthropic) aujourd'hui qu'OpenAI et Anthropic divergent publiquement sur le pacing : OpenAI ralentit certains travaux de modèles, tandis qu'Anthropic affirme que ses garde-fous suffisent sans pause équivalente. Cela ne rend pas automatiquement un côté plus sérieux que l'autre. Mais la comparaison devient utile.
+
+Si chaque lab peut définir en privé ce que "suffisamment de preuves" veut dire, le pacing peut redevenir une simple position de marque.
+
+Les questions dures restent les mêmes :
+
+- qui vérifie le seuil
+- qui voit les résultats du monitoring
+- quand un run mis en pause peut redémarrer
+- si les évaluateurs indépendants obtiennent assez de détails pour comparer les pratiques
+- si les clients et les gouvernements connaissent les conditions safety avant qu'on leur demande de faire confiance à la sortie
+
+OpenAI dit qu'un rapport technique arrivera dans les prochaines semaines.
+
+Très bien.
+
+Le vrai test sera de savoir si ce rapport rend le frein réutilisable par d'autres, et pas seulement admirable après coup.
 
 ## Le bulletin compte moins que les promesses
 
