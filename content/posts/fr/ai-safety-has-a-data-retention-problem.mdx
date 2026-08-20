@@ -1,0 +1,229 @@
+---
+title: "La safety IA a un problème de rétention des données"
+date: "2026-08-20"
+description: "OpenAI présente Private Safety Processing pour détecter des risques à travers plusieurs interactions tout en conservant le Zero Data Retention. Anthropic fait le pari inverse sur ses modèles les plus capables. La leçon utile : la safety de l'IA enterprise devient un problème d'architecture de données."
+tags: ["AI Safety", "Enterprise AI", "OpenAI", "Anthropic"]
+draft: false
+---
+
+## En bref
+
+L'IA enterprise vient de trouver un triangle très pénible.
+
+Les entreprises veulent des modèles plus puissants.
+
+Les équipes safety veulent assez de contexte pour détecter les abus dans le temps.
+
+Les clients ne veulent pas que le fournisseur IA garde leurs secrets.
+
+Choisissez les trois, apparemment.
+
+Le 19 août, OpenAI a annoncé [Private Safety Processing](https://openai.com/index/offering-zero-data-retention-for-frontier-models/), un système en preview censé permettre à certains clients enterprise et API de garder le Zero Data Retention tout en laissant des systèmes automatisés chercher des patterns de risque à travers des interactions liées.
+
+C'est un signal produit plus important que le titre ne le laisse croire.
+
+L'ancienne question de confidentialité en IA enterprise était :
+
+"Est-ce que vous entraînez vos modèles sur nos données ?"
+
+Question nécessaire. Plus suffisante.
+
+La nouvelle question est :
+
+"Votre système safety peut-il comprendre un comportement dangereux en plusieurs étapes sans transformer nos données sensibles en mémoire opérationnelle chez vous ?"
+
+Très glamour. La conformité vient de découvrir la safety des agents.
+
+## Le prompt seul n'est plus l'unité de risque
+
+L'argument d'OpenAI est simple, et plutôt juste.
+
+Les risques les plus sérieux ne sont pas toujours visibles dans un prompt et une réponse. Un utilisateur peut répartir son intention sur plusieurs conversations. Un acteur malveillant peut sonder les garde-fous dans le temps. Un agent peut s'éloigner de l'autorité de l'utilisateur au fil d'une tâche longue. Une séquence qui paraît inoffensive étape par étape peut devenir clairement dangereuse quand on regarde le pattern.
+
+C'est exactement ce que l'industrie apprend à la dure.
+
+Les agents ne sont pas des réponses. Ce sont des trajectoires.
+
+Ils naviguent, planifient, appellent des outils, réessaient, gardent de l'état, posent des questions de suivi, passent d'un fichier à l'autre, et continuent parfois quand la frontière sûre est devenue floue. Si le système safety ne voit qu'une image à la fois, il peut rater le film.
+
+Mais voir le film demande souvent de retenir plus de contexte.
+
+C'est là que le problème enterprise commence.
+
+Les mêmes données qui rendent un pattern de sécurité lisible peuvent contenir du code source, des dossiers médicaux, des données financières, une stratégie juridique, des plans produit non annoncés, des fichiers clients, des notes de recherche ou du matériel de réponse à incident. Pour beaucoup d'acheteurs, "faites-nous confiance, c'est pour la safety" ne suffit pas. Ils ont leurs propres obligations réglementaires, engagements de sécurité, promesses clients et modèles de menace internes.
+
+Donc la couche safety a besoin de mémoire.
+
+Le client veut de l'effacement.
+
+Le produit doit réconcilier les deux.
+
+## OpenAI Essaie De Rendre Le Signal Plus Petit Que La Donnée
+
+La proposition d'OpenAI consiste à séparer le contenu sensible du signal d'application des règles.
+
+Pour les déploiements Zero Data Retention, OpenAI dit que le contenu client reste sur l'infrastructure contrôlée par le client. L'entreprise développe aussi une option où le contenu serait stocké sur l'infrastructure d'OpenAI, mais chiffré avec des clés contrôlées par le client. Dans les deux cas, des systèmes automatisés peuvent identifier un abus potentiel et renvoyer des signaux safety limités sans exposer les prompts ou les réponses sous-jacents au personnel d'OpenAI.
+
+Cette distinction compte.
+
+Le fournisseur n'a pas besoin de voir toute la conversation client pour recevoir un signal du type : cette séquence pourrait impliquer un abus cyber, un risque biologique, une activité destructrice ou une tentative de contourner les garde-fous. OpenAI dit que les clients peuvent enquêter sur les alertes et les décisions d'application des règles avec les informations disponibles dans leurs propres systèmes, puis choisir de partager davantage s'ils veulent faire appel, clarifier une activité légitime ou soutenir une enquête sur un abus vérifié.
+
+Voilà la forme que prend l'IA enterprise :
+
+Pas seulement "pas d'entraînement sur vos données".
+
+Pas seulement "nous supprimons les logs".
+
+Mais une infrastructure safety compatible avec la confidentialité.
+
+Cela veut dire stockage contrôlé par le client, clés de chiffrement, détecteurs automatisés, signaux étroits visibles par le fournisseur, chemins d'appel, et assez de preuves côté client pour comprendre ce qui s'est passé.
+
+Le produit IA n'est plus seulement le modèle.
+
+C'est aussi la frontière de confidentialité autour du moniteur.
+
+## Anthropic Fait Le Pari Inverse
+
+C'est pour cela que la comparaison avec Anthropic est intéressante.
+
+La [documentation d'Anthropic sur la rétention](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention) dit que Claude Fable 5 et Claude Mythos 5 exigent 30 jours de rétention des données et ne sont pas disponibles sous Zero Data Retention. Elle précise aussi que les organisations avec ZDR peuvent activer cette rétention de 30 jours seulement pour un workspace spécifique, tandis que les autres workspaces gardent le réglage par défaut de l'organisation.
+
+Ce n'est pas un petit changement de réglage.
+
+C'est une philosophie de safety qui devient une contrainte d'achat.
+
+Dans son [rapport de risque d'août](https://www.anthropic.com/aug-2026-risk-report), Anthropic expliquait que cette rétention obligatoire sur ses modèles les plus capables serait impopulaire auprès des clients et risquée commercialement, surtout si les concurrents ne suivent pas, mais nécessaire pour détecter et prévenir des attaques sophistiquées réparties sur plusieurs requêtes.
+
+C'est une position sérieuse.
+
+Elle est aussi douloureuse pour les clients dans des environnements réglementés ou sensibles.
+
+La nouvelle preview d'OpenAI dit en substance : peut-être que le fournisseur n'a pas besoin de retenir le contenu si l'architecture safety est conçue autrement.
+
+Anthropic dit : pour les modèles les plus capables, nous ne sommes pas à l'aise avec ce compromis.
+
+Ce n'est pas une pièce morale.
+
+C'est une bifurcation produit.
+
+Un côté parie sur la rétention comme preuve safety.
+
+L'autre parie sur des signaux compatibles avec la confidentialité.
+
+Les deux approches peuvent échouer.
+
+La rétention peut devenir trop large, difficile à gouverner et toxique commercialement. Les systèmes fondés sur des signaux peuvent manquer du contexte, créer des faux positifs ou devenir impossibles à auditer de l'extérieur. Le chiffrement contrôlé par le client sonne très bien jusqu'au premier vrai cas d'abus qui demande une coopération entre fournisseur, client, cloud provider, forces de l'ordre et régulateurs.
+
+Le plus difficile n'est pas d'annoncer le principe.
+
+C'est de faire tenir le workflow pendant un vrai incident.
+
+## Zero Retention Ne Veut Pas Dire Zero Gouvernance
+
+C'est l'erreur que les acheteurs doivent éviter.
+
+Zero Data Retention sonne comme une réponse nette.
+
+Elle ne l'est pas.
+
+Elle répond à une question : est-ce que le fournisseur retient les prompts et les réponses après traitement ?
+
+Elle ne répond pas automatiquement à celles-ci :
+
+- quelles métadonnées sont retenues
+- quels signaux safety sont produits
+- quelles fonctionnalités sont exclues
+- si les sessions d'agents, fichiers, sandboxes, traces d'outils ou environnements managés stockent de l'état
+- qui peut voir les alertes
+- comment les décisions d'application des règles peuvent être contestées
+- ce qui se passe avec les obligations légales ou les signalements obligatoires
+- si le client a assez de logs pour reconstruire un incident
+- si le fournisseur peut détecter un abus réparti entre plusieurs comptes
+
+Le billet d'OpenAI contient d'ailleurs une réserve importante : les obligations de signalement de contenus d'abus sexuel sur mineurs continuent de s'appliquer, et les images signalées comme potentiellement concernées peuvent être conservées pour revue humaine et signalement même dans les déploiements ZDR. Axios note aussi que le nouveau système vise certains clients enterprise et API, pas les abonnements ChatGPT grand public.
+
+Très bien.
+
+Cette réserve n'est pas une note de bas de page à ignorer. C'est la vraie forme du produit.
+
+Toute politique de données IA sérieuse devient une matrice :
+
+Quel plan ?
+
+Quel modèle ?
+
+Quelle fonctionnalité ?
+
+Quelle juridiction ?
+
+Quel type de donnée ?
+
+Quelle catégorie de risque ?
+
+Quel arrangement de rétention ?
+
+Quelle partie contrôle le stockage ?
+
+Quels humains peuvent y accéder ?
+
+Très simple. Bon courage avec le tableur.
+
+## La Checklist D'achat Vient De Changer
+
+Pour les acheteurs enterprise, la leçon pratique n'est pas :
+
+"Choisissez OpenAI parce qu'il n'y a pas de rétention."
+
+Ou :
+
+"Choisissez Anthropic parce que la rétention est plus sûre."
+
+Trop facile.
+
+La meilleure leçon est :
+
+Demandez comment le fournisseur sépare le contenu, les signaux safety, l'application des règles et l'auditabilité.
+
+Si un modèle peut exécuter de longues tâches agentiques, le fournisseur doit pouvoir expliquer :
+
+- comment il détecte un comportement risqué à travers plusieurs interactions
+- ce qui est visible par le fournisseur et ce qui reste chez le client
+- où vivent les prompts, sorties, fichiers, appels d'outils et traces d'agents
+- ce qui se passe quand le système signale une recherche sécurité légitime
+- qui enquête sur les alertes
+- ce que le client peut exporter
+- quels modèles ou fonctionnalités cassent le ZDR
+- ce qui se passe quand la loi, la safety ou la réponse aux abus prime sur la suppression ordinaire
+- comment les contrôles techniques sont vérifiés, pas seulement promis
+
+Le langage contractuel ennuyeux fait maintenant partie du système safety de l'IA.
+
+C'est agaçant.
+
+C'est aussi un progrès.
+
+Parce que l'alternative est pire : des agents puissants opérant dans des workflows sensibles avec soit trop peu de contexte safety long terme, soit trop de données visibles par le fournisseur.
+
+## Le Changement Plus Large
+
+L'histoire d'hier, c'était que le pacing safety a désormais un coût d'entraînement et de monitoring.
+
+L'histoire d'aujourd'hui, c'est que le monitoring safety a aussi un coût de confidentialité.
+
+Les deux sont liés.
+
+À mesure que les modèles frontier deviennent plus agentiques, le système safety a besoin de plus de contexte temporel. Mais à mesure que les clients les installent dans du travail plus sensible, le fournisseur est autorisé à voir moins de contenu brut. Le marché va récompenser les labs capables de résoudre cette tension techniquement, pas seulement dans les slogans.
+
+La prochaine compétition enterprise ne sera donc pas seulement :
+
+Qui a le modèle le plus intelligent ?
+
+Ce sera aussi :
+
+Qui peut prouver que le moniteur est assez fort sans transformer les données client en mémoire fournisseur ?
+
+C'est une course très différente.
+
+Et pour une fois, la partie la plus intéressante ne sera peut-être pas le benchmark.
+
+Ce sera peut-être la politique de rétention.
