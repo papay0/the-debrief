@@ -1,0 +1,195 @@
+---
+title: "Production Agents Need Hands, Skills, and Files"
+date: "2026-08-21"
+description: "Anthropic made computer use, browser use, the Skills API, and the Files API generally available on Claude Platform. The useful signal is not another agent demo. It is the stack production agents need: hands for old software, procedures for local expertise, files for working state, and sandboxes around the loop."
+tags: ["AI Agents", "Anthropic", "Developer Tools", "Enterprise AI"]
+draft: false
+---
+
+## The Short Version
+
+The agent race is getting less magical and more mechanical.
+
+On August 20, Anthropic made [computer use, browser use, the Skills API, and the Files API generally available on Claude Platform](https://claude.com/blog/computer-use-skills-api-files-api).
+
+The lazy headline is:
+
+"Claude can click around and make files."
+
+True. Also not the interesting part.
+
+The useful headline is:
+
+Anthropic is productizing the missing substrate for production agents.
+
+A real work agent needs a few boring things:
+
+- hands for software that does not have a usable API
+- procedures for team-specific expertise
+- files for inputs, outputs, receipts, and working state
+- a sandbox around the loop
+- a way to ship all of this through the clouds and compliance channels companies already buy
+
+Very glamorous. The chatbot has become middleware.
+
+That is the actual story.
+
+## The Browser Is The API Of Last Resort
+
+Anthropic describes computer use as a way for Claude to operate visible software through screenshots, clicks, typing, and scrolling. The new browser use tool adds page structure, so an agent can target fields and buttons more directly instead of relying only on screen coordinates.
+
+That distinction sounds small.
+
+It is not.
+
+The biggest blocker for agents is not always reasoning. It is the fact that real work lives inside old portals, weird SaaS screens, admin consoles, insurer forms, procurement systems, HR tools, and internal web apps that were not built for agentic automation.
+
+Sometimes there is an API.
+
+Sometimes the API is incomplete.
+
+Sometimes using it requires six months of vendor process.
+
+Sometimes the only honest interface is the same one a human uses.
+
+So the browser becomes the API of last resort.
+
+That is powerful. It is also brittle.
+
+If an agent can click through production software, the buyer should immediately ask about domain allowlists, test accounts, staging environments, audit logs, permission boundaries, replayability, and what happens when the page changes. We learned this lesson once with RPA. AI does not delete the lesson. It just makes the automation more flexible, and therefore easier to overtrust.
+
+The practical question is not:
+
+"Can the model use the browser?"
+
+The practical question is:
+
+"Can we make browser use boring enough to trust?"
+
+## Skills Are Procedures, Not Prompts
+
+The Skills API may be the more important piece.
+
+Anthropic says developers can upload and version skills as folders of instructions, scripts, and templates, then attach those skills to Claude requests. Claude can use them inside its code execution sandbox when the task calls for that expertise.
+
+That is not just prompt management.
+
+It is procedure management.
+
+Every company has work that lives in half-written SOPs, onboarding docs, spreadsheet templates, Slack lore, checklists, macros, compliance language, and "ask Maya, she knows how this filing works."
+
+Production agents need that knowledge in a form that can be reviewed, versioned, tested, and updated.
+
+This is where "agent skill" stops meaning a cute capability and starts looking like an operational artifact.
+
+Who owns the skill?
+
+Who reviews changes?
+
+Which version was used for this customer action?
+
+Did the skill call a script?
+
+Did the script write a file?
+
+Was the output checked by a human?
+
+Those questions are less exciting than a benchmark.
+
+They are also closer to how agents will be bought.
+
+## Files Are Agent Working State
+
+The Files API is the third leg of the stool.
+
+Anthropic says developers can upload files once, reference them later by ID, let agents read and write documents, and download created outputs. It also says the generally available version includes automatic expiration, higher rate limits, and up to 1 TB of storage per organization.
+
+Again, boring.
+
+Again, important.
+
+Agents do not just answer. They handle artifacts.
+
+They need to read intake documents, fill forms, generate reports, produce spreadsheets, save confirmations, attach evidence, and hand off finished work. If every task is a stateless prompt, the agent is a demo. If the system can carry files through the workflow and return a real output, it starts to look like software.
+
+But this is also where yesterday's privacy conversation comes back.
+
+Files are not "memory" in the marketing sense.
+
+They are still state.
+
+They still need retention rules, access controls, expiration, export paths, audit trails, and clear ownership. A production agent that touches customer files is not just using a model. It is operating a small document system around the model.
+
+That system is where a lot of the risk will live.
+
+## General Availability Is Where Demos Become Procurement
+
+The timing matters because Anthropic is not just showing a lab demo.
+
+It says these tools are available now on Claude Platform, that the Skills API and Files API are available through Microsoft Foundry, and that computer and browser use are planned for Google Cloud Vertex AI. It also says computer use is eligible for HIPAA-regulated workloads for customers with a business associate agreement.
+
+This is the quiet enterprise move.
+
+Anthropic is not only saying:
+
+"Look what Claude can do."
+
+It is saying:
+
+"Here are the agent primitives you can buy through the infrastructure you already route through procurement."
+
+The customer examples in the announcement should be treated as vendor-provided claims, not neutral evidence. Still, the pattern is revealing. Healthcare forms. Insurance workflows. Bank credit memos. Documents, portals, procedures, and files.
+
+That is where production agents start.
+
+Not in a blank chat box.
+
+In a messy workflow with existing software on both sides.
+
+## The Builder Checklist
+
+If you are building agents for real work, the takeaway is not "add computer use."
+
+Too small.
+
+The takeaway is to design the whole work loop.
+
+Ask:
+
+- when should the agent use an API, and when is a browser actually the safer interface?
+- where do team procedures live, and how are they versioned?
+- which files enter the system, where do outputs go, and how long does state persist?
+- what can the sandbox reach?
+- what is logged when the agent clicks, retries, fails, or changes a file?
+- how does a human review sensitive actions?
+- what counts as successful completion: a model response, a submitted form, a generated file, or a verified business outcome?
+
+That last one matters most.
+
+The unit of value is not the response.
+
+It is the completed workflow.
+
+## The Bigger Shift
+
+I keep coming back to the same point because the market keeps confirming it.
+
+The agent race is not only about the smartest model.
+
+It is about who can package intelligence into a controlled work system.
+
+OpenAI has been moving up the stack with ChatGPT Work and agent deployment infrastructure. Google and Microsoft are wrapping agents around browsers, documents, email, and office suites. Anthropic is now making the lower-level pieces more explicit: hands, skills, files, sandbox, and cloud distribution.
+
+That is good for builders.
+
+It also raises the bar.
+
+An "agent" that only chats is starting to feel unfinished.
+
+A production agent needs hands for legacy software, skills for institutional knowledge, files for state, and rails around all of it.
+
+The future is not one giant autonomous genius.
+
+It is a lot of carefully constrained workers operating inside very unglamorous systems.
+
+Which, honestly, sounds a lot like work.
