@@ -1,8 +1,8 @@
 ---
 title: "AI Agents Are Finally Doing Real Work. The Numbers Are Weird."
-date: "2026-06-25"
-description: "A new OpenAI report on Codex shows agentic AI moving from chat to delegated work. The catch: almost everyone still uses chatbots."
-tags: ["AI Agents", "Codex", "AI Coding", "Future of Work"]
+date: "2026-08-22"
+description: "OpenAI's Codex data showed agents moving from chat to delegated work. Linear's product-data report adds the sharper twist: AI is spreading across software teams, coding-agent teams are opening far more pull requests, and the time saved has not clearly appeared yet."
+tags: ["AI Agents", "Codex", "Linear", "AI Coding", "Future of Work"]
 draft: false
 ---
 
@@ -53,6 +53,68 @@ So no, we are not living in a world where every person has five AI agents runnin
 Not yet.
 
 But the people who do cross the line use it a lot. They stop treating AI like a search box and start treating it like a junior operator. A slightly chaotic one, sure. But still an operator.
+
+## Update: Linear shows the second weird number
+
+Two months later, Linear has published a useful second data point.
+
+Its [AI usage report](https://linear.app/data) looks at aggregated product data from paid Linear workspaces: AI conversations, agent sessions, issue activity, comments, and pull requests. It is not a census of the whole market, and Linear is careful about that. It can see what happens inside Linear. It cannot see every AI workflow happening in a terminal, IDE, Slack thread, browser, or private repo.
+
+Good.
+
+That limitation is exactly why the report is interesting. It is not trying to turn token counts into a productivity religion. It is looking at the work surface where product teams actually coordinate.
+
+The first signal: AI use is no longer just an engineering habit.
+
+Between January and June 2026, Linear says the share of users active on its AI features more than doubled in every function it measured. Product users went from 12% to 34%. Engineering went from 12% to 30%. Even go-to-market went from 5% to 18%.
+
+That matches the Codex story: agents start in code, then leak into normal organizational work.
+
+The second signal is sharper.
+
+Linear says teams with coding agents opened far more pull requests per workspace per week than teams without them. In June 2024, the coding-agent cohort averaged roughly 21 PRs per week. By June 2026, that number was about 65. Traditional teams moved from about 8 to about 10.
+
+That is a huge difference.
+
+It is also not the same as "AI made everyone 3x more productive."
+
+Linear says the quiet part out loud: pull requests measure motion, not value. More PRs can mean more useful work. They can also mean more review burden, more coordination, more small changes, more bot-generated noise, more partially finished branches, and more things for humans to merge, reject, rewrite, or babysit.
+
+Then comes the line that should make every AI productivity deck sweat a little:
+
+Linear says the gains have not clearly shown up as time saved. Existing work held, AI appeared as an additional layer, and overall time spent on product development appears to be going up rather than down.
+
+Very efficient. We automated the work and got more work.
+
+This is not a dunk on agents. It is the realistic adoption curve.
+
+When a tool makes work cheaper, teams often do more of it. They write more issues. Open more PRs. Explore more branches. Ask for more variants. Turn vague ideas into tickets earlier. Review more machine-generated diffs. Move faster in one part of the system and discover that another part is now the bottleneck.
+
+The agent did not remove the team.
+
+It moved the constraint.
+
+## The review layer is becoming the product
+
+Linear's August 20 changelog makes the same point from the product side.
+
+Linear Agent can now set up, run, and test code before returning work. It can adapt to codebase configuration, install dependencies, use pinned runtime versions and setup scripts, run the app, navigate through browser flows, verify the implementation, capture before-and-after screenshots, fix problems, rerun tests, and return the work with validation attached.
+
+That sounds like a coding-agent feature.
+
+It is also a review-system feature.
+
+The important move is not only that the agent writes code. It is that the agent brings evidence back with the code: what environment it used, what it ran, what it saw in the browser, what changed, what failed, what it fixed, and what still needs a human decision.
+
+This is where agent products are heading.
+
+Not just "here is a patch."
+
+"Here is a patch, the run history, the test evidence, the screenshots, the cost, and the remaining judgment call."
+
+That is much closer to how teams will actually absorb agentic work.
+
+The bottleneck becomes less typing code and more deciding whether the machine-produced work should enter the product.
 
 ## What an agent actually changes
 
@@ -115,6 +177,12 @@ Start small.
 Give it a folder with harmless files. Ask it to organize them. Ask it to summarize a few documents. Ask it to turn messy notes into a clean brief. Ask it to make a spreadsheet from a CSV. Watch what it does.
 
 Then ask yourself the real question: did it save time, or did it just create a new thing to babysit?
+
+Linear's data makes that question less rhetorical.
+
+The best early answer might be:
+
+It creates more finished-looking work, and then your process has to decide what deserves to survive.
 
 That is the whole game right now.
 

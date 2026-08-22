@@ -1,8 +1,8 @@
 ---
 title: "Les agents IA font enfin du vrai travail. Les chiffres sont bizarres."
-date: "2026-06-25"
-description: "Un nouveau rapport d'OpenAI sur Codex montre que l'IA agentique passe du chat au vrai travail délégué. Mais presque tout le monde utilise encore des chatbots."
-tags: ["AI Agents", "Codex", "AI Coding", "Future of Work"]
+date: "2026-08-22"
+description: "Les données d'OpenAI sur Codex montraient déjà le passage du chat au travail délégué. Le rapport produit de Linear ajoute le twist le plus utile : l'IA se diffuse dans les équipes software, les équipes avec agents de code ouvrent beaucoup plus de pull requests, et le temps gagné n'apparaît pas encore clairement."
+tags: ["AI Agents", "Codex", "Linear", "AI Coding", "Future of Work"]
 draft: false
 ---
 
@@ -53,6 +53,68 @@ Donc non, on ne vit pas encore dans un monde où chaque personne a cinq agents I
 Pas encore.
 
 Mais les gens qui passent de l'autre côté l'utilisent beaucoup. Ils arrêtent de traiter l'IA comme une barre de recherche et commencent à la traiter comme un opérateur junior. Un peu chaotique, oui. Mais un opérateur quand même.
+
+## Mise à jour : Linear montre le deuxième chiffre bizarre
+
+Deux mois plus tard, Linear apporte un deuxième point de données très utile.
+
+Son [rapport sur l'usage de l'IA](https://linear.app/data) s'appuie sur des données agrégées de workspaces Linear payants : conversations IA, sessions d'agents, activité sur les issues, commentaires et pull requests. Ce n'est pas un recensement de tout le marché, et Linear le précise. L'entreprise voit ce qui se passe dans Linear. Elle ne voit pas tous les workflows IA qui vivent dans un terminal, un IDE, un thread Slack, un navigateur ou un repo privé.
+
+Très bien.
+
+Cette limite est justement ce qui rend le rapport intéressant. Il ne transforme pas les tokens en religion de la productivité. Il regarde la surface de travail où les équipes produit se coordonnent vraiment.
+
+Premier signal : l'IA n'est plus seulement une habitude d'ingénieur.
+
+Entre janvier et juin 2026, Linear dit que la part d'utilisateurs actifs sur ses fonctionnalités IA a plus que doublé dans toutes les fonctions mesurées. Les utilisateurs produit sont passés de 12% à 34%. L'engineering de 12% à 30%. Même le go-to-market est passé de 5% à 18%.
+
+Cela confirme l'histoire de Codex : les agents commencent dans le code, puis se diffusent dans le travail organisationnel normal.
+
+Le deuxième signal est plus tranchant.
+
+Linear dit que les équipes avec agents de code ouvrent beaucoup plus de pull requests par workspace et par semaine que les équipes sans agents. En juin 2024, la cohorte avec agents de code tournait autour de 21 PR par semaine. En juin 2026, ce chiffre était autour de 65. Les équipes traditionnelles sont passées d'environ 8 à environ 10.
+
+C'est énorme.
+
+Ce n'est pas pour autant la même chose que "l'IA a rendu tout le monde 3x plus productif".
+
+Linear dit la partie gênante à voix haute : les pull requests mesurent du mouvement, pas de la valeur. Plus de PR peut vouloir dire plus de travail utile. Cela peut aussi vouloir dire plus de relecture, plus de coordination, plus de petits changements, plus de bruit généré par des bots, plus de branches à moitié terminées, et plus de choses que les humains doivent merger, refuser, réécrire ou babysitter.
+
+Puis vient la phrase qui devrait faire transpirer quelques decks de productivité IA :
+
+Linear dit que ces gains n'apparaissent pas clairement comme du temps économisé. Le travail existant reste là, l'IA apparaît comme une couche de travail supplémentaire, et le temps total passé sur le développement produit semble augmenter plutôt que baisser.
+
+Très efficace. On a automatisé le travail et obtenu plus de travail.
+
+Ce n'est pas une attaque contre les agents. C'est la vraie courbe d'adoption.
+
+Quand un outil rend le travail moins cher, les équipes en font souvent davantage. Elles écrivent plus d'issues. Ouvrent plus de PR. Explorent plus de branches. Demandent plus de variantes. Transforment plus tôt des idées floues en tickets. Relisent plus de diffs générés par machine. Accélèrent une partie du système et découvrent qu'une autre partie est maintenant le goulot.
+
+L'agent n'a pas supprimé l'équipe.
+
+Il a déplacé la contrainte.
+
+## La couche de revue devient le produit
+
+Le changelog de Linear du 20 août raconte la même chose côté produit.
+
+Linear Agent peut maintenant configurer, lancer et tester le code avant de rendre son travail. Il peut s'adapter à la configuration du codebase, installer des dépendances, utiliser des versions de runtime et des scripts de setup, lancer l'application, naviguer dans des flows navigateur, vérifier l'implémentation, capturer des screenshots avant/après, corriger des problèmes, relancer les tests et revenir avec la validation attachée.
+
+Cela ressemble à une fonctionnalité d'agent de code.
+
+C'est aussi une fonctionnalité de système de revue.
+
+Le mouvement important n'est pas seulement que l'agent écrit du code. C'est qu'il ramène des preuves avec le code : l'environnement utilisé, les commandes lancées, ce qu'il a vu dans le navigateur, ce qui a changé, ce qui a échoué, ce qu'il a corrigé et ce qui demande encore une décision humaine.
+
+C'est la direction des produits d'agents.
+
+Pas seulement "voici un patch".
+
+"Voici un patch, l'historique d'exécution, les preuves de test, les screenshots, le coût et le jugement qui reste à poser."
+
+C'est beaucoup plus proche de la façon dont les équipes vont absorber le travail agentique.
+
+Le goulot devient moins l'écriture du code que la décision de laisser ou non le travail produit par la machine entrer dans le produit.
 
 ## Ce qu'un agent change vraiment
 
@@ -115,6 +177,12 @@ Commencez petit.
 Donnez-lui un dossier avec des fichiers sans risque. Demandez-lui de les organiser. Demandez-lui de résumer quelques documents. Demandez-lui de transformer des notes brouillon en brief propre. Demandez-lui de faire un spreadsheet à partir d'un CSV. Regardez ce qu'il fait.
 
 Puis posez-vous la vraie question : est-ce que ça vous a fait gagner du temps, ou est-ce que ça a juste créé un nouveau truc à babysitter ?
+
+Les données de Linear rendent cette question moins théorique.
+
+La meilleure réponse provisoire pourrait être :
+
+Cela crée plus de travail qui a l'air terminé, puis votre processus doit décider ce qui mérite de survivre.
 
 C'est tout le sujet en ce moment.
 
