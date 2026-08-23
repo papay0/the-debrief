@@ -1,8 +1,8 @@
 ---
 title: "Les assistants IA veulent les droits de l'OS"
-date: "2026-07-17"
-description: "Les nouvelles mesures DMA contre Google ne sont pas seulement une histoire d'antitrust. Elles montrent où va la guerre des assistants : commandes vocales, actions dans les apps, contexte local, données de recherche et privilèges système qui rendent un agent vraiment utile."
-tags: ["AI Agents", "Google", "Apple", "AI Regulation"]
+date: "2026-08-23"
+description: "Les mesures DMA contre Google montraient déjà pourquoi l'accès des assistants est une guerre de système d'exploitation. Le plugin Apple Messages d'OpenAI rend le sujet personnel : les agents utiles ont besoin des messages, du contexte local, des validations et du modèle de permissions de l'OS."
+tags: ["AI Agents", "Google", "Apple", "OpenAI", "AI Regulation"]
 draft: false
 ---
 
@@ -37,6 +37,92 @@ L'OS décide ce que le modèle peut toucher.
 Et dès que l'assistant peut toucher les choses, le propriétaire de la plateforme possède un pouvoir immense.
 
 Futur très normal. Le réglage de l'assistant par défaut devient maintenant de la politique industrielle.
+
+## Mise à jour : Messages est le test des privilèges système
+
+Un mois plus tard, OpenAI rend l'argument beaucoup moins abstrait.
+
+Le 20 août, OpenAI a lancé un [plugin Apple Messages](https://openai.com/products/release-notes/) pour l'app desktop ChatGPT sur macOS. Le plugin peut lire et rechercher des conversations Messages sur un Mac, préparer des réponses et envoyer des messages via l'app Messages d'Apple. Il fonctionne dans ChatGPT Work et Codex, et OpenAI dit qu'il est disponible sur tous les plans dans l'app desktop macOS.
+
+Cela ressemble à une petite fonctionnalité.
+
+Ce n'en est pas une.
+
+Les messages ne sont pas une source de données comme une autre.
+
+C'est le graphe social de l'utilisateur, ses plans, ses rappels, son contexte émotionnel, ses obligations, ses petits mensonges, ses vieux reçus, ses demi-décisions, ses blagues récurrentes, sa logistique et toute la mémoire du type "attends, qu'est-ce que je leur avais promis ?"
+
+Un assistant qui peut rechercher dans les messages ne répond pas seulement à partir de documents.
+
+Un assistant qui peut envoyer des messages n'écrit pas seulement du texte.
+
+Il touche l'une des surfaces d'action les plus intimes de l'ordinateur.
+
+C'est exactement ce que j'entendais par privilèges système.
+
+## Le modèle de permissions devient le produit
+
+Le guide du plugin d'OpenAI est prudent sur la frontière.
+
+Le plugin Apple Messages fonctionne seulement dans Codex et ChatGPT Work, pas dans les conversations ChatGPT ordinaires. Pour cette version, il ne fonctionne que dans le build Apple Silicon de l'app desktop macOS, et il n'est pas disponible sur le web, mobile, Codex CLI ou l'extension IDE. L'utilisateur doit accorder les permissions macOS demandées avant que ChatGPT puisse lire Messages. Par défaut, ChatGPT demande de relire le message et les destinataires avant l'envoi.
+
+Très bien.
+
+Mais regardez tout ce qui se cache comme design produit dans ce paragraphe.
+
+Quelle surface peut utiliser le plugin ?
+
+Quelle architecture de machine ?
+
+Quelles permissions macOS ?
+
+Quel mode de chat ?
+
+Quelles validations avant envoi ?
+
+Un administrateur workspace peut-il le désactiver ?
+
+Que se passe-t-il quand l'approbation persistante est activée ?
+
+Le guide d'OpenAI prévient que l'approbation persistante retire à l'utilisateur sa dernière chance de relire avant que ChatGPT envoie un message en son nom. Il note aussi un problème connu : les tâches qui désactivent les demandes d'approbation peuvent empêcher Messages d'afficher la confirmation nécessaire à l'envoi.
+
+C'est ça, l'histoire.
+
+Pas "l'IA peut envoyer des textos".
+
+"L'utilité de l'assistant dépend d'un modèle d'approbation assez fragile pour que la documentation doive expliquer où il casse."
+
+Ce n'est pas une critique. C'est la forme réelle des produits agentiques.
+
+Dès que l'assistant peut agir dans un logiciel personnel, le produit n'est plus seulement le modèle ou la boîte de prompt. C'est la frontière de permission, le chemin de révocation, le contrôle admin, la règle local-versus-cloud et le dernier checkpoint humain avant que le message parte de votre machine.
+
+TechCrunch rapporte qu'OpenAI affirme que le plugin ne crée pas d'index complet des messages, tourne localement sur l'appareil et stocke le contenu des messages localement sauf si l'utilisateur choisit le stockage cloud de la conversation. Le même article note aussi que la configuration demande Full Disk Access.
+
+Le compromis tient en une phrase :
+
+Pour rendre un assistant utile, on lui donne une permission terriblement utile.
+
+## Apple a toujours la version la plus facile
+
+Le plus drôle, c'est que c'est aussi une histoire Apple.
+
+OpenAI peut s'intégrer à Messages sur Mac en passant par les permissions et les chemins d'automatisation exposés par macOS. C'est important. Cela donne à ChatGPT une route vers une surface de communication native d'Apple sans devenir Siri.
+
+Mais ce n'est toujours pas la même chose que posséder l'OS.
+
+Cela ne fonctionne pas sur iPhone, là où la plupart des gens vivent réellement dans Messages. Cela ne devient pas l'assistant par défaut. Cela ne peut pas redessiner le modèle de permissions du système. Cela ne peut pas décider comment chaque app expose ses intents. Cela ne peut pas se tenir tranquillement à côté de chaque notification sauf si la plateforme l'autorise.
+
+Le plugin prouve donc les deux côtés de la guerre des assistants.
+
+Les assistants concurrents peuvent parfois atteindre des surfaces profondes grâce à des plugins, des permissions et de l'automatisation desktop.
+
+Les propriétaires de plateformes décident encore où se trouvent les surfaces les plus profondes, à quel point elles sont stables et si elles existent sur les appareils qui comptent vraiment.
+
+C'est pour cela que la guerre des assistants finit toujours par devenir une guerre d'OS.
+
+La qualité du modèle vous donne le brouillon.
+
+L'accès au système d'exploitation décide si vous pouvez l'envoyer.
 
 ## Ce que l'Europe force vraiment
 
@@ -234,7 +320,13 @@ Peut-il expliquer quelle permission il demande ?
 
 Peut-il fonctionner sans demander tout le téléphone ?
 
+Peut-il lire un fil sans indexer une vie ?
+
+Peut-il envoyer un message sans faire de "toujours autoriser" le chemin paresseux ?
+
 L'utilisateur peut-il révoquer l'accès proprement ?
+
+Un administrateur peut-il désactiver la surface risquée sans casser le reste du workflow ?
 
 Une autre app peut-elle faire confiance à son action ?
 

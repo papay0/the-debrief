@@ -1,8 +1,8 @@
 ---
 title: "AI Assistants Want OS Privileges"
-date: "2026-07-17"
-description: "Europe's new DMA measures against Google are not just another antitrust story. They show where the assistant war is going: voice hooks, app actions, local context, search data, and the operating-system privileges that make an agent useful."
-tags: ["AI Agents", "Google", "Apple", "AI Regulation"]
+date: "2026-08-23"
+description: "Europe's DMA measures against Google showed why assistant access is an operating-system fight. OpenAI's Apple Messages plugin now makes the point personal: useful agents need access to messages, local context, approvals, and the OS permission model around them."
+tags: ["AI Agents", "Google", "Apple", "OpenAI", "AI Regulation"]
 draft: false
 ---
 
@@ -37,6 +37,92 @@ The OS decides what the model can touch.
 And once the assistant can touch things, the platform owner suddenly has enormous power.
 
 Very normal future. The default assistant setting is now industrial policy.
+
+## Update: Messages is the OS-privilege test
+
+One month later, OpenAI has made the argument less abstract.
+
+On August 20, OpenAI shipped an [Apple Messages plugin](https://openai.com/products/release-notes/) for the ChatGPT desktop app on macOS. The plugin can read and search Messages chats on a Mac, draft replies, and send messages through Apple's Messages app. It works in ChatGPT Work and Codex, and OpenAI says it is available on all plans in the macOS desktop app.
+
+That sounds like a small feature.
+
+It is not.
+
+Messages are not just another data source.
+
+They are the user's social graph, plans, reminders, emotional context, obligations, little lies, old receipts, half-decisions, running jokes, logistics, and "wait, what did I promise them?" memory.
+
+An assistant that can search messages is not just answering from documents.
+
+An assistant that can send messages is not just writing text.
+
+It is reaching into one of the most intimate action surfaces on the computer.
+
+This is exactly what I meant by OS privileges.
+
+## The permission model is the product now
+
+OpenAI's own plugin guide is careful about the boundary.
+
+The Apple Messages plugin only works in Codex and ChatGPT Work, not ordinary ChatGPT chats. For this release it only works in the Apple Silicon build of the macOS desktop app, and it is not available on web, mobile, Codex CLI, or the IDE extension. Users have to grant macOS permissions before ChatGPT can read Messages. By default, ChatGPT asks the user to review the message and recipients before sending.
+
+Good.
+
+Also: look at how much product design is hiding inside that paragraph.
+
+Which surface can use the plugin?
+
+Which device architecture?
+
+Which macOS permissions?
+
+Which chat mode?
+
+Which send approvals?
+
+Can a workspace admin disable it?
+
+What happens when persistent approval is turned on?
+
+OpenAI's guide warns that persistent approval removes the user's final review before ChatGPT sends a message as them. It also notes a known issue where tasks that disable approval prompts may be unable to show the confirmation needed to send.
+
+That is the story.
+
+Not "AI can text now."
+
+"The assistant's usefulness depends on an approval model fragile enough that the docs have to explain where it breaks."
+
+This is not a criticism. It is what real agent products look like.
+
+Once the assistant can act in personal software, the product is no longer only the model or the prompt box. It is the permission boundary, the revocation path, the admin control, the local-versus-cloud data rule, and the final human checkpoint before the message leaves your machine.
+
+TechCrunch reported that OpenAI said the plugin does not create a full index of the user's messages, runs locally on the device, and stores message content locally unless the user chooses cloud conversation storage. The same report also noted that setup requires Full Disk Access.
+
+That is the tradeoff in one sentence:
+
+To make an assistant useful, you give it a terrifyingly useful permission.
+
+## Apple still has the easiest version
+
+The funny part is that this is also an Apple story.
+
+OpenAI can integrate with Messages on the Mac by going through the permissions and automation paths macOS exposes. That matters. It gives ChatGPT a route into a native Apple communication surface without becoming Siri.
+
+But it is still not the same thing as owning the OS.
+
+It does not work on iPhone, where most people actually live inside Messages. It does not become the default assistant. It cannot redesign the system permission model. It cannot decide how every app exposes intents. It cannot quietly sit next to every notification unless the platform allows that.
+
+So the plugin proves both sides of the assistant war.
+
+Rival assistants can sometimes reach deep surfaces through plugins, permissions, and desktop automation.
+
+Platform owners still decide where the deepest surfaces are, how stable they are, and whether they exist on the devices that matter most.
+
+That is why the assistant fight keeps turning into an OS fight.
+
+Model quality gets you the draft.
+
+Operating-system access decides whether you can send it.
 
 ## What Europe is actually forcing
 
@@ -234,7 +320,13 @@ Can it explain which permission it needs?
 
 Can it operate without asking for the entire phone?
 
+Can it read a thread without indexing a life?
+
+Can it send a message without making "always allow" the lazy path?
+
 Can the user revoke access cleanly?
+
+Can an admin disable the risky surface without breaking the rest of the workflow?
 
 Can another app trust its action?
 
