@@ -1,8 +1,8 @@
 ---
 title: "L'IA gratuite a quand même une facture"
-date: "2026-08-12"
-description: "Le vrai sujet du prix de l'IA n'est pas le tarif affiché. C'est le compteur dessous. Le déploiement international des ads ChatGPT, l'accès gratuit à GPT-5.6 Luna, les chats texte illimités et les sièges Premium Business rendent le contrat explicite : l'accès gratuit est financé par les ads, les quotas, les niveaux d'offre et le moment où l'utilisateur sort de la subvention."
-tags: ["AI Strategy", "Startups", "Enterprise AI", "AI Agents"]
+date: "2026-08-24"
+description: "Le vrai sujet du prix de l'IA n'est pas le tarif affiché. C'est le compteur dessous. La baisse de prix de GPT-5.6 Sol chez OpenAI et le lancement à moitié prix de Gemini 3.7 Flash chez Google clarifient la phase suivante : les labs se battent sur le coût par workflow terminé, pas seulement sur l'intelligence du modèle."
+tags: ["AI Strategy", "Startups", "Enterprise AI", "AI Agents", "AI Pricing"]
 draft: false
 ---
 
@@ -105,6 +105,42 @@ Mais cela veut dire que les builders devraient arrêter de dire "on utilise Chat
 Le produit IA n'est plus seulement le modèle.
 
 C'est la politique commerciale autour du modèle.
+
+## Mise à jour : la guerre des prix des agents se joue sur la marge par workflow
+
+Le compteur a encore bougé.
+
+Le 21 août, OpenAI a mis à jour son [article de lancement de GPT-5.6](https://openai.com/index/gpt-5-6/) pour indiquer que les prix API et crédits de GPT-5.6 Sol baissaient de plus de 20% pour les trois prochains mois. Cela arrive après les baisses du 30 juillet sur Luna et Terra.
+
+Google joue la même partie de son côté. [Gemini 3.7 Flash](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/), présenté le 13 août, est décrit comme son meilleur modèle "workhorse" pour le code et les agents, avec un prix introductif jusqu'au 31 décembre : $0.75 par million de tokens en entrée et $3.75 par million de tokens en sortie. Google dit que c'est moitié moins que le prix initial de 3.6 Flash, et relie explicitement ce rapport prix/performance au passage des agents en production. L'entreprise dit aussi que Spark, son agent personnel 24/7 dans l'app Gemini, passe sur 3.7 Flash pour l'usage des outils Workspace.
+
+Ce n'est pas une histoire de coupon.
+
+C'est une stratégie agentique.
+
+Une réponse de chatbot peut être subventionnée comme un coût d'acquisition. Un workflow agentique est autre chose. Il planifie, lit, appelle des outils, recommence, demande parfois une précision, résume, puis renvoie le résultat à un humain pour validation. Une seule demande utilisateur peut devenir un petit paquet d'appels modèle et d'appels d'outils.
+
+Donc la vraie unité n'est plus "une requête".
+
+C'est un workflow terminé.
+
+C'est pour cela que ces baisses de prix comptent. Le modèle qui gagne n'est pas seulement le plus intelligent dans un tableau de benchmarks. C'est celui qui est assez bon, assez bon marché et assez prévisible pour rester dans un vrai processus sans transformer chaque automatisation réussie en problème de marge.
+
+Pour les builders, le piège est clair : ne construisez pas votre modèle économique sur des prix promotionnels. Le tarif introductif de Gemini 3.7 Flash a une date de fin. La baisse de prix de Sol est explicitement temporaire. Traitez ces prix comme un signal de distribution, pas comme une base de coûts durable.
+
+La checklist pratique change :
+
+Mesurez le coût par workflow terminé, pas le coût par appel.
+
+Suivez les tentatives répétées et les boucles de clarification.
+
+Routez les étapes faciles vers des modèles moins chers quand la qualité le permet.
+
+Ajoutez le temps de validation humaine à la facture.
+
+Écrivez ce qui se passe quand le prix promotionnel expire.
+
+Si la réponse est "on verra plus tard", félicitations, vous venez de trouver la vraie page de pricing.
 
 ## Ce que les acheteurs doivent retenir
 
