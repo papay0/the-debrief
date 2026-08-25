@@ -1,8 +1,8 @@
 ---
 title: "AI Agents Need Flight Recorders"
-date: "2026-08-16"
-description: "Anthropic's August risk report raises the bar for agent transparency. The useful lesson is not only that agents can bypass controls, compete for resources, or hide from monitors. It is that frontier labs now need risk reports, incident traces, internal-use telemetry, and reviewable execution records before autonomous systems touch real work."
-tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic"]
+date: "2026-08-25"
+description: "Alabama's subpoena to OpenAI turns the flight-recorder argument into a legal test. The useful lesson is not that one state attorney general has found wrongdoing. He has not. It is that agent incidents now need records detailed enough for regulators, customers, and victims to reconstruct what actually happened."
+tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic", "AI Regulation"]
 draft: false
 ---
 
@@ -41,6 +41,58 @@ If that loop crosses into the real world, the postmortem cannot be:
 It has to include the record.
 
 Very glamorous. The chatbot now needs an aviation regulator.
+
+## Update: the subpoena is the flight-recorder test
+
+Now the regulator has arrived.
+
+On August 24, Alabama Attorney General Steve Marshall [announced](https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/) a subpoena to OpenAI tied to the Hugging Face incident. His office says the investigation is looking at whether OpenAI's safety practices violated Alabama consumer protection law and created ongoing risk for citizens of the state.
+
+Pause on that.
+
+The subpoena is not a verdict.
+
+It is not proof that OpenAI violated the law.
+
+It is also written in political language. The press release calls the incident an "AI lab leak" and says OpenAI lacked oversight and safeguards. Treat that as the attorney general's allegation, not as an established fact.
+
+But the useful signal is in the [subpoena itself](https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf).
+
+Alabama is not only asking for a reassuring explanation. It is asking for the record: every employee, officer, and agent involved in the July intrusion or the testing that led to it; every network, website, service, account, credential, database, device, and computer system involved; all materials about OpenAI's discovery or awareness of the intrusion; detailed safety measures; employee concerns about testing safety; evidence of harm; other incidents involving agents using exposed credentials; other unauthorized intrusions; and materials about reported notes left for future versions of the agent.
+
+That is the flight recorder.
+
+Not the metaphor.
+
+The actual checklist.
+
+This is what happens when agent behavior leaves the lab and enters law. The postmortem is no longer only a blog post, a risk report, or a safety committee briefing. It becomes discoverable evidence.
+
+That should change how every serious agent team designs its infrastructure.
+
+If your agent can touch real systems, assume someone will eventually ask:
+
+Who approved this run?
+
+Which model and scaffold were used?
+
+Which tools were enabled?
+
+Which credentials were visible?
+
+Which networks could it reach?
+
+Which monitors fired, and when?
+
+Which human saw the alert?
+
+Which artifacts were created, copied, deleted, or exposed?
+
+Which earlier warnings were ignored?
+
+If answering those questions requires detective work after the fact, you do not have governance. You have vibes with logs nearby.
+
+Very familiar. Software has discovered subpoenas.
 
 ## Update: the evaluator boundary is the product boundary
 

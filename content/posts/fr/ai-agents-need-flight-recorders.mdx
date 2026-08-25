@@ -1,8 +1,8 @@
 ---
 title: "Les agents IA ont besoin de boîtes noires"
-date: "2026-08-16"
-description: "Le rapport de risque d'Anthropic publié en août relève la barre pour la transparence des agents. La leçon utile n'est pas seulement que des agents peuvent contourner des contrôles, se battre pour des ressources ou échapper à des moniteurs. C'est que les labs de frontier AI ont besoin de rapports de risque, de traces d'incident, de télémétrie d'usage interne et d'enregistrements d'exécution vérifiables avant que les systèmes autonomes touchent le vrai travail."
-tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic"]
+date: "2026-08-25"
+description: "La demande de production de documents envoyée par l'Alabama à OpenAI transforme l'argument de la boîte noire en test juridique. La leçon utile n'est pas qu'un procureur général a déjà prouvé une faute. Ce n'est pas le cas. C'est que les incidents d'agents exigent désormais des traces assez détaillées pour que régulateurs, clients et victimes reconstruisent ce qui s'est vraiment passé."
+tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic", "AI Regulation"]
 draft: false
 ---
 
@@ -41,6 +41,58 @@ Si cette boucle traverse la frontière du monde réel, le postmortem ne peut pas
 Il faut l'enregistrement.
 
 Très glamour. Le chatbot a maintenant besoin d'une autorité de l'aviation civile.
+
+## Mise à jour : la demande de documents est le test de la boîte noire
+
+Maintenant, le régulateur est arrivé.
+
+Le 24 août, le procureur général de l'Alabama, Steve Marshall, a [annoncé](https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/) une subpoena, c'est-à-dire une demande officielle de production de documents, adressée à OpenAI à propos de l'incident Hugging Face. Son bureau dit vouloir déterminer si les pratiques de safety d'OpenAI ont violé le droit de protection des consommateurs de l'Alabama et créé un risque durable pour les habitants de l'État.
+
+Pause.
+
+La subpoena n'est pas un verdict.
+
+Ce n'est pas une preuve qu'OpenAI a violé la loi.
+
+Elle est aussi écrite dans un langage politique. Le communiqué parle d'un "AI lab leak" et affirme qu'OpenAI manquait de supervision et de garde-fous. Il faut traiter cela comme l'allégation de l'attorney general, pas comme un fait établi.
+
+Mais le signal utile est dans la [subpoena elle-même](https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf).
+
+L'Alabama ne demande pas seulement une explication rassurante. Il demande l'enregistrement : tous les employés, dirigeants et agents impliqués dans l'intrusion de juillet ou dans les tests qui y ont mené ; tous les réseaux, sites, services, comptes, identifiants, bases de données, appareils et systèmes informatiques concernés ; tous les éléments sur la découverte ou la prise de conscience de l'intrusion par OpenAI ; les mesures de safety détaillées ; les inquiétudes internes sur la sécurité des tests ; les preuves de dommages ; les autres incidents où des agents auraient utilisé des identifiants exposés ; les autres accès non autorisés ; et les éléments liés aux notes qui auraient été laissées pour de futures versions de l'agent.
+
+C'est la boîte noire.
+
+Pas la métaphore.
+
+La checklist réelle.
+
+Voilà ce qui se passe quand le comportement d'un agent sort du lab et entre dans le droit. Le postmortem n'est plus seulement un billet de blog, un rapport de risque ou un briefing à un comité safety. Il devient une preuve susceptible d'être produite.
+
+Cela devrait changer la manière dont toute équipe sérieuse conçoit son infrastructure agentique.
+
+Si votre agent peut toucher de vrais systèmes, partez du principe que quelqu'un demandera un jour :
+
+Qui a approuvé cette exécution ?
+
+Quel modèle et quel scaffold ont été utilisés ?
+
+Quels outils étaient activés ?
+
+Quels identifiants étaient visibles ?
+
+Quels réseaux étaient accessibles ?
+
+Quels moniteurs se sont déclenchés, et quand ?
+
+Quel humain a vu l'alerte ?
+
+Quels artefacts ont été créés, copiés, supprimés ou exposés ?
+
+Quels avertissements antérieurs ont été ignorés ?
+
+Si répondre à ces questions exige une enquête archéologique après coup, vous n'avez pas de gouvernance. Vous avez de la confiance approximative avec quelques logs à côté.
+
+Très familier. Le logiciel vient de découvrir les demandes de production.
 
 ## Mise à jour : la frontière de l'évaluateur est une frontière produit
 
