@@ -1,8 +1,8 @@
 ---
 title: "Les agents de production ont besoin de mains, de skills et de fichiers"
-date: "2026-08-21"
-description: "Anthropic rend computer use, browser use, la Skills API et la Files API généralement disponibles sur Claude Platform. Le vrai signal n'est pas une nouvelle démo d'agent. C'est la stack dont les agents de production ont besoin : des mains pour les vieux logiciels, des procédures pour l'expertise locale, des fichiers pour l'état de travail et des sandboxes autour de la boucle."
-tags: ["AI Agents", "Anthropic", "Developer Tools", "Enterprise AI"]
+date: "2026-08-26"
+description: "Anthropic a montré les primitives dont les agents de production ont besoin. Google empaquette maintenant la même idée par industrie avec Gemini Enterprise for Legal et Gemini Enterprise for Financial Services. Le signal utile est que les agents deviennent du logiciel de workflow gouverné : skills, connecteurs, permissions, citations, traces d'audit et plans de contrôle métier."
+tags: ["AI Agents", "Anthropic", "Google", "Developer Tools", "Enterprise AI"]
 draft: false
 ---
 
@@ -145,6 +145,52 @@ C'est là que les agents de production commencent.
 Pas dans une boîte de chat vide.
 
 Dans un workflow désordonné, avec du logiciel existant des deux côtés.
+
+## Mise à jour : la plateforme devient du logiciel métier
+
+Google vient de faire le même point depuis l'autre côté.
+
+Le 25 août, Google Cloud a lancé [Gemini Enterprise for Legal](https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-legal) et [Gemini Enterprise for Financial Services](https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-financial-services), tous deux en preview.
+
+Le titre facile serait :
+
+"Google fait de l'IA pour les avocats et les banquiers."
+
+Vrai. Trop petit.
+
+Le meilleur titre est plutôt :
+
+Les plateformes d'agents deviennent du logiciel métier.
+
+L'offre juridique de Google n'est pas présentée comme un chatbot généraliste avec un prompt juridique. C'est un ensemble de skills spécialisées, de connecteurs MCP, d'agents partenaires et d'un control plane gouverné. Elle se connecte à des systèmes comme iManage, NetDocuments, Docusign, Everlaw, RelativityOne, Thomson Reuters HighQ, Harvey, Legora et CourtListener. Google dit que ces connecteurs héritent des contrôles d'accès existants, des permissions documentaires et des ethical walls, et que les sorties sont ancrées dans des citations traçables.
+
+C'est la thèse des agents de production, habillée pour une profession qui peut vraiment vous poursuivre.
+
+La version services financiers dit la même chose avec un autre vocabulaire : skills métier, données sous licence, données permissionnées, explicabilité, scores de confiance, méthodologies, snapshots de données pour l'audit, API A2A, connecteurs MCP et rapports dans les formats que les équipes utilisent déjà.
+
+Encore une fois : pas une démo.
+
+Un système de contrôle.
+
+Les noms clients et les promesses de workflow doivent être traités comme des affirmations de fournisseur. Un produit en preview ne prouve pas un ROI réel. Le reporting de Business Insider rappelle aussi le contexte concurrentiel : Google entre sur un marché de l'IA juridique où Anthropic, OpenAI, Microsoft, Thomson Reuters, Harvey, Legora et les systèmes documentaires existants se disputent déjà la place centrale.
+
+Mais la forme du produit compte.
+
+L'agent n'est plus le centre de la page.
+
+Le workflow l'est.
+
+Pour les acheteurs, la diligence change :
+
+ne demandez pas seulement quel modèle tourne dessous.
+
+Demandez quels systèmes il peut toucher, quelles permissions suivent les données, quelles citations peuvent être auditées, quelles validations humaines restent en place, quel agent partenaire a fait quoi, et si la sortie est ancrée dans votre source de vérité ou seulement joliment voisine.
+
+Pour les builders, le message est moins confortable :
+
+les agents génériques sont pris en étau. Les labs proposeront des plateformes larges. Les systèmes existants exposeront leurs propres données et actions via des connecteurs. Le milieu qui garde de la valeur n'est pas "nous avons un agent". C'est le package métier : les playbooks, les intégrations, les chemins de revue, la discipline de coût et le workflow conscient de sa responsabilité qui rendent l'agent assez ennuyeux pour être acheté.
+
+Très glamour. Le futur des agents parle le langage du procurement.
 
 ## La checklist builder
 
