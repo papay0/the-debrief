@@ -1,0 +1,182 @@
+---
+title: "Physical Agents Need a Hardware Contract"
+date: "2026-08-28"
+description: "Anthropic's Model Hardware Standard is not just a robotics side quest. It is the permission layer physical agents need before they touch microscopes, liquid handlers, robot arms, quantum hardware, or manufacturing equipment."
+tags: ["AI Agents", "Anthropic", "Physical AI", "Robotics", "AI Safety"]
+draft: false
+---
+
+## The Short Version
+
+AI agents are getting hands.
+
+Not metaphorical hands. Actual control over machines.
+
+Anthropic opened a research preview on August 27 for the [Model Hardware Standard](https://www.anthropic.com/news/model-hardware-standard-research-preview), or MHS, a shared specification for AI agents to operate physical devices. The first target is not a consumer robot wandering around a house. It is scientific labs and advanced manufacturing: microscopes, liquid handlers, robotic arms, lasers, cameras, quantum hardware, factory instruments, and other devices with programmable interfaces.
+
+The lazy headline is:
+
+"Claude can run lab equipment."
+
+The useful headline is:
+
+Physical agents need a hardware contract.
+
+Because once an AI agent leaves the browser and starts touching motors, fluids, lasers, temperature controls, robot arms, and experimental samples, a prompt is not a safety system. A refusal policy is not a machine guard. A nice tool-calling API is not enough.
+
+The device has to say what it is.
+
+The system has to define what the agent can read, what it can change, which limits are enforced, what state comes back, and where the agent must stop and ask a human.
+
+That is the important part of MHS.
+
+It is not just an Anthropic product story. It is a preview of the boring infrastructure every serious physical-agent stack is going to need.
+
+Very glamorous. The future of embodied AI may begin with drivers and permission files.
+
+## The machine has to describe itself
+
+Software agents already have a version of this problem.
+
+If an agent can use tools, the tool has to expose a contract: what it does, what inputs it accepts, what permissions it needs, what errors mean, and what happens after the call.
+
+Anthropic's own [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol) helped make that shape more visible for software.
+
+MHS tries to move the same idea into hardware.
+
+Anthropic says the MHS driver gives devices a standard interface with primitives like read and write. A device can become discoverable in a standard format. It can expose characteristics the agent would not infer from code alone: what it measures, what can be adjusted, and what safety limits will be enforced.
+
+That sounds dry until you remember what the alternative is.
+
+The alternative is bespoke lab integrations, vendor-specific software, handwritten scripts, local knowledge, paper manuals, tribal operator habits, and an agent trying to infer physical constraints from whatever documentation happened to be in context.
+
+That is fine for a demo.
+
+It is not fine for a lab that has chemicals, samples, expensive instruments, fragile hardware, and protocols that can fail silently.
+
+The device contract matters because physical machines are not just APIs with heavier side effects. They have state. They drift. They need calibration. They have geometry, speed, mass, temperature, pressure, fluid dynamics, failure modes, and maintenance realities.
+
+If the machine cannot describe those constraints in a way the agent and the surrounding system can enforce, the agent is being asked to improvise in the one domain where improvisation can break the thing in front of it.
+
+## Safety moves from refusal to interlock
+
+The most important safety shift is simple:
+
+Physical safety has to happen before and during action.
+
+A chatbot can refuse a bad request after reading it. A software agent can be blocked before a tool call. A physical agent needs both of those, plus constraints that are closer to industrial safety than content moderation.
+
+Anthropic says it is using the MHS research preview to develop safety evaluations and best practices before making the standard open source. Wired's [reporting on the launch](https://www.wired.com/story/anthropic-standard-ai-agents-coming-to-the-physical-world/) frames the same tension: AI agents may speed up science and manufacturing, but physical access introduces risks that are not captured by text-only guardrails.
+
+Correct.
+
+The safety unit cannot be:
+
+Can the model say this?
+
+It has to be:
+
+Can the agent do this, on this machine, in this state, with these materials, under this user's authority, within these limits?
+
+That means preconditions.
+
+That means range limits.
+
+That means human approval for certain actions.
+
+That means emergency stops.
+
+That means device logs.
+
+That means authentication.
+
+That means the hardware refusing commands that should not be possible, even if the model has a very confident plan and a beautiful explanation.
+
+We keep learning this lesson in software agents. A policy is text. An agent reads text for a living. The safety layer has to be technical.
+
+With physical agents, that becomes less optional.
+
+## Labs are the right early battlefield
+
+MHS is interesting partly because Anthropic is starting in places where the pain is real.
+
+Labs and advanced manufacturing facilities already contain expensive automated equipment. They already have protocols. They already have specialists. They already have calibration, quality control, provenance, and operational discipline.
+
+They also have a brutal integration problem.
+
+Anthropic says connecting hardware can take weeks or months because devices do not naturally communicate with one another. In its telling, MHS can reduce some of that integration work to hours or minutes. Treat that as an early vendor claim, not a universal law of physics.
+
+Still, the direction is right.
+
+The best early physical-agent market may not be humanoid robots doing broad household chores. It may be narrow, high-value environments where the machines are already programmable, the tasks are already procedural, and the human bottleneck is coordination.
+
+Genentech's proof of concept in Anthropic's post is a good example. The work coordinated a liquid handler, robotic arm, and plate reader around a BCA protein assay. The interesting part is not that Claude became a scientist. It is that an agent could orchestrate equipment, observe results, adjust parameters, hit limits, recover from some errors, and still reveal where physical intuition was missing.
+
+That last clause matters.
+
+In the same post, Genentech describes Claude struggling with bubbles during liquid handling. Retrying in the same well made the problem worse until humans guided it toward gentler handling and a clean well.
+
+That is exactly what sober physical AI looks like:
+
+useful automation, real progress, and failure modes that come from the stubborn details of the physical world.
+
+Very annoying. Reality has viscosity.
+
+## This belongs in every physical AI stack
+
+A month ago, I wrote that [physical AI is becoming an agent stack](/posts/robots-need-bodies-not-just-brains). Google DeepMind's Gemini Robotics 2 announcement made the robot side clearer: whole-body control, progress tracking, local inference, adaptation, video understanding, safety stops.
+
+MHS adds a different layer.
+
+It is less about the robot brain and more about the controlled environment around the brain.
+
+The useful question is not just:
+
+How good is the model?
+
+It is:
+
+What contract does every machine expose to the agent?
+
+If you are evaluating a physical-agent system, ask the boring questions first:
+
+- Which devices can the agent see?
+- Which actions can it take on each device?
+- Which actions are impossible at the hardware layer?
+- What state does each device report back?
+- How are calibration, maintenance, and faults represented?
+- What requires human approval?
+- What is logged?
+- Can a run be replayed after something goes wrong?
+- Can limits be changed without rewriting the whole integration?
+- Who is responsible when the agent follows the protocol and the protocol is wrong?
+
+Those questions will matter more than the demo.
+
+They are also the difference between "agent with access to machines" and "physical automation system a serious organization might actually trust."
+
+## The bigger shift
+
+The public imagination wants embodied AI to look like a robot walking into the room.
+
+Maybe.
+
+But the more immediate version may be quieter:
+
+an agent coordinating instruments overnight, watching curves, moving plates, adjusting parameters, detecting faults, checking a camera feed, and turning a messy workflow into a controlled loop.
+
+That is less cinematic than a humanoid assistant.
+
+It may also be more economically real.
+
+The physical-agent race will not be won only by the lab with the smartest model or the prettiest robot. It will be won by the systems that make machines legible, constrainable, monitorable, and auditable enough for agents to use them without turning every deployment into a custom science project.
+
+MHS is early. It is a research preview. The safety work is unfinished. The open-source release is still ahead. The partner examples are promising, not proof that autonomous labs are suddenly solved.
+
+But the shape is important.
+
+The next frontier for agents is not just longer context or better tool use.
+
+It is authority over the physical world.
+
+And authority needs a contract.
