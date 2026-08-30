@@ -1,0 +1,218 @@
+---
+title: "Les données d'entraînement ont besoin de reçus"
+date: "2026-08-30"
+description: "La nouvelle plainte de Sony Music Publishing et Warner Chappell contre Anthropic n'est pas seulement un autre débat sur le fair use. C'est un rappel : les entreprises frontier ont maintenant besoin de provenance pour la chaîne d'approvisionnement de données derrière leurs modèles."
+tags: ["Anthropic", "AI Regulation", "Copyright", "AI Strategy"]
+draft: false
+---
+
+## La version courte
+
+Le conflit copyright autour de l'IA devient plus précis.
+
+C'est le point important.
+
+Sony Music Publishing, Warner Chappell et d'autres éditeurs musicaux ont poursuivi Anthropic le 28 août devant la cour fédérale du Northern District of California. [The Verge rapporte](https://www.theverge.com/ai-artificial-intelligence/986438/sony-music-warner-chappell-anthropic-lawsuit-copyright) que la plainte vise des dizaines de milliers d'oeuvres protégées, nomme personnellement les cofondateurs Dario Amodei et Benjamin Mann, et demande jusqu'à 150 000 dollars par oeuvre, plus des dommages supplémentaires pour l'éventuelle suppression d'informations de copyright.
+
+[TechCrunch rapporte](https://techcrunch.com/2026/08/29/sony-music-warner-sue-anthropic-alleging-a-brazen-campaign-of-intellectual-property-theft/) qu'Anthropic conteste les accusations et dit vouloir se défendre devant le tribunal.
+
+Très bien.
+
+Il ne faut donc pas traiter la plainte comme une conclusion judiciaire.
+
+Mais il ne faut pas non plus ranger l'histoire dans le dossier "une entreprise IA se fait poursuivre, tout le monde débat du fair use, rendez-vous dans trois ans."
+
+L'histoire utile est plus nette :
+
+Les données d'entraînement ont maintenant besoin de reçus.
+
+Pas de vibes.
+
+Pas de "c'était public."
+
+Pas de "le modèle a appris des motifs."
+
+Des reçus.
+
+D'où venait le contenu ? Était-il licencié, acheté, scrapé, téléchargé par torrent, récupéré via miroir, transformé, filtré, attribué, privé de métadonnées, utilisé pour l'entraînement, utilisé pour le fine-tuning, utilisé pour du retour de reinforcement learning, utilisé pour générer des données synthétiques, ou conservé dans une bibliothèque centrale pour un usage futur ?
+
+Cette chaîne devient une partie du produit.
+
+Très normal. La model card se transforme lentement en audit de supply chain.
+
+## Le débat dépasse le slogan
+
+La version paresseuse du copyright IA dit :
+
+"Est-ce que l'entraînement sur des oeuvres protégées relève du fair use ?"
+
+Cette question compte encore.
+
+Mais elle est trop petite.
+
+La plainte Sony et Warner Chappell, telle que résumée par [Music Business Worldwide](https://www.musicbusinessworldwide.com/now-sony-music-publishing-and-warner-chappell-sue-anthropic-in-multi-billion-dollar-lawsuit-one-of-the-largest-and-most-blatant-ongoing-thefts-of-intellectual-property-in-history/), avance plusieurs chefs de demande autour du torrenting allégué, de l'infraction contributive alléguée par les fondateurs, de l'infraction directe et de la suppression ou modification d'informations de gestion des droits.
+
+Ce n'est pas un seul argument.
+
+C'est une stack.
+
+La question de l'entraînement demande si un modèle peut apprendre d'une oeuvre sans se substituer à l'oeuvre.
+
+La question de l'acquisition demande si l'entreprise avait une copie licite au départ.
+
+La question de la conservation demande si l'entreprise a construit une bibliothèque interne réutilisable avec sa propre finalité au-delà d'un seul run d'entraînement.
+
+La question de la sortie demande si le modèle peut reproduire une expression protégée pour des utilisateurs.
+
+La question des métadonnées demande si des informations de gestion des droits ont été retirées en chemin.
+
+Ce sont des problèmes différents.
+
+Les écraser dans un seul débat sur le fair use est pratique pour les panels. C'est mauvais pour les opérateurs.
+
+## Bartz a rendu le problème visible
+
+C'est pour cela que la décision précédente dans Bartz v. Anthropic compte.
+
+En juin 2025, le juge William Alsup a donné à Anthropic une victoire importante sur l'entraînement. Dans son [ordonnance sur le fair use](https://copyrightalliance.org/wp-content/uploads/2025/06/Bartz-v.-Anthropic-Order.pdf), le tribunal traite les copies utilisées pour entraîner les LLM comme transformatives et favorables au fair use pour cet usage d'entraînement.
+
+Mais la même ordonnance trace une ligne dure autour des copies piratées utilisées pour construire la bibliothèque centrale d'Anthropic. Le tribunal dit qu'Anthropic a téléchargé plus de sept millions de copies piratées de livres, les a conservées dans une bibliothèque centrale, et ne pouvait pas justifier cette acquisition et cette conservation comme fair use simplement parce que certaines copies pourraient ensuite servir à l'entraînement.
+
+Cette distinction est maintenant tout le marché.
+
+Les entreprises IA aimeraient garder la conversation ici :
+
+L'entraînement est-il transformateur ?
+
+Les ayants droit poussent la conversation vers :
+
+Montrez-moi d'où vient la copie.
+
+C'est une question beaucoup plus opérationnelle.
+
+Elle transforme le copyright d'un débat philosophique en infrastructure de données.
+
+Si une entreprise de modèles ne peut pas reconstruire la source, la licence, l'historique de traitement, la gestion des métadonnées, la décision de conservation et l'usage aval d'un artefact d'entraînement, elle n'a pas seulement un problème juridique.
+
+Elle a un problème de système.
+
+## La musique rend le problème plus dur
+
+La musique n'est pas juste "des livres, mais plus courts".
+
+Les paroles sont compactes, mémorables, fortement licenciées, faciles à reconnaître et commercialement enchevêtrées avec plusieurs types d'ayants droit. Le système de droits autour des chansons est notoirement stratifié : éditeurs, labels, auteurs, enregistrements, compositions, paroles, synchronisation, droits mécaniques, droits de performance et plateformes qui paient déjà pour l'accès.
+
+Industrie très reposante. Juste quelques bases de droits entre vous et le refrain.
+
+Cette structure rend l'entraînement IA plus compliqué.
+
+Si un modèle reproduit un long passage d'un roman, le problème est évident. S'il reproduit des paroles de chanson, même une portion plus courte peut être très reconnaissable et commercialement sensible. Si un dataset contient des recueils de chansons, des sites de paroles, des sous-titres, des bases licenciées ou des pages scrapées avec des notices de copyright, les questions de provenance et de métadonnées deviennent plus difficiles à balayer.
+
+Les éditeurs musicaux ne demandent pas seulement de l'argent. Les articles sur la plainte disent aussi qu'ils veulent des informations sur les données et méthodes de collecte, ainsi que la destruction des copies contrefaisantes.
+
+C'est la demande stratégique cachée.
+
+La discovery.
+
+Un lab frontier peut souvent absorber un gros règlement plus facilement qu'un accounting supervisé par un tribunal sur la construction de son corpus d'entraînement.
+
+## "Safety-focused" doit inclure la provenance des données
+
+C'est la partie inconfortable pour Anthropic.
+
+Anthropic a construit une identité publique forte autour de la safety, du déploiement prudent, de Constitutional AI, du comportement des modèles, des garde-fous cyber, du watermarking, des contrôles de risque biologique et du développement frontier responsable.
+
+Une partie de ce travail est réelle et importante.
+
+Mais la safety ne peut pas seulement vouloir dire :
+
+Le modèle refusera-t-il une demande dangereuse ?
+
+Elle doit aussi vouloir dire :
+
+L'entreprise peut-elle prouver comment le modèle a été construit ?
+
+Si un lab IA dit travailler plus prudemment que le reste de l'industrie, cette prudence ne peut pas commencer au comportement post-training. Elle doit remonter jusqu'à l'acquisition des données, aux choix de licence, à la politique de suppression, aux registres de provenance, aux accès internes, aux datasets tiers, et à la question de savoir si les ingénieurs pouvaient traiter internet comme un service achats avec moins de paperasse.
+
+Cela ne veut pas dire que toutes les accusations de la plainte Sony et Warner Chappell tiendront.
+
+Cela veut dire que la catégorie appartient à la gouvernance IA.
+
+Un modèle entraîné sur des données désordonnées peut produire des réponses utiles. Une entreprise avec des pratiques de données désordonnées peut publier de la recherche safety sérieuse. Les deux peuvent être vrais.
+
+La question acheteur est de savoir si la gouvernance de l'entreprise est assez solide pour survivre à un procès, une revue procurement, une enquête réglementaire et une due diligence client.
+
+C'est le niveau maintenant.
+
+## Les builders hériteront aussi du problème
+
+Ce n'est pas seulement un problème de lab frontier.
+
+Si vous construisez sur des systèmes IA, la provenance des données d'entraînement devient une partie de votre risque fournisseur.
+
+Vous ne vous souciez peut-être pas personnellement de savoir si un modèle a vu tel recueil de chansons en 2021.
+
+Votre avocat, peut-être.
+
+Votre client, peut-être.
+
+Votre assureur, peut-être.
+
+Votre acheteur enterprise, peut-être.
+
+Votre régulateur, peut-être.
+
+Votre équipe procurement peut demander si le fournisseur IA offre une indemnisation, quelles exclusions s'appliquent, quelles disclosures existent sur les données d'entraînement, si les sorties sont filtrées contre le contenu mémorisé, si les mises à jour de modèle changent ce risque, et si le même workflow peut tourner chez un autre fournisseur si une ordonnance de tribunal mord.
+
+C'est la même leçon que dans l'article d'hier sur le [risque fournisseur de Cursor](/fr/posts/your-coding-agent-is-a-supply-chain), mais une couche plus bas.
+
+Votre produit IA dépend de modèles.
+
+Les modèles dépendent de données.
+
+Les données dépendent de droits, d'acquisition, de stockage, de traitement et de preuves.
+
+La stack a une stack.
+
+Très pratique.
+
+## Ce que les équipes devraient demander
+
+Si vous achetez ou construisez avec de l'IA, demandez moins :
+
+Les données étaient-elles publiques ?
+
+Demandez :
+
+- Quelles catégories de données ont entraîné le modèle ?
+- Quelles sources étaient licenciées, achetées, fournies par les utilisateurs, scrapées, synthétiques ou exclues ?
+- Les archives pirates, datasets fuités, shadow libraries ou datasets disputés sont-ils explicitement interdits ?
+- Quelles informations de gestion des droits sont conservées ou supprimées pendant le traitement ?
+- Le fournisseur peut-il tracer une oeuvre contestée à travers l'entraînement, le fine-tuning, les données synthétiques et les pipelines d'évaluation ?
+- Quels filtres de sortie existent contre le contenu mémorisé ou quasi verbatim ?
+- Ces filtres sont-ils testés par des ayants droit, des auditeurs, ou seulement des équipes internes ?
+- Que se passe-t-il quand un ayant droit demande un retrait ?
+- Quelle indemnisation le fournisseur propose-t-il, et qu'exclut-elle ?
+- Votre produit peut-il changer de modèle si une ordonnance limite un fournisseur ?
+
+Aucune de ces questions n'est aussi amusante qu'un graphique de benchmark.
+
+Elles sont beaucoup plus proches du travail.
+
+## Le fond du sujet
+
+La plainte Sony et Warner Chappell peut finir par un règlement. Elle peut se resserrer. Anthropic peut faire tomber des demandes importantes. Le tribunal peut distinguer les faits musicaux des faits autour des livres. Le montant des dommages peut finir très loin du titre.
+
+Donc il ne faut pas surlire la plainte.
+
+Mais il faut lire la direction.
+
+Les entreprises IA passent de "nous avons entraîné sur internet" à "montrez votre chaîne de sources." Les ayants droit passent de l'indignation abstraite à la provenance des datasets, aux méthodes d'acquisition, aux métadonnées, au comportement des sorties et à la discovery. Les acheteurs enterprise vont absorber cette logique parce qu'ils ne veulent pas que leur outil de workflow interne devienne une exposition copyright non chiffrée.
+
+La prochaine phase de la gouvernance IA n'est pas seulement le comportement du modèle.
+
+C'est la provenance du modèle.
+
+Les données d'entraînement ont besoin de reçus.
+
+Et les entreprises capables de les produire auront un avantage plus discret, moins cinématographique, mais beaucoup plus utile.

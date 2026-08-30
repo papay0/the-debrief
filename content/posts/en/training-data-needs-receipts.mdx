@@ -1,0 +1,220 @@
+---
+title: "Training Data Needs Receipts"
+date: "2026-08-30"
+description: "Sony Music Publishing and Warner Chappell's new lawsuit against Anthropic is not just another fair-use fight. It is a reminder that frontier AI companies now need provenance for the data supply chain behind their models."
+tags: ["Anthropic", "AI Regulation", "Copyright", "AI Strategy"]
+draft: false
+---
+
+## The Short Version
+
+The AI copyright fight is getting more specific.
+
+That is the important part.
+
+Sony Music Publishing, Warner Chappell, and other music publishers sued Anthropic in the U.S. District Court for the Northern District of California on August 28. [The Verge reports](https://www.theverge.com/ai-artificial-intelligence/986438/sony-music-warner-chappell-anthropic-lawsuit-copyright) that the complaint seeks damages for tens of thousands of copyrighted works, names Anthropic cofounders Dario Amodei and Benjamin Mann personally, and asks for up to $150,000 per work plus additional damages for alleged removal of copyright data.
+
+[TechCrunch reports](https://techcrunch.com/2026/08/29/sony-music-warner-sue-anthropic-alleging-a-brazen-campaign-of-intellectual-property-theft/) that Anthropic denies the publishers' claims and says it will defend itself in court.
+
+Good.
+
+So we should not treat the complaint as a finding of fact.
+
+But we also should not file it under "AI company gets sued, everyone argues about fair use, see you in three years."
+
+The useful story is sharper:
+
+Training data now needs receipts.
+
+Not vibes.
+
+Not "publicly available."
+
+Not "the model learned patterns."
+
+Receipts.
+
+Where did the material come from? Was it licensed, bought, scraped, torrented, mirrored, transformed, filtered, attributed, stripped of metadata, used for training, used for fine-tuning, used for reinforcement feedback, used to generate synthetic data, or retained in a central library for future use?
+
+That chain is becoming part of the product.
+
+Very normal. The model card is slowly turning into a supply-chain audit.
+
+## The fight is moving past the slogan
+
+The lazy version of AI copyright is:
+
+"Is training on copyrighted work fair use?"
+
+That question still matters.
+
+It is also too small.
+
+The Sony and Warner Chappell complaint, as summarized by [Music Business Worldwide](https://www.musicbusinessworldwide.com/now-sony-music-publishing-and-warner-chappell-sue-anthropic-in-multi-billion-dollar-lawsuit-one-of-the-largest-and-most-blatant-ongoing-thefts-of-intellectual-property-in-history/), brings claims around alleged torrenting, alleged contributory infringement by the founders, direct infringement, and removal or alteration of copyright-management information.
+
+That is not one argument.
+
+It is a stack.
+
+The training question asks whether a model can learn from a work without substituting for the work.
+
+The acquisition question asks whether the company had a lawful copy in the first place.
+
+The retention question asks whether the company built a reusable internal library that has its own purpose beyond any one training run.
+
+The output question asks whether the model can reproduce protected expression for users.
+
+The metadata question asks whether copyright-management information was removed along the way.
+
+Those are different problems.
+
+Collapsing them into one fair-use debate is convenient for panel discussions and bad for operators.
+
+## Bartz made the receipt problem visible
+
+This is why the earlier Bartz v. Anthropic ruling matters.
+
+In June 2025, Judge William Alsup gave Anthropic a meaningful win on training. The court's [fair-use order](https://copyrightalliance.org/wp-content/uploads/2025/06/Bartz-v.-Anthropic-Order.pdf) treated the LLM training copies as transformative and favored fair use for that training use.
+
+But the same order drew a hard line around pirated copies used to build Anthropic's central library. The court said Anthropic downloaded more than seven million pirated copies of books, retained them in a central library, and could not justify that acquisition and retention as fair use merely because some copies might later be used for training.
+
+That distinction is the whole market now.
+
+AI companies would like the conversation to stay at:
+
+Is training transformative?
+
+Rights holders are pushing the conversation toward:
+
+Show me where the copy came from.
+
+That is a much more operational question.
+
+It turns copyright from a philosophy fight into data infrastructure.
+
+If a model company cannot reconstruct the source, license, processing history, metadata handling, retention decision, and downstream use of a training artifact, it does not only have a legal problem.
+
+It has a systems problem.
+
+## Music makes the problem harder
+
+Music is not just "books, but shorter."
+
+Lyrics are compact, memorable, heavily licensed, easy to recognize, and commercially entangled with multiple rights holders. The copyright system around songs is famously layered: publishers, labels, writers, recordings, compositions, lyrics, synchronization, mechanical rights, performance rights, and platforms that already pay for access.
+
+Very relaxing industry. Just a few rights databases between you and the chorus.
+
+That structure makes AI training messier.
+
+If a model reproduces a long passage from a novel, the issue is obvious. If a model reproduces lyrics, even a smaller amount can be more recognizable and more commercially sensitive. If a dataset includes songbooks, lyric sites, captions, licensed databases, or scraped pages that contain copyright notices, the provenance and metadata questions become harder to wave away.
+
+The music publishers are also not only asking for money. Reporting on the complaint says they want disclosure around training data and collection methods, and destruction of infringing copies.
+
+That is the buried strategic demand.
+
+Discovery.
+
+Not just damages.
+
+A frontier lab can often absorb a large settlement more easily than it can absorb a court-supervised accounting of how its training corpus was assembled.
+
+## "Safety-focused" has to include data provenance
+
+This is the awkward part for Anthropic.
+
+Anthropic has built a strong public identity around safety, careful deployment, constitutional AI, model behavior, cyber safeguards, watermarking, biological-risk controls, and responsible frontier development.
+
+Some of that work is real and important.
+
+But safety cannot only mean:
+
+Will the model refuse a dangerous request?
+
+It also has to mean:
+
+Can the company prove how the model was built?
+
+If an AI lab says it is more careful than the rest of the industry, the care cannot begin at post-training behavior. It has to reach backwards into data acquisition, licensing choices, deletion policy, provenance records, internal access, third-party datasets, and whether engineers were allowed to treat the internet as a procurement department with worse paperwork.
+
+That does not mean every allegation in the Sony and Warner Chappell complaint will hold.
+
+It means the category belongs inside AI governance.
+
+A model trained on messy data can still produce useful answers. A company with messy data practices can still publish serious safety research. Both things can be true.
+
+The buyer question is whether the company's governance is strong enough to survive litigation, procurement review, regulatory inquiry, and customer due diligence.
+
+That is the bar now.
+
+## Builders will inherit this too
+
+This is not only a frontier-lab problem.
+
+If you build on top of AI systems, training-data provenance becomes part of your vendor risk.
+
+You may not care personally whether a model saw a particular songbook in 2021.
+
+Your lawyer might.
+
+Your customer might.
+
+Your insurer might.
+
+Your enterprise buyer might.
+
+Your regulator might.
+
+Your procurement team might ask whether your AI vendor offers indemnity, what exclusions apply, what training-data disclosures exist, whether outputs are filtered for memorized content, whether model updates change that risk, and whether the same workflow can run on a different provider if a court order bites.
+
+This is the same lesson from yesterday's [Cursor supplier-risk story](/posts/your-coding-agent-is-a-supply-chain), but one layer deeper.
+
+Your AI product depends on models.
+
+The models depend on data.
+
+The data depends on rights, acquisition, storage, processing, and proof.
+
+The stack has a stack.
+
+Very convenient.
+
+## What teams should ask
+
+If you are buying or building with AI, ask less:
+
+Was the data public?
+
+Ask:
+
+- What categories of data trained the model?
+- Which sources were licensed, purchased, user-provided, scraped, synthetic, or excluded?
+- Are pirate archives, leaked datasets, shadow libraries, or disputed datasets explicitly prohibited?
+- What copyright-management information is preserved or removed during processing?
+- Can the vendor trace a challenged work through training, fine-tuning, synthetic data, and evaluation pipelines?
+- What output filters exist for memorized or near-verbatim copyrighted material?
+- Are those filters tested by rightsholders, auditors, or only internal teams?
+- What happens when a rightsholder requests removal?
+- What indemnity does the vendor provide, and what does it exclude?
+- Can your product switch models if a court order limits a provider?
+
+None of these questions are as fun as a benchmark chart.
+
+They are much closer to the work.
+
+## The bottom line
+
+The Sony and Warner Chappell lawsuit may settle. It may narrow. Anthropic may defeat important claims. The court may distinguish the music facts from the book facts. The damages number may end up looking very different from the headline.
+
+So do not overread the complaint.
+
+But do read the direction.
+
+AI companies are moving from "we trained on the internet" to "show your source chain." Rights holders are moving from abstract outrage to dataset provenance, acquisition methods, metadata, output behavior, and discovery. Enterprise buyers are going to absorb that logic because they do not want their internal workflow tool to become an unpriced copyright exposure.
+
+The next phase of AI governance is not only model behavior.
+
+It is model provenance.
+
+Training data needs receipts.
+
+And the companies that can produce them will have a quieter, less cinematic, much more useful advantage.
