@@ -1,7 +1,7 @@
 ---
 title: "Les modèles IA de pointe deviennent des produits sous autorisation"
 date: "2026-08-07"
-description: "La Maison-Blanche a maintenant finalisé un cadre confidentiel de revue des modèles frontier, selon WIRED et The Guardian. Le problème n'est plus seulement de savoir qui obtient l'accès aux modèles. C'est de savoir si le règlement lui-même est assez lisible pour que builders, startups, développeurs open model et public puissent planifier."
+description: "Astra chez OpenAI et Claude Fable/Mythos 5.1 chez Anthropic rendent la thèse des modèles sous autorisation très concrète. L'IA frontier n'est plus seulement un choix de modèle : c'est une carte de capacités, de garde-fous, de trusted access, de custody des logs et d'éligibilité utilisateur."
 tags: ["AI Regulation", "OpenAI", "Anthropic", "Models"]
 draft: false
 ---
@@ -21,6 +21,66 @@ Il y a deux semaines, Anthropic a dit avoir dû [suspendre l'accès à Claude Fa
 C'est ça, le changement.
 
 Les modèles IA de pointe commencent à ressembler moins à des apps, et plus à de l'infrastructure contrôlée.
+
+## Mise à jour : les clés ont maintenant des niveaux
+
+La thèse des modèles sous autorisation vient de devenir un lancement produit.
+
+Le 1er septembre, OpenAI a publié [Path to Astra](https://openai.com/index/path-to-astra/), où l'entreprise dit qu'Astra est le premier modèle OpenAI qu'elle estime au seuil cyber Critical de son Preparedness Framework. En clair : avec les bons outils et les bons accès, OpenAI dit qu'Astra peut trouver des failles de sécurité inconnues et développer des moyens de les exploiter dans beaucoup de systèmes bien protégés, sans qu'une personne guide chaque étape.
+
+Ce n'est pas une annonce de modèle normale.
+
+C'est un problème de gestion des clés avec une veste de benchmark.
+
+OpenAI dit avoir retardé certaines parties du développement et de la sortie d'Astra pendant qu'elle renforçait les garde-fous contre le misuse cyber et les actions non autorisées du modèle. L'entreprise dit aussi que l'accès aux capacités cyber les plus avancées d'Astra sera plus limité : le travail cyber avancé commencera avec un groupe de testeurs, puis s'élargira via Daybreak Blue pour des usages défensifs. Les utilisateurs ordinaires pourraient voir plus de friction. OpenAI prévient que des contrôles safety supplémentaires peuvent ralentir, mettre en pause ou arrêter du travail légitime, y compris dans ChatGPT et Codex, si le moniteur de misalignment signale une tâche.
+
+Voilà la nouvelle forme du lancement :
+
+Même famille de modèles.
+Surfaces de capacité différentes.
+Classes d'utilisateurs différentes.
+Monitoring différent.
+Conditions d'arrêt différentes.
+
+Très excitant. Le modèle sort maintenant avec un plan de table.
+
+Anthropic avance dans la même direction, mais par l'autre côté. Sa nouvelle sortie [Claude Fable 5.1 et Claude Mythos 5.1](https://www.anthropic.com/claude-fable-and-mythos-5-1) dit que les deux produits reposent sur le même modèle sous-jacent, avec des niveaux de garde-fous différents. Fable 5.1 est généralement disponible. Mythos 5.1 n'est disponible que via des programmes de trusted access, avec des garde-fous plus permissifs pour des cyberdéfenseurs et des professionnels des sciences de la vie vérifiés.
+
+Cette distinction compte plus que le tableau de benchmarks.
+
+Le produit n'est plus simplement "Claude".
+C'est quel Claude, sous quels garde-fous, pour quelle tâche, avec quel statut client.
+
+Anthropic dit que Fable 5.1 peut maintenant être utilisé pour identifier des vulnérabilités logicielles, mais que les tests d'intrusion, la génération d'exploits et le scanning de vulnérabilités binaires restent redirigés vers des modèles Opus. L'entreprise dit que Mythos 5.1 offre une autre voie aux utilisateurs vérifiés via le Cyber Verification Program et le Life Sciences Verification Program. Elle dit aussi que le programme d'accès pour les sciences de la vie a été développé avec le gouvernement américain.
+
+Ce n'est pas seulement une politique safety.
+
+C'est du routing de capacités.
+
+La couche de données devient elle aussi permissionnée. Anthropic a aussi annoncé [Enterprise Frontier Safeguards](https://www.anthropic.com/news/enterprise-frontier-safeguards), un système censé combiner une confidentialité proche du zero data retention avec du monitoring contre les abus. Le mouvement architectural important, c'est la custody : les données d'activité client peuvent rester dans le cloud du client, sous ses propres clés, pendant que des systèmes automatisés analysent une fenêtre roulante pour détecter des signaux sérieux de misuse. Si quelque chose nécessite une revue humaine, Anthropic dit que le signal va au client plutôt qu'à des employés d'Anthropic par défaut.
+
+C'est la version enterprise du même changement.
+
+Le modèle n'est pas seulement un modèle.
+C'est un ensemble de :
+
+- seuils de capacité
+- programmes de trusted access
+- règles de juridiction et d'identité
+- fenêtres de monitoring
+- logs sous contrôle client
+- coût des faux positifs
+- routing par type de tâche
+- propriété de la revue humaine
+- exceptions pour usage défensif
+
+Cet ensemble devient le produit.
+
+Ce n'est pas automatiquement mauvais. Des capacités puissantes en cybersécurité ou en biologie ne devraient probablement pas se comporter comme un simple menu déroulant dans une app grand public. Une banque, un hôpital, un éditeur logiciel et un compte créé il y a cinq minutes ne devraient pas forcément recevoir les mêmes affordances le premier jour.
+
+Mais la même question revient toujours :
+
+Qui reçoit les clés, et qui peut auditer la serrure ?
 
 ## Mise à jour : le règlement devient le produit
 
@@ -263,13 +323,15 @@ En gros, l'inverse des coupures surprises.
 
 ## Ce qu'il faut surveiller maintenant
 
-L'histoire OpenAI est le test à court terme.
+Le lancement d'Astra chez OpenAI est maintenant le test à court terme.
 
-Si GPT-5.6 sort vraiment d'abord auprès d'un petit groupe de partenaires approuvés par le gouvernement, regardez si c'est temporaire. Une preview courte et bien définie, c'est une chose. Une couche de permission permanente, c'en est une autre.
+Regardez si le chemin cyber avancé réservé à Daybreak reste temporaire. Une preview défensive courte et bien définie, c'est une chose. Une couche de permission permanente pour les capacités les plus précieuses, c'en est une autre.
 
 Regardez aussi si les critères d'approbation deviennent publics. Si personne ne sait qui est qualifié ni pourquoi, "trusted access" devient juste un nom poli pour du gatekeeping.
 
-Et regardez comment les autres labs réagissent. Google, Meta, xAI, Mistral, DeepSeek et l'écosystème open source ne vont pas faire pause parce que Washington décide encore des règles.
+Regardez aussi les faux positifs. Si les nouveaux moniteurs ralentissent, mettent en pause ou arrêtent régulièrement du travail légitime, la couche safety devient un sujet de qualité produit, pas seulement un sujet de politique.
+
+Et regardez comment les autres labs réagissent. Anthropic sépare déjà Fable et Mythos par niveau de garde-fous et par éligibilité client. Google, Meta, xAI, Mistral, DeepSeek et l'écosystème open source ne vont pas faire pause parce que Washington et les labs décident encore de la bonne forme des règles.
 
 Le business des modèles de pointe change de forme.
 

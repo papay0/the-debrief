@@ -1,7 +1,7 @@
 ---
 title: "Frontier AI Models Are Becoming Permissioned Products"
 date: "2026-08-07"
-description: "The White House has now finalized a confidential frontier-model vetting framework, according to WIRED and the Guardian. The issue is no longer only who gets model access. It is whether the rulebook itself is inspectable enough for builders, startups, open-model developers, and the public to plan around."
+description: "OpenAI's Astra and Anthropic's Claude Fable/Mythos 5.1 make the permissioned-model thesis concrete. Frontier AI is no longer just a model choice. It is becoming a map of capabilities, safeguards, trusted access, monitoring custody, and user eligibility."
 tags: ["AI Regulation", "OpenAI", "Anthropic", "Models"]
 draft: false
 ---
@@ -21,6 +21,66 @@ Two weeks ago, Anthropic said it had to [suspend access to Claude Fable 5 and Cl
 That is the shift.
 
 Frontier models are starting to look less like apps and more like restricted infrastructure.
+
+## Update: the keys now have tiers
+
+The permissioned-model thesis just became a product launch.
+
+On September 1, OpenAI published [Path to Astra](https://openai.com/index/path-to-astra/), saying Astra is the first OpenAI model it believes meets the Critical cybersecurity capability threshold under its Preparedness Framework. In plain English: with the right tools and access, OpenAI says Astra can find previously unknown security flaws and develop ways to exploit them across many well-protected systems without a person guiding each step.
+
+That is not a normal model announcement.
+
+It is a key-management problem wearing a benchmark jacket.
+
+OpenAI says it delayed parts of Astra's development and release while it hardened safeguards against cyber misuse and unauthorized model actions. It also says access to Astra's most advanced cybersecurity capabilities will be more limited: advanced cyber work will start with a group of testers, then expand through Daybreak Blue for defensive use. Everyday users may see more friction. OpenAI warns that extra safety checks can slow, pause, or stop legitimate work, including in ChatGPT and Codex, if the misalignment monitor flags a task.
+
+That is the new launch shape:
+
+Same model family.
+Different capability surfaces.
+Different user classes.
+Different monitoring.
+Different stop conditions.
+
+Very exciting. The model now ships with a seating chart.
+
+Anthropic is moving in the same direction from the other side. Its new [Claude Fable 5.1 and Claude Mythos 5.1](https://www.anthropic.com/claude-fable-and-mythos-5-1) release says the two products are the same underlying model with different levels of safeguards. Fable 5.1 is generally available. Mythos 5.1 is available only through trusted access programs, with more permissive safeguards for vetted cyberdefenders and life-sciences professionals.
+
+That distinction matters more than the benchmark table.
+
+The product is no longer simply "Claude."
+It is which Claude, under which safeguards, for which task, with which customer status.
+
+Anthropic says Fable 5.1 can now be used to identify software vulnerabilities, but still redirects penetration testing, exploit generation, and binary-based vulnerability scanning to Opus models. It says Mythos 5.1 gives vetted users a different path through the Cyber Verification Program and Life Sciences Verification Program. It also says the life-sciences access program was developed with the U.S. government.
+
+That is not just safety policy.
+
+It is capability routing.
+
+The data layer is being permissioned too. Anthropic also announced [Enterprise Frontier Safeguards](https://www.anthropic.com/news/enterprise-frontier-safeguards), a system meant to combine zero-data-retention-style privacy with misuse monitoring. The important architectural move is custody: customer activity data can live in the customer's own cloud account, under the customer's keys, while automated systems analyze a rolling window for serious misuse signals. If something needs human review, Anthropic says the flag goes to the customer rather than to Anthropic employees by default.
+
+This is the enterprise version of the same shift.
+
+The model is not just a model.
+It is a bundle of:
+
+- capability thresholds
+- trusted access programs
+- jurisdiction and identity rules
+- monitoring windows
+- customer-controlled logs
+- false-positive costs
+- task-level routing
+- human review ownership
+- defensive-use exceptions
+
+That bundle is becoming the product.
+
+This is not automatically bad. Powerful cyber and biology capabilities probably should not behave like an ordinary dropdown in a consumer app. A bank, a hospital, a software vendor, and a random newly created account should not necessarily get the same affordances on day one.
+
+But the same question keeps coming back:
+
+Who gets the keys, and who can audit the lock?
 
 ## Update: the rulebook is now the product
 
@@ -263,13 +323,15 @@ Basically the opposite of surprise shutdowns.
 
 ## What to watch now
 
-The OpenAI story is the near-term test.
+OpenAI's Astra launch is now the near-term test.
 
-If GPT-5.6 really does launch first to a small set of government-approved partners, watch how temporary that is. A short, well-defined preview is one thing. An indefinite permission layer is another.
+Watch how temporary the Daybreak-only advanced cyber path is. A short, well-defined defensive preview is one thing. An indefinite permission layer for the most valuable capabilities is another.
 
 Also watch whether the approval criteria become public. If nobody knows who qualifies or why, "trusted access" becomes a polite name for gatekeeping.
 
-And watch how other labs react. Google, Meta, xAI, Mistral, DeepSeek, and the open-source ecosystem are not going to pause because Washington is still deciding what the rules are.
+Watch the false positives too. If the new monitors regularly slow, pause, or stop legitimate work, the safety layer becomes a product-quality issue, not just a policy issue.
+
+And watch how other labs react. Anthropic is already splitting Fable and Mythos by safeguard level and customer eligibility. Google, Meta, xAI, Mistral, DeepSeek, and the open-source ecosystem are not going to pause because Washington and the labs are still deciding what the rules should be.
 
 The frontier model business is changing shape.
 
