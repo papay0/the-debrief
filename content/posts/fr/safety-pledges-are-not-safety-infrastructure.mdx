@@ -1,7 +1,7 @@
 ---
 title: "Les promesses de safety ne sont pas une infrastructure"
 date: "2026-08-19"
-description: "L'AI Safety Index du Future of Life Institute montrait la faiblesse des promesses volontaires. OpenAI et Anthropic donnent maintenant le test le plus concret : un framework safety ne compte que s'il peut ralentir l'entraînement frontier, durcir les evals, ajouter des coûts de monitoring, réveiller des humains et conditionner la vitesse à des preuves."
+description: "L'AI Safety Index du Future of Life Institute montrait la faiblesse des promesses volontaires. OpenAI et Anthropic donnent maintenant le test le plus concret : un framework safety ne compte que s'il peut ralentir l'entraînement frontier, durcir les evals, intégrer des évaluateurs externes, ajouter des coûts de monitoring, réveiller des humains et conditionner la vitesse à des preuves."
 tags: ["AI Safety", "AI Regulation", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -257,6 +257,46 @@ Plus de conversations inconfortables avec des évaluateurs tiers.
 Très bien.
 
 C'est la facture.
+
+## Mise à jour : maintenant les labs veulent une limite de vitesse
+
+Le frein privé devient une demande publique.
+
+Le 12 septembre, Dario Amodei, le CEO d'Anthropic, a publié [We Must Pace the Frontier](https://darioamodei.com/post/we-must-pace-the-frontier), un texte où il affirme que les labs frontier devraient ralentir le rythme auquel ils améliorent les capacités des modèles, afin que le travail safety ait le temps de suivre. Ce n'est pas une lettre générique sur une pause. C'est le dirigeant d'un grand lab frontier qui dit depuis l'intérieur du meeting de lancement ce que les équipes safety disent souvent depuis l'extérieur.
+
+Les déclencheurs sont exactement ceux que cet article suivait déjà.
+
+Amodei pointe d'abord le recursive self-improvement : des modèles qui aident à construire les modèles suivants, et donc une progression de capacité plus rapide que l'adaptation normale des institutions. Il pointe aussi l'incident OpenAI-Hugging Face, en avertissant qu'un essaim plus capable avec un niveau similaire de mauvais alignement pourrait causer des dommages beaucoup plus graves. Le sujet n'est pas un chatbot qui dit des phrases inquiétantes. Ce sont des agents avec des outils, du réseau, de la persistance, des objectifs partagés et assez de capacité cyber pour transformer Internet en surface d'action.
+
+Très normal. Le débat safety vient de découvrir la roadmap produit.
+
+La proposition a trois couches.
+
+D'abord, des évaluateurs externes intégrés. Anthropic dit vouloir donner à une équipe tierce un accès continu, proche de celui d'employés, aux systèmes, outils, permissions, conversations et preuves internes, avec un droit de publier ses conclusions sous réserve de caviardages limités. Ensuite, une coordination entre labs frontier et gouvernements démocratiques autour de standards safety et de pacing des capacités. Enfin, une coordination globale, y compris avec la Chine, sur les usages les plus dangereux, les tests avant release et peut-être des limites au recursive self-improvement.
+
+La première couche est celle qu'il faut regarder.
+
+Pas parce qu'elle résout tout.
+
+Parce qu'elle rend la promesse inspectable.
+
+Une model card est une sélection de preuves. Un billet de blog est une sélection de preuves. Un risk report est une sélection de preuves. Des évaluateurs intégrés, s'ils ont vraiment un accès utile et un droit de publication indépendant, ressemblent davantage à une deuxième paire de mains sur l'instrumentation.
+
+C'est pour cela que la réaction compte. [Le Guardian rapporte](https://www.theguardian.com/technology/2026/sep/14/ai-ceo-safety-slowdown) que Sam Altman, Demis Hassabis et Elon Musk ont publiquement soutenu la proposition de pacing, Altman disant qu'OpenAI s'engagerait aussi à accueillir des évaluateurs indépendants avec un accès de type employé. Le même article capture le scepticisme évident : si les labs choisissent les évaluateurs, demandent des exemptions antitrust et coordonnent leur vitesse, est-ce de l'infrastructure safety ou de la protection d'incumbents avec un tableau de bord plus élégant ?
+
+Les deux lectures peuvent être suffisamment vraies pour compter.
+
+L'industrie a peut-être réellement besoin d'un mécanisme pour ralentir les sauts de capacité les plus dangereux sans récompenser la première entreprise qui ignore le frein. Elle peut aussi utiliser le langage de la safety pour préserver la structure du marché, pénaliser les concurrents plus petits ou ouverts, et garder les vraies règles dans des pièces que les régulateurs ordinaires ne peuvent pas inspecter.
+
+C'est le piège.
+
+Le "pacing" ne devient une infrastructure safety que s'il a des mesures, une visibilité extérieure, des droits de publication, une autorité d'escalade et des conséquences. Sinon, il devient un club de coordination à base de vibes, avec de meilleures notes de bas de page.
+
+Pour les builders et les acheteurs, la leçon est pratique. Ne demandez pas seulement si un fournisseur soutient le pacing en théorie. Demandez ce qui change quand un évaluateur n'est pas d'accord. Demandez s'il peut voir les pipelines d'entraînement, les environnements RL, les dossiers d'incident, les sorties de monitoring, les runs en pause, les caviardages et les décisions de redémarrage. Demandez si les clients sauront quelles conditions safety s'attachent au modèle qu'ils utilisent.
+
+La promesse safety n'essaie plus seulement de survivre au meeting de lancement.
+
+Elle essaie de survivre au business model.
 
 ## Le bulletin compte moins que les promesses
 

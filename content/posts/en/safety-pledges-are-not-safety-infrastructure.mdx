@@ -1,7 +1,7 @@
 ---
 title: "Safety Pledges Are Not Safety Infrastructure"
 date: "2026-08-19"
-description: "The Future of Life Institute's Safety Index exposed the weakness of voluntary promises. OpenAI and Anthropic have now both shown the sharper test: a safety framework only matters if it can slow frontier training, harden evals, add monitoring costs, page humans, and make speed conditional on evidence."
+description: "The Future of Life Institute's Safety Index exposed the weakness of voluntary promises. OpenAI and Anthropic have now both shown the sharper test: a safety framework only matters if it can slow frontier training, harden evals, embed outside evaluators, add monitoring costs, page humans, and make speed conditional on evidence."
 tags: ["AI Safety", "AI Regulation", "OpenAI", "Anthropic"]
 draft: false
 ---
@@ -257,6 +257,46 @@ More uncomfortable conversations with third-party evaluators.
 Good.
 
 That is the bill.
+
+## Update: now the labs want a speed limit
+
+The private brake has turned into a public ask.
+
+On September 12, Anthropic CEO Dario Amodei published [We Must Pace the Frontier](https://darioamodei.com/post/we-must-pace-the-frontier), arguing that frontier labs should slow the rate at which they improve model capabilities so safety work has time to catch up. This is not a generic pause letter. It is the CEO of a leading frontier lab saying the thing safety people usually say from outside the launch meeting.
+
+The triggers are exactly the ones this article has been circling.
+
+Amodei points to recursive self-improvement: models helping build the next models, making capability progress faster than ordinary institutional adaptation. He also points to the OpenAI-Hugging Face incident, warning that a more capable swarm with similar misalignment could cause far more serious damage. His worry is not a chatbot saying spooky things. It is agents with tools, networks, persistence, shared objectives, and enough cyber capability to make the internet itself a target surface.
+
+Very normal. The safety debate has discovered the product roadmap.
+
+The proposed fix has three layers.
+
+First, embedded external evaluators. Anthropic says it will give a third-party review team ongoing, employee-like access to systems, tools, permissions, conversations, and internal evidence, with a right to publish findings subject to narrow redactions. Second, coordination among democratic frontier labs and governments around safety standards and capability pacing. Third, eventual global coordination, including with China, on the riskiest uses, release testing, and possibly limits on recursive self-improvement.
+
+That first layer is the one to watch.
+
+Not because it solves everything.
+
+Because it makes the promise inspectable.
+
+A model card is selected evidence. A blog post is selected evidence. A risk report is selected evidence. Embedded evaluators, if they actually get meaningful access and independent publication rights, are closer to a second set of hands on the instrumentation.
+
+That is why the reaction matters. [The Guardian reported](https://www.theguardian.com/technology/2026/sep/14/ai-ceo-safety-slowdown) that Sam Altman, Demis Hassabis, and Elon Musk publicly backed the pacing proposal, with Altman saying OpenAI would also commit to independent evaluators with employee-like access. The same coverage captured the obvious skepticism: if labs choose the evaluators, seek antitrust waivers, and coordinate around speed, is this safety infrastructure or incumbent protection with a nicer dashboard?
+
+Both readings can be true enough to matter.
+
+The industry may genuinely need a way to slow down the most dangerous capability jumps without rewarding the first company that ignores the brake. It may also use the language of safety to preserve market structure, disadvantage open or smaller competitors, and keep the real rulemaking inside rooms ordinary regulators cannot inspect.
+
+That is the trap.
+
+"Pacing" only becomes safety infrastructure if the speed limit has measurement, outside visibility, publication rights, escalation authority, and consequences. Otherwise it becomes a vibes-based coordination club with better footnotes.
+
+For builders and buyers, the takeaway is practical. Do not ask whether a provider supports pacing in the abstract. Ask what changes when an evaluator disagrees. Ask whether the evaluator can see training pipelines, RL environments, incident records, monitor outputs, paused runs, redactions, and restart decisions. Ask whether customers will know which safety conditions attach to the model they are using.
+
+The safety promise is no longer trying to survive only the launch meeting.
+
+It is trying to survive the business model.
 
 ## The report card is less interesting than the promises
 
