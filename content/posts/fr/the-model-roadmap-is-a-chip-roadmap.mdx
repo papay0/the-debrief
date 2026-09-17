@@ -1,7 +1,7 @@
 ---
 title: "La roadmap des modèles devient une roadmap silicium"
 date: "2026-08-08"
-description: "Anthropic qui recrute une équipe custom silicon, ce n'est pas seulement une histoire de dépendance à Nvidia. Avec la puce Jalapeño d'OpenAI et la machine d'infrastructure Google-Anthropic, cela montre que les roadmaps frontier descendent dans l'architecture des puces, le financement des data centers, l'énergie et les goulets d'étranglement industriels."
+description: "L'équipe silicium d'Anthropic, la puce Jalapeño d'OpenAI et la poussée full-stack de Huawei racontent la même histoire : les roadmaps frontier passent maintenant par les puces, l'interconnexion, la mémoire, le software, l'énergie, le financement et la fabrication."
 tags: ["AI Infrastructure", "AI Chips", "Anthropic", "OpenAI"]
 draft: false
 ---
@@ -145,6 +145,74 @@ C'est pour cela que l'expression "infrastructure IA" commence à devenir trop pe
 Ce n'est pas de l'infrastructure comme une startup qui achète des serveurs.
 
 C'est de la stratégie industrielle.
+
+## Mise à jour : Huawei vend le système, pas la puce
+
+Huawei vient de rendre l'argument full-stack impossible à rater.
+
+À Huawei Connect, le 17 septembre, l'entreprise a [présenté](https://www.huawei.com/en/news/2026/9/hc-wang-keynote) l'Atlas 960E SuperPoD, de nouveaux équipements d'interconnexion optique, un système de calcul général mis à niveau, un cluster de stockage dédié à la mémoire de contexte et une roadmap pour les accélérateurs Ascend 960, 970 et 980.
+
+Le titre facile sera que Huawei défie Nvidia.
+
+C'est vrai, mais incomplet.
+
+Huawei ne présente pas une puce héroïque qui dépasserait soudainement la frontière américaine. L'entreprise présente un portefeuille de 11 puces reliées par UnifiedBus, avec de l'optique near-packaged, de la mémoire partagée, du stockage, du réseau, du software système et un écosystème de développeurs.
+
+Le signal utile, c'est que comparer les puces une par une devient la mauvaise unité d'analyse.
+
+Huawei affirme qu'un seul Atlas 960E peut relier jusqu'à 4 096 NPUs, fournir jusqu'à un pétaoctet de mémoire à haute bande passante et éviter des dizaines de milliers de modules optiques classiques. L'entreprise dit aussi que l'architecture plus large peut démarrer 100 000 sandboxes 30 fois plus vite que des serveurs traditionnels, augmenter leur densité, garder des KV caches à l'échelle du pétaoctet près de l'inférence et, à terme, relier jusqu'à un million de NPUs.
+
+Ce sont les chiffres de Huawei, pas des benchmarks indépendants.
+
+La distinction compte. Un chiffre de keynote n'est pas une charge de production. Le « jusqu'à » porte beaucoup de poids. La disponibilité, la maturité du software, les rendements industriels, l'utilisation réelle, la fiabilité, le coût et les déploiements clients diront si le système tient ses promesses hors des slides de Huawei.
+
+Mais la cible de design est déjà parlante.
+
+Huawei n'optimise pas seulement pour entraîner des modèles.
+
+Huawei optimise pour les agents.
+
+Un démarrage rapide des sandboxes permet de créer davantage d'environnements isolés pour les agents de code, de recherche et de tool use. De gros systèmes de KV cache permettent aux longues conversations et aux agents qui enchaînent les étapes de réutiliser le contexte sans tout recalculer. Une meilleure interconnexion permet à des milliers de composants moins puissants de se comporter davantage comme une seule machine utile. Les économies d'énergie et la tolérance aux pannes déterminent si tout cela peut tourner économiquement pendant des jours, plutôt que gagner une démo de cinq minutes.
+
+Voilà à quoi ressemble un besoin produit agentique quand il descend jusqu'au data center.
+
+## Les restrictions à l'export changent l'architecture
+
+La dimension géopolitique est tout aussi importante.
+
+L'Associated Press [rapporte](https://apnews.com/article/huawei-ai-chips-nvidia-superpod-technology-26ab418df1339c518483918218ffbe57) que le nouveau système de Huawei arrive alors que la Chine pousse son autonomie technologique face aux restrictions menées par les États-Unis sur les puces avancées et les machines qui les fabriquent. AP ajoute la nuance indispensable : l'entraînement avancé en Chine repose encore souvent sur du hardware américain, et Nvidia garde une avance dans plusieurs domaines.
+
+Ce n'est donc pas une histoire simple où « Huawei a rattrapé Nvidia ».
+
+C'est une réponse système à un désavantage sur les composants.
+
+Quand on ne peut pas acheter le meilleur accélérateur individuel, on travaille l'architecture scale-out, les liens optiques, la mutualisation de la mémoire, le stockage, le scheduling, la compatibilité software et l'approvisionnement domestique. On essaie de rendre un ensemble de puces plus contraintes utile comme un tout coordonné.
+
+Cela ne prouve pas que les restrictions à l'export ont échoué.
+
+Cela montre comment elles redirigent l'ingénierie.
+
+Elles peuvent ralentir l'accès à une frontière industrielle précise tout en accélérant l'investissement dans les substituts autour d'elle. Le résultat n'est plus une seule stack IA mondiale avec des puces légèrement différentes. Ce sont de plus en plus deux écosystèmes d'infrastructure, chacun essayant de faire en sorte que son hardware, son software, ses modèles, son financement et ses standards se renforcent mutuellement.
+
+Cela crée une nouvelle forme de lock-in.
+
+CUDA n'a jamais été seulement du silicium. Ascend ne le sera pas non plus.
+
+## Les acheteurs ont besoin d'une eval de plateforme
+
+Pour les équipes IA, la vraie question n'est pas de savoir si le plus gros chiffre de Huawei dépasse le plus gros chiffre de Nvidia.
+
+La vraie question est de savoir si une charge peut migrer.
+
+Votre modèle tourne-t-il nativement sur la stack ? Les kernels, bibliothèques, outils d'observabilité, contrôles sécurité et systèmes d'orchestration fonctionnent-ils ? La plateforme peut-elle soutenir les patterns de contexte, de sandbox, de stockage et de réseau dont vos agents ont besoin ? Que se passe-t-il quand un fournisseur, une région cloud, une règle d'export ou une dépendance software change ?
+
+C'est pour cela que la portabilité de l'infrastructure mérite maintenant la même discipline que la portabilité des modèles.
+
+Gardez des benchmarks de charges représentatives, pas seulement les slides des fournisseurs. Mesurez les tâches agentiques terminées, la latence sous charge, la reprise après panne, l'énergie et le coût total de serving. Sachez quelles parties de la stack sont propriétaires. Testez la difficulté réelle de déplacer modèles, données, environnements d'outils et monitoring entre fournisseurs.
+
+Le prochain gagnant de l'infrastructure IA n'aura peut-être pas la meilleure puce individuelle.
+
+Il aura peut-être la meilleure machine autour des puces qu'il peut réellement obtenir.
 
 ## Même la couche des outils est en jeu
 

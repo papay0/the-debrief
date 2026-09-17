@@ -1,7 +1,7 @@
 ---
 title: "The Model Roadmap Is Becoming a Chip Roadmap"
 date: "2026-08-08"
-description: "Anthropic hiring a custom silicon team is not just another Nvidia-dependence story. Together with OpenAI's Jalapeño chip and the Google-Anthropic infrastructure machine, it shows that frontier AI roadmaps are moving into chip architecture, data-center finance, power, and manufacturing bottlenecks."
+description: "Anthropic's silicon team, OpenAI's Jalapeño chip, and Huawei's full-stack SuperPoD push all point in the same direction: frontier AI roadmaps now run through chips, interconnect, memory, software, power, finance, and manufacturing."
 tags: ["AI Infrastructure", "AI Chips", "Anthropic", "OpenAI"]
 draft: false
 ---
@@ -145,6 +145,74 @@ This is why the phrase "AI infrastructure" is starting to feel too small.
 It is not infrastructure in the way a startup buys servers.
 
 It is industrial strategy.
+
+## Update: Huawei is selling the system, not the chip
+
+Huawei just made the full-stack argument impossible to miss.
+
+At Huawei Connect on September 17, the company [unveiled](https://www.huawei.com/en/news/2026/9/hc-wang-keynote) the Atlas 960E SuperPoD, new optical interconnect hardware, an upgraded general-purpose computing system, a context-memory storage cluster, and a roadmap for Ascend 960, 970, and 980 accelerators.
+
+The headline will be that Huawei is challenging Nvidia.
+
+That is true, but incomplete.
+
+Huawei is not presenting one heroic chip that suddenly beats the American frontier. It is presenting an 11-chip portfolio tied together by UnifiedBus, near-packaged optics, shared memory, storage, networking, system software, and a developer ecosystem.
+
+The useful signal is that the chip comparison is becoming the wrong unit of analysis.
+
+Huawei says a single Atlas 960E can connect up to 4,096 NPUs, provide as much as one petabyte of high-bandwidth memory, and avoid tens of thousands of conventional optical modules. It says the wider architecture can start 100,000 sandboxes 30 times faster than traditional servers, improve sandbox density, keep petabyte-scale KV caches close to inference, and eventually connect as many as one million NPUs.
+
+Those are Huawei's claims, not independent benchmark results.
+
+The distinction matters. A keynote number is not a production workload. "Up to" is doing a lot of work. Availability, software maturity, yields, utilization, reliability, cost, and customer deployment will decide whether the system performs outside Huawei's slides.
+
+Still, the design target is revealing.
+
+Huawei is not optimizing only for model training.
+
+It is optimizing for agents.
+
+Fast sandbox startup means more isolated environments can be created for coding, research, and tool-using agents. Large KV-cache systems mean longer conversations and repeated agent steps can reuse context without constantly recomputing it. Better interconnect means thousands of weaker components can behave more like one useful machine. Power savings and fault tolerance determine whether any of that can run economically for days instead of winning a five-minute demo.
+
+This is what it looks like when agent product requirements travel all the way down into the data center.
+
+## Export controls are changing the architecture
+
+The geopolitical part is just as important.
+
+The Associated Press [reported](https://apnews.com/article/huawei-ai-chips-nvidia-superpod-technology-26ab418df1339c518483918218ffbe57) that Huawei's new system arrives as China pushes for technological self-reliance under U.S.-led restrictions on advanced chips and chipmaking equipment. AP also noted the important caveat: advanced Chinese training still often relies on American hardware, and Nvidia remains ahead in several areas.
+
+So this is not a clean "Huawei caught Nvidia" story.
+
+It is a systems response to a component disadvantage.
+
+If you cannot buy the best individual accelerator, you work on scale-out architecture, optical links, memory pooling, storage, scheduling, software compatibility, and domestic supply. You try to make more constrained chips useful as a coordinated whole.
+
+That does not prove export controls failed.
+
+It shows how export controls redirect engineering.
+
+They can slow access to a particular manufacturing frontier while accelerating investment in substitutes around it. The result is not one global AI stack with slightly different chips. It is increasingly two infrastructure ecosystems, each trying to make its hardware, software, model support, financing, and standards reinforce the others.
+
+That creates a new kind of lock-in.
+
+CUDA was never only about silicon. Ascend will not be either.
+
+## Buyers need a platform eval, not a chip chart
+
+For AI teams, the practical question is not whether Huawei's top number is larger than Nvidia's top number.
+
+It is whether a workload can move.
+
+Can your model run natively on the software stack? Do the kernels, libraries, observability tools, security controls, and orchestration systems work? Can the platform sustain the context, sandbox, storage, and networking patterns your agents need? What happens when a supplier, cloud region, export rule, or software dependency changes?
+
+That is why infrastructure portability now deserves the same discipline as model portability.
+
+Keep representative workload benchmarks, not only vendor benchmark slides. Measure completed agent tasks, latency under load, failure recovery, power, and total serving cost. Know which parts of the stack are proprietary. Test how difficult it is to move models, data, tool environments, and monitoring between providers.
+
+The next AI infrastructure winner may not have the single best chip.
+
+It may have the best machine around the chips it can actually obtain.
 
 ## Even the tool layer is now in play
 
