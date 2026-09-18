@@ -1,0 +1,195 @@
+---
+title: "L'IA frontier a besoin d'instruments de bord"
+date: "2026-09-18"
+description: "Anthropic affirme que Claude pilote maintenant 26 % de son travail de R&D en IA. Le vrai sujet n'est pas le fantasme de l'auto-amélioration, mais la mesure du rythme auquel les labs frontier s'automatisent, supervisent leurs agents et répartissent leur compute."
+tags: ["AI Safety", "Anthropic", "AI Agents", "AI Policy"]
+draft: false
+---
+
+## La version courte
+
+Anthropic affirme que Claude pilote maintenant 26 % du travail de recherche et développement en IA réalisé chez Anthropic.
+
+Cela va produire beaucoup de titres du genre « Claude construit Claude ».
+
+Techniquement vrai.
+
+Mais ce n'est pas la partie la plus utile.
+
+La partie utile, c'est qu'Anthropic vient de publier une première tentative de tableau de bord pour mesurer la vitesse à laquelle un lab frontier s'automatise lui-même. Son [nouveau cadre de mesure](https://www.anthropic.com/institute/measuring-pace-of-ai-development) suit trois éléments : la part de R&D IA pilotée par l'IA, la supervision de ces agents et la part du compute consacrée à la sécurité.
+
+L'[Associated Press a résumé la nouvelle](https://apnews.com/article/anthropic-claude-ai-model-self-improvement-4d3a7430f57cbc7c39e1c5f2b7d7e132) en disant que Claude aide à construire sa propre prochaine version. C'est juste. Et c'est précisément pour cela que les définitions comptent.
+
+C'est une bien meilleure conversation que de se demander si l'auto-amélioration récursive est arrivée.
+
+Ce n'est pas le cas, du moins pas dans la version entièrement autonome de science-fiction. Anthropic dit qu'aucune des tâches mesurées n'a été réalisée par l'IA sans intervention humaine. Plus de 90 % atteignent au moins le niveau où Claude collabore réellement avec une personne, mais des humains fixent encore les objectifs, examinent le travail et restent dans la boucle.
+
+La direction compte quand même.
+
+En février, la part de R&D d'Anthropic pilotée par Claude était proche de zéro. En août, elle atteignait 26 %.
+
+L'industrie de l'IA frontier a besoin d'un compteur pour suivre ce changement.
+
+Pas parce qu'un chiffre nous dira quand les machines prendront le contrôle.
+
+Parce que les gouvernements, les salariés, les clients et même les labs ne peuvent pas gouverner une transition qu'ils ne voient pas.
+
+## Le chiffre principal n'est pas l'histoire
+
+« Claude pilote 26 % de la R&D IA d'Anthropic » semble plus autonome que la réalité.
+
+Anthropic classe dans la catégorie « leads » les tâches où un système IA réalise l'essentiel du travail de bout en bout à partir d'une consigne humaine de haut niveau, sous supervision. Cela peut inclure l'écriture de code, l'exécution d'expériences, l'analyse de résultats ou la rédaction technique. Cela ne veut pas dire que Claude choisit la stratégie de recherche de l'entreprise, s'attribue du compute, déploie son successeur puis disparaît dans le data center pour méditer sur l'infini.
+
+Il y a une personne au début.
+
+Il y a une personne à la fin.
+
+Et souvent une personne au milieu qui essaie de comprendre pourquoi la test suite est rouge.
+
+Cette distinction compte, car « l'IA aide à construire la prochaine IA » peut décrire des réalités très différentes :
+
+- de l'autocomplétion pour un chercheur
+- un agent qui implémente une expérience bien spécifiée
+- un agent qui propose puis valide une nouvelle direction de recherche
+- un système qui améliore et déploie son successeur sans intervention humaine
+
+Ce ne sont pas les mêmes capacités.
+
+Le cadre d'Anthropic est utile précisément parce qu'il essaie de les séparer. Il utilise une échelle à six niveaux, de l'absence d'IA au travail entièrement autonome. L'estimation d'août place 26 % des tâches à l'avant-dernier niveau, mais aucune au dernier.
+
+C'est une automatisation importante.
+
+Ce n'est pas de l'auto-amélioration récursive autonome.
+
+Les deux phrases peuvent être vraies sans gâcher le thread de qui que ce soit.
+
+## Trois cadrans valent mieux qu'un benchmark
+
+Le choix le plus intéressant d'Anthropic est de publier trois catégories de mesure plutôt qu'un grand score magique.
+
+Le premier cadran est **l'automatisation de la R&D**.
+
+Quelle part du travail nécessaire pour créer de meilleurs modèles est maintenant réalisée par des modèles ? Pas seulement le code, mais aussi la recherche, l'évaluation, l'infrastructure, la conception d'expériences et tout ce qui transforme du compute en nouveau système.
+
+Le deuxième cadran est **la supervision des agents**.
+
+Anthropic affirme qu'environ 30 000 agents opèrent à un instant donné sur sa plateforme agentique interne la plus utilisée. Chaque action passe par un moniteur en ligne avant son exécution, puis est aussi ingérée pour une analyse hors ligne. En août, ces systèmes ont examiné plus d'un milliard de décisions.
+
+Le moniteur en ligne en a bloqué environ 0,002 %, soit une décision sur 47 000. Le contrôle hors ligne a signalé un ou deux journaux d'activité sur mille, soit environ 100 000 par semaine. Environ 50 par semaine sont arrivés jusqu'à une revue humaine.
+
+Ces chiffres ne prouvent pas que le système est sûr.
+
+Ils font quelque chose de plus basique et de plus utile : ils montrent la forme du système de contrôle.
+
+On peut demander si le taux de blocage est trop faible, si le moniteur hors ligne détecte des problèmes ratés en temps réel, si les humains peuvent examiner correctement les escalades et si les cas dangereux se concentrent dans quelques workflows. « Nous surveillons nos agents » devient une affirmation inspectable, pas une phrase rassurante dans un document de politique interne.
+
+Le troisième cadran est **l'allocation du compute**.
+
+Sur une semaine de juillet, Anthropic dit qu'environ 6 % de son compute de R&D IA a été consacré à la sécurité. Parmi le compute utilisé par des systèmes IA qui travaillent eux-mêmes sur la R&D IA, cette part atteignait environ 12 %.
+
+Là encore, c'est imparfait.
+
+Mais utile.
+
+Les promesses de sécurité ne coûtent pas cher. Le compute, le temps des chercheurs et les lancements retardés, si. Si un lab affirme que la sécurité est centrale tout en gardant l'allocation des ressources invisible, il demande au public de faire confiance à un adjectif.
+
+Montrez-nous le budget dans l'unité qui fait tourner le lab.
+
+## Le tableau de bord est construit par le conducteur
+
+Maintenant, le scepticisme.
+
+Ce sont les mesures d'Anthropic sur Anthropic, avec des modèles Anthropic qui aident à évaluer le travail d'Anthropic.
+
+Ce n'est pas une vérification indépendante.
+
+Anthropic reconnaît assez franchement les limites. Son modèle et les évaluateurs humains n'ont donné exactement la même note que dans 59 % des cas. Deux évaluateurs humains ne sont tombés exactement d'accord que 35 % du temps. L'accord à un niveau près atteint en revanche 97 %, ce qui suggère que le cadre distingue mieux les grandes catégories que leurs frontières précises.
+
+Le panier de tâches est également figé depuis juillet. Cela permet les comparaisons, mais peut rater de nouvelles formes de travail. Les chiffres de compute ne couvrent qu'une semaine. Les catégories sont subjectives. Chaque lab peut placer la frontière autour de « sécurité », « recherche » ou « piloté par l'IA » à un endroit très pratique.
+
+Et les incitations sont compliquées.
+
+Un lab peut vouloir afficher un chiffre d'automatisation élevé pour lever des fonds ou recruter des chercheurs.
+
+Il peut vouloir minimiser ce même chiffre quand la conversation porte sur l'emploi, les contrôles à l'export ou les seuils réglementaires.
+
+Il peut vouloir afficher une part généreuse de compute de sécurité tout en classant comme sécurité du travail général de fiabilité.
+
+Bienvenue dans le monde des métriques.
+
+La réponse n'est pas de rejeter la mesure parce qu'elle peut être manipulée. Toute mesure importante peut l'être.
+
+La réponse consiste à standardiser les définitions, conserver les preuves brutes, commander des audits indépendants et comparer le tableau de bord déclaré aux résultats observables.
+
+## Ce qu'exigerait un vrai tableau de bord public
+
+Anthropic suggère que ces métriques pourraient un jour déclencher des protections plus fortes, par exemple une période de test fixe avant qu'un nouveau modèle puisse servir à accélérer davantage la R&D IA.
+
+C'est la bonne direction.
+
+Mais un tableau de bord crédible à l'échelle du secteur demanderait plus qu'un billet de blog publié par chaque lab.
+
+Il devrait inclure :
+
+- une taxonomie commune des tâches entre les labs
+- des mesures séparées pour le code, la recherche, l'évaluation et l'infrastructure
+- la part des tâches terminées, pas seulement tentées
+- le temps de revue humaine et le taux de décisions annulées
+- les blocages en ligne, les alertes hors ligne et les incidents confirmés
+- le nombre d'agents simultanés et la durée de leurs runs
+- le compute de sécurité, le compute dédié aux capacités et l'infrastructure partagée difficile à classer
+- une réplication indépendante sur un échantillon représentatif de tâches
+- des définitions versionnées pour empêcher un lab de changer discrètement les règles du jeu
+- la publication des changements méthodologiques importants et des angles morts connus
+
+Il ne s'agit pas de publier les poids des modèles, les plans de recherche propriétaires ou chaque incident de sécurité interne.
+
+Il s'agit de publier assez de données opérationnelles pour savoir si l'industrie passe de « l'IA assiste les chercheurs » à « l'IA fait tourner la boucle de recherche » en six mois ou en six ans.
+
+Ce calendrier change presque tout.
+
+Il change la planification des emplois.
+
+Il change les hypothèses derrière les contrôles à l'export.
+
+Il change le temps disponible pour évaluer un système avant son déploiement.
+
+Il change la question de savoir si les équipes de sécurité grandissent au même rythme que les systèmes qu'elles doivent superviser.
+
+Et il change la probabilité que les régulateurs écrivent des règles pour l'industrie actuelle plutôt que pour celle d'il y a deux générations de modèles.
+
+## Les builders doivent demander des métriques opérationnelles
+
+Ce n'est pas seulement un problème de gouvernement.
+
+Les entreprises qui achètent des systèmes agentiques devraient commencer à poser les mêmes questions.
+
+Combien d'actions un agent peut-il prendre sans revue ? Lesquelles sont contrôlées avant exécution ? Lesquelles sont analysées après coup ? Quel pourcentage est bloqué ? Qu'est-ce qui arrive jusqu'à une personne ? Combien de temps prend cette revue ? Le fournisseur peut-il montrer les taux d'incident par workflow au lieu d'un grand chiffre de sécurité qui mélange tout ?
+
+Si 30 000 agents internes peuvent fonctionner simultanément dans un lab frontier, le problème de gouvernance n'est plus un chatbot qui dit une chose étrange.
+
+C'est de la gestion de flotte.
+
+L'analogie utile pour l'entreprise n'est pas un salarié avec de l'autocomplétion.
+
+C'est un système de production avec des milliers de travailleurs semi-indépendants, des contrôles automatiques, de rares escalades et un très grand rayon d'impact si les hypothèses de monitoring sont fausses.
+
+Cela mérite des tableaux de bord, des logs, des seuils et des exercices.
+
+Pas des vibes.
+
+## L'essentiel
+
+Les chiffres d'Anthropic ne prouvent pas que l'auto-amélioration récursive est arrivée.
+
+Ils prouvent que la question devient mesurable.
+
+Claude pilote 26 % des tâches de R&D IA d'Anthropic. Plus de 90 % impliquent une collaboration significative avec l'IA. Environ 30 000 agents peuvent être actifs en même temps. Plus d'un milliard de décisions sont passées par des moniteurs en un mois. Six pour cent du compute de R&D d'une semaine échantillon ont été consacrés à la sécurité, selon la définition d'Anthropic.
+
+Chacun de ces chiffres demande du contexte, un regard externe et de meilleures normes communes.
+
+Mais cela reste un progrès.
+
+Les labs frontier ont passé des années à nous montrer des graphiques de benchmarks sur les capacités de leurs modèles.
+
+Ils doivent maintenant nous montrer les instruments de bord de ce que deviennent leurs organisations.

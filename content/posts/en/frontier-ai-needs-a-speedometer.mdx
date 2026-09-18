@@ -1,0 +1,195 @@
+---
+title: "Frontier AI Needs a Speedometer"
+date: "2026-09-18"
+description: "Anthropic says Claude now leads 26% of its AI R&D work. The important part is not the self-improvement headline. It is the attempt to measure how fast frontier labs are automating themselves, how those agents are supervised, and where the compute goes."
+tags: ["AI Safety", "Anthropic", "AI Agents", "AI Policy"]
+draft: false
+---
+
+## The Short Version
+
+Anthropic says Claude now leads 26% of the AI research and development work inside Anthropic.
+
+That is going to produce a lot of "Claude is building Claude" headlines.
+
+Technically true.
+
+Also not the most useful part.
+
+The useful part is that Anthropic has published an early dashboard for measuring how quickly a frontier lab is automating itself. Its [new measurement framework](https://www.anthropic.com/institute/measuring-pace-of-ai-development) tracks three things: how much AI R&D is led by AI, how those agents are monitored, and how much compute is allocated to safety work.
+
+The [Associated Press framed the news](https://apnews.com/article/anthropic-claude-ai-model-self-improvement-4d3a7430f57cbc7c39e1c5f2b7d7e132) as Claude helping to build the next version of itself. That is fair. It is also exactly why the definitions matter.
+
+That is a much better conversation than asking whether recursive self-improvement has arrived.
+
+It has not, at least not in the fully autonomous science-fiction sense. Anthropic says none of the work it measured was completed by AI without human involvement. More than 90% reached at least the level where Claude meaningfully collaborated with a person, but people still set goals, reviewed work, and remained in the loop.
+
+Still, the direction matters.
+
+In February, the share of Anthropic's R&D led by Claude was close to zero. By August, it was 26%.
+
+The frontier AI industry needs a speedometer for that change.
+
+Not because one number will tell us when the machines take over.
+
+Because governments, workers, customers, and even the labs themselves cannot govern a transition they cannot observe.
+
+## The headline number is not the story
+
+"Claude leads 26% of Anthropic's AI R&D" sounds more autonomous than it is.
+
+Anthropic defines "leads" as work where an AI system completes most of a task end to end from a high-level human prompt, with a person supervising the result. That can include writing code, running experiments, analyzing results, or drafting technical work. It does not mean Claude chooses the company's research agenda, allocates its own compute, deploys a successor model, and disappears into the data center to contemplate infinity.
+
+There is a person at the beginning.
+
+There is a person at the end.
+
+Often there is a person in the middle wondering why the test suite is red.
+
+This distinction matters because "AI helps build the next AI" can describe several very different realities:
+
+- autocomplete for a researcher
+- an agent that implements a well-specified experiment
+- an agent that proposes and validates a new research direction
+- a system that independently improves and deploys its successor
+
+Those are not the same capability.
+
+Anthropic's framework is useful precisely because it tries to separate them. It uses a six-level scale running from no AI use to fully autonomous work. The company's August estimate puts 26% of tasks at the second-highest level, but zero at the highest.
+
+That is substantial automation.
+
+It is not autonomous recursive self-improvement.
+
+Both statements can be true without ruining anybody's thread.
+
+## Three dials are better than one benchmark
+
+The most interesting choice Anthropic made is to publish three categories of measurement instead of one grand capability score.
+
+The first dial is **R&D automation**.
+
+How much of the work required to build better models is now done by models? Not just coding, but research, evaluation, infrastructure, experiment design, and the other work that turns compute into a new system.
+
+The second dial is **agent oversight**.
+
+Anthropic says roughly 30,000 agents operate at any given time on its most-used internal agent platform. Every action passes through an online monitor before execution and is also ingested for offline analysis. In August, those systems reviewed more than one billion decisions.
+
+The online monitor blocked about 0.002% of them, or roughly one in 47,000. Offline monitoring flagged one or two transcripts per thousand, producing around 100,000 flagged transcripts each week. About 50 a week reached human review.
+
+Those numbers do not prove the system is safe.
+
+They do something more basic and more useful: they reveal the shape of the control system.
+
+We can ask whether the block rate is too low, whether the offline monitor catches things the online monitor misses, whether humans can meaningfully review the escalations, and whether the dangerous cases are concentrated in a few workflows. "We monitor our agents" becomes an inspectable claim instead of a soothing sentence in a policy document.
+
+The third dial is **compute allocation**.
+
+In a one-week snapshot from July, Anthropic says about 6% of its AI R&D compute went to safety work. Among the compute used by AI systems doing AI R&D, the safety share was about 12%.
+
+Again, imperfect.
+
+But useful.
+
+Safety promises are cheap. Compute, researcher time, and delayed launches are expensive. If a lab says safety is central while the resource allocation stays invisible, the public is being asked to trust the adjective.
+
+Show us the budget in the unit that runs the lab.
+
+## The dashboard is built by the driver
+
+Now the skepticism.
+
+These are Anthropic's measurements of Anthropic, using Anthropic's models to help evaluate Anthropic's work.
+
+That is not independent verification.
+
+Anthropic is unusually candid about the limitations. Its model and human raters matched exactly only 59% of the time. Human raters matched one another exactly just 35% of the time. Agreement within one level was much higher, at 97%, which suggests the framework can probably distinguish broad categories better than precise boundaries.
+
+The task basket is also frozen from July. That makes comparisons possible, but it can miss new kinds of work. The compute figures cover one week. The categories are subjective. Different labs can draw the line around "safety," "research," or "AI-led" in very convenient places.
+
+And the incentives are messy.
+
+A lab may want its automation number to look high when raising money or recruiting researchers.
+
+It may want the same number to look low when discussing labor displacement, export controls, or regulatory thresholds.
+
+It may want its safety-compute share to look generous while classifying general reliability work as safety.
+
+Welcome to metrics.
+
+The answer is not to reject measurement because it can be gamed. Every important measurement can be gamed.
+
+The answer is to standardize definitions, preserve raw evidence, commission independent audits, and compare the self-reported dashboard with observable outcomes.
+
+## What a real public dashboard would need
+
+Anthropic suggests these metrics could eventually trigger stronger safeguards, including fixed testing periods before a new model is used to accelerate further AI R&D.
+
+That is the right direction.
+
+But a credible industry dashboard would need more than a blog post from each lab.
+
+It should include:
+
+- a common task taxonomy across labs
+- separate measures for coding, research, evaluation, and infrastructure work
+- the share of tasks completed, not just attempted
+- human review time and reversal rates
+- online blocks, offline flags, and confirmed incidents
+- the number of concurrent agents and the duration of their runs
+- safety compute, capability compute, and ambiguous shared infrastructure
+- independent replication of a representative task sample
+- versioned definitions so a lab cannot quietly move the goalposts
+- disclosure of major methodology changes and known blind spots
+
+This is not a call to publish model weights, proprietary research plans, or every internal security event.
+
+It is a call to publish enough operational data to tell whether the industry is moving from "AI assists researchers" to "AI runs the research loop" in six months or six years.
+
+That timing changes almost everything.
+
+It changes workforce planning.
+
+It changes export-control assumptions.
+
+It changes how much evaluation can happen before deployment.
+
+It changes whether safety teams are scaling with the systems they are supposed to supervise.
+
+And it changes whether policymakers are writing rules for the industry that exists or the one that existed two model generations ago.
+
+## Builders should ask for operational metrics
+
+This is not only a government problem.
+
+Companies buying agent systems should start asking similar questions.
+
+How many actions can an agent take without review? Which actions are checked before execution? Which are analyzed later? What percentage gets blocked? What reaches a person? How long does review take? Can the vendor show incident rates by workflow instead of one blended safety number?
+
+If 30,000 internal agents can operate simultaneously at a frontier lab, the governance challenge is no longer one chatbot saying one strange thing.
+
+It is fleet management.
+
+The useful enterprise analogy is not an employee with autocomplete.
+
+It is a production system with thousands of semi-independent workers, automated controls, rare escalations, and a very large blast radius if the monitoring assumptions are wrong.
+
+That deserves dashboards, logs, thresholds, and drills.
+
+Not vibes.
+
+## The Bottom Line
+
+Anthropic's numbers are not proof that recursive self-improvement has arrived.
+
+They are proof that the question is becoming measurable.
+
+Claude leads 26% of Anthropic's AI R&D tasks. More than 90% involve meaningful AI collaboration. Roughly 30,000 agents can be active at once. More than a billion decisions passed through monitors in one month. Six percent of a sampled week's R&D compute went to safety, by Anthropic's definition.
+
+Every one of those figures needs context, external scrutiny, and better standardization.
+
+But this is still progress.
+
+The frontier labs have spent years showing us benchmark charts for what their models can do.
+
+Now they need to show us instrument panels for what their organizations are becoming.
