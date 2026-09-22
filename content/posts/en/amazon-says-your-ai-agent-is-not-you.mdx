@@ -1,0 +1,214 @@
+---
+title: "Amazon Says Your AI Agent Is Not You"
+date: "2026-09-22"
+description: "Amazon blocked Meta's Muse from shopping on its store even when users asked it to. The fight exposes the missing contract in agentic commerce: a user can authorize an agent, but the destination still decides whether that delegation counts."
+tags: ["AI Agents", "Meta", "Amazon", "AI Products"]
+draft: false
+---
+
+## The Short Version
+
+You ask an AI agent to buy something on Amazon.
+
+You log in.
+
+You approve the purchase.
+
+Who else needs to say yes?
+
+Amazon, apparently.
+
+Less than two weeks after Meta launched Muse, Amazon [blocked the agent from shopping on its store](https://www.geekwire.com/2026/amazon-blocks-metas-muse-ai-assistant-in-new-standoff-over-agentic-shopping/). Users who try now see a warning that an unauthorized AI agent violates Amazon's conditions of use.
+
+Amazon told GeekWire that Meta did not notify it before Muse began accessing the store, that the agent did not identify itself while browsing, and that its handling of account credentials created privacy and security concerns. Meta did not comment on the block.
+
+That looks like a product feud.
+
+It is one.
+
+Amazon has its own shopping agents. Meta wants Muse to become the agent people use everywhere. Both companies would prefer to own the interface between intent and checkout.
+
+But the fight is bigger than two giants protecting their turf.
+
+It exposes the missing contract underneath the agent economy:
+
+A user can authorize an agent.
+
+The service on the other side can still refuse to recognize that delegation.
+
+The user says, "Muse is me."
+
+Amazon says, "No, it isn't."
+
+That disagreement is going to show up everywhere agents try to act.
+
+## User permission is only one permission
+
+Meta [introduced Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) as a personal agent that runs inside a dedicated virtual machine, uses its own browser, fills forms, negotiates, books travel, and asks for approval before sensitive actions such as purchases.
+
+Meta says Muse cannot see passwords or payment methods. Credentials entered by the user go into secure storage. A separate Sentinel agent reviews outbound actions, and the user receives an audit trail.
+
+Those are meaningful controls.
+
+They answer one side of the permission problem:
+
+Did the user authorize the agent?
+
+Amazon is asking another:
+
+Did the service authorize the agent?
+
+Those are not the same question.
+
+If I give an assistant my office badge and ask them to pick up a document, I have delegated authority. The building can still require the assistant to identify themselves, use the visitor entrance, accept limited access, or leave.
+
+Browser agents currently blur that distinction because they travel through interfaces designed for humans. They can use the same account, cookies, pages, and checkout flow as the person who sent them.
+
+To the user, the agent feels like a tool.
+
+To the website, it can look like an undisclosed third party operating inside a customer account.
+
+Both descriptions can be true.
+
+That is the awkward center of this fight.
+
+## Amazon is protecting customers and a moat
+
+Amazon's concerns are not imaginary.
+
+An external agent inside an authenticated account can see addresses, order histories, recommendations, saved payment flows, subscriptions, reviews, and behavioral data. A poorly secured agent could expose that information. A compromised one could place orders, scrape private pages, manipulate returns, or create support disputes that neither company is ready to own.
+
+Amazon also needs to distinguish a legitimate delegated agent from credential theft and abusive automation. A normal-looking browser session is not proof that the human account holder is at the keyboard.
+
+There is a good security reason to know what entered the store.
+
+There is also a very good business reason.
+
+Shopping agents can move product discovery away from Amazon's rankings, ads, recommendations, and interface. If Muse receives the intent, compares the options, chooses the product, and handles checkout, Amazon risks becoming fulfillment infrastructure behind Meta's customer relationship.
+
+Amazon does not oppose that model in principle.
+
+It operates the same model itself.
+
+Amazon's [Buy for Me](https://www.aboutamazon.com/news/retail/amazon-shopping-app-buy-for-me-brands) agent buys products from other brands' websites when they are not available in Amazon's store. Amazon says the system identifies itself to brands, uses encrypted customer details, and lets brands choose whether to participate. Its expanded [Shop Direct](https://www.aboutamazon.com/news/retail/amazon-shop-direct-external-stores) program gives merchants a way to supply product feeds or opt out.
+
+That makes Amazon's position coherent and convenient.
+
+Third-party agents should identify themselves and respect the destination's decision.
+
+Amazon's agent gets to visit other stores under Amazon's rules.
+
+Other agents get to visit Amazon under Amazon's rules.
+
+Security and self-interest are sharing a checkout cart.
+
+## The law has not settled the product question
+
+Amazon has fought this battle before.
+
+It sued Perplexity over Comet, arguing that the browser's assistant continued accessing password-protected Amazon accounts after Amazon told it to stop.
+
+In August, the Ninth Circuit [vacated a preliminary injunction against Perplexity](https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/04/26-1444.pdf). The court said Amazon was unlikely to show that Perplexity itself had accessed Amazon's computers under federal and California anti-hacking laws. In the court's view, the user was accessing Amazon with the assistant as a tool.
+
+That sounds like a win for the idea that "my agent is me."
+
+It was narrower than that.
+
+The court explicitly said its decision did not prevent Amazon from regulating access through private terms of service. It rejected one anti-hacking theory at the preliminary-injunction stage. It did not create a universal right for agents to enter any service their users can access.
+
+So the practical fight moves down a layer.
+
+Away from dramatic claims about hacking.
+
+Toward contracts, product controls, technical identification, merchant consent, account suspensions, and the leverage of whoever owns the destination.
+
+Amazon can block Muse today without waiting for a final theory of agent personhood.
+
+That may be the most important lesson for builders.
+
+The agent economy will be governed by code and terms of service long before courts produce a clean doctrine for it.
+
+## The web needs delegation, not disguise
+
+The bad version of this future is a permanent disguise contest.
+
+Agent companies make browsers look more human.
+
+Websites build better bot detection.
+
+Agents rotate infrastructure and interaction patterns.
+
+Websites add more friction for everyone.
+
+Customers solve more CAPTCHAs while the largest companies negotiate private access deals.
+
+Very intelligent. Excellent use of the technology.
+
+The better version is an explicit delegation layer.
+
+When an agent arrives, the service should be able to verify:
+
+- which agent is acting
+- which company operates it
+- which user sent it
+- what action the user approved
+- what data the agent can receive
+- how much it can spend
+- how long the authority lasts
+- where the audit record lives
+- who handles fraud, returns, and disputes
+- how the service can limit or revoke access
+
+This is more than a user-agent string.
+
+An agent can claim any name in a browser header. The useful version needs cryptographic identity, scoped authority, signed requests, revocable credentials, and receipts that both sides can inspect.
+
+The infrastructure is not science fiction. AWS already [supports cryptographic authentication for some agent traffic](https://aws.amazon.com/blogs/security/authenticate-legitimate-ai-agent-traffic-with-aws-waf-bot-control/), with identity, least-privilege access, and auditability as the point.
+
+Commerce will need an equivalent contract at the transaction layer.
+
+Not "pretend to be Arthur."
+
+More like:
+
+"Muse is acting for Arthur, may purchase this item up to this amount, may receive this address for fulfillment, may not read order history, and this authority expires in ten minutes."
+
+That is less magical than an agent roaming the web like a person.
+
+It is also how the web becomes willing to let it in.
+
+## What builders should take from the block
+
+Do not build a browser agent on the assumption that user credentials settle access.
+
+They do not.
+
+If your product depends on silently looking human, it depends on the destination failing to notice or choosing not to care. That is not an integration. It is a temporary condition.
+
+Plan for agent identification.
+
+Use scoped tokens where services support them. Keep credentials outside the model's view. Record the user's approval and the agent's actions separately. Build a handoff when a service blocks automation. Give the counterparty enough information to investigate a bad transaction without exposing the user's entire history.
+
+And assume the destination has its own incentives.
+
+Some services will welcome outside agents because they bring demand.
+
+Some will charge for access.
+
+Some will prefer their own agents.
+
+Some will allow research but not purchase.
+
+Some will say no.
+
+That is not a temporary implementation detail around the glorious agent future.
+
+It is the market structure of that future.
+
+Meta built Muse to act for the user.
+
+Amazon just reminded everyone that acting for the user does not make the agent the user.
+
+The next generation of agents will not only need permission from the people who send them.
+
+They will need terms of entry from the places they go.
