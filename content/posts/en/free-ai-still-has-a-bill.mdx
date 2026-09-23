@@ -1,7 +1,7 @@
 ---
 title: "Free AI Still Has a Bill"
-date: "2026-08-24"
-description: "The most important AI pricing story is not the sticker price. It is the meter underneath it. OpenAI's GPT-5.6 Sol price cut and Google's half-price Gemini 3.7 Flash push make the next phase clearer: labs are competing on cost per completed workflow, not just model intelligence."
+date: "2026-09-23"
+description: "Anthropic and OpenAI just pushed frontier-class models down the price curve on the same day. The important number is still not the token price. It is the cost of a completed workflow after context, retries, tools, latency, and human review."
 tags: ["AI Strategy", "Startups", "Enterprise AI", "AI Agents", "AI Pricing"]
 draft: false
 ---
@@ -106,41 +106,128 @@ The AI product is no longer just the model.
 
 It is the commercial policy around the model.
 
-## Update: the agent price war is about workflow margin
+## Update: the price war reached the frontier
 
 The meter moved again.
 
-On August 21, OpenAI updated its [GPT-5.6 launch post](https://openai.com/index/gpt-5-6/) to say it had dropped API and credit pricing for GPT-5.6 Sol by more than 20% for the next three months. That follows its July 30 cuts for Luna and Terra.
+This time, two labs moved it on the same day.
 
-Google is using the same play from the other side. [Gemini 3.7 Flash](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/), introduced August 13, is pitched as Google's most intelligent workhorse model yet for coding and agents, with an introductory price through December 31 of $0.75 per million input tokens and $3.75 per million output tokens. Google says that is half the original 3.6 Flash price, and explicitly ties the price/performance story to scaling production-ready agents. It also says Spark, its 24/7 personal agent in the Gemini app, is moving onto 3.7 Flash for Workspace tool use.
+On September 22, Anthropic [introduced Claude Opus 5.5](https://www.anthropic.com/claude-opus-5-5), its first model release since calling for the frontier to be paced. Anthropic says it performs around the level of Claude Fable 5.1 on most work, generates output more than 30% faster than Opus 5, and costs about 40% less on typical workloads.
 
-This is not a coupon story.
+OpenAI released GPT-6 Sol and GPT-6 Luna hours later. Its [model catalog](https://developers.openai.com/api/docs/models) positions Sol for complex coding and agentic workflows and Luna for focused, high-volume work. Its [API pricing page](https://developers.openai.com/api/docs/pricing) lists standard short-context rates of $2 per million input tokens and $10 per million output tokens for Sol, and $0.10 and $0.50 for Luna.
 
-It is agent strategy.
+That is not a normal model launch day.
 
-A chatbot answer can be subsidized as a user-acquisition cost. An agent workflow is different. It plans, reads, calls tools, retries, asks for clarification, summarizes, and sometimes hands the result back to a human reviewer. One user request can become a small bundle of model calls and tool calls.
+It is the model market telling us what the competition is becoming.
 
-So the real unit is no longer "one prompt."
+The frontier still matters.
 
-It is a completed workflow.
+But capability is sliding down the price curve fast enough that the more important question is no longer just "which model is smartest?"
 
-That is why the price cuts matter. The winning model is not just the smartest model in a benchmark table. It is the model that is good enough, cheap enough, and predictable enough to leave inside a real process without turning every successful automation into a margin problem.
+It is:
 
-For builders, the trap is obvious: do not build your business model around promotional economics. Google's introductory Gemini 3.7 Flash pricing has an end date. OpenAI's Sol cut is explicitly temporary. Treat those prices as a distribution signal, not a durable cost basis.
+How much useful work survives the invoice?
 
-The practical checklist changes:
+## Forty percent cheaper is not a token price
 
-Measure cost per completed workflow, not cost per call.
+Anthropic's numbers make the distinction unusually clear.
 
-Track retries and clarification loops.
+The posted token rates for Opus 5.5 are 20% below Opus 5: input falls from $5 to $4 per million tokens, while output falls from $25 to $20. Anthropic reaches its larger 40% typical-workload claim by adding another factor: Opus 5.5 uses fewer tokens to complete the work.
 
-Route easy steps to cheaper models when quality allows it.
+That may be true.
 
-Include human review time in the bill.
+It is also a vendor estimate based on Anthropic's tests, default settings, and idea of a typical workload. Your codebase, tools, prompts, retry behavior, review gates, and failure modes did not participate in that average.
 
-Write down what happens when the promotional price expires.
+The useful part is not the exact marketing percentage.
 
-If the answer is "we will figure it out later," congratulations, you have found the real pricing page.
+It is the accounting model.
+
+A stronger model can cost less even when its nominal token price is higher, if it finishes in fewer steps, avoids retries, calls fewer tools, writes less unnecessary output, and creates less rework for a human.
+
+A cheap model can be expensive if it confidently takes the scenic route.
+
+This is why cost per token is becoming the least interesting honest number on the pricing page.
+
+## Cache pricing is product strategy
+
+The most revealing Opus 5.5 price cut is not input or output.
+
+It is cache reads.
+
+Anthropic cut them from $0.50 to $0.20 per million tokens, a 60% reduction.
+
+That matters because agent work is repetitive in a very specific way. A coding agent rereads repository instructions, architecture notes, tool definitions, files, test output, and conversation history. A research agent carries source material and a growing working set. An office agent keeps the same policies, templates, customer context, and approval rules across many steps.
+
+The user sees one task.
+
+The agent keeps bringing the same backpack through the turnstile.
+
+Cheap cache reads make long sessions, persistent context, and repeated tool use more economical. They also reward products that structure reusable context cleanly instead of resending an improvised pile of text on every call.
+
+This is not only infrastructure optimization.
+
+It changes which agent products can have a margin.
+
+## The premium model is becoming a workflow step
+
+OpenAI's new spread makes the routing logic impossible to ignore.
+
+GPT-6 Sol and Luna both support tools, reasoning controls, a context window above one million tokens, and large outputs. But Luna's listed input price is one-twentieth of Sol's, while Sol is positioned for the harder agentic work.
+
+That does not mean Luna is the right answer for everything.
+
+It means "use the best model" is no longer a serious architecture.
+
+A real workflow might use a cheap model to classify requests, extract fields, monitor changes, and prepare context. It might call a stronger model for planning, ambiguous judgment, or a difficult code change. It might escalate one consequential decision to a frontier model and then require human approval before an external action.
+
+The premium model becomes a step in the workflow, not the workflow itself.
+
+That is how AI gets cheaper in production without every task becoming worse.
+
+It is also how pricing becomes product design.
+
+## Pacing is not a commercial ceasefire
+
+Anthropic emphasizes that Opus 5.5 was tested by external evaluators before release and performed better on its internal behavioral audit. That is relevant after the company's call to pace frontier development.
+
+But "pacing" clearly does not mean freezing the product line.
+
+Anthropic and OpenAI released competing, cheaper agent models within hours of each other. The commercial race is still running. The practical version of pacing will therefore be judged by release gates, independent access, deployment safeguards, monitoring, and what happens when evaluations find a problem.
+
+Not by the absence of launches.
+
+That is a separate governance argument.
+
+For buyers, the immediate lesson is simpler:
+
+Do not confuse a lower price with a stable cost.
+
+## Measure the workflow before celebrating the discount
+
+These releases are genuinely good news for builders.
+
+More capable models at lower prices make more automation viable. They give teams room to run better evaluations, try more routes, preserve more context, and automate work that did not survive the economics six months ago.
+
+They also make it easier to hide bad economics behind cheap tokens.
+
+The practical checklist is now:
+
+- measure cost per successful workflow, not cost per API call
+- separate fresh input, cached context, output, tool fees, and fast-mode premiums
+- record retries, clarification loops, and failed runs
+- include human review and correction time
+- test several effort levels instead of defaulting to maximum reasoning
+- route routine steps to cheaper models only after quality evals
+- pin model versions and rerun evals before migration
+- model the bill when usage grows by 10x
+
+If a vendor says a model is 40% cheaper, useful.
+
+Now run your task.
+
+The pricing page is an input.
+
+The completed workflow is the receipt.
 
 ## What buyers should take from this
 
