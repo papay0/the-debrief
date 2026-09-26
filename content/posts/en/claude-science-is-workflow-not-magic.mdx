@@ -1,7 +1,7 @@
 ---
 title: "Claude Science Is Workflow, Not Magic"
-date: "2026-07-06"
-description: "Anthropic's Claude Science is not interesting because it proves AI can replace scientists. It is interesting because frontier labs are turning agents into domain-specific workbenches."
+date: "2026-09-26"
+description: "Claude agents found a genuinely interesting pattern in viral DNA. Humans still had to choose the problem, run the experiments, interpret the result, and admit that they do not yet know what the system does. That is what AI-assisted science actually looks like."
 tags: ["AI Agents", "Anthropic", "Science", "AI Workflows"]
 draft: false
 ---
@@ -33,6 +33,139 @@ The model still matters.
 But the product is becoming the model plus tools, data, compute, permissions, audit trails, and a domain-specific interface that knows what real work looks like.
 
 Very glamorous. We reinvented the lab notebook and gave it subagents.
+
+## Update: Claude found something. Biology still gets the last word
+
+Anthropic now has a much stronger example of the workflow in action.
+
+On September 23, the company said Claude agents had [identified a previously uncharacterized enzyme system](https://www.anthropic.com/news/claude-discovers-novel-enzyme-system) in bacteriophages. Anthropic calls it array-associated reverse transcriptases, or ART. The system combines a reverse transcriptase, a partner gene, and a long array of repeating DNA sequences that looks somewhat like a CRISPR array.
+
+That is a real scientific lead.
+
+It is not a new CRISPR tool.
+
+Anthropic does not yet know ART's biological function. There is no known DNA-cutting enzyme attached to it. The [preprint](https://doi.org/10.64898/2026.09.22.753630) has not been peer reviewed, and the result has not been independently replicated. As [Nature reported](https://www.nature.com/articles/d41586-026-03039-6), the evidence that ART behaves like CRISPR is still scant.
+
+So the useful headline is not "Claude invented gene editing."
+
+It is:
+
+Claude helped find a weird thing worth testing.
+
+That is less cinematic.
+
+It is also much closer to how discovery begins.
+
+## The 950-agent number needs a workflow around it
+
+The computational search was substantial.
+
+According to Anthropic's preprint, 949 Claude sessions completed 119 tasks across 21.5 hours of wall-clock time, using 215.6 million tokens. The agents surveyed reverse-transcriptase loci across 1.9 billion protein clusters, recovered roughly 200,000 RT clusters, investigated thousands of nearby protein families, and produced 19 reports for human review.
+
+One agent noticed an unusual repeating pattern in raw DNA beside a reverse-transcriptase gene. The original research brief had asked the system to look for partner genes, not non-coding repeat arrays. The agent followed the anomaly, opened more work, compared it with known systems, and promoted the result for review.
+
+That is the impressive part.
+
+The agents did not simply retrieve a fact that Anthropic had hidden in a document. They ran a large computational campaign and noticed a pattern outside the most obvious path.
+
+But the autonomy had boundaries.
+
+Humans chose reverse transcriptases as the research target. Humans wrote the brief. Humans built the harness and selected the model. Humans reviewed the reports. Human scientists performed all physical lab work. Humans interpreted the evidence and decided what could responsibly be claimed.
+
+The computational campaign ran without human intervention.
+
+The scientific process did not.
+
+Both statements matter.
+
+## Hypotheses are getting cheaper than experiments
+
+Claude gathered roughly 200,000 RT clusters and narrowed the campaign to a small set of candidates.
+
+That funnel is the product.
+
+AI can now produce more plausible hypotheses than a lab can physically test. It can search a database all night, open hundreds of parallel investigations, write candidate reports, rank them, and preserve the transcript. The scarce resource moves downstream: expert attention, assay design, wet-lab capacity, controls, replication, and the willingness to kill an exciting idea when the evidence does not cooperate.
+
+This changes what a good scientific agent should optimize for.
+
+Not the number of hypotheses.
+
+Not how confident the reports sound.
+
+Not how many agents were involved.
+
+The useful metric is how efficiently the system moves from a large search space to a small set of testable, well-supported candidates without hiding the rejected paths.
+
+The graveyard matters.
+
+Anthropic's agents investigated 17 candidate partner families. Most were rejected or set aside as annotation artifacts, known systems, or ordinary genomic neighbors. That is healthy. A scientific workflow should make the failures inspectable instead of polishing only the winner into a launch post.
+
+## "AI discovered" needs a methods section
+
+This result gives us a better way to read future AI-science claims.
+
+Ask which step the AI actually performed.
+
+Did it search literature?
+
+Did it generate a hypothesis?
+
+Did it notice a pattern in primary data?
+
+Did it design the experiment?
+
+Did it operate the equipment?
+
+Did it interpret the result?
+
+Did an independent lab reproduce it?
+
+"AI discovered X" can describe any combination of those steps. Collapsing them into one verb makes a workflow look like magic and makes scientific accountability disappear at exactly the wrong moment.
+
+For this result, the strongest fair claim is specific: Claude agents autonomously surfaced an unusual genomic pattern and drove the computational analysis that initiated the discovery. Humans did the bench science. The function remains unknown.
+
+That is still important.
+
+It just is not the same as an autonomous scientist completing the full loop.
+
+## The lab is now part of the AI product
+
+Anthropic did not stop at releasing Claude Science software.
+
+It built a molecular-biology lab.
+
+That is the strategic signal.
+
+If frontier models can generate biological hypotheses at scale, the company that owns only the model still depends on somebody else's instruments, samples, protocols, queue, and judgment to learn which ideas survive contact with reality. A wet lab closes that loop faster.
+
+It also creates a new conflict of interest.
+
+The company built the model, coordinated the agents, employed the scientists, ran the experiments, wrote the preprint, and published the launch post. None of that invalidates the result. It does mean outside review and independent replication matter more, not less.
+
+The next trustworthy layer is not another reviewer agent from the same system.
+
+It is another lab.
+
+## What builders should copy
+
+Most teams are not about to build a biology facility.
+
+They can still copy the useful architecture:
+
+- keep the full agent transcripts and code
+- show the funnel from all candidates to the selected result
+- preserve rejected hypotheses and the reason each was rejected
+- separate model observations from human interpretations
+- make every computational result reproducible from primary data
+- define which steps require expert approval
+- publish negative results, not only launch-worthy successes
+- invite independent reviewers before turning a lead into a product claim
+
+This is the same lesson Claude Science suggested in June, now with much better evidence.
+
+The agent can make the search broader and faster.
+
+The workflow has to make the result narrower and more trustworthy.
 
 ## Why Claude Science is the right story
 

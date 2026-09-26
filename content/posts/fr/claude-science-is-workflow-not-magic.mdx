@@ -1,7 +1,7 @@
 ---
 title: "Claude Science parle de workflow, pas de magie"
-date: "2026-07-06"
-description: "Claude Science n'est pas intéressant parce qu'il prouverait que l'IA peut remplacer les scientifiques. Il l'est parce que les labos de pointe transforment les agents en vrais environnements de travail spécialisés."
+date: "2026-09-26"
+description: "Des agents Claude ont repéré un motif réellement intéressant dans l'ADN de virus. Des humains ont quand même dû choisir le problème, mener les expériences, interpréter le résultat et reconnaître qu'ils ignorent encore la fonction du système. Voilà à quoi ressemble la science assistée par IA."
 tags: ["AI Agents", "Anthropic", "Science", "AI Workflows"]
 draft: false
 ---
@@ -33,6 +33,139 @@ Le modèle compte toujours.
 Mais le produit devient le modèle plus les outils, les données, le calcul, les permissions, les traces d'audit, et une interface spécialisée qui comprend à quoi ressemble le vrai travail.
 
 Très glamour. Nous avons réinventé le cahier de labo avec des sous-agents.
+
+## Mise à jour : Claude a trouvé quelque chose. La biologie garde le dernier mot
+
+Anthropic dispose maintenant d'un exemple beaucoup plus solide de ce workflow en action.
+
+Le 23 septembre, l'entreprise a annoncé que des agents Claude avaient [identifié un système enzymatique encore non caractérisé](https://www.anthropic.com/news/claude-discovers-novel-enzyme-system) chez des bactériophages. Anthropic l'appelle ART, pour array-associated reverse transcriptases. Le système combine une transcriptase inverse, un gène partenaire et une longue série de séquences d'ADN répétées qui ressemble un peu à une matrice CRISPR.
+
+C'est une vraie piste scientifique.
+
+Ce n'est pas un nouvel outil CRISPR.
+
+Anthropic ne connaît pas encore la fonction biologique d'ART. Aucune enzyme connue de découpe de l'ADN ne lui est associée. Le [préprint](https://doi.org/10.64898/2026.09.22.753630) n'a pas été relu par les pairs, et le résultat n'a pas été reproduit indépendamment. Comme le [souligne Nature](https://www.nature.com/articles/d41586-026-03039-6), les preuves qu'ART fonctionne comme CRISPR restent minces.
+
+Le titre utile n'est donc pas « Claude a inventé l'édition génétique ».
+
+C'est plutôt :
+
+Claude a aidé à trouver une bizarrerie qui mérite d'être testée.
+
+C'est moins cinématographique.
+
+C'est aussi beaucoup plus proche de la manière dont une découverte commence.
+
+## Le chiffre de 950 agents a besoin d'un workflow autour de lui
+
+La recherche informatique était considérable.
+
+Selon le préprint d'Anthropic, 949 sessions Claude ont réalisé 119 tâches en 21,5 heures chrono, en consommant 215,6 millions de tokens. Les agents ont exploré les loci de transcriptases inverses dans 1,9 milliard de clusters de protéines, récupéré environ 200 000 clusters de RT, examiné des milliers de familles de protéines voisines et produit 19 rapports pour revue humaine.
+
+Un agent a remarqué un motif répétitif inhabituel dans l'ADN brut à côté d'un gène de transcriptase inverse. Le brief initial demandait au système de chercher des gènes partenaires, pas des séries répétées dans l'ADN non codant. L'agent a suivi l'anomalie, ouvert de nouvelles tâches, comparé le motif aux systèmes connus et fait remonter le résultat pour examen.
+
+C'est la partie impressionnante.
+
+Les agents n'ont pas simplement retrouvé un fait qu'Anthropic avait caché dans un document. Ils ont mené une grande campagne informatique et remarqué un motif en dehors du chemin le plus évident.
+
+Mais cette autonomie avait des limites.
+
+Des humains ont choisi les transcriptases inverses comme cible. Des humains ont écrit le brief. Des humains ont construit le harness et choisi le modèle. Des humains ont relu les rapports. Des scientifiques humains ont effectué tout le travail physique au laboratoire. Des humains ont interprété les preuves et décidé ce qui pouvait être affirmé de façon responsable.
+
+La campagne informatique s'est déroulée sans intervention humaine.
+
+Le processus scientifique, non.
+
+Les deux phrases comptent.
+
+## Les hypothèses deviennent moins chères que les expériences
+
+Claude a rassemblé environ 200 000 clusters de RT avant de réduire la campagne à une petite sélection de candidats.
+
+Cet entonnoir est le produit.
+
+L'IA peut maintenant produire plus d'hypothèses plausibles qu'un labo ne peut en tester physiquement. Elle peut explorer une base de données toute la nuit, ouvrir des centaines d'enquêtes en parallèle, rédiger des rapports, les classer et conserver toute la trace. La ressource rare se déplace vers l'aval : attention des experts, conception des essais, capacité de laboratoire, contrôles, réplication, et volonté de tuer une belle idée quand les preuves refusent de coopérer.
+
+Cela change ce qu'un bon agent scientifique doit optimiser.
+
+Pas le nombre d'hypothèses.
+
+Pas le ton assuré des rapports.
+
+Pas le nombre d'agents mobilisés.
+
+La métrique utile est l'efficacité avec laquelle le système passe d'un immense espace de recherche à quelques candidats testables et bien étayés, sans cacher les voies abandonnées.
+
+Le cimetière compte.
+
+Les agents d'Anthropic ont examiné 17 familles candidates de protéines partenaires. La plupart ont été rejetées ou mises de côté comme artefacts d'annotation, systèmes déjà connus ou voisins génomiques ordinaires. C'est sain. Un workflow scientifique doit rendre les échecs inspectables au lieu de ne polir que le gagnant pour le billet de lancement.
+
+## « Découvert par l'IA » a besoin d'une section méthodes
+
+Ce résultat donne une meilleure grille de lecture pour les prochaines annonces de science par IA.
+
+Demandez quelle étape l'IA a réellement accomplie.
+
+A-t-elle cherché dans la littérature ?
+
+A-t-elle généré une hypothèse ?
+
+A-t-elle repéré un motif dans les données primaires ?
+
+A-t-elle conçu l'expérience ?
+
+A-t-elle manipulé les instruments ?
+
+A-t-elle interprété le résultat ?
+
+Un laboratoire indépendant l'a-t-il reproduit ?
+
+« L'IA a découvert X » peut désigner n'importe quelle combinaison de ces étapes. Les réduire à un seul verbe transforme un workflow en magie et fait disparaître la responsabilité scientifique au pire moment.
+
+Pour ce résultat, l'affirmation la plus forte qui reste juste est précise : des agents Claude ont fait émerger de manière autonome un motif génomique inhabituel et mené l'analyse informatique qui a lancé la découverte. Les humains ont fait les expériences. La fonction reste inconnue.
+
+C'est tout de même important.
+
+Ce n'est simplement pas la même chose qu'un scientifique autonome bouclant tout le cycle.
+
+## Le laboratoire fait maintenant partie du produit IA
+
+Anthropic ne s'est pas arrêtée au logiciel Claude Science.
+
+Elle a construit un laboratoire de biologie moléculaire.
+
+C'est le signal stratégique.
+
+Si les modèles frontier peuvent générer des hypothèses biologiques à grande échelle, l'entreprise qui ne possède que le modèle dépend encore des instruments, échantillons, protocoles, files d'attente et jugements de quelqu'un d'autre pour savoir quelles idées survivent au contact du réel. Un wet lab raccourcit cette boucle.
+
+Il crée aussi un nouveau conflit d'intérêts.
+
+La même entreprise a construit le modèle, coordonné les agents, employé les scientifiques, mené les expériences, rédigé le préprint et publié le billet de lancement. Rien de cela n'invalide le résultat. Cela signifie que la revue externe et la réplication indépendante comptent davantage, pas moins.
+
+La prochaine couche de confiance n'est pas un autre agent de revue issu du même système.
+
+C'est un autre laboratoire.
+
+## Ce que les builders devraient copier
+
+La plupart des équipes ne vont pas construire un labo de biologie.
+
+Elles peuvent quand même copier l'architecture utile :
+
+- conserver tous les journaux des agents et tout le code
+- montrer l'entonnoir complet, de tous les candidats jusqu'au résultat retenu
+- préserver les hypothèses rejetées et la raison de chaque rejet
+- séparer les observations du modèle des interprétations humaines
+- rendre chaque résultat informatique reproductible à partir des données primaires
+- définir les étapes qui exigent l'approbation d'un expert
+- publier les résultats négatifs, pas seulement les succès dignes d'un lancement
+- inviter des évaluateurs indépendants avant de transformer une piste en affirmation produit
+
+C'est la même leçon que Claude Science suggérait en juin, avec maintenant des preuves bien meilleures.
+
+L'agent peut rendre la recherche plus large et plus rapide.
+
+Le workflow doit rendre le résultat plus étroit et plus digne de confiance.
 
 ## Pourquoi Claude Science est la bonne histoire
 
