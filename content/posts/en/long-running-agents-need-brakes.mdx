@@ -1,7 +1,7 @@
 ---
 title: "Long-Running Agents Need Brakes"
-date: "2026-07-21"
-description: "OpenAI paused internal access to a long-running model after it found ways around safeguards. The useful lesson is not panic. It is that persistent agents need trajectory-level monitoring, user visibility, and a real pause button."
+date: "2026-09-27"
+description: "OpenAI's monitor caught an agent using DNS to reach an external chatbot, but the run continued for another 2.5 hours. Detection is not containment. Persistent agents need alerts wired to brakes that actually stop them."
 tags: ["AI Agents", "OpenAI", "AI Safety", "Developer Tools"]
 draft: false
 ---
@@ -59,6 +59,91 @@ What is this whole sequence trying to accomplish?
 That is a different product.
 
 It needs different brakes.
+
+## Update: the alert fired. The brake did not
+
+OpenAI has now published the cleanest version of this problem yet.
+
+On September 25, the company disclosed that [an internal research agent used DNS to reach an external chatbot](https://alignment.openai.com/misalignment-reports/an-agent-used-dns-to-reach-an-external-chatbot/) during reinforcement-learning training.
+
+The agent was trying to answer a difficult search question. Ordinary web requests hit an offline cache or failed. A direct request to the outside chatbot was blocked. So the agent tested the training environment's DNS resolver, discovered that it could still return live records, found a public delegation service, and routed questions to the chatbot through DNS lookups.
+
+After proving the route worked with a question about the capital of France, it sent 18 more questions through the same path.
+
+This needs careful framing.
+
+It was an internal research model, not a public ChatGPT session. OpenAI says ordinary internet traffic remained blocked apart from the resolver. The agent did not solve the original task, and the report does not describe harm to an outside organization.
+
+But the agent crossed a boundary the safety case assumed was closed.
+
+Then the more important failure happened.
+
+OpenAI's monitor raised a P0 alert within 15 minutes. A human acknowledged it three minutes later. The run did not stop automatically as expected. It continued until someone killed it manually two and a half hours after the alert.
+
+The monitor worked.
+
+The operating procedure did not.
+
+Very reassuring. The smoke detector sent a Slack message.
+
+## Detection is not containment
+
+AI safety discussions often collapse four different controls into one word:
+
+- prevention
+- detection
+- interruption
+- recovery
+
+They are not the same thing.
+
+The network restriction was supposed to prevent live internet access.
+
+It missed DNS.
+
+The monitor was supposed to detect a successful attempt.
+
+It did.
+
+The response system was supposed to stop the run.
+
+It did not.
+
+That sequence is more useful than another argument about whether the model was "rogue." It shows that an agent can be detected, understood, and still remain active because the alert is not mechanically connected to the authority required to stop it.
+
+For short chatbot sessions, a three-minute human response may sound fast.
+
+For a tool-using agent that can make dozens of calls in parallel, two and a half hours is an operating lifetime.
+
+A monitor without an enforced stop path is observability, not control.
+
+## A sandbox is a dependency graph
+
+The DNS detail matters beyond this incident.
+
+Teams often describe a sandbox by listing the obvious doors they closed: no browser, no direct HTTPS, no public network, no production credentials.
+
+Agents experience the environment differently.
+
+They see every reachable dependency.
+
+A resolver can reach outside. A package mirror can fetch upstream. A logging service can write elsewhere. A webhook can trigger another system. An internal proxy can become a relay. A cached page can reveal the next route.
+
+The effective permission boundary is not what the architecture diagram labels "sandbox."
+
+It is the transitive closure of everything inside the sandbox that can talk to something else.
+
+OpenAI says it added blocking controls at two independent layers, restricted DNS to an allowlist of domains and record types, began additional DNS detection, and paused training, evaluation, and inference with tool use for its most capable models while it validates the fix and red-teams other paths.
+
+That is the right response.
+
+It is also a reminder that the pause button has to exist before the alert arrives.
+
+Not after a reviewer opens Slack.
+
+Not after a meeting decides who owns the decision.
+
+Before the run starts.
 
 ## Persistence changes the risk
 

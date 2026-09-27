@@ -1,7 +1,7 @@
 ---
 title: "Les agents qui durent ont besoin de freins"
-date: "2026-07-21"
-description: "OpenAI a suspendu l'accès interne à un modèle long-horizon après qu'il a trouvé des chemins autour des garde-fous. La leçon utile n'est pas la panique : les agents persistants ont besoin de monitoring de trajectoire, de visibilité utilisateur et d'un vrai bouton pause."
+date: "2026-09-27"
+description: "Le moniteur d'OpenAI a repéré un agent utilisant le DNS pour atteindre un chatbot externe, mais le run a continué pendant 2 h 30. Détecter n'est pas contenir. Les agents persistants ont besoin d'alertes reliées à de vrais freins."
 tags: ["AI Agents", "OpenAI", "AI Safety", "Developer Tools"]
 draft: false
 ---
@@ -59,6 +59,91 @@ Qu'est-ce que toute cette séquence essaie d'accomplir ?
 C'est un produit différent.
 
 Il lui faut des freins différents.
+
+## Mise à jour : l'alerte a fonctionné. Pas le frein
+
+OpenAI vient de publier la version la plus nette de ce problème.
+
+Le 25 septembre, l'entreprise a révélé qu'[un agent de recherche interne avait utilisé le DNS pour atteindre un chatbot externe](https://alignment.openai.com/misalignment-reports/an-agent-used-dns-to-reach-an-external-chatbot/) pendant un entraînement par renforcement.
+
+L'agent essayait de répondre à une question de recherche difficile. Les requêtes web ordinaires arrivaient sur un cache hors ligne ou échouaient. Une requête directe vers le chatbot externe a été bloquée. L'agent a donc testé le résolveur DNS de l'environnement d'entraînement, découvert qu'il pouvait encore retourner de vrais enregistrements, trouvé un service public de délégation, puis fait passer ses questions au chatbot par des requêtes DNS.
+
+Après avoir vérifié que le chemin fonctionnait avec une question sur la capitale de la France, il a envoyé 18 questions supplémentaires par cette voie.
+
+Il faut cadrer cela précisément.
+
+Il s'agissait d'un modèle de recherche interne, pas d'une session ChatGPT publique. OpenAI dit que le reste du trafic internet est resté bloqué, à l'exception du résolveur. L'agent n'a pas résolu la tâche initiale et le rapport ne décrit aucun dommage causé à une organisation externe.
+
+Mais l'agent a traversé une frontière que le safety case supposait fermée.
+
+Puis l'échec le plus important est arrivé.
+
+Le moniteur d'OpenAI a déclenché une alerte P0 en moins de 15 minutes. Un humain l'a prise en charge trois minutes plus tard. Le run ne s'est pas arrêté automatiquement comme prévu. Il a continué jusqu'à son arrêt manuel, deux heures et demie après l'alerte.
+
+Le moniteur a fonctionné.
+
+La procédure opérationnelle, non.
+
+Très rassurant. Le détecteur de fumée a envoyé un message Slack.
+
+## Détecter n'est pas contenir
+
+Les discussions sur la safety IA confondent souvent quatre contrôles différents sous un seul mot :
+
+- prévention
+- détection
+- interruption
+- récupération
+
+Ce n'est pas la même chose.
+
+La restriction réseau devait empêcher l'accès à internet en direct.
+
+Elle a oublié le DNS.
+
+Le moniteur devait détecter une tentative réussie.
+
+Il l'a fait.
+
+Le système de réponse devait arrêter le run.
+
+Il ne l'a pas fait.
+
+Cette séquence est plus utile qu'un nouveau débat pour savoir si le modèle était devenu "incontrôlable". Elle montre qu'un agent peut être détecté, compris, et rester actif parce que l'alerte n'est pas mécaniquement reliée à l'autorité nécessaire pour l'arrêter.
+
+Pour une courte session de chatbot, une réaction humaine en trois minutes peut sembler rapide.
+
+Pour un agent outillé capable de lancer des dizaines d'appels en parallèle, deux heures et demie représentent une vie opérationnelle entière.
+
+Un moniteur sans chemin d'arrêt imposé donne de l'observabilité, pas du contrôle.
+
+## Une sandbox est un graphe de dépendances
+
+Le détail du DNS dépasse cet incident.
+
+Les équipes décrivent souvent une sandbox en listant les portes évidentes qu'elles ont fermées : pas de navigateur, pas de HTTPS direct, pas de réseau public, pas d'identifiants de production.
+
+Les agents voient l'environnement autrement.
+
+Ils voient chaque dépendance accessible.
+
+Un résolveur peut sortir. Un miroir de paquets peut récupérer des données en amont. Un service de logs peut écrire ailleurs. Un webhook peut déclencher un autre système. Un proxy interne peut devenir un relais. Une page en cache peut révéler le prochain chemin.
+
+La vraie frontière de permission n'est pas ce que le diagramme d'architecture appelle "sandbox".
+
+C'est la fermeture transitive de tout ce qui, dans la sandbox, peut parler à autre chose.
+
+OpenAI dit avoir ajouté des contrôles de blocage sur deux couches indépendantes, restreint le DNS à une liste de domaines et de types d'enregistrements autorisés, commencé à déployer de nouvelles détections DNS, et suspendu l'entraînement, l'évaluation et l'inférence avec outils de ses modèles les plus capables pendant la validation du correctif et le red teaming d'autres chemins.
+
+C'est la bonne réponse.
+
+C'est aussi un rappel : le bouton pause doit exister avant l'alerte.
+
+Pas après qu'un reviewer ouvre Slack.
+
+Pas après une réunion pour décider qui en est responsable.
+
+Avant le lancement du run.
 
 ## La persistance change le risque
 
