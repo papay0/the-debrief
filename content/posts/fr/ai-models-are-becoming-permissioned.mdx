@@ -1,7 +1,7 @@
 ---
 title: "Les modèles IA de pointe deviennent des produits sous autorisation"
-date: "2026-08-07"
-description: "Astra chez OpenAI et Claude Fable/Mythos 5.1 chez Anthropic rendent la thèse des modèles sous autorisation très concrète. L'IA frontier n'est plus seulement un choix de modèle : c'est une carte de capacités, de garde-fous, de trusted access, de custody des logs et d'éligibilité utilisateur."
+date: "2026-09-28"
+description: "Une cour d'appel fédérale a validé l'exclusion d'Anthropic par le Pentagone après le refus de l'entreprise de retirer ses limites sur les armes autonomes létales et la surveillance de masse. La permission va désormais dans les deux sens : les labs filtrent les capacités, les grands clients peuvent traiter ces filtres comme un risque fournisseur."
 tags: ["AI Regulation", "OpenAI", "Anthropic", "Models"]
 draft: false
 ---
@@ -21,6 +21,43 @@ Il y a deux semaines, Anthropic a dit avoir dû [suspendre l'accès à Claude Fa
 C'est ça, le changement.
 
 Les modèles IA de pointe commencent à ressembler moins à des apps, et plus à de l'infrastructure contrôlée.
+
+## Mise à jour : le client peut refuser les garde-fous
+
+La couche de permission fonctionne maintenant dans les deux sens.
+
+Le 25 septembre, une cour d'appel fédérale divisée a [validé l'exclusion d'Anthropic de certains marchés publics du Pentagone](https://law.justia.com/cases/federal/appellate-courts/cadc/26-1049/26-1049-2026-09-25.html). Le conflit a commencé lorsque l'entreprise a refusé que Claude soit utilisé pour des armes autonomes létales ou pour la surveillance de masse aux États-Unis, et n'a pas accepté la demande du gouvernement couvrant tous les usages légaux.
+
+La décision ne dit pas que ces restrictions constituent une mauvaise politique de sécurité.
+
+Elle dit que le gouvernement pouvait les traiter comme un risque dans sa chaîne d'approvisionnement.
+
+Toute l'histoire tient dans cette distinction.
+
+Au nom de la majorité, obtenue par deux voix contre une, le juge Katsas explique que la loi sur les achats publics, section 4713 du titre 41, s'intéresse à ce que fait un fournisseur, pas à ses motivations. Du point de vue du gouvernement, la capacité et la volonté d'Anthropic de restreindre Claude pouvaient interrompre l'accès à un composant utilisé dans des systèmes de sécurité nationale. Pour relever de cette loi, l'entreprise n'avait pas besoin d'être malveillante, compromise ou contrôlée par un adversaire étranger.
+
+La juge Henderson n'est pas d'accord. Selon elle, le Congrès avait conçu cette disposition pour des produits compromis et des acteurs malveillants ou étrangers, pas pour une entreprise américaine qui annonce ses limites contractuelles avant que le gouvernement achète son service.
+
+Et l'histoire n'est pas encore proprement terminée. Un tribunal fédéral californien est arrivé au résultat inverse sous une autre autorité du Pentagone. La cour d'appel de Washington répond que cette décision concernait une autre loi, avec une définition plus étroite. Anthropic [dit contester la nouvelle décision et envisager la suite de la procédure](https://www.marketscreener.com/news/us-appeals-court-upholds-pentagon-s-blacklisting-of-anthropic-ce785adfd188f523).
+
+Ce n'est donc pas une permission judiciaire générale donnée aux gouvernements pour effacer tous les garde-fous d'un modèle.
+
+Mais c'est un signal produit majeur.
+
+Pour les builders, un garde-fou peut désormais créer deux risques opposés à la fois :
+
+- trop permissif, le fournisseur peut faciliter un usage dangereux
+- trop restrictif, un client puissant peut considérer le fournisseur comme une infrastructure peu fiable
+- trop facile à modifier, chaque client hérite d'une politique instable
+- trop difficile à modifier, le modèle peut échouer aux exigences de continuité de l'acheteur
+
+Le fournisseur appelle cela une limite de sécurité.
+
+L'acheteur appelle cela un kill switch.
+
+Les deux descriptions peuvent être vraies.
+
+Voilà le nouveau marché sous autorisation : les labs ne sont plus les seuls à décider qui reçoit les clés. Les clients décident aussi quelles serrures ils accepteront.
 
 ## Mise à jour : les clés ont maintenant des niveaux
 

@@ -1,7 +1,7 @@
 ---
 title: "Frontier AI Models Are Becoming Permissioned Products"
-date: "2026-08-07"
-description: "OpenAI's Astra and Anthropic's Claude Fable/Mythos 5.1 make the permissioned-model thesis concrete. Frontier AI is no longer just a model choice. It is becoming a map of capabilities, safeguards, trusted access, monitoring custody, and user eligibility."
+date: "2026-09-28"
+description: "A federal appeals court upheld the Pentagon's exclusion of Anthropic after the company refused to remove restrictions on lethal autonomous weapons and mass surveillance. Permissioning now runs both ways: labs can gate capabilities, and powerful customers can treat those gates as procurement risk."
 tags: ["AI Regulation", "OpenAI", "Anthropic", "Models"]
 draft: false
 ---
@@ -21,6 +21,43 @@ Two weeks ago, Anthropic said it had to [suspend access to Claude Fable 5 and Cl
 That is the shift.
 
 Frontier models are starting to look less like apps and more like restricted infrastructure.
+
+## Update: the customer can reject the guardrails
+
+The permission layer now runs in both directions.
+
+On September 25, a divided federal appeals court [upheld the Pentagon's exclusion of Anthropic from some government procurement](https://law.justia.com/cases/federal/appellate-courts/cadc/26-1049/26-1049-2026-09-25.html). The dispute began after Anthropic refused to let Claude be used for lethal autonomous weapons or domestic mass surveillance and would not accept the government's demand for access across all lawful uses.
+
+The decision does not say those restrictions are bad safety policy.
+
+It says the government could treat them as supply-chain risk.
+
+That distinction is the whole story.
+
+Writing for the 2-1 majority, Judge Katsas said the procurement statute, Section 4713 of Title 41, turns on what a supplier does, not why it does it. From the government's perspective, Anthropic's ability and willingness to restrict Claude could interrupt access to a component used in national-security systems. The company did not need to be malicious, compromised, or controlled by a foreign adversary for that risk to count under this law.
+
+Judge Henderson dissented. She argued that Congress built the provision around compromised products and malicious or foreign actors, not a domestic vendor announcing contractual limits before the government buys its service.
+
+There is also no neat final chapter yet. A California federal court reached the opposite result under a different Defense Department authority. The D.C. Circuit said that ruling involved another statute with a narrower definition. Anthropic [says it disagrees with the new decision and is considering further review](https://www.marketscreener.com/news/us-appeals-court-upholds-pentagon-s-blacklisting-of-anthropic-ce785adfd188f523).
+
+So this is not a general judicial blessing for governments to erase every model safeguard.
+
+It is still a major product signal.
+
+For builders, a guardrail can now create two different kinds of risk at once:
+
+- too permissive, and the provider may enable dangerous use
+- too restrictive, and a powerful customer may treat the provider as unreliable infrastructure
+- too easy to change, and every customer inherits policy volatility
+- too hard to change, and the model may fail a buyer's continuity requirements
+
+The vendor calls it a safety boundary.
+
+The buyer calls it a kill switch.
+
+Both descriptions can be true.
+
+That is the new permissioned market: not just labs deciding who gets the keys, but customers deciding which locks they will tolerate.
 
 ## Update: the keys now have tiers
 
