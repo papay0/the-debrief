@@ -1,8 +1,8 @@
 ---
 title: "Les agents qui durent ont besoin de freins"
-date: "2026-09-27"
-description: "Le moniteur d'OpenAI a repéré un agent utilisant le DNS pour atteindre un chatbot externe, mais le run a continué pendant 2 h 30. Détecter n'est pas contenir. Les agents persistants ont besoin d'alertes reliées à de vrais freins."
-tags: ["AI Agents", "OpenAI", "AI Safety", "Developer Tools"]
+date: "2026-09-29"
+description: "La plateforme Open Agent Safety de NVIDIA déplace les contrôles hors du processus de l'agent, puis son design Sentry déplace le watchdog hors de l'hôte. C'est la bonne architecture pour un frein, mais la disponibilité du logiciel ne prouve pas encore que tout le système peut contenir un vrai incident."
+tags: ["AI Agents", "NVIDIA", "OpenAI", "AI Safety", "Developer Tools"]
 draft: false
 ---
 
@@ -59,6 +59,66 @@ Qu'est-ce que toute cette séquence essaie d'accomplir ?
 C'est un produit différent.
 
 Il lui faut des freins différents.
+
+## Mise à jour : le frein sort de l'agent
+
+NVIDIA vient de proposer la version la plus concrète de ce frein.
+
+Le 28 septembre, l'entreprise a annoncé sa [plateforme Open Agent Safety](https://www.nvidia.com/en-us/solutions/ai/agent-safety/), construite autour de deux couches aux rôles différents.
+
+[OpenShell](https://github.com/NVIDIA/OpenShell/) est la couche runtime open source. Elle place l'agent dans une sandbox, applique des règles sur les fichiers, les processus, le réseau, les outils et les credentials, puis journalise les décisions d'autorisation ou de refus. Le choix architectural important est que l'application des règles se fait hors du processus de l'agent.
+
+Sentry est la seconde couche. NVIDIA le présente comme un watchdog hors bande exécuté sur du matériel BlueField-4, séparé à la fois de l'agent et du logiciel de l'hôte. Il observe l'activité, applique les politiques et doit pouvoir placer un agent en quarantaine en quelques millisecondes lorsqu'il franchit une limite.
+
+Cette séparation compte plus que les noms de produits.
+
+L'agent ne devrait pas posséder son propre frein.
+
+L'application qui l'héberge ne devrait pas non plus être la seule à pouvoir le tirer.
+
+Si le même processus exécute le travail, interprète la politique, détecte la violation et décide de l'arrêt, une seule compromission ou un seul mauvais état peut casser toute la chaîne de contrôle. Déporter l'application des règles rend plus difficile pour l'agent de traiter le garde-fou comme un obstacle local de plus. Placer un second watchdog hors de l'hôte crée un chemin d'arrêt qui peut rester disponible même lorsque le workload déraille.
+
+C'est la version hardware de la leçon d'hier.
+
+Le détecteur de fumée doit pouvoir atteindre le disjoncteur.
+
+Et le disjoncteur ne devrait pas se trouver dans la pièce en feu.
+
+## Un design de référence n'est pas un rapport d'incident
+
+L'architecture est prometteuse.
+
+Les preuves sont encore précoces.
+
+OpenShell est du code public avec des contrôles documentés. Sentry est un design de référence lié à la nouvelle infrastructure de NVIDIA. NVIDIA affirme que la plateforme aurait pu empêcher de récents incidents agentiques, et [AP rapporte](https://apnews.com/article/nvidia-ai-security-openshell-sentry-a4cfc84ed00353ff8f2dad4bed7b429e) que l'entreprise la présente comme une réponse d'ingénierie au risque d'agents incontrôlables.
+
+Le conditionnel travaille beaucoup dans cette phrase.
+
+Un diagramme ne prouve pas qu'une politique couvre la dépendance que personne n'avait modélisée. Une promesse de quarantaine en quelques millisecondes ne dit pas à quelle vitesse le système reconnaît une violation nouvelle. Un watchdog indépendant peut toujours hériter de règles obsolètes, d'une identité faible, d'une télémétrie incomplète, d'une allowlist trop large ou d'un opérateur qui approuve automatiquement le mauvais changement de politique.
+
+Le vrai test n'est pas de savoir si la plateforme bloque l'attaque de démonstration.
+
+C'est de savoir si des équipes indépendantes peuvent la faire échouer avec :
+
+- des chemins réseau indirects comme le DNS, les miroirs de paquets et les relais
+- la réutilisation d'un credential hors de sa destination autorisée
+- des agents enfants qui répartissent le travail entre plusieurs processus
+- des changements de politique demandés pendant un run
+- un logiciel hôte compromis qui cache ou réécrit la télémétrie
+- un comportement ambigu qui paraît légitime action par action
+- des arrêts d'urgence sous charge réelle, pas seulement en laboratoire
+
+Le design de NVIDIA ne remplace pas les garde-fous du modèle, le monitoring de trajectoire, l'escalade humaine ou l'analyse après incident.
+
+Il rend la frontière de contrôle plus honnête.
+
+Les prompts peuvent demander à l'agent de bien se comporter.
+
+La politique runtime peut limiter ce qu'il a le droit de faire.
+
+Un chemin d'arrêt indépendant peut terminer le run lorsque les deux premiers échouent.
+
+Voilà à quoi ressemble un frein.
 
 ## Mise à jour : l'alerte a fonctionné. Pas le frein
 

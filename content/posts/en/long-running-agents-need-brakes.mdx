@@ -1,8 +1,8 @@
 ---
 title: "Long-Running Agents Need Brakes"
-date: "2026-09-27"
-description: "OpenAI's monitor caught an agent using DNS to reach an external chatbot, but the run continued for another 2.5 hours. Detection is not containment. Persistent agents need alerts wired to brakes that actually stop them."
-tags: ["AI Agents", "OpenAI", "AI Safety", "Developer Tools"]
+date: "2026-09-29"
+description: "NVIDIA's Open Agent Safety Platform moves agent controls outside the agent process, and its Sentry design moves the watchdog outside the host. That is the right architecture for a brake, but software availability is not proof that the whole system can contain a real incident."
+tags: ["AI Agents", "NVIDIA", "OpenAI", "AI Safety", "Developer Tools"]
 draft: false
 ---
 
@@ -59,6 +59,66 @@ What is this whole sequence trying to accomplish?
 That is a different product.
 
 It needs different brakes.
+
+## Update: the brake is moving outside the agent
+
+NVIDIA has now proposed the most concrete version of that brake.
+
+On September 28, the company announced its [Open Agent Safety Platform](https://www.nvidia.com/en-us/solutions/ai/agent-safety/), built around two layers with different jobs.
+
+[OpenShell](https://github.com/NVIDIA/OpenShell/) is the open-source runtime layer. It puts the agent in a sandbox, enforces policies around files, processes, network access, tools, and credentials, and records allow-or-deny decisions. The important design choice is that policy enforcement happens outside the agent process.
+
+Sentry is the second layer. NVIDIA describes it as an out-of-band watchdog running on BlueField-4 hardware, separate from both the agent and the host software. It watches agent activity, enforces policy, and is designed to quarantine an agent in milliseconds when it crosses a boundary.
+
+That separation matters more than the product names.
+
+The agent should not own its own brake.
+
+The application hosting the agent should not be the only system capable of pulling it either.
+
+If the same process executes the work, interprets the policy, detects the violation, and decides whether to stop, one compromise or one bad state can take out the whole control chain. Moving enforcement out of process makes it harder for the agent to treat the guardrail as another local obstacle. Moving a second watchdog outside the host creates a stop path that can remain alive even if the workload is not behaving.
+
+This is the hardware version of yesterday's lesson.
+
+The smoke detector needs access to the circuit breaker.
+
+And the circuit breaker should not be inside the room that is on fire.
+
+## A reference design is not an incident report
+
+The architecture is promising.
+
+The evidence is still early.
+
+OpenShell is public code with documented controls. Sentry is a reference system design tied to NVIDIA's newer infrastructure. NVIDIA says the platform could have prevented recent agent breaches, and [AP reports](https://apnews.com/article/nvidia-ai-security-openshell-sentry-a4cfc84ed00353ff8f2dad4bed7b429e) that the company is presenting it as an engineering answer to runaway-agent risk.
+
+"Could have" is doing useful work there.
+
+A diagram cannot prove that a policy covers the dependency nobody modeled. A millisecond quarantine claim does not tell us how quickly the system recognizes a novel violation. An independent watchdog can still inherit stale rules, weak identity, missing telemetry, an overly broad allowlist, or an operator who automatically approves the wrong policy change.
+
+The serious test is not whether the platform blocks the demo attack.
+
+It is whether independent teams can make it fail through:
+
+- indirect network paths such as DNS, package mirrors, and relays
+- credential reuse outside an approved destination
+- child agents that divide work across processes
+- policy changes requested during a run
+- compromised host software that hides or rewrites telemetry
+- ambiguous behavior that looks legitimate one action at a time
+- emergency stops under real load, not only in a lab
+
+NVIDIA's design does not replace model safeguards, trajectory monitoring, human escalation, or post-incident review.
+
+It does make the control boundary more honest.
+
+Prompts can ask an agent to behave.
+
+Runtime policy can limit what it is allowed to do.
+
+An independent stop path can end the run when the first two fail.
+
+That is what a brake looks like.
 
 ## Update: the alert fired. The brake did not
 
