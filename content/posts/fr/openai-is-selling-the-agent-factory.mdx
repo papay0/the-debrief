@@ -1,10 +1,172 @@
 ---
 title: "OpenAI vend l'usine à agents"
-date: "2026-07-22"
-description: "OpenAI Presence n'est pas seulement une nouvelle page produit enterprise. C'est un signal : les labs IA ne vendent plus seulement de l'intelligence, mais la machine qui déploie, teste, surveille et améliore les agents dans les vraies entreprises."
-tags: ["OpenAI", "AI Agents", "Enterprise AI", "AI Strategy"]
+date: "2026-09-30"
+description: "Avec l'Agents API, OpenAI transforme l'usine à agents en infrastructure louée : exécution hébergée, sessions durables, sous-agents, navigateur et connexions MCP privées. Le produit stratégique n'est plus seulement le modèle, mais le control plane autour du travail."
+tags: ["OpenAI", "AI Agents", "Enterprise AI", "Developer Tools", "AI Strategy"]
 draft: false
 ---
+
+## Mise à jour : l'usine est devenue une API
+
+L'usine n'est plus seulement un service enterprise.
+
+OpenAI en fait une infrastructure que les développeurs peuvent louer.
+
+À DevDay, l'annonce la plus bruyante était [GPT-6.1 Sol](https://developers.openai.com/api/docs/changelog), un modèle moins cher pour le code et le travail professionnel.
+
+L'annonce la plus importante était tout ce qu'OpenAI a placé autour.
+
+L'[Agents API](https://openai.com/index/introducing-the-agents-api/) est entrée en bêta publique le 10 septembre. OpenAI dit proposer le harness de Codex comme service managé, avec orchestration des sessions, compaction du contexte, récupération, sessions durables, sandboxes hébergées, outils et sous-agents. Le 29 septembre, OpenAI a ajouté [computer use](https://developers.openai.com/api/docs/guides/agents-api/tools/computer-use), afin qu'un agent puisse piloter un navigateur hébergé par OpenAI pendant que l'application du développeur gère les approbations de sites et la connexion aux comptes.
+
+Le même cycle de lancement a ajouté [Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels), une connexion sortante entre le réseau d'un client et OpenAI. ChatGPT, Codex, la Responses API et d'autres produits OpenAI compatibles peuvent ainsi appeler un serveur MCP privé sans que celui-ci accepte du trafic entrant depuis internet.
+
+Assemblons les pièces.
+
+OpenAI peut maintenant héberger l'agent, conserver sa session, compacter son contexte, coordonner ses sous-agents, lui donner un navigateur, le connecter à des outils privés et retransmettre son travail vers l'application.
+
+Ce n'est pas une API de modèle accompagnée de quelques utilitaires.
+
+C'est un control plane pour agents.
+
+## L'abstraction remonte encore d'un étage
+
+Les premières API de modèles utiles vendaient des tokens.
+
+La couche suivante a vendu des appels d'outils, des sorties structurées, des fichiers, de la recherche et du travail en arrière-plan.
+
+L'Agents API vend la boucle.
+
+Les développeurs peuvent toujours fournir leur propre environnement ou passer par un fournisseur compatible. OpenAI dit aussi que le harness repose sur des composants open source. Ce sont de vraies portes de sortie.
+
+Mais le produit par défaut est clair : envoyez la tâche dans un runtime managé par OpenAI et laissez OpenAI opérer la machine complexe qui l'entoure.
+
+C'est séduisant parce que cette machine est complexe.
+
+Un agent long-running a besoin de plus qu'un prompt et une boucle `while`. Il lui faut un état qui survive à une connexion coupée. Il lui faut une compaction du contexte qui ne supprime pas silencieusement la contrainte importante. Il lui faut des permissions d'outils, de l'isolation, des événements de progression, des retries, une annulation, de la récupération et une trace de ce que chaque sous-agent a fait.
+
+La plupart des équipes ne veulent pas construire tout cela avant même de savoir si le workflow est utile.
+
+OpenAI propose donc un très bon échange :
+
+Confiez-nous la complexité opérationnelle.
+
+Confiez-nous aussi le centre de l'architecture.
+
+## Computer use rend la frontière visible
+
+Le navigateur montre comment ce produit veut répartir les responsabilités.
+
+OpenAI héberge le navigateur et exécute la boucle de l'agent. L'application du développeur reçoit une demande lorsque l'agent veut visiter un site ou se connecter. L'application doit montrer la demande à l'utilisateur, collecter son approbation ou ses identifiants, puis renvoyer la décision.
+
+C'est la bonne forme.
+
+L'agent ne devrait pas approuver son propre accès.
+
+Mais un événement d'approbation n'est pas encore un produit d'approbation.
+
+Les développeurs doivent toujours décider :
+
+- ce que l'utilisateur accepte réellement
+- si l'approbation couvre une page, une origine, une action ou le reste de la session
+- comment garder les identifiants hors du contexte du modèle et des logs
+- ce qui se passe si la demande expire pendant la connexion
+- comment montrer à l'utilisateur ce que le navigateur a fait après son accord
+- quelles actions exigent une seconde confirmation avant de modifier des données
+
+OpenAI fournit le mécanisme.
+
+L'application possède encore le sens.
+
+Cette distinction sera facile à ignorer dans les démos et impossible à ignorer après le premier incident.
+
+## Un accès privé n'est pas une exécution privée
+
+Secure MCP Tunnel résout un vrai problème enterprise.
+
+Une entreprise peut garder un serveur MCP derrière son firewall, exécuter le client de tunnel d'OpenAI dans son réseau et n'ouvrir qu'une connexion HTTPS sortante. OpenAI met les requêtes MCP en attente, le client les transmet localement, puis la réponse revient par le même tunnel.
+
+C'est bien mieux que de demander à chaque entreprise d'exposer un nouvel endpoint public parce que l'agent a besoin d'un outil.
+
+Mais cela change aussi le diagramme de confiance.
+
+Le serveur privé reste privé.
+
+La requête passe tout de même par un endpoint de tunnel hébergé par OpenAI.
+
+La documentation d'OpenAI apporte une autre distinction utile : les changements de métadonnées du tunnel apparaissent dans les audit logs de la plateforme, et les logs de conformité normaux continuent de s'appliquer au niveau de l'app. En revanche, le trafic du control plane du tunnel et les requêtes de transport individuelles ne sont pas émis comme événements d'app dans la ChatGPT Compliance Platform par le chemin du tunnel.
+
+Cela ne rend pas le tunnel dangereux.
+
+Cela veut dire que les équipes de sécurité doivent cartographier quel système conserve quelle preuve avant de qualifier le workflow d'auditable.
+
+"Le serveur n'est pas public" répond à une question réseau.
+
+Cela ne répond pas à toutes les questions sur les données, l'autorisation, la rétention, l'observabilité ou la réponse aux incidents.
+
+## Le nouveau lock-in se trouve dans la mémoire opérationnelle
+
+Le lock-in modèle est facile à décrire.
+
+Vos prompts fonctionnent mieux avec un modèle. Vos évaluations visent son comportement. Votre budget suppose ses prix.
+
+Le lock-in du runtime est plus profond.
+
+Il vit dans l'historique des sessions, le comportement de la compaction, les définitions d'outils, les événements d'approbation, les hypothèses de sandbox, les traces des sous-agents, la sémantique des retries et le chemin de récupération après un échec partiel.
+
+On peut remplacer le nom d'un modèle dans un appel API.
+
+Remplacer le système qui se souvient du travail, décide quel contexte survit, planifie les outils et reconstruit une session cassée ressemble davantage au remplacement d'un environnement d'exécution.
+
+Cela ne veut pas dire que les développeurs devraient refuser l'Agents API.
+
+Une infrastructure managée est souvent exactement le bon choix.
+
+Cela veut dire que la revue d'architecture doit cesser de faire comme si le modèle était la seule dépendance importante.
+
+Avant de placer un travail sérieux sur un runtime agentique hébergé, il faut demander :
+
+- Pouvons-nous exporter toute la session, les événements d'outils, les approbations et les traces des sous-agents ?
+- Pouvons-nous reproduire le workflow avec un autre runtime ?
+- Quel état nous appartient, et quel état n'existe que chez le fournisseur ?
+- Pouvons-nous fixer la version du modèle, du harness et des contrats d'outils ?
+- Que devient une session en cours pendant une panne du fournisseur ou un changement d'API ?
+- Pouvons-nous arrêter tous les agents enfants depuis une seule surface de contrôle ?
+- Quelles actions sont réellement imposées par nos systèmes plutôt que seulement demandées dans le prompt ?
+- Où enquêtons-nous lorsque le log de l'application, celui du tunnel et la trace du fournisseur se contredisent ?
+
+L'usine est devenue plus facile à louer.
+
+L'acheteur doit encore savoir où se trouvent les sorties de secours.
+
+## Le vrai produit de DevDay
+
+GPT-6.1 Sol sera peut-être plus rapide, moins cher ou meilleur sur un benchmark particulier.
+
+Ces avantages bougeront encore.
+
+Le signal durable de DevDay est qu'OpenAI veut posséder une plus grande partie du chemin entre une demande et un travail terminé.
+
+Le modèle raisonne.
+
+Le harness se souvient.
+
+Le runtime exécute.
+
+Le navigateur agit.
+
+Le tunnel atteint les systèmes privés.
+
+L'application approuve.
+
+Cette dernière ligne compte. OpenAI fournit davantage de la machine, mais la responsabilité n'a pas disparu. Elle a été répartie entre davantage de frontières.
+
+La plateforme agentique gagnante ne rendra pas seulement ces frontières puissantes.
+
+Elle les rendra lisibles.
+
+L'usine à agents est là.
+
+Les développeurs doivent maintenant décider s'ils achètent des machines ou s'ils louent le sol sur lequel elles reposent.
 
 ## La version courte
 
@@ -82,7 +244,7 @@ Mais ce process n'est pas décoratif.
 
 C'est le produit.
 
-Hier, j'écrivais que [les agents qui durent ont besoin de freins](/fr/posts/long-running-agents-need-brakes). Presence est la version commerciale de la même idée, côté entreprise : pas seulement "est-ce que l'agent peut agir ?", mais "est-ce que l'entreprise peut gouverner la façon dont il agit ?"
+La veille de la première version de cet article, j'écrivais que [les agents qui durent ont besoin de freins](/fr/posts/long-running-agents-need-brakes). Presence est la version commerciale de la même idée, côté entreprise : pas seulement "est-ce que l'agent peut agir ?", mais "est-ce que l'entreprise peut gouverner la façon dont il agit ?"
 
 ## L'agent doit continuer à changer
 

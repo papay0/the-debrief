@@ -1,10 +1,172 @@
 ---
 title: "OpenAI Is Selling the Agent Factory"
-date: "2026-07-22"
-description: "OpenAI Presence is not just another enterprise product page. It shows where the model labs are going: from selling intelligence to selling the machinery that deploys, tests, monitors, and improves agents inside real companies."
-tags: ["OpenAI", "AI Agents", "Enterprise AI", "AI Strategy"]
+date: "2026-09-30"
+description: "OpenAI's Agents API turns the agent factory into rented infrastructure: hosted execution, durable sessions, subagents, browser use, and private MCP connections. The strategic product is no longer only the model. It is the control plane around the work."
+tags: ["OpenAI", "AI Agents", "Enterprise AI", "Developer Tools", "AI Strategy"]
 draft: false
 ---
+
+## Update: the factory is now an API
+
+The factory is no longer only an enterprise service.
+
+OpenAI is turning it into infrastructure that developers can rent.
+
+At DevDay, the loud announcement was [GPT-6.1 Sol](https://developers.openai.com/api/docs/changelog), a cheaper model for coding and professional work.
+
+The more important announcement was everything OpenAI put around it.
+
+The [Agents API](https://openai.com/index/introducing-the-agents-api/) entered public beta on September 10. OpenAI says it runs the Codex harness as a managed service, including session orchestration, context compaction, recovery, durable sessions, hosted sandboxes, tools, and subagents. On September 29, OpenAI added [computer use](https://developers.openai.com/api/docs/guides/agents-api/tools/computer-use), so an agent can operate a browser hosted by OpenAI while the developer's application handles website approvals and sign-in.
+
+The same release cycle added [Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels), an outbound connection from a customer's network to OpenAI. It lets ChatGPT, Codex, the Responses API, and other supported OpenAI products call a private MCP server without that server accepting public inbound traffic.
+
+Put those pieces together.
+
+OpenAI can now host the agent, preserve its session, compact its context, coordinate its subagents, give it a browser, connect it to private tools, and stream the work back to the application.
+
+That is not a model API with a few utilities attached.
+
+It is an agent control plane.
+
+## The abstraction is moving up again
+
+The first useful model APIs sold tokens.
+
+The next layer sold tool calls, structured outputs, files, retrieval, and background work.
+
+The Agents API sells the loop.
+
+Developers can still bring their own environment or supported provider. OpenAI also says the harness is built on open-source components. Those are meaningful escape hatches.
+
+But the default product is clear: send the task to an OpenAI-managed runtime and let OpenAI operate the difficult machinery around it.
+
+That is attractive because the machinery is difficult.
+
+A long-running agent needs more than a prompt and a while loop. It needs state that survives a dropped connection. It needs context compaction that does not quietly delete the important constraint. It needs tool permissions, environment isolation, progress events, retries, cancellation, recovery, and a record of what every subagent did.
+
+Most teams do not want to build all of that before they can test whether the workflow is useful.
+
+So OpenAI is offering a very good trade:
+
+Give us the operational complexity.
+
+Also give us the center of the architecture.
+
+## Computer use makes the boundary visible
+
+The browser feature shows how this product wants responsibility to be divided.
+
+OpenAI hosts the browser and runs the agent loop. The developer's application receives requests when the agent wants to visit a website or sign in. The application is supposed to show the request to the user, collect approval or credentials, and return the decision.
+
+That is the right shape.
+
+The agent should not approve its own access.
+
+But an approval event is not an approval product.
+
+Builders still have to decide:
+
+- what the user is actually consenting to
+- whether approval applies to one page, one origin, one action, or the rest of the session
+- how credentials stay out of model context and logs
+- what happens when a request expires during sign-in
+- how the user sees what the browser did after approval
+- which actions require a second confirmation before data changes
+
+OpenAI supplies the mechanism.
+
+The application still owns the meaning.
+
+That distinction will be easy to miss in demos and impossible to ignore after the first incident.
+
+## Private access is not the same as private execution
+
+Secure MCP Tunnel solves a real enterprise problem.
+
+A company can keep an MCP server behind its firewall, run OpenAI's tunnel client inside the network, and open only an outbound HTTPS path. OpenAI queues MCP work, the client forwards it locally, and the response travels back through the same tunnel.
+
+That is much better than telling every enterprise to expose a new public endpoint because the agent needs one tool.
+
+It also changes the trust diagram.
+
+The private server remains private.
+
+The request still passes through an OpenAI-hosted tunnel endpoint.
+
+OpenAI's documentation makes another useful distinction: tunnel metadata changes appear in Platform audit logs, and normal app-level compliance logging still applies, but tunnel control-plane traffic and individual transport requests are not emitted as ChatGPT Compliance Platform app events by the tunnel path.
+
+That does not make the tunnel unsafe.
+
+It means security teams need to map which system records which evidence before they call the workflow auditable.
+
+"The server is not public" answers a network question.
+
+It does not answer every question about data handling, authorization, retention, observability, or incident response.
+
+## The new lock-in is operational memory
+
+Model lock-in is easy to describe.
+
+Your prompts work best with one model. Your evals target its behavior. Your budget assumes its prices.
+
+Runtime lock-in is deeper.
+
+It lives in session history, compaction behavior, tool definitions, approval events, sandbox assumptions, subagent traces, retry semantics, and the recovery path after a partial failure.
+
+You can replace a model name in an API call.
+
+Replacing the system that remembers the work, decides what context survives, schedules the tools, and reconstructs a failed session is closer to replacing an operating environment.
+
+That does not mean builders should reject the Agents API.
+
+Managed infrastructure is often exactly the right choice.
+
+It means the architecture review should stop pretending the model is the only dependency that matters.
+
+Before putting serious work on a hosted agent runtime, ask:
+
+- Can we export the full session, tool events, approvals, and subagent traces?
+- Can we reproduce the workflow with another runtime?
+- Which state belongs to us, and which state exists only inside the provider?
+- Can we pin the model, harness behavior, and tool contracts?
+- What happens to an in-progress session during a provider outage or API change?
+- Can we stop every child agent from one control surface?
+- Which actions are enforced by our systems rather than requested in the prompt?
+- Where do we investigate when the application log, tunnel log, and provider trace disagree?
+
+The factory has become easier to rent.
+
+The buyer still needs to know where the emergency exits are.
+
+## DevDay's real product
+
+GPT-6.1 Sol may be faster, cheaper, or better for a particular benchmark.
+
+Those advantages will move again.
+
+The durable DevDay signal is that OpenAI wants to own more of the path between a request and completed work.
+
+The model reasons.
+
+The harness remembers.
+
+The runtime executes.
+
+The browser acts.
+
+The tunnel reaches private systems.
+
+The application approves.
+
+That last line matters. OpenAI is supplying more of the machine, but responsibility has not disappeared. It has been divided across more boundaries.
+
+The winning agent platform will not only make those boundaries powerful.
+
+It will make them legible.
+
+The agent factory is here.
+
+Now developers have to decide whether they are buying machinery or renting the floor it sits on.
 
 ## The Short Version
 
@@ -82,7 +244,7 @@ But that process is not decoration.
 
 It is the product.
 
-Yesterday I wrote that [long-running agents need brakes](/en/posts/long-running-agents-need-brakes). Presence is the commercial version of the same idea, but aimed at businesses: not just "can the agent act?" but "can the company govern how it acts?"
+The day before the original version of this article, I wrote that [long-running agents need brakes](/en/posts/long-running-agents-need-brakes). Presence is the commercial version of the same idea, but aimed at businesses: not just "can the agent act?" but "can the company govern how it acts?"
 
 ## The agent has to keep changing
 
