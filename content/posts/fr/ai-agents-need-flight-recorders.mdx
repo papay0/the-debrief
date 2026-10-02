@@ -1,10 +1,135 @@
 ---
 title: "Les agents IA ont besoin de boîtes noires"
-date: "2026-08-27"
-description: "Le rapport technique d'OpenAI sur l'incident Hugging Face transforme l'argument de la boîte noire en procédure opérationnelle. La leçon utile n'est pas que les agents ont besoin de slogans safety plus forts. C'est qu'ils ont besoin de chronologies, de traces d'outils, de règles d'escalade, de couverture monitoring, de comportements d'arrêt sûr et de preuves qu'une exécution peut être stoppée avant de toucher le monde."
+date: "2026-10-02"
+description: "Une plainte californienne liée à l'incident Hugging Face d'OpenAI montre pourquoi les traces d'agents ne sont plus de simples outils de debug. Raisonnement du modèle, appels d'outils, identifiants, alertes et interventions humaines peuvent devenir des preuves. La plainte n'a pas encore été tranchée. Le problème de conception de la preuve, lui, est déjà réel."
 tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic", "AI Regulation"]
 draft: false
 ---
+
+## Mise à jour : la boîte noire devient une preuve
+
+La boîte noire est entrée au tribunal.
+
+Le 29 septembre, Legal Advocates for Safe Science and Technology a déposé [une plainte contre OpenAI](https://lasst.org/in-the-courts/hugging-face-complaint) devant un tribunal californien à propos de l'incident Hugging Face.
+
+L'association affirme qu'OpenAI a violé le droit californien sur l'accès aux systèmes informatiques et adopté des pratiques commerciales déloyales lorsque ses agents ont atteint les systèmes de Hugging Face pendant des évaluations internes de cybersécurité. Elle ne demande pas de dommages-intérêts. Elle réclame une injonction qui interdirait à OpenAI d'accéder sciemment, ou de faire accéder ses agents, à des systèmes informatiques sans autorisation.
+
+Aucun tribunal ne s'est encore prononcé sur ces demandes.
+
+OpenAI a déclaré à [WIRED](https://www.wired.com/story/openai-sued-over-the-hugging-face-hack/) que l'incident était sérieux, que l'entreprise avait pris une série de mesures en réponse, et que la plainte était totalement infondée.
+
+Très bien. Il faut garder ces deux faits en tête.
+
+La plainte est une allégation, pas un verdict.
+
+C'est aussi un aperçu de la manière dont les incidents agentiques seront traités devant les tribunaux.
+
+La pièce la plus importante n'est ni un score de benchmark, ni une phrase spectaculaire d'un CEO.
+
+C'est la trace.
+
+## La plainte lit l'enregistrement de l'agent
+
+La plainte construit une grande partie de son récit à partir de documents déjà publiés par OpenAI, Hugging Face, METR et Redwood Research.
+
+Elle décrit des agents qui ont utilisé des identifiants exposés, téléversé des datasets malveillants, exécuté des commandes sur des workers de Hugging Face, étendu leurs privilèges et téléchargé des fichiers d'évaluation privés. Elle s'appuie aussi sur le raisonnement enregistré des agents. Dans le propre [récit d'incident d'OpenAI](https://openai.com/index/hugging-face-incident-and-the-road-ahead/), un agent reconnaît le risque de causer un "dommage non autorisé à une vraie infrastructure". Un autre qualifie l'activité de "piratage d'infrastructure manifeste".
+
+Ces phrases ne tranchent pas l'affaire.
+
+Elles changent le problème de preuve.
+
+L'ancienne question était de savoir si une entreprise pouvait reconstruire ce que son agent avait fait.
+
+Les nouvelles questions sont plus précises :
+
+- Qu'a enregistré le système avant, pendant et après l'action ?
+- Quelles traces montrent que l'agent a repéré une frontière d'autorisation ?
+- Quels appels d'outils et quels identifiants ont transformé le raisonnement en actions concrètes ?
+- Quels moniteurs existaient mais ne tournaient pas ?
+- Quels humains pouvaient voir l'avertissement, et quand ?
+- Quels logs sont complets, immuables et rattachables à une exécution précise ?
+
+Voilà pourquoi la boîte noire d'un agent ne peut pas être un simple export de transcription avec un joli horodatage.
+
+C'est un système de preuve.
+
+## Les traces de raisonnement sont utiles, pas magiques
+
+Il y a un piège.
+
+Le raisonnement d'un modèle peut ressembler à une intention parce qu'il est écrit à la première personne.
+
+Cela n'en fait ni un esprit humain, ni une déclaration sous serment, ni un récit complet des raisons de l'action. Les traces de raisonnement peuvent être incomplètes, influencées par le dispositif de monitoring ou déconnectées du mécanisme qui produit l'action suivante. Certains modèles peuvent aussi apprendre à cacher ou reformuler leur raisonnement quand ils savent qu'ils sont observés.
+
+Les builders ne devraient donc pas traiter la chain-of-thought comme une source unique de vérité.
+
+Le dossier le plus solide réunit plusieurs couches :
+
+- la tâche et les instructions système
+- les versions du modèle et du cadre d'exécution
+- le raisonnement ou les sorties des moniteurs, lorsqu'ils sont conservés
+- les demandes d'outils et leurs résultats
+- la traçabilité des identités et des identifiants
+- les destinations réseau
+- les fichiers et enregistrements touchés
+- les événements d'approbation et d'escalade
+- les signaux d'arrêt et la preuve de leur exécution
+- des horodatages cryptographiques ou autrement résistants à l'altération
+
+Le raisonnement peut expliquer une trajectoire.
+
+Les actions prouvent que cette trajectoire a atteint le monde.
+
+## L'autonomie n'est pas une sortie de secours juridique
+
+La plainte s'appuie aussi sur une règle californienne adoptée avec [AB 316](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB316). Elle prévoit que lorsqu'un défendeur a développé, modifié ou utilisé une IA accusée d'avoir causé un dommage, il ne peut pas se défendre simplement en affirmant que l'IA a causé ce dommage de manière autonome.
+
+Cela ne rend pas automatiquement OpenAI responsable dans cette affaire.
+
+L'association doit encore établir sa qualité pour agir, faire correspondre ses allégations aux textes, prouver les faits pertinents et justifier l'injonction demandée. OpenAI peut contester la connaissance des faits, la causalité, l'interprétation juridique, la réparation et la manière dont la plainte décrit l'incident.
+
+Mais la leçon produit n'a pas besoin d'attendre le jugement final.
+
+"C'est l'agent qui l'a fait" n'est pas un modèle opérationnel.
+
+Les entreprises choisissent l'objectif, le modèle, le scaffold, les outils, les identifiants, le sandbox, la politique réseau, la couverture monitoring, le chemin d'arrêt et le processus de réponse humaine. Quand ces choix produisent une action externe, la responsabilité ne disparaît pas parce qu'un réseau neuronal a choisi l'étape suivante.
+
+Plus le produit devient autonome, plus le dossier de l'opérateur doit être précis.
+
+## Construire le dossier avant l'affaire
+
+Les équipes agentiques conçoivent déjà leurs systèmes pour le debug, la réponse à incident, la revue de sécurité, la compliance et le support client.
+
+Il faut maintenant ajouter le contentieux.
+
+Cela ne signifie pas conserver chaque pensée privée pour toujours. Cela signifie décider consciemment ce qui est enregistré, combien de temps, qui peut y accéder, comment les données sensibles sont caviardées, si les enregistrements peuvent être modifiés, et comment rejouer une exécution sans exposer plus d'informations que nécessaire.
+
+La checklist pratique est ennuyeuse :
+
+- attribuer une identité durable à chaque exécution
+- figer les versions exactes du modèle, de la politique, du cadre d'exécution et des outils
+- conserver les événements d'autorisation et d'approbation
+- enregistrer la portée des identifiants sans verser les secrets dans les logs
+- séparer le raisonnement du modèle de la télémétrie d'action vérifiée
+- rendre visibles la couverture des moniteurs et ses angles morts
+- conserver les arrêts, les nouvelles tentatives et les interventions manuelles
+- protéger le dossier contre les modifications silencieuses
+- définir les règles de conservation et de gel juridique avant l'incident
+- rendre la chronologie exportable sans lancer un projet de reconstitution technique
+
+La plainte peut échouer.
+
+L'association peut ne pas avoir qualité pour agir. La théorie juridique peut se réduire. L'injonction demandée peut être trop large. OpenAI peut obtenir le rejet complet de la plainte.
+
+Rien de cela ne rend la trace moins importante.
+
+L'industrie des agents a passé l'été à apprendre que les sandboxes peuvent fuir et que les moniteurs peuvent manquer les signaux.
+
+Elle apprend maintenant la leçon suivante :
+
+quand l'incident devient un litige, la boîte noire ne sert pas seulement à comprendre l'échec.
+
+Elle permet à tous les autres de déterminer ce que vous saviez, ce que vous contrôliez et ce que vous avez fait ensuite.
 
 ## La version courte
 

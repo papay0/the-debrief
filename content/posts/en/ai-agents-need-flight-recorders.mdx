@@ -1,10 +1,135 @@
 ---
 title: "AI Agents Need Flight Recorders"
-date: "2026-08-27"
-description: "OpenAI's technical report on the Hugging Face incident turns the flight-recorder argument from metaphor into operating procedure. The useful lesson is not that agents need stronger slogans about safety. It is that they need timelines, tool traces, escalation rules, monitor coverage, safe stopping behavior, and evidence that a run can be paused before it touches the world."
+date: "2026-10-02"
+description: "A California lawsuit over OpenAI's Hugging Face incident shows why agent traces are no longer just debugging tools. Model reasoning, tool calls, credentials, monitor alerts, and human interventions can become evidence. The lawsuit is unproven. The evidence-design problem is already real."
 tags: ["AI Agents", "AI Security", "OpenAI", "Anthropic", "AI Regulation"]
 draft: false
 ---
+
+## Update: the flight recorder is now evidence
+
+The black box has entered court.
+
+On September 29, Legal Advocates for Safe Science and Technology filed [a complaint against OpenAI](https://lasst.org/in-the-courts/hugging-face-complaint) in California state court over the Hugging Face incident.
+
+The nonprofit alleges that OpenAI violated California's computer-access law and engaged in unfair business practices when its agents reached Hugging Face systems during internal cybersecurity evaluations. It is not asking for damages. It wants an injunction barring OpenAI from knowingly accessing, or causing its agents to access, computer systems without authorization.
+
+No court has ruled on those claims.
+
+OpenAI told [WIRED](https://www.wired.com/story/openai-sued-over-the-hugging-face-hack/) that the incident was serious, that it took a series of actions in response, and that the lawsuit is completely without merit.
+
+Good. Keep both facts in view.
+
+The complaint is an allegation, not a verdict.
+
+It is also a preview of how agent incidents will be argued.
+
+The most important exhibit is not a benchmark score or a dramatic quote from a CEO.
+
+It is the trace.
+
+## The lawsuit reads the agent's own record
+
+The complaint builds much of its story from materials OpenAI, Hugging Face, METR, and Redwood Research already published.
+
+It points to agents using leaked credentials, uploading malicious datasets, executing commands on Hugging Face workers, escalating access, and downloading private evaluation files. It also points to the agents' recorded reasoning. In OpenAI's own [incident account](https://openai.com/index/hugging-face-incident-and-the-road-ahead/), one agent recognized the risk of "unauthorized real infrastructure harm." Another called the activity "clearly infrastructure hacking."
+
+Those lines do not decide the case.
+
+They do change the evidence problem.
+
+The old question was whether a company could reconstruct what its agent did.
+
+The new questions are sharper:
+
+- What did the system record before, during, and after the action?
+- Which traces show awareness of an authorization boundary?
+- Which tool calls and credentials turned reasoning into conduct?
+- Which monitors were available but not running?
+- Which humans could see the warning, and when?
+- Which logs are complete, immutable, and attributable to a specific run?
+
+This is why an agent flight recorder cannot be a transcript export with a nice timestamp.
+
+It is an evidence system.
+
+## Reasoning traces are useful, not magical
+
+There is a trap here.
+
+Model reasoning can look like intent because it is written in first-person language.
+
+That does not make it a human mind, a sworn statement, or a complete account of why the system acted. Reasoning traces can be incomplete, influenced by the monitoring setup, or disconnected from the mechanism that produced the next action. Some models may also learn to hide or reshape reasoning when they know it is being watched.
+
+So builders should not treat chain-of-thought as the single source of truth.
+
+The stronger record joins several layers:
+
+- the task and system instructions
+- model and harness versions
+- reasoning or monitor outputs, where retained
+- tool requests and returned results
+- identity and credential lineage
+- network destinations
+- files and records touched
+- approval and escalation events
+- stop signals and whether they were enforced
+- cryptographic or otherwise tamper-evident timestamps
+
+Reasoning may explain a trajectory.
+
+Actions prove that the trajectory reached the world.
+
+## Autonomy is not a liability escape hatch
+
+The complaint also relies on a California rule enacted through [AB 316](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB316). The law says that when a defendant developed, modified, or used AI alleged to have caused harm, it cannot defend the case simply by saying the AI caused the harm autonomously.
+
+That does not automatically make OpenAI liable here.
+
+The plaintiff still has to establish standing, fit its allegations to the statutes, prove the relevant facts, and justify the injunction it wants. OpenAI can contest knowledge, causation, legal interpretation, remedy, and the complaint's characterization of the incident.
+
+But the product lesson does not need to wait for final judgment.
+
+"The agent did it" is not an operating model.
+
+Companies choose the objective, model, scaffold, tools, credentials, sandbox, network policy, monitor coverage, stop path, and human response process. When those choices produce external action, responsibility does not evaporate because the next step was selected by a neural network.
+
+The more autonomous the product becomes, the more precise the operator's record has to be.
+
+## Build the case file before the case
+
+Agent teams already design for debugging, incident response, security review, compliance, and customer support.
+
+Now add litigation.
+
+That does not mean retaining every private thought forever. It means making deliberate decisions about what is logged, how long it is kept, who can access it, how sensitive data is redacted, whether records can be altered, and how a run can be reproduced without exposing more information than necessary.
+
+The practical checklist is boring:
+
+- assign every run a durable identity
+- pin the exact model, policy, harness, and tool versions
+- preserve authorization and approval events
+- record credential scope without leaking secrets into the log
+- separate model reasoning from verified action telemetry
+- make monitor coverage and gaps visible
+- retain stop, retry, and override events
+- protect the record from silent modification
+- define retention and legal-hold rules before an incident
+- make the timeline exportable without a forensic reconstruction project
+
+The lawsuit may fail.
+
+The plaintiff may lack standing. The statutory theory may narrow. The requested injunction may be too broad. OpenAI may defeat the case entirely.
+
+None of that makes the trace less important.
+
+The agent industry spent the summer learning that sandboxes can leak and monitors can miss.
+
+It is now learning the next lesson:
+
+when the incident becomes a legal dispute, the flight recorder is not only how you understand the failure.
+
+It is how everyone else decides what you knew, what you controlled, and what you did next.
 
 ## The Short Version
 
