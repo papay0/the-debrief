@@ -1,0 +1,198 @@
+---
+title: "ChatGPT can see your money. It still cannot touch it."
+date: "2026-10-03"
+description: "OpenAI has expanded ChatGPT Finances to Free and Go users in the U.S. The product can read bank, investment, and credit data, but it cannot move money or place trades. That read-only boundary is the right design choice. It is also only the beginning of the trust problem."
+tags: ["OpenAI", "ChatGPT", "AI Products", "AI Safety", "Personal Finance"]
+draft: false
+---
+
+## The short version
+
+ChatGPT can now see your checking balance, your spending, your investments, your liabilities, and your credit report.
+
+It still cannot pay a bill.
+
+Good.
+
+On October 2, OpenAI [expanded Finances in ChatGPT](https://help.openai.com/en/articles/6825453-chatgpt-release-notes) to Free and Go users in the United States on web, iOS, and Android. The product was already available on paid plans. The important change is scale: connecting a general-purpose AI assistant to your financial life is no longer a premium experiment.
+
+Users can connect financial accounts through Plaid and credit-report data through Experian. ChatGPT can then show spending, bills, subscriptions, net worth, portfolio allocation, stock and ETF positions, credit factors, and a VantageScore 3.0 score. It can answer questions using that context and save financial memories about goals, obligations, and planned purchases.
+
+That is a lot of access.
+
+OpenAI also publishes a useful list of things the product [cannot do](https://help.openai.com/en/articles/20001222-finances-in-chatgpt):
+
+- move money
+- pay bills
+- make trades
+- change account settings
+- change retirement contributions
+- open or close accounts
+- file taxes
+
+This list is not a product limitation to apologize for.
+
+It is the product architecture.
+
+## Read-only is the right first boundary
+
+Personal finance has an unusually clean asymmetry.
+
+A wrong summary is annoying.
+
+A wrong transfer is money.
+
+A model that misclassifies a reimbursement as spending can produce a bad chart. A model that acts on the same misunderstanding can overdraft an account, sell the wrong asset, create a tax event, miss a bill, or move cash that was reserved for rent.
+
+OpenAI's own documentation explains some of the ordinary data problems. Financial institutions may provide limited history. A connection may include balances but not transactions, holdings, APRs, or due dates. Pending transactions can be duplicated. Transfers and credit-card payments can be counted as spending. Experian data updates monthly and may not match a live account balance.
+
+None of this is exotic AI failure.
+
+It is messy source data meeting a model that wants to produce a coherent answer.
+
+The read-only boundary contains the blast radius. ChatGPT can analyze, explain, and propose. The user still has to leave the product, inspect the real account, and perform the consequential action.
+
+That friction is useful.
+
+The financial industry spent years trying to remove clicks from every workflow. AI products will be tempted to finish the job. But in high-stakes systems, one extra approval is not always bad UX. Sometimes it is the moment when a person notices that the model read an old balance, misunderstood a transfer, or confidently optimized the wrong goal.
+
+## Read-only does not mean low-risk
+
+The product cannot move your money.
+
+It can still influence what you do with it.
+
+OpenAI says ChatGPT can help users think through debt, emergency funds, retirement contributions, idle cash, taxes, credit, portfolio allocation, and major purchases. It also says ChatGPT is not a fiduciary, registered investment adviser, broker-dealer, tax preparer, law firm, or substitute for a qualified professional.
+
+Both statements can be true.
+
+They also describe the awkward middle layer AI products are entering.
+
+ChatGPT is not legally acting as your adviser. It is still looking at your income, balances, debts, spending, investments, credit factors, and goals, then generating a personalized recommendation in a conversational voice.
+
+The disclaimer matters.
+
+The interface matters more.
+
+If a system repeatedly tells a user how much cash to keep, which debt to pay first, how to change retirement contributions, or whether idle money should move into a higher-yield account, people will experience that as advice even when the footer calls it information.
+
+The old [CFPB warning about chatbots in consumer finance](https://www.consumerfinance.gov/data-research/research-reports/chatbots-in-consumer-finance/chatbots-in-consumer-finance/) was mostly about banks replacing customer support with brittle bots. But its core concerns travel well: inaccurate information, sensitive chat logs, privacy and security risk, and users who overestimate what a conversational system understands.
+
+Finances is more capable than the scripted banking bots in that report.
+
+That makes the questions harder, not smaller.
+
+## The benchmark is useful because it is not 100
+
+OpenAI says Finances defaults to GPT-5.5 Thinking and that it worked with more than 50 finance professionals to evaluate the product on an internal benchmark.
+
+The company reports a score of 79 out of 100 for GPT-5.5 Thinking and 82.5 for GPT-5.5 Pro.
+
+Those numbers are company claims on a company benchmark. They do not tell us how the system performs across every income level, institution, tax situation, language, disability, family structure, or financial emergency.
+
+But the missing 21 points are informative.
+
+OpenAI is not claiming perfection. The product page says answers should be clear about uncertainty, assumptions, and missing information. The help center tells users to check sources and dates when a widget looks wrong.
+
+That is the correct posture.
+
+The interface should make it unavoidable.
+
+Every important number should show its source and last-sync time. Recommendations should expose the assumptions that produced them. A credit score should say which model and bureau generated it. A portfolio answer should distinguish today's market data from the last available account snapshot. A budget should make clear which transactions were excluded, reclassified, or guessed.
+
+Confidence should not be a writing style.
+
+It should be evidence the user can inspect.
+
+## The data boundary is more complicated than the account connection
+
+Plaid and Experian are only the first layer.
+
+OpenAI says ChatGPT can access balances, transactions, investments, liabilities, and the credit data a user authorizes. It can also create financial memories from things the user says, such as a private loan, a mortgage, a savings target, or a purchase plan.
+
+Those categories do not disappear together.
+
+Disconnecting a Plaid account or Experian connection stops future access and triggers deletion of the underlying synced data from OpenAI's systems within 30 days, according to OpenAI. But disconnecting does not delete financial information already written into conversation history. Financial memories are managed separately. Conversations are managed separately. Plaid connections outside ChatGPT are managed separately.
+
+That is a lot of separately.
+
+The product does provide controls. Users can remove individual accounts, delete financial memories, disconnect Experian independently, change model-training settings, and enable multi-factor authentication. Temporary chats do not access connected financial accounts or create financial memories.
+
+But OpenAI says finance conversations follow the same model-training setting selected for ChatGPT generally.
+
+I would set a stricter default.
+
+Connected financial data should be excluded from model training unless a user gives specific, informed consent for that category. Disconnecting Finances should offer one clear flow to remove the synced data, related memories, and finance conversations, with an exact explanation of what remains and for how long.
+
+Sensitive modes should not require users to understand the difference between a connector, a chat, a memory, and a provider portal before they can leave cleanly.
+
+## OpenAI already sees the next step
+
+The current product is read-only.
+
+OpenAI's [launch announcement](https://openai.com/index/personal-finance-chatgpt/) also describes a future that goes beyond answers and toward action through partners such as Intuit.
+
+The examples are revealing: moving from a credit-card recommendation to understanding approval odds and submitting an application, or moving from a question about a stock sale to a tax estimate and a scheduled session with a local expert.
+
+That is not the same as giving the model direct control of a brokerage account.
+
+It does move the product closer to the transaction.
+
+Once recommendations can hand users into applications, referrals, bookings, or paid services, a new set of questions becomes unavoidable:
+
+- Is the recommendation optimized for the user or for the partner?
+- Is there a referral fee or commercial relationship?
+- Which alternatives were considered?
+- Can the user see why one card, account, adviser, or tax service was presented?
+- Does the system clearly separate analysis from promotion?
+- What happens when the model's recommendation is wrong but the partner action succeeds?
+
+OpenAI does not need to solve every future business model before offering a useful spending dashboard.
+
+It does need to preserve the boundary between personal context and commercial influence.
+
+A system that knows your debt, income, credit score, spending habits, and goals is unusually good at identifying what you might buy next.
+
+That can be helpful.
+
+It can also become the most informed sales funnel you have ever met.
+
+## How I would use it
+
+Start small.
+
+Connect one account before connecting your whole financial life. Turn on multi-factor authentication. Review the model-training setting. Check which accounts and fields are actually syncing. Ask the product to show the source and date behind a conclusion. Compare any important number with the original institution.
+
+Treat categorizations as drafts.
+
+Treat recommendations as proposals.
+
+Perform consequential actions yourself.
+
+If you disconnect, delete the finance conversations and financial memories you no longer want retained. Do not assume removing the bank connection removes every derivative piece of context.
+
+And if the answer could materially affect taxes, credit, retirement, debt, insurance, or investments, use the chat to prepare better questions for a qualified person, not to make the person disappear.
+
+## The real launch is the trust test
+
+Opening Finances to Free and Go users is not just a pricing change.
+
+It is a consumer trust experiment at ChatGPT scale.
+
+The product has a sensible first architecture: broad visibility, personalized analysis, and no direct authority to act.
+
+Keep that boundary.
+
+Make the data lineage obvious.
+
+Make deletion simpler than connection.
+
+Default sensitive data away from training.
+
+Disclose commercial incentives before recommendations become referrals.
+
+Then resist the inevitable demo where the agent pays every bill, rebalances every account, and applies for the perfect card while the user sleeps.
+
+That demo will look magical.
+
+The boring read-only version may be the more mature product.

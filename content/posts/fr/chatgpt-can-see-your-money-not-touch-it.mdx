@@ -1,0 +1,198 @@
+---
+title: "ChatGPT voit votre argent. Il ne peut toujours pas y toucher."
+date: "2026-10-03"
+description: "OpenAI a étendu ChatGPT Finances aux utilisateurs Free et Go aux États-Unis. Le produit peut lire des données bancaires, d'investissement et de crédit, mais il ne peut ni déplacer de l'argent ni passer d'ordre. Cette frontière en lecture seule est le bon choix. Ce n'est aussi que le début du problème de confiance."
+tags: ["OpenAI", "ChatGPT", "AI Products", "AI Safety", "Personal Finance"]
+draft: false
+---
+
+## La version courte
+
+ChatGPT peut maintenant voir le solde de votre compte courant, vos dépenses, vos investissements, vos dettes et votre dossier de crédit.
+
+Il ne peut toujours pas payer une facture.
+
+Très bien.
+
+Le 2 octobre, OpenAI a [étendu Finances dans ChatGPT](https://help.openai.com/en/articles/6825453-chatgpt-release-notes) aux utilisateurs Free et Go aux États-Unis, sur le web, iOS et Android. Le produit existait déjà pour les abonnements payants. Le changement important, c'est l'échelle : connecter un assistant IA généraliste à sa vie financière n'est plus une expérience premium.
+
+Les utilisateurs peuvent connecter leurs comptes financiers via Plaid et les données de leur dossier de crédit via Experian. ChatGPT peut ensuite afficher les dépenses, factures, abonnements, patrimoine net, allocations de portefeuille, positions en actions et ETF, facteurs de crédit et score VantageScore 3.0. Il peut répondre à partir de ce contexte et conserver des souvenirs financiers sur des objectifs, obligations ou achats prévus.
+
+C'est beaucoup d'accès.
+
+OpenAI publie aussi une liste utile de ce que le produit [ne peut pas faire](https://help.openai.com/en/articles/20001222-finances-in-chatgpt) :
+
+- déplacer de l'argent
+- payer des factures
+- passer des ordres
+- modifier les paramètres d'un compte
+- changer les cotisations retraite
+- ouvrir ou fermer un compte
+- remplir une déclaration fiscale
+
+Cette liste n'est pas une limitation produit dont il faudrait s'excuser.
+
+C'est l'architecture du produit.
+
+## La lecture seule est la bonne première frontière
+
+Les finances personnelles ont une asymétrie particulièrement nette.
+
+Un mauvais résumé est agaçant.
+
+Un mauvais virement, c'est de l'argent.
+
+Un modèle qui classe un remboursement comme une dépense peut produire un mauvais graphique. Un modèle qui agit sur le même malentendu peut mettre un compte à découvert, vendre le mauvais actif, créer un événement fiscal, rater une facture ou déplacer l'argent réservé au loyer.
+
+La propre documentation d'OpenAI décrit certains problèmes de données tout à fait ordinaires. Une institution peut fournir peu d'historique. Une connexion peut contenir les soldes sans les transactions, les positions, les taux ou les échéances. Les opérations en attente peuvent apparaître en double. Les virements et paiements de carte peuvent être comptés comme des dépenses. Les données Experian sont actualisées chaque mois et peuvent ne pas correspondre au solde en temps réel.
+
+Rien de tout cela n'est un échec IA exotique.
+
+Ce sont des données sources imparfaites face à un modèle qui veut produire une réponse cohérente.
+
+La frontière en lecture seule contient le rayon d'impact. ChatGPT peut analyser, expliquer et proposer. L'utilisateur doit encore quitter le produit, vérifier le vrai compte et réaliser lui-même l'action importante.
+
+Cette friction est utile.
+
+L'industrie financière a passé des années à retirer des clics de chaque workflow. Les produits IA voudront finir le travail. Mais dans un système à forts enjeux, une approbation supplémentaire n'est pas toujours une mauvaise UX. C'est parfois le moment où une personne remarque que le modèle a lu un ancien solde, mal compris un virement ou optimisé avec beaucoup d'assurance le mauvais objectif.
+
+## Lecture seule ne veut pas dire faible risque
+
+Le produit ne peut pas déplacer votre argent.
+
+Il peut quand même influencer ce que vous en faites.
+
+OpenAI explique que ChatGPT peut aider à réfléchir aux dettes, fonds d'urgence, cotisations retraite, liquidités inutilisées, impôts, crédit, allocations de portefeuille et achats importants. L'entreprise précise aussi que ChatGPT n'est ni fiduciaire, ni conseiller en investissement enregistré, ni courtier, ni préparateur fiscal, ni cabinet juridique, ni substitut à un professionnel qualifié.
+
+Ces deux affirmations peuvent être vraies.
+
+Elles décrivent aussi la zone intermédiaire inconfortable dans laquelle entrent les produits IA.
+
+ChatGPT n'agit pas juridiquement comme votre conseiller. Il regarde tout de même vos revenus, soldes, dettes, dépenses, investissements, facteurs de crédit et objectifs, puis génère une recommandation personnalisée sur un ton conversationnel.
+
+La mention légale compte.
+
+L'interface compte davantage.
+
+Si un système vous répète combien de liquidités conserver, quelle dette rembourser en premier, comment modifier vos cotisations retraite ou s'il faut déplacer de l'argent dormant vers un compte mieux rémunéré, les utilisateurs vivront cela comme un conseil même si le pied de page parle d'information.
+
+L'ancien [avertissement du CFPB sur les chatbots dans la finance grand public](https://www.consumerfinance.gov/data-research/research-reports/chatbots-in-consumer-finance/chatbots-in-consumer-finance/) portait surtout sur les banques qui remplaçaient leur support client par des bots rigides. Mais ses préoccupations centrales restent pertinentes : informations inexactes, logs sensibles, risques de confidentialité et de sécurité, et utilisateurs qui surestiment ce qu'un système conversationnel comprend.
+
+Finances est plus capable que les bots bancaires scriptés de ce rapport.
+
+Cela rend les questions plus difficiles, pas plus petites.
+
+## Le benchmark est utile parce qu'il ne vaut pas 100
+
+OpenAI affirme que Finances utilise GPT-5.5 Thinking par défaut et avoir travaillé avec plus de 50 professionnels de la finance pour évaluer le produit sur un benchmark interne.
+
+L'entreprise annonce un score de 79 sur 100 pour GPT-5.5 Thinking et de 82,5 pour GPT-5.5 Pro.
+
+Ce sont des chiffres d'entreprise sur un benchmark d'entreprise. Ils ne nous disent pas comment le système se comporte pour chaque niveau de revenu, institution, situation fiscale, langue, handicap, structure familiale ou urgence financière.
+
+Mais les 21 points manquants sont instructifs.
+
+OpenAI ne prétend pas à la perfection. La page produit dit que les réponses doivent expliciter leurs incertitudes, hypothèses et informations manquantes. Le centre d'aide demande aux utilisateurs de vérifier les sources et les dates lorsqu'un widget semble incorrect.
+
+C'est la bonne posture.
+
+L'interface devrait la rendre impossible à éviter.
+
+Chaque chiffre important devrait afficher sa source et sa dernière date de synchronisation. Les recommandations devraient exposer les hypothèses qui les ont produites. Un score de crédit devrait préciser quel modèle et quel bureau l'ont généré. Une réponse sur un portefeuille devrait distinguer les données de marché du jour du dernier instantané disponible du compte. Un budget devrait dire quelles transactions ont été exclues, reclassées ou devinées.
+
+La confiance ne devrait pas être un style d'écriture.
+
+Elle devrait être une preuve que l'utilisateur peut inspecter.
+
+## La frontière des données dépasse la connexion bancaire
+
+Plaid et Experian ne sont que la première couche.
+
+OpenAI explique que ChatGPT peut accéder aux soldes, transactions, investissements, dettes et données de crédit autorisées par l'utilisateur. Il peut aussi créer des souvenirs financiers à partir de ce que l'utilisateur lui raconte : un prêt privé, une hypothèque, un objectif d'épargne ou un projet d'achat.
+
+Ces catégories ne disparaissent pas ensemble.
+
+Déconnecter un compte Plaid ou Experian coupe l'accès futur et déclenche, selon OpenAI, la suppression des données synchronisées sous-jacentes de ses systèmes sous 30 jours. Mais la déconnexion n'efface pas les informations financières déjà écrites dans l'historique des conversations. Les souvenirs financiers se gèrent séparément. Les conversations se gèrent séparément. Les connexions Plaid utilisées hors de ChatGPT se gèrent séparément.
+
+Cela fait beaucoup de « séparément ».
+
+Le produit fournit de vrais contrôles. L'utilisateur peut retirer un compte individuel, supprimer des souvenirs financiers, déconnecter Experian indépendamment, modifier les réglages d'entraînement et activer l'authentification multifacteur. Les chats temporaires n'accèdent pas aux comptes financiers connectés et ne créent pas de souvenirs financiers.
+
+Mais OpenAI dit que les conversations financières suivent le même réglage d'entraînement que le reste de ChatGPT.
+
+Je choisirais un défaut plus strict.
+
+Les données financières connectées devraient être exclues de l'entraînement sauf consentement spécifique et éclairé pour cette catégorie. Déconnecter Finances devrait proposer un parcours clair pour supprimer les données synchronisées, les souvenirs associés et les conversations financières, avec une explication exacte de ce qui reste et pendant combien de temps.
+
+Un mode sensible ne devrait pas obliger l'utilisateur à comprendre la différence entre un connecteur, un chat, une mémoire et le portail d'un fournisseur avant de pouvoir partir proprement.
+
+## OpenAI voit déjà l'étape suivante
+
+Le produit actuel fonctionne en lecture seule.
+
+L'[annonce de lancement](https://openai.com/index/personal-finance-chatgpt/) d'OpenAI décrit aussi un futur qui dépasse les réponses pour aller vers l'action, via des partenaires comme Intuit.
+
+Les exemples sont révélateurs : passer d'une recommandation de carte bancaire à l'estimation de ses chances d'acceptation puis au dépôt d'une demande, ou passer d'une question sur la fiscalité d'une vente d'actions à une estimation fiscale et un rendez-vous avec un expert local.
+
+Ce n'est pas la même chose que donner au modèle le contrôle direct d'un compte de courtage.
+
+Cela rapproche tout de même le produit de la transaction.
+
+Dès que les recommandations peuvent orienter l'utilisateur vers une demande, un apporteur, une réservation ou un service payant, de nouvelles questions deviennent inévitables :
+
+- La recommandation optimise-t-elle pour l'utilisateur ou pour le partenaire ?
+- Existe-t-il une commission d'apport ou une relation commerciale ?
+- Quelles alternatives ont été considérées ?
+- L'utilisateur peut-il comprendre pourquoi telle carte, tel compte, tel conseiller ou tel service fiscal lui est présenté ?
+- Le système sépare-t-il clairement l'analyse de la promotion ?
+- Que se passe-t-il si la recommandation du modèle est mauvaise mais que l'action du partenaire aboutit ?
+
+OpenAI n'a pas besoin de résoudre tous ses futurs modèles économiques avant de proposer un tableau de dépenses utile.
+
+L'entreprise doit en revanche préserver la frontière entre contexte personnel et influence commerciale.
+
+Un système qui connaît vos dettes, revenus, score de crédit, habitudes de dépense et objectifs est particulièrement doué pour identifier ce que vous pourriez acheter ensuite.
+
+Cela peut être utile.
+
+Cela peut aussi devenir le tunnel de vente le mieux informé que vous ayez jamais rencontré.
+
+## Comment je l'utiliserais
+
+Commencez petit.
+
+Connectez un seul compte avant toute votre vie financière. Activez l'authentification multifacteur. Vérifiez le réglage d'entraînement. Regardez quels comptes et quels champs sont réellement synchronisés. Demandez au produit d'afficher la source et la date derrière une conclusion. Comparez chaque chiffre important avec l'institution d'origine.
+
+Traitez les catégorisations comme des brouillons.
+
+Traitez les recommandations comme des propositions.
+
+Réalisez vous-même les actions importantes.
+
+Si vous vous déconnectez, supprimez les conversations financières et les souvenirs financiers que vous ne voulez plus conserver. Ne supposez pas que retirer la connexion bancaire efface chaque morceau de contexte dérivé.
+
+Et si la réponse peut modifier sensiblement vos impôts, votre crédit, votre retraite, vos dettes, vos assurances ou vos investissements, utilisez le chat pour préparer de meilleures questions à poser à une personne qualifiée, pas pour faire disparaître cette personne.
+
+## Le vrai lancement, c'est le test de confiance
+
+Ouvrir Finances aux utilisateurs Free et Go n'est pas qu'un changement tarifaire.
+
+C'est une expérience de confiance grand public à l'échelle de ChatGPT.
+
+Le produit part d'une architecture raisonnable : grande visibilité, analyse personnalisée et aucune autorité directe pour agir.
+
+Gardez cette frontière.
+
+Rendez la lignée des données évidente.
+
+Rendez la suppression plus simple que la connexion.
+
+Écartez par défaut les données sensibles de l'entraînement.
+
+Déclarez les incitations commerciales avant que les recommandations ne deviennent des mises en relation commerciales.
+
+Puis résistez à la démo inévitable dans laquelle l'agent paie chaque facture, rééquilibre chaque compte et demande la carte parfaite pendant que l'utilisateur dort.
+
+Cette démo aura l'air magique.
+
+La version ennuyeuse, en lecture seule, est peut-être le produit le plus mature.
