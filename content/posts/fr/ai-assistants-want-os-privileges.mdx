@@ -1,10 +1,120 @@
 ---
 title: "Les assistants IA veulent les droits de l'OS"
-date: "2026-08-23"
-description: "Les mesures DMA contre Google montraient déjà pourquoi l'accès des assistants est une guerre de système d'exploitation. Le plugin Apple Messages d'OpenAI rend le sujet personnel : les agents utiles ont besoin des messages, du contexte local, des validations et du modèle de permissions de l'OS."
+date: "2026-10-04"
+description: "Apple reconnaît désormais que Full Disk Access expose fichiers, mails, messages et historique de navigation, et promet une validation plus explicite à mesure que les agents IA gagnent en autonomie. La vraie solution n'est pas une alerte plus effrayante, mais des permissions système ciblées, révocables et attribuables."
 tags: ["AI Agents", "Google", "Apple", "OpenAI", "AI Regulation"]
 draft: false
 ---
+
+## Mise à jour : Apple reconnaît que Full Disk Access est trop large pour les agents
+
+Apple vient de confirmer l'argument central de cet article.
+
+Le 2 octobre, l'entreprise a publié une courte note pour les développeurs intitulée ["Updates to Full Disk Access in macOS"](https://developer.apple.com/news/?id=p6zjojqw).
+
+Quatre paragraphes.
+
+Et une concession assez importante.
+
+Apple explique que Full Disk Access a surtout été créé pour permettre aux apps de sauvegarde de fonctionner. Cette permission contourne une grande partie des contrôles habituels et ouvre l'accès aux données du Mac. Selon Apple, certains développeurs l'utilisent désormais d'une manière qui peut exposer fichiers, mails, messages et historique de navigation sans que l'utilisateur comprenne vraiment ce qu'il a autorisé.
+
+Puis Apple nomme ce qui change l'échelle du risque :
+
+Les agents.
+
+À mesure que les logiciels gagnent en capacités et en autonomie, le risque augmente fortement, dit Apple. L'entreprise prévoit donc de modifier macOS pour que ce niveau d'accès ne puisse être accordé qu'à travers une action utilisateur "très explicite".
+
+Très bien.
+
+Mais c'est une direction, pas encore une architecture de sécurité.
+
+Apple n'a annoncé ni la version de macOS concernée, ni la date du changement. On ne sait pas si l'accès deviendra plus granulaire, combien de temps une autorisation restera valide, ce que l'utilisateur pourra révoquer ou si les agents disposeront d'une nouvelle API pensée autour de tâches précises.
+
+La vraie question n'est donc pas de savoir si le bouton sera plus difficile à cliquer.
+
+C'est de savoir si Full Disk Access doit encore être la permission utilisée.
+
+## Une alerte plus effrayante ne suffit pas
+
+Un consentement explicite vaut mieux qu'un consentement accidentel.
+
+Mais cela ne résout pas le problème des agents.
+
+Full Disk Access est une permission globale et permanente à l'échelle de l'app. Une fois accordée, elle peut survivre à la raison précise que l'utilisateur avait en tête. L'agent peut ensuite recevoir de nouveaux prompts, ouvrir de nouveaux outils, rencontrer du contenu hostile ou interpréter une instruction ambiguë d'une manière que personne n'avait anticipée au moment de cocher la case.
+
+Le consentement donné à l'installation n'est pas un consentement à chaque décision future de l'agent.
+
+Apple possède déjà un meilleur modèle ailleurs dans macOS. Pour les apps sandboxées, son [système d'accès aux fichiers](https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox) permet à l'utilisateur de choisir un fichier ou un dossier précis, puis d'accorder un accès en lecture seule ou en lecture-écriture à cette ressource.
+
+C'est beaucoup plus proche de ce dont les agents ont besoin.
+
+Pas :
+
+"Faites confiance à cette app avec tout l'ordinateur."
+
+Mais :
+
+"Autorisez cet agent à lire ce dossier pour cette tâche, jusqu'à la fin de cette tâche."
+
+La différence paraît petite.
+
+C'est tout le produit.
+
+## Le plugin Messages devient le test évident
+
+Le plugin Apple Messages décrit plus bas rend la tension très concrète.
+
+OpenAI affirme qu'il fonctionne localement et demande par défaut une validation avant l'envoi. TechCrunch rapporte que sa configuration exige Full Disk Access. Rien de tout cela ne signifie qu'OpenAI a abusé de cette permission.
+
+Cela signifie que le système d'exploitation a donné une clé très large à une fonctionnalité ciblée.
+
+Reuters [relie l'annonce d'Apple](https://www.investing.com/news/stock-market-news/apple-says-it-will-flag-ai-requests-for-mac-data-after-metas-muse-draws-complaints-4930505) aux critiques visant l'accès de Muse, chez Meta, à des messages privés ; Meta conteste cette présentation. Pas besoin de trancher ce désaccord pour voir le problème de plateforme.
+
+Si un assistant utile a besoin de l'une des permissions les plus larges du Mac pour rechercher dans Messages, le modèle de permissions porte plus de risque que la fonctionnalité ne l'exige réellement.
+
+La note d'Apple soulève aussi un point moins discuté : les données d'une conversation appartiennent à plus d'une personne. Donner à un assistant accès à ses messages peut exposer les mots, les identités et le contexte de gens qui n'ont jamais vu la fenêtre de permission.
+
+Le consentement de l'utilisateur compte.
+
+Ce n'est pas la seule vie privée en jeu.
+
+## À quoi devraient ressembler les permissions des agents
+
+Un modèle de permissions conçu pour les agents devrait être presque ennuyeux de précision.
+
+- **Ciblé par ressource :** une conversation, un dossier, un calendrier ou un compte, pas tout le disque.
+- **Ciblé par action :** lire et rechercher ne doivent pas automatiquement permettre d'écrire, d'envoyer, de supprimer ou de modifier des réglages.
+- **Demandé au bon moment :** l'accès apparaît quand la tâche en a besoin, pas pendant l'installation alors que l'usage futur reste abstrait.
+- **Limité dans le temps :** l'autorisation expire avec la tâche, la session ou une durée clairement annoncée.
+- **Attribuable :** l'utilisateur voit quel agent, quel outil et quelle instruction ont provoqué l'accès.
+- **Traçable :** un journal montre ce qui a été lu ou modifié, et pourquoi.
+- **Révocable :** l'accès se retire facilement, sans désinstaller le produit ni fouiller plusieurs panneaux de réglages.
+
+Et ces règles doivent s'appliquer à Apple comme aux acteurs tiers.
+
+Ce dernier point compte parce que sécurité et concurrence sont désormais liées. Apple peut avoir entièrement raison de vouloir renforcer les contrôles autour des agents, tout en bénéficiant d'un système où ses concurrents dépendent des permissions qu'elle définit.
+
+La réponse n'est pas de donner un accès universel à tout le monde.
+
+C'est d'exposer un ensemble commun de capacités étroitement délimitées et bien journalisées, utilisées dans les mêmes conditions par Apple et les assistants concurrents.
+
+La bataille européenne sur l'interopérabilité, analysée dans la version originale ci-dessous, devient plus claire sous cet angle. "Ouvrir la plateforme" ne devrait pas signifier distribuer un passe-partout à chaque assistant. Cela devrait signifier exposer les actions utiles du système à travers des permissions conçues pour la tâche réelle.
+
+## La vraie leçon
+
+Full Disk Access est une permission de compatibilité très large, pensée pour des logiciels comme les outils de sauvegarde.
+
+Ce n'est pas un modèle natif de capacités pour agents autonomes.
+
+L'annonce d'Apple est bienvenue parce qu'elle reconnaît que l'autonomie change le niveau de risque. Une validation plus délibérée peut empêcher certains utilisateurs d'accorder cette permission dangereuse trop facilement.
+
+Mais un clic plus difficile n'est qu'une transition.
+
+Le système d'exploitation doit devenir l'intermédiaire entre l'intention de l'utilisateur et la prochaine action de l'agent.
+
+L'agent devrait demander le fichier.
+
+Pas l'ordinateur.
 
 ## En bref
 
@@ -214,11 +324,11 @@ Mais la tension est réelle.
 
 Un assistant capable de lire votre écran, d'agir dans les apps, de comprendre le contexte personnel et de passer d'un service à l'autre est puissant parce qu'il est intime. Le même accès qui le rend utile devient dangereux si le mauvais acteur l'obtient, si les permissions sont floues, si les logs sont faibles ou si le modèle suit la mauvaise instruction.
 
-C'est exactement pour ça que l'histoire GPT-Red d'hier compte, mais depuis un autre angle.
+C'est exactement pour ça que l'histoire GPT-Red compte, mais depuis un autre angle.
 
-Hier, il s'agissait de tester les agents avant qu'internet ne les attaque.
+Cet article parlait de tester les agents avant qu'internet ne les attaque.
 
-Aujourd'hui, il s'agit de savoir où ces agents ont le droit de vivre.
+Celui-ci demande où ces agents ont le droit de vivre.
 
 Plus l'assistant descend profondément dans l'OS, plus le modèle de sécurité devient le produit.
 

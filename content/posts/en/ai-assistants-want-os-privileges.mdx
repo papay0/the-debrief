@@ -1,10 +1,120 @@
 ---
 title: "AI Assistants Want OS Privileges"
-date: "2026-08-23"
-description: "Europe's DMA measures against Google showed why assistant access is an operating-system fight. OpenAI's Apple Messages plugin now makes the point personal: useful agents need access to messages, local context, approvals, and the OS permission model around them."
+date: "2026-10-04"
+description: "Apple now says Full Disk Access exposes files, mail, messages, and browsing history, and will require more explicit user action as AI agents become more autonomous. The real fix is not a scarier dialog. It is scoped, revocable, attributable OS permissions designed for agents."
 tags: ["AI Agents", "Google", "Apple", "OpenAI", "AI Regulation"]
 draft: false
 ---
+
+## Update: Apple says Full Disk Access is too broad for agents
+
+Apple just confirmed the central argument of this article.
+
+On October 2, the company published a short developer notice called ["Updates to Full Disk Access in macOS"](https://developer.apple.com/news/?id=p6zjojqw).
+
+It is four paragraphs long.
+
+It is also a fairly large concession.
+
+Apple says Full Disk Access was created largely so backup apps could work. It lets software sidestep normal controls and reach data across the Mac. According to Apple, some developers now use that permission in ways that can expose files, mail, messages, and browsing history without users fully understanding what they granted.
+
+Then Apple names the thing that changes the stakes:
+
+Agents.
+
+As software becomes more capable and autonomous, Apple says the risk grows substantially. The company plans to change macOS so this level of access can only be granted through "very explicit user action."
+
+Good.
+
+But that is a direction, not yet a security architecture.
+
+Apple did not announce which macOS release will contain the change. It did not explain whether access will become more granular, how long grants will last, what users will be able to revoke, or whether agents will receive a new API designed around individual tasks.
+
+So the important question is not whether the permission dialog becomes harder to click.
+
+It is whether Full Disk Access remains the permission at all.
+
+## A scarier dialog is not the fix
+
+Explicit consent is better than accidental consent.
+
+It still does not solve the agent problem.
+
+Full Disk Access is an app-wide, ambient permission. Once granted, it can outlive the specific reason the user had in mind. An agent may later receive new prompts, open new tools, encounter hostile content, or interpret an ambiguous instruction in a way nobody anticipated when the checkbox was approved.
+
+Consent at installation is not consent to every future agent decision.
+
+Apple already has a better pattern elsewhere in macOS. For sandboxed apps, its [file-access model](https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox) can let a user choose a specific file or folder and grant read-only or read-write access to that selected resource.
+
+That is much closer to what agents need.
+
+Not:
+
+"Trust this app with the computer."
+
+But:
+
+"Let this agent read this folder for this task, until this task ends."
+
+The distinction sounds small.
+
+It is the entire product.
+
+## The Messages plugin is now the obvious test
+
+The Apple Messages plugin described below makes the tension concrete.
+
+OpenAI says the plugin works locally and asks for review before sending by default. TechCrunch reported that setup requires Full Disk Access. None of that means OpenAI misused the permission.
+
+It means the operating system gave a focused feature a very broad key.
+
+Reuters [connected Apple's announcement](https://www.investing.com/news/stock-market-news/apple-says-it-will-flag-ai-requests-for-mac-data-after-metas-muse-draws-complaints-4930505) to complaints about Meta's Muse accessing private messages; Meta disputed that account. We do not need to settle that dispute to see the platform problem.
+
+If a useful assistant needs one of the Mac's broadest permissions to search messages, the permission model is carrying more risk than the feature actually requires.
+
+Apple's notice also raises a less discussed point: communication data belongs to more than one person. Giving an assistant access to your messages can expose the words, identities, and context of people who never clicked the permission dialog.
+
+The user's consent matters.
+
+It is not the only privacy interest in the room.
+
+## What agent permissions should look like
+
+An agent-native permission model should be boringly specific.
+
+- **Resource-scoped:** one conversation, folder, calendar, or account instead of the entire disk.
+- **Action-scoped:** reading and searching should not automatically include writing, sending, deleting, or changing settings.
+- **Just in time:** ask when the task needs access, not during setup when the future use is abstract.
+- **Time-limited:** expire the grant after the task, session, or a clearly stated period.
+- **Attributable:** show which agent, tool, and instruction caused the access.
+- **Auditable:** let the user see what was read or changed and why.
+- **Revocable:** make access easy to remove without uninstalling the product or hunting through several settings panels.
+
+And the rules should apply to Apple as well as third parties.
+
+That last part matters because security and competition are now tangled together. Apple can be completely right that agent access needs stronger controls while also benefiting from a system where rivals depend on permissions Apple defines.
+
+The answer is not universal access for everyone.
+
+It is a common set of narrow, well-instrumented capabilities that Apple and competing assistants must use on equal terms.
+
+Europe's interoperability fight, discussed in the original article below, makes more sense through that lens. "Open the platform" should not mean giving every assistant a master key. It should mean exposing the useful system actions through permissions designed for the actual job.
+
+## The real lesson
+
+Full Disk Access is a compatibility escape hatch built for software such as backup tools.
+
+It is not a native capability model for autonomous agents.
+
+Apple's announcement is welcome because it recognizes that autonomy changes the risk. A more deliberate grant can stop some users from approving a dangerous permission casually.
+
+But a harder click is transitional.
+
+The operating system has to become the permission broker between the user's intent and the agent's next action.
+
+The agent should ask for the file.
+
+Not the computer.
 
 ## The Short Version
 
@@ -214,11 +324,11 @@ But the tension is real.
 
 An assistant that can read your screen, take actions in apps, understand personal context, and move across services is powerful because it is intimate. The same access that makes the assistant useful also makes it dangerous if the wrong actor gets it, if permissions are unclear, if logs are weak, or if the model follows the wrong instruction.
 
-That is exactly why yesterday's GPT-Red story matters, but from a different angle.
+That is exactly why the GPT-Red story matters, but from a different angle.
 
-Yesterday was about testing agents before the internet attacks them.
+That story was about testing agents before the internet attacks them.
 
-Today is about where those agents are allowed to live.
+This one is about where those agents are allowed to live.
 
 The deeper the assistant goes into the OS, the more the security model becomes the product.
 
