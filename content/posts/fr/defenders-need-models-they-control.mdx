@@ -1,8 +1,8 @@
 ---
 title: "Les défenseurs ont besoin de modèles qu'ils contrôlent"
-date: "2026-08-11"
-description: "L'Open Secure AI Alliance de NVIDIA montrait pourquoi les défenseurs ont besoin d'une IA qu'ils contrôlent. L'expansion de Daybreak par OpenAI montre maintenant la version fermée du même problème : une IA cyber-capable doit passer par de l'accès de confiance, des permissions limitées, du monitoring, des workflows partenaires et de l'auditabilité, pas par un simple accès chatbot."
-tags: ["AI Security", "AI Agents", "Open Source", "NVIDIA"]
+date: "2026-10-07"
+description: "NVIDIA, OpenAI et maintenant Anthropic convergent vers la même leçon : une IA cyber-capable a besoin de plus que des garde-fous. Il lui faut des autorisations explicites, une identité, du monitoring et un chemin d'accès réellement utilisable par les défenseurs."
+tags: ["AI Security", "AI Agents", "Open Source", "Anthropic"]
 draft: false
 ---
 
@@ -39,6 +39,118 @@ La leçon utile est plus opérationnelle :
 Si l'IA doit aider à défendre des systèmes, les défenseurs ont besoin d'une partie de cette IA qu'ils contrôlent vraiment pendant l'incident.
 
 Très pratique. L'outil d'urgence ne peut pas exiger que l'urgence parle poliment.
+
+## Mise à jour : un même modèle, trois profils de sécurité
+
+Le 6 octobre, Anthropic a transformé ce problème de contrôle en architecture produit.
+
+Son [Cyber Verification Program](https://www.anthropic.com/news/cyber-verification-program) élargi donne aux utilisateurs vérifiés trois profils d'accès aux capacités cyber de Claude : Defense Access, Red Team Access et Specialized Access. Les trois incluent Opus 5.5, Sonnet 5.5, Mythos 5.1 et les futurs modèles. Ce n'est pas le menu de modèles qui change.
+
+C'est ce que le modèle a le droit de faire pour vous.
+
+Defense Access vise l'analyse de vulnérabilités, le reverse engineering de malware, la réponse à incident et d'autres tâches défensives. Anthropic dit accepter les candidatures d'entreprises, associations, universités, gouvernements, opérateurs d'infrastructures critiques, petites sociétés de sécurité, maintainers open source et chercheurs indépendants. L'entreprise s'attend à ce qu'une grande partie des dossiers soient validés en quelques jours.
+
+Red Team Access s'adresse aux organisations qui font des tests d'intrusion et du red teaming autorisés. L'examen prend plusieurs semaines, les contrôles opérationnels sont plus stricts, et certaines catégories liées aux dommages physiques ou à la perturbation massive restent bloquées.
+
+Specialized Access est réservé à un groupe beaucoup plus restreint qui teste des systèmes critiques ou sensibles, après un examen approfondi impliquant le gouvernement américain.
+
+C'est la nouvelle version de l'argument de cet article.
+
+Le nom d'un modèle ne suffit plus à décrire sa capacité utile.
+
+Il faut aussi connaître l'identité de l'utilisateur, l'objectif approuvé, le profil de garde-fous, la politique de monitoring et l'environnement dans lequel le modèle opère.
+
+Le profil de sécurité devient un profil d'autorisation.
+
+## Anthropic montre enfin la couche intermédiaire
+
+Le débat public nous propose généralement deux choix.
+
+Un : un modèle hébergé avec des garde-fous conservateurs, qui peut refuser du travail de sécurité légitime.
+
+Deux : un modèle ouvert ou local que le défenseur peut lancer sans demander la permission à un fournisseur.
+
+Les deux choix sont réels. Aucun ne suffit seul.
+
+Le programme d'Anthropic rend explicite la couche intermédiaire : des capacités frontier hébergées, avec une vérification progressivement plus forte et des autorisations progressivement plus larges.
+
+Ce n'est pas du contrôle par la propriété. Anthropic possède toujours le modèle, définit la politique, surveille les accès et peut réduire ou retirer une autorisation. Mais cela peut devenir une forme utile de contrôle opérationnel si les règles sont assez prévisibles pour qu'une équipe sécurité puisse construire dessus.
+
+Le benchmark interne du programme rend la différence particulièrement visible.
+
+Sur CyScenarioBench, les garde-fous de l'accès public ont bloqué les 50 essais dès le premier prompt. Avec Defense Access, 46 essais sur 50 ont été bloqués à un moment ou à un autre, et quatre ont abouti. Avec Red Team Access, aucun n'a été bloqué ; Opus 5.5 a réussi 34 essais sur 50, pratiquement le même résultat que la baseline sans garde-fous d'Anthropic, à 67,6 %.
+
+Il faut lire ces chiffres avec prudence. Il s'agit d'une évaluation menée par le fournisseur sur dix challenges tentés cinq fois chacun, pas d'une large validation indépendante.
+
+Mais le message produit reste très net :
+
+Mêmes modèles. Politique d'accès différente. Capacité utile radicalement différente.
+
+## L'accès de confiance devient une infrastructure
+
+La partie intéressante n'est pas le formulaire de candidature.
+
+C'est la plomberie derrière le formulaire.
+
+Les [exigences de sécurité](https://support.claude.com/en/articles/17202708-cyber-verification-program-security-requirements) d'Anthropic transforment l'accès de confiance en une stack de contrôles concrets : MFA résistante au phishing, identités nominatives pour les utilisateurs ou workloads, credentials à durée de vie courte, appareils gérés, révocation rapide des accès compromis, notification des incidents et revue continue de la conformité.
+
+Pour le red teaming, les organisations doivent aussi mettre en place une allowlist et des logs du trafic sortant pour les workflows offensifs ou agentiques. L'accès est limité aux utilisateurs approuvés. Les credentials compromis doivent être révoqués sous 24 heures. Un utilisateur qui quitte l'organisation doit être retiré sous trois jours ouvrés.
+
+Cela ressemble beaucoup plus au fonctionnement des infrastructures privilégiées que nous connaissons déjà.
+
+On ne donne pas accès à une base de données de production à quiconque connaît le nom du produit. On lie cet accès à une identité, un rôle, un périmètre, un appareil et une trace d'audit. Les modèles cyber-capables commencent à hériter du même design.
+
+Très bien.
+
+Le modèle n'est plus seulement un logiciel qui répond à des questions. C'est un système privilégié dont les permissions changent le travail qu'il peut effectuer.
+
+## Le compromis sur les données reste inachevé
+
+Il y a un coût.
+
+Anthropic exige de conserver les données pour monitorer le programme. Les exemptions zero data retention existantes pour Fable et Mythos peuvent continuer temporairement, et l'entreprise promet une future option Enterprise File Storage qui permettra aux clients de garder les données dans leur propre cloud tout en préservant les garde-fous du programme.
+
+« Future » est un mot important dans cette phrase.
+
+Les équipes de réponse à incident manipulent des logs sensibles, des détails d'exploitation, des systèmes clients, des identifiants, des échantillons de malware et des preuves parfois soumises à des contraintes légales ou réglementaires. Un fournisseur ne peut pas proposer sérieusement un accès défensif avancé tout en traitant la gouvernance des données comme une note de bas de page.
+
+L'échange est compréhensible : des autorisations plus larges créent davantage de risque d'abus, donc le fournisseur veut plus de visibilité. Mais les équipes qui ont le besoin le plus légitime peuvent aussi avoir les meilleures raisons de ne pas envoyer leurs données brutes d'incident dans un service qui les conserve.
+
+L'accès de confiance doit mériter les deux mots.
+
+## Les 129 000 vulnérabilités ont besoin de contexte
+
+Anthropic dit que ses partenaires ont trouvé au moins 129 000 vulnérabilités vérifiées avec ses modèles entre avril et juillet 2026. Le scanning open source mené par Anthropic en aurait ajouté 5 500 autres jusqu'en octobre. Plus de 33 000 auraient reçu une sévérité haute ou critique.
+
+Ce sont des affirmations de l'entreprise et de ses partenaires basées sur des remontées partielles, pas un recensement indépendant. Un nombre de vulnérabilités ne dit pas combien étaient nouvelles, exploitables, corrigées, dupliquées ou utiles sans intervention humaine.
+
+Un déploiement concret apporte un peu de contexte. En mai, [Axios rapportait](https://www.axios.com/2026/05/13/palo-alto-networks-mythos-gpt-cybersecurity) que Palo Alto Networks avait utilisé Mythos pour trouver 75 vulnérabilités dans plus de 130 produits. L'entreprise disait que le système avait produit des exploits fonctionnels dans plus de 70 % des cas lors d'un test interne, mais aussi environ 30 % de faux positifs. Il fallait beaucoup d'expertise humaine, de personnalisation et un harness de scanning.
+
+Cela ressemble moins à de la magie et davantage à un outil de sécurité puissant.
+
+C'est mieux.
+
+L'histoire utile n'est pas que Claude a réparé Internet de manière autonome. C'est que les modèles deviennent assez productifs pour de vrais workflows de sécurité, tout en exigeant encore des opérateurs experts, de l'infrastructure, de la vérification et de la remédiation.
+
+## Contrôler veut maintenant dire savoir quel Claude on utilise
+
+Le programme à trois niveaux d'Anthropic ne rend pas les modèles ouverts et locaux moins importants.
+
+Il clarifie la stack.
+
+Une équipe sécurité sérieuse peut utiliser un modèle local pour de la forensic sensible, un modèle hébergé généraliste pour l'analyse ordinaire, Defense Access pour le malware et les vulnérabilités, Red Team Access pour les tests autorisés, et un fournisseur spécialisé pour le travail le plus sensible sur les systèmes critiques.
+
+Ce n'est pas de la fragmentation gratuite.
+
+C'est le principe du moindre privilège appliqué aux capacités de l'IA.
+
+Le risque est que l'accès de confiance devienne une porte élégante pour les grandes organisations, pendant que les petits défenseurs restent coincés avec les refus. Anthropic inclut explicitement les chercheurs indépendants et les maintainers open source dans Defense Access, ce qui est prometteur. Le vrai test viendra après l'annonce : des examens prévisibles, des recours clairs, des restrictions transparentes et un accès qui ne dépend pas discrètement du budget enterprise.
+
+Le changement de fond est déjà là.
+
+Le modèle n'a pas seulement appris davantage de cyber.
+
+Il a acquis un système de permissions.
 
 ## Mise à jour : Daybreak est la version fermée du même problème
 

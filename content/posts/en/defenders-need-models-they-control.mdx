@@ -1,8 +1,8 @@
 ---
 title: "Defenders Need Models They Control"
-date: "2026-08-11"
-description: "NVIDIA's Open Secure AI Alliance showed why defenders need AI they can control. OpenAI's Daybreak expansion now shows the closed-model version of the same problem: cyber-capable AI has to move through trusted access, scoped permissions, monitoring, partner workflows, and auditability, not ordinary chatbot access."
-tags: ["AI Security", "AI Agents", "Open Source", "NVIDIA"]
+date: "2026-10-07"
+description: "NVIDIA, OpenAI, and now Anthropic are converging on the same lesson: cyber-capable AI needs more than guardrails. It needs explicit authorization, identity, monitoring, and an access path that defenders can actually use."
+tags: ["AI Security", "AI Agents", "Open Source", "Anthropic"]
 draft: false
 ---
 
@@ -39,6 +39,118 @@ The useful lesson is more operational:
 If AI is going to help defend systems, defenders need some AI they can actually control during the incident.
 
 Very inconvenient. The emergency tool cannot require the emergency to look polite.
+
+## Update: the same model now has three security profiles
+
+On October 6, Anthropic turned that control problem into a product architecture.
+
+Its expanded [Cyber Verification Program](https://www.anthropic.com/news/cyber-verification-program) gives verified users three different access profiles for Claude's cyber capabilities: Defense Access, Red Team Access, and Specialized Access. All three include Opus 5.5, Sonnet 5.5, Mythos 5.1, and future models. What changes is not the model menu.
+
+What changes is what the model is allowed to do for you.
+
+Defense Access is for vulnerability analysis, malware reverse engineering, incident response, and similar defensive work. Anthropic says companies, nonprofits, universities, governments, critical infrastructure operators, small security firms, open-source maintainers, and individual researchers can apply. It expects many applicants to qualify within days.
+
+Red Team Access is for organizations doing authorized penetration testing and red teaming. The review takes weeks, the operational controls are stricter, and some categories involving physical harm or mass disruption remain blocked.
+
+Specialized Access is for a much smaller group testing critical and safety-sensitive systems, with an in-depth review involving the US government.
+
+This is the next version of the argument in this article.
+
+A model name no longer tells you the model's useful capability.
+
+You also need to know the user's identity, the approved purpose, the safeguard profile, the monitoring policy, and the environment in which the model is operating.
+
+The safety profile is becoming an authorization profile.
+
+## Anthropic finally shows the middle layer
+
+The public debate usually gives us two choices.
+
+One: a hosted model with conservative safeguards that may refuse legitimate security work.
+
+Two: an open or local model that the defender can run without asking a provider for permission.
+
+Both choices are real. Neither is enough by itself.
+
+Anthropic's program makes the middle layer explicit: hosted frontier capability with progressively stronger verification and progressively broader authorization.
+
+That is not the same as control through ownership. Anthropic still owns the model, defines the policy, monitors access, and can narrow or withdraw a grant. But it can be a useful form of operational control if the rules are predictable enough for a security team to build around.
+
+The program's internal benchmark makes the distinction unusually visible.
+
+On Anthropic's CyScenarioBench, its public-access safeguards blocked all 50 trials at the first prompt. Under Defense Access, 46 of 50 trials were blocked at some point and four completed. Under Red Team Access, none were blocked; Opus 5.5 completed 34 of 50 trials, essentially matching Anthropic's no-safeguards baseline of 67.6%.
+
+Treat those numbers carefully. This is a vendor-run evaluation with ten challenges attempted five times each, not broad independent validation.
+
+But the product point is still sharp:
+
+Same models. Different access policy. Radically different useful capability.
+
+## Trusted access is becoming infrastructure
+
+The interesting part is not the application form.
+
+It is the machinery behind the form.
+
+Anthropic's [security requirements](https://support.claude.com/en/articles/17202708-cyber-verification-program-security-requirements) turn trusted access into a stack of concrete controls: phishing-resistant MFA, named user or workload identities, short-lived credentials, managed devices, rapid credential revocation, incident reporting, and continuous compliance review.
+
+For Red Team work, organizations also need outbound traffic allow-listing and logging for offensive or agentic workflows. Access is limited to approved users. Compromised credentials have to be revoked within 24 hours. Departing users have to be removed within three business days.
+
+This is much closer to how privileged infrastructure already works.
+
+We do not give production database access to anyone who knows the product name. We bind access to an identity, a role, a scope, a device, and an audit trail. Cyber-capable models are starting to inherit the same design.
+
+Good.
+
+The model is not just software that answers questions anymore. It is a privileged system whose permissions change the work it can perform.
+
+## The privacy bargain is unfinished
+
+There is a cost.
+
+Anthropic requires data retention for program monitoring. Existing zero-data-retention exemptions for Fable and Mythos can continue temporarily, and the company says a future Enterprise File Storage option will let customers keep data in customer-controlled cloud storage while preserving program safeguards.
+
+Future is doing important work in that sentence.
+
+Incident responders handle sensitive logs, exploit details, customer systems, credentials, malware samples, and evidence that may be subject to legal or regulatory constraints. A provider cannot credibly offer advanced defensive access while treating data governance as a footnote.
+
+The trade is understandable: broader authorization creates more abuse risk, so the provider wants more visibility. But the teams with the most legitimate need may also have the strongest reasons not to send raw incident data into a retained service.
+
+Trusted access has to earn both halves of its name.
+
+## 129,000 vulnerabilities need context
+
+Anthropic says partners using its models found at least 129,000 verified vulnerabilities between April and July 2026, with Anthropic's open-source scanning work adding another 5,500 through October. More than 33,000 were categorized as high or critical severity.
+
+Those are company and partner claims based on partial reporting, not an independent census. A vulnerability count does not tell us how many findings were novel, exploitable, patched, duplicated, or useful without human work.
+
+There is some helpful context from a specific deployment. In May, [Axios reported](https://www.axios.com/2026/05/13/palo-alto-networks-mythos-gpt-cybersecurity) that Palo Alto Networks used Mythos to find 75 vulnerabilities across more than 130 products. The company said the system produced working exploits more than 70% of the time in an internal test, but also generated roughly 30% false positives. It required extensive human expertise, customization, and a scanning harness.
+
+That sounds less like magic and more like a powerful security tool.
+
+Which is better.
+
+The useful story is not that Claude autonomously fixed the internet. It is that models are becoming productive enough for serious security workflows, while still requiring expert operators, infrastructure, verification, and remediation.
+
+## Control now means knowing which Claude you have
+
+Anthropic's three-tier program does not make open and local models less important.
+
+It makes the stack clearer.
+
+A serious security team may use a local model for sensitive forensics, a general hosted model for ordinary analysis, Defense Access for malware and vulnerability work, Red Team Access for authorized testing, and a specialized provider for the narrowest critical-system work.
+
+That is not fragmentation for its own sake.
+
+It is least privilege applied to AI capability.
+
+The risk is that trusted access becomes a polished gate for large organizations while smaller defenders remain stuck with refusals. Anthropic explicitly includes individual researchers and open-source maintainers in Defense Access, which is promising. The test will be whether the program stays usable after the announcement: predictable reviews, clear appeals, transparent restrictions, and access that does not quietly depend on enterprise purchasing power.
+
+The deeper shift is already here.
+
+The model has not only learned more cyber.
+
+It has acquired a permissions system.
 
 ## Update: Daybreak is the closed-model version of this problem
 
