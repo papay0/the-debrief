@@ -1,0 +1,195 @@
+---
+title: "L'IA peut trouver la faille. Qui va la corriger ?"
+date: "2026-10-09"
+description: "Le nouvel OSS Scanner d'Anthropic peut envoyer aux mainteneurs des rapports de vulnérabilité non relus, produits par des modèles de pointe. Le scan est gratuit. Le tri, la divulgation, le correctif, les tests et la publication ne le sont pas."
+tags: ["Sécurité IA", "Open Source", "Anthropic", "Outils développeurs"]
+draft: false
+---
+
+## La version courte
+
+Trouver la faille est en train de devenir la partie la moins coûteuse.
+
+Le 8 octobre, Anthropic a lancé [OSS Scanner](https://www.anthropic.com/news/anthropic-cyber-mission), un service gratuit, accessible sur inscription, qui analyse régulièrement des projets open source avec les modèles les plus puissants de l'entreprise. Chaque rapport peut contenir une preuve de concept, une explication et une proposition de correctif.
+
+Ces rapports sont envoyés sans relecture humaine.
+
+Anthropic prévoit un taux de vrais positifs supérieur à 90 %, tout en prévenant que certains rapports contiendront des erreurs, par exemple une mauvaise estimation de la gravité. Le service vise les projets qui ont les moyens de suivre le rythme. Les autres peuvent rester dans le circuit plus lent de divulgation vérifiée par des humains.
+
+Toute l'histoire est dans cette distinction.
+
+L'IA peut produire davantage de signalements.
+
+Elle ne peut pas produire davantage d'heures de maintenance.
+
+Le scanner est peut-être gratuit. Reproduire le bug, comprendre le modèle de menace, vérifier que la découverte est nouvelle, coordonner la divulgation, écrire un correctif sûr, tester les régressions, rétroporter la correction, publier de nouvelles versions et prévenir les utilisateurs en aval ne le sont pas.
+
+Le goulot d'étranglement se déplace.
+
+Avant, il fallait trouver assez de failles.
+
+Demain, il faudra peut-être surtout survivre à la file d'attente.
+
+## Un scanner précis à 90 % crée 100 % du travail de tri
+
+Plus de 90 %, cela semble excellent.
+
+Pour un nouveau service de sécurité alimenté par des modèles, ça l'est probablement.
+
+Mais la précision ne mesure pas la charge de travail.
+
+Si un scanner envoie 100 rapports et que dix sont faux, le mainteneur doit tout de même examiner les 100 pour identifier les dix erreurs. Même un rapport valide peut surestimer la gravité, dupliquer un problème connu, dépendre d'un scénario d'attaque irréaliste, ne concerner qu'une configuration abandonnée ou proposer un correctif qui bloque la preuve de concept tout en cassant autre chose.
+
+Les [recommandations d'OSS-Fuzz](https://google.github.io/oss-fuzz/advanced-topics/bug-fixing-guidance) de Google disent la même chose, sans le spectacle du modèle de pointe. La gravité dépend du modèle de menace propre au projet. Certains bugs sont difficiles à reproduire. Certaines corrections apparemment simples ajoutent assez de complexité pour obliger le mainteneur à se demander si le projet est vraiment plus sûr après le patch.
+
+Ce jugement, c'est le travail.
+
+Anthropic ne le cache pas. Son annonce explique que Project Glasswing a facilité la découverte de vulnérabilités, mais que leur vérification, leur classement et leur correction restent difficiles. Dans certains cas, plusieurs mois se sont écoulés entre la découverte d'une faille et son correctif.
+
+Scanner très avancé. Même calendrier obstiné.
+
+## Une preuve de concept n'est pas un correctif
+
+Les rapports d'OSS Scanner peuvent inclure une preuve de concept montrant comment exploiter la faille.
+
+C'est utile. Elle aide le mainteneur à reproduire le problème et à distinguer une alerte crédible d'un avertissement générique.
+
+C'est aussi une information sensible.
+
+Le [guide de l'OpenSSF sur les vulnérabilités](https://oss-vulnerability-guide.openssf.org/finder-guide.html) recommande de ne transmettre les preuves de concept qu'après avoir établi un canal sécurisé. La divulgation coordonnée ne consiste pas à envoyer un exploit astucieux à la personne qui a le plus de commits. Il faut signaler le problème en privé, créer et tester une correction, coordonner la communication en aval, maintenir un embargo si nécessaire et publier la mitigation sans laisser les utilisateurs exposés.
+
+Beaucoup de projets open source n'ont pas d'équipe de sécurité.
+
+Ils ont une ou deux personnes qui maintiennent le code.
+
+Elles ne sont pas toujours payées. Elles n'ont pas forcément de canal privé, d'infrastructure de test, d'automatisation des versions, de relation avec une autorité CVE ni de temps pour traiter une pile de rapports d'exploitation générés par une machine. L'OpenSSF demande explicitement aux chercheurs de s'adapter à cette réalité, car un petit projet peut avoir besoin de beaucoup plus d'aide pour aller jusqu'au bout d'une divulgation.
+
+Voilà pourquoi un rapport de qualité est précieux, mais aussi pourquoi le rapport ne peut pas être la ligne d'arrivée.
+
+Ce qui réduit le risque n'est pas la découverte.
+
+C'est la correction qui arrive chez les utilisateurs.
+
+## Le coût est déplacé en aval
+
+« Analyse de sécurité gratuite » ressemble à un don de capacité.
+
+C'en est un.
+
+Mais ce don peut aussi déplacer la facture.
+
+Le fournisseur du modèle paie le calcul et la découverte. Le mainteneur paie en interruptions, en tri, en compréhension du domaine, en conception du correctif, en tests, en publications et en support. Les équipes en aval doivent ensuite voir passer la nouvelle version, comprendre si elles sont concernées, mettre à jour leurs dépendances et vérifier que le patch n'a rien cassé.
+
+Cela ne rend pas le scanner mauvais.
+
+OSS-Fuzz de Google a montré toute la valeur d'une détection continue et gratuite. Sa documentation indique que le service a contribué à identifier et corriger plus de 10 000 vulnérabilités et 36 000 bugs dans 1 000 projets.
+
+Mais OSS-Fuzz a aussi construit pendant des années tout un flux autour du moteur de détection : rapports privés, cas de test reproductibles, déduplication automatique, vérification des correctifs, délais de divulgation et, désormais, propositions de patch produites par IA puis contrôlées en interne avant d'arriver chez les mainteneurs.
+
+Cette mécanique n'est pas de la paperasse autour du produit.
+
+C'est le produit.
+
+Anthropic semble l'avoir compris. OSS Scanner fonctionne sur inscription. Le flux de rapports bruts est réservé aux projets qui disent pouvoir absorber le volume. Anthropic conservera une divulgation relue par des humains pour les autres et affirme avoir financé la Python Software Foundation, l'Apache Software Foundation, Alpha-Omega, l'OpenSSF et des organisations de coordination qui évitent de submerger les mainteneurs.
+
+C'est une bonne base.
+
+La réussite du programme dépendra moins du nombre de vulnérabilités remontées que de la capacité du soutien humain à grandir avec elles.
+
+## Les infrastructures critiques ont le même problème
+
+Anthropic a lancé OSS Scanner dans le cadre d'une Cyber Mission plus large, qui comprend aussi un programme de défense des infrastructures critiques.
+
+Les deux initiatives semblent différentes.
+
+Elles révèlent la même contrainte.
+
+Les réseaux électriques, les systèmes d'eau, les usines et les transports reposent souvent sur des technologies opérationnelles propriétaires conçues pour durer des décennies. Anthropic rappelle qu'il n'est pas toujours possible de les arrêter pour appliquer un patch, que chaque modification peut être risquée et que des vulnérabilités connues peuvent rester ouvertes pendant des années. Dans de rares cas, une correction peut demander des décennies avant d'être déployée sans danger.
+
+L'entreprise ne se contente donc pas de déposer un modèle dans une salle de contrôle en parlant de défense à la vitesse des machines. Elle commence avec un petit groupe de fabricants, d'entreprises de cybersécurité et de cabinets de conseil, épaulés par des ingénieurs sur site et des chercheurs en menaces.
+
+Le modèle peut aider à trouver la faiblesse.
+
+L'institution doit encore décider si, quand et comment toucher à la machine qui garde l'eau potable.
+
+Ce n'est pas un échec de l'IA.
+
+C'est la réalité du travail de sécurité.
+
+## Il faut mesurer les correctifs, pas les découvertes
+
+Le chiffre le plus simple à publier sera le nombre de failles trouvées.
+
+Le nombre de projets analysés.
+
+Le nombre de vulnérabilités potentielles identifiées.
+
+Le nombre d'étiquettes « haute » ou « critique » attribuées.
+
+Ces données décrivent l'activité. Elles mesurent mal la réduction du risque.
+
+Une évaluation sérieuse devrait demander :
+
+- Combien de rapports étaient nouveaux et valides ?
+- Combien de temps de maintenance le tri a-t-il demandé ?
+- À quelle fréquence la gravité a-t-elle été corrigée ?
+- Combien de patchs proposés étaient assez sûrs pour être utilisés ?
+- Combien de temps a-t-il fallu pour publier une correction ?
+- Combien de versions affectées ont reçu un rétroportage ?
+- Les utilisateurs en aval ont-ils réellement fait la mise à jour ?
+- Le programme a-t-il créé des régressions ou des erreurs de divulgation ?
+- Les mainteneurs se sont-ils sentis aidés ou ensevelis ?
+
+La bonne métrique n'est pas le nombre de vulnérabilités découvertes.
+
+C'est le risque exploitable supprimé par heure d'attention humaine rare.
+
+Cette mesure tient moins bien dans un billet de lancement.
+
+C'est aussi celle qui compte.
+
+## La défense par l'IA a besoin d'un budget de correction
+
+Si les modèles de pointe continuent à progresser dans la recherche de failles, tout programme d'analyse sérieux devra placer un budget de correction à côté du budget de calcul.
+
+Cela peut vouloir dire payer les mainteneurs.
+
+Financer des ingénieurs capables de reproduire et trier les rapports.
+
+Maintenir des canaux privés de divulgation.
+
+Construire des environnements de test et de validation des patchs.
+
+Aider à gérer les CVE, les avis de sécurité, les rétroportages et l'information des utilisateurs en aval.
+
+Soutenir les fondations et les coordinateurs qui savent déjà quels projets font tourner des infrastructures essentielles grâce au travail bénévole.
+
+Et parfois, cela veut dire ne pas envoyer un nouveau rapport tant que le premier n'est pas corrigé.
+
+L'industrie de l'IA adore le moment de la découverte parce qu'il fait une excellente démonstration. Le modèle trouve ce que les humains avaient raté. Il existe une preuve de concept. La courbe monte.
+
+La correction est plus lente et moins spectaculaire.
+
+C'est pourtant là que la sécurité se construit.
+
+## En clair
+
+OSS Scanner est une expérience utile parce qu'Anthropic reconnaît sa propre limite.
+
+Le service est volontaire.
+
+Les rapports sont clairement présentés comme non relus.
+
+Le taux d'erreur attendu est annoncé.
+
+Les projets qui manquent de moyens peuvent rester dans un circuit vérifié par des humains.
+
+Et Anthropic finance une partie des organisations qui font ce travail de coordination peu spectaculaire.
+
+Ce sont de bons choix.
+
+Le programme doit maintenant prouver qu'une découverte plus rapide réduit plus vite le risque, au lieu de faire simplement grossir la boîte de réception.
+
+L'IA peut trouver la faille.
+
+Le plus difficile reste de construire la capacité humaine et institutionnelle pour la corriger.

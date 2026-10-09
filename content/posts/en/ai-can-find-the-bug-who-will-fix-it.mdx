@@ -1,0 +1,195 @@
+---
+title: "AI Can Find the Bug. Who Is Going to Fix It?"
+date: "2026-10-09"
+description: "Anthropic's new OSS Scanner can send maintainers unreviewed vulnerability reports from frontier models. The scanner is free. Triage, disclosure, patching, testing, and release work are not."
+tags: ["AI Security", "Open Source", "Anthropic", "Developer Tools"]
+draft: false
+---
+
+## The short version
+
+Finding the vulnerability is becoming the cheap part.
+
+On October 8, Anthropic launched [OSS Scanner](https://www.anthropic.com/news/anthropic-cyber-mission), a free, opt-in service that periodically scans open-source projects with the company's strongest models. Each report can include a proof of concept, an explanation, and a suggested fix.
+
+The reports arrive without human review.
+
+Anthropic expects a true-positive rate above 90%, while warning that some reports will contain inaccuracies such as the wrong severity rating. It says the service is intended for projects with enough capacity to keep up. Projects that do not have that capacity can remain on Anthropic's slower, human-verified disclosure path.
+
+That distinction is the whole story.
+
+AI can produce more findings.
+
+It cannot produce more maintainer hours.
+
+The scanner may be free. Reproducing the bug, understanding the threat model, checking whether the finding is novel, coordinating disclosure, writing a safe patch, testing regressions, backporting the fix, cutting releases, and warning downstream users are not.
+
+The security bottleneck is moving.
+
+It used to be finding enough bugs.
+
+Now it may be surviving the queue.
+
+## A 90% scanner can create a 100% workload
+
+Above 90% sounds excellent.
+
+For a new model-generated security service, it probably is.
+
+But precision is not workload.
+
+If a scanner sends 100 reports and ten are wrong, a maintainer still has to inspect all 100 to learn which ten. Even a valid report may have the wrong severity, duplicate an existing issue, depend on an unrealistic threat model, affect only an unsupported configuration, or propose a patch that fixes the proof of concept while breaking something else.
+
+Google's [OSS-Fuzz guidance](https://google.github.io/oss-fuzz/advanced-topics/bug-fixing-guidance) makes the same point without the frontier-model drama. Severity depends on the project's threat model. Some bugs do not reproduce reliably. Some apparently simple fixes add enough complexity that the maintainer has to decide whether the result actually makes the project safer.
+
+That judgment is the work.
+
+Anthropic is not hiding this. Its announcement says that Project Glasswing made vulnerabilities easier to find, but verifying, prioritizing, and fixing them remained difficult. It says months sometimes passed between a finding and a fix.
+
+Very advanced scanner. Same stubborn calendar.
+
+## A proof of concept is not a patch
+
+OSS Scanner reports can include a proof of concept showing how a bug could be exploited.
+
+That is useful. It helps a maintainer reproduce the issue and distinguish a plausible claim from a generic warning.
+
+It is also sensitive material.
+
+The [OpenSSF vulnerability guide](https://oss-vulnerability-guide.openssf.org/finder-guide.html) recommends sharing proofs of concept only after a secure channel has been established. Coordinated disclosure is not simply emailing a clever exploit to whoever has the most commits. It means privately reporting the issue, creating and testing a fix, coordinating downstream communication, preserving an embargo when necessary, and releasing the mitigation so users are not left exposed.
+
+Many open-source projects do not have a security team.
+
+They have one or two maintainers.
+
+They may be unpaid. They may not have a private intake process, test infrastructure, release automation, a CVE relationship, or time to work through a stack of machine-generated exploit reports. OpenSSF explicitly warns researchers to adapt to that reality because a small project may need much more help to carry a disclosure through to completion.
+
+This is why a high-quality report matters, but it is also why a report cannot be the finish line.
+
+The artifact that reduces risk is not the finding.
+
+It is the fix that reaches users.
+
+## The cost moves downstream
+
+"Free security scanning" sounds like donated capacity.
+
+It is.
+
+It can also transfer cost.
+
+The model provider pays for inference and discovery. The maintainer pays in interruption, triage, domain reasoning, patch design, testing, releases, and support. Downstream teams then have to notice the release, understand whether they are affected, update dependencies, and verify that the patch did not break their systems.
+
+This does not make the scanner bad.
+
+Google's OSS-Fuzz has shown how valuable continuous, free vulnerability discovery can be. Its documentation says the service has helped identify and fix more than 10,000 vulnerabilities and 36,000 bugs across 1,000 projects.
+
+But OSS-Fuzz also has years of workflow around the detection engine: private reports, reproducible test cases, automatic deduplication, fix verification, disclosure timelines, and increasingly AI-proposed patches that pass internal quality review before maintainers see them.
+
+That surrounding machinery is not administrative overhead.
+
+It is the product.
+
+Anthropic appears to understand that. OSS Scanner is opt-in. The raw-report path is reserved for projects that say they can handle the volume. Anthropic will keep human-reviewed disclosure for others, and says it has funded the Python Software Foundation, Apache Software Foundation, Alpha-Omega, OpenSSF, and coordination groups that help prevent maintainers from being overwhelmed.
+
+Good.
+
+The success of the program will depend less on how many vulnerabilities the model can surface than on whether that support grows with the findings.
+
+## Critical infrastructure has the same bottleneck
+
+Anthropic launched OSS Scanner as part of a broader Cyber Mission that also includes a Critical Infrastructure Defense Program.
+
+The two efforts look different.
+
+They expose the same constraint.
+
+Power grids, water systems, factories, and transportation networks often run on proprietary operational technology built to last for decades. Anthropic notes that these systems cannot always be taken offline for a patch, that changes can be dangerous, and that known vulnerabilities may remain unresolved for years. In rare cases, a fix may take decades to deploy safely.
+
+So the company is not dropping a model into a control room and calling it machine-speed defense. It is starting with a small group of equipment makers, security vendors, and consulting firms, plus on-site engineers and threat researchers.
+
+The model can help find the weakness.
+
+The institution still has to decide whether, when, and how to touch the machine keeping the water clean.
+
+That is not AI failure.
+
+It is the shape of real security work.
+
+## Measure patches, not findings
+
+The easiest number to publish will be findings.
+
+How many projects scanned.
+
+How many possible vulnerabilities identified.
+
+How many high or critical labels assigned.
+
+Those numbers are useful for describing activity. They are weak measures of reduced risk.
+
+A serious evaluation should ask:
+
+- How many reports were novel and valid?
+- How much maintainer time did triage require?
+- How often was severity corrected?
+- How many suggested fixes were safe enough to use?
+- How long did it take to release a patch?
+- How many affected versions received backports?
+- Did downstream users actually upgrade?
+- Did the program create regressions or disclosure mistakes?
+- Did maintainers feel helped or buried?
+
+The key metric is not vulnerabilities found.
+
+It is exploitable risk removed per hour of scarce human attention.
+
+That metric is harder to put in a launch post.
+
+It is also the one that matters.
+
+## AI defense needs a remediation budget
+
+If frontier models keep getting better at finding security flaws, every serious scanning program will need a remediation budget beside the inference budget.
+
+That can mean paying maintainers.
+
+Funding security engineers who can reproduce and triage reports.
+
+Maintaining private disclosure channels.
+
+Building test environments and patch validation.
+
+Helping with CVEs, advisories, backports, and downstream notification.
+
+Supporting foundations and coordinators that already know which projects are carrying critical infrastructure with volunteer labor.
+
+And sometimes it means not sending another report until the first one is fixed.
+
+The AI industry likes the discovery moment because it demos beautifully. The model finds something humans missed. There is a proof of concept. The graph goes up.
+
+Remediation is slower and less cinematic.
+
+It is also where security happens.
+
+## The bottom line
+
+Anthropic's OSS Scanner is a useful experiment because it acknowledges its own boundary.
+
+The service is opt-in.
+
+The reports are labeled as unreviewed.
+
+The expected error rate is disclosed.
+
+Projects without enough capacity can stay on a human-verified path.
+
+And Anthropic is funding some of the organizations that do the unglamorous coordination work.
+
+Those are good choices.
+
+Now the program has to prove that faster discovery creates faster risk reduction rather than a faster-growing inbox.
+
+AI can find the bug.
+
+The hard part is still building the human and institutional capacity to fix it.
