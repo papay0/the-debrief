@@ -1,0 +1,279 @@
+---
+title: "A Universal AI Agent Should Not Know Everything"
+date: "2026-10-11"
+description: "Google's new universal workplace agent carries memory across email, documents, chat, code, and subagents. The UK privacy regulator is asking the necessary question: how do you keep a useful agent from turning every available piece of personal data into context?"
+tags: ["AI Agents", "Google", "AI Privacy", "Enterprise AI", "AI Regulation"]
+draft: false
+---
+
+## The short version
+
+Google wants one AI agent to know how your company works.
+
+The UK privacy regulator would like to know exactly why it needs each piece of that information.
+
+Those are not opposing ideas.
+
+They are the product requirement.
+
+On October 8, Google Cloud [introduced the Gemini agent](https://cloud.google.com/blog/products/ai-machine-learning/welcome-to-gemini-at-work-2026), which it calls a single, universal agent for work. It can operate across Google Workspace, Microsoft 365, Slack, the command line, desktop files, databases, enterprise apps, and MCP servers. It runs in the cloud, keeps working after the laptop closes, carries the same memory across channels, and can create temporary subagents for multi-step jobs.
+
+The same day, the UK's Information Commissioner's Office [opened a six-week call for evidence on agentic AI](https://ico.org.uk/about-the-ico/ico-and-stakeholder-consultations/2026/10/agentic-ai-call-for-evidence/) and confirmed enquiries into recent agent testing involving OpenAI, Anthropic, Meta, and the UK AI Security Institute.
+
+The ICO's message is simple:
+
+Autonomy is not an excuse for poor compliance.
+
+That sentence should be printed above every enterprise agent console.
+
+An agent does not become exempt from data protection law because nobody predicted which file it would open, which inference it would make, which subagent it would create, or which website it would visit.
+
+The organization remains responsible for the processing.
+
+The agent still needs a purpose.
+
+And "all of your business context" is not a purpose.
+
+## The universal agent is a context machine
+
+Google's announcement is ambitious in a very specific way.
+
+Gemini is not only a chatbot embedded in several products. Google says it maintains one set of memories, context, and personalization across the places where a person works. It can respond to an event, run for hours or days, choose among Gemini and Anthropic models, connect to internal systems, and dynamically create job-specific subagents with their own identities.
+
+Coworker agents can receive their own email address, calendar, storage, and place in the company directory. Google says they act under their own identity and see only what colleagues share with them.
+
+Good.
+
+Identity and permissions are the right foundation.
+
+But the real product advantage is continuity.
+
+Gemini knows the documents, people, prior tasks, operating procedures, and systems around the work. It does not need to be briefed again every time the user moves from Gmail to Sheets or from Slack to the command line.
+
+That is also the privacy risk.
+
+A universal agent becomes useful by making boundaries disappear.
+
+Data protection depends on knowing where the boundaries are.
+
+## Useful someday is not a lawful purpose
+
+The ICO's earlier [analysis of agentic AI data risks](https://ico.org.uk/about-the-ico/research-reports-impact-and-evaluation/research-and-reports/technology-and-innovation/tech-horizons-and-ico-tech-futures/ico-tech-futures-agentic-ai/data-protection-and-privacy-risks/) makes the conflict unusually concrete.
+
+Organizations should not give an agent access to personal information simply because it might become useful later.
+
+They need a justifiable purpose.
+
+They should limit the data, tools, and databases available to what that purpose requires.
+
+The ICO compares this to least privilege, the old security principle that says a user or service should receive only the access needed for the job.
+
+Agents make that principle harder because the job is often described as an outcome rather than a procedure.
+
+"Prepare the quarterly review" may lead an agent into financial records, customer emails, staff performance notes, sales forecasts, calendars, and external research. A person can understand that some of those sources are inappropriate. A general-purpose agent may interpret them as useful context.
+
+That means the permission boundary cannot only be:
+
+Can Gemini read Drive?
+
+It has to be:
+
+Which Drive files may this task use, for which purpose, for how long, and what may the agent remember afterward?
+
+Very simple. The future of work has rediscovered purpose limitation.
+
+## Four memories create four deletion problems
+
+Google says Gemini keeps four types of memory.
+
+Session memory preserves the current task, including work that runs for days.
+
+Semantic memory builds structured knowledge as the agent reads documents, talks to people, and works with other agents.
+
+Procedural memory records how work gets done, including skills the agent writes for itself.
+
+Episodic memory remembers what it has done before.
+
+That is a thoughtful product model.
+
+It is also a data-governance map.
+
+If an employee corrects an inaccurate fact, which memory changes?
+
+If a customer asks for personal information to be erased, can the company find every task, summary, procedure, subagent trace, and learned association that contains it?
+
+If a document permission is revoked, does knowledge derived from the document remain in semantic memory?
+
+If a temporary subagent generated a wrong inference about a person, does correcting the parent agent correct the child record, the output document, and every downstream system that received it?
+
+The ICO warns about cascading hallucinations for exactly this reason. An agent can invent inaccurate personal information, store it, pass it to another agent, and write it into a system that later treats it as fact.
+
+A wrong answer is annoying.
+
+A wrong answer with memory, tools, and write access becomes a record-management problem.
+
+## The user is not the only person in the data
+
+Enterprise agent demos usually focus on the person assigning the task.
+
+That person is not the only data subject involved.
+
+An agent coordinating a meeting reads colleagues' calendars.
+
+An agent preparing a sales review may process customer messages.
+
+An HR agent may infer health, union, disability, or performance information from ordinary workplace records.
+
+A finance agent may combine internal files with public information about people who have never used the product.
+
+The user clicking "delegate" does not create a lawful basis for every person whose information the agent discovers along the way.
+
+The ICO calls this invisible processing: people may not know an organization is using their information, may have no direct relationship with the agent provider, and may therefore be unable to exercise rights of access, correction, objection, or erasure.
+
+This is where static privacy notices begin to fail.
+
+A company can explain the intended deployment before launch. An open-ended agent can still create a new data flow during the task.
+
+So privacy has to become a runtime control.
+
+Not another page in the footer.
+
+## Subagents need a delegation receipt
+
+Google's temporary subagents are a sensible way to split complicated work.
+
+They are also where accountability can become blurry very quickly.
+
+The parent receives an objective.
+
+It creates three subagents.
+
+One searches documents. One analyzes a database. One drafts the result. The parent combines the work and writes it into a system of record.
+
+Who accessed the personal data?
+
+Which model processed it?
+
+Which permissions were inherited?
+
+What did each subagent retain?
+
+Which source produced the final inference?
+
+Google says each subagent has its own identity. That is useful. Identity makes the chain observable.
+
+Now the system needs a delegation receipt that binds each identity to:
+
+- the parent task
+- the specific purpose
+- the data and tools it could access
+- the model and skill versions it used
+- the information it created or changed
+- the memory it retained
+- the time its authority expired
+- the human or system responsible for the outcome
+
+Without that record, multi-agent architecture can become distributed plausible deniability.
+
+The parent blames the subagent.
+
+The deployer blames the provider.
+
+The provider points to the customer's configuration.
+
+The person affected gets a help-center article.
+
+## The agent is not the data controller
+
+The ICO is admirably direct on this point.
+
+Agentic systems are not legal entities. Organizations remain responsible for how personal information is processed, even when the system chooses its own path through a task.
+
+That means "the agent decided" is not an incident explanation.
+
+It is a system description.
+
+The organization deploying the agent still has to decide what purpose is legitimate, what data is necessary, what risks require a data protection impact assessment, which decisions need meaningful human intervention, and how a person can challenge an automated outcome.
+
+The provider still has to build controls that make those obligations possible.
+
+This is an important division of work.
+
+Google can provide identity, policy management, permissions, sandboxes, network gateways, logs, and controls over memory.
+
+The customer has to configure those mechanisms around a real purpose and operating model.
+
+Neither side gets to hand responsibility to the model in the middle.
+
+## The ten-company announcement is not agent approval
+
+The ICO [also announced](https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/10/ico-secures-changes-from-leading-ai-developers-as-scrutiny-extends-to-ai-agents) that Amazon, Anthropic, Apple, Cohere, DeepSeek, Google, Meta, Microsoft, OpenAI, and Stability AI have made or committed to make data-protection changes following its foundation-model supervision program.
+
+Those changes include clearer explanations of training data, stronger ways for people to exercise their rights, and better evidence that safeguards work.
+
+That is useful progress.
+
+It is not a clean bill of health for agentic AI.
+
+The supervision work focused largely on foundation-model training, lawful basis, special-category data, transparency, access, and objection. The agent call for evidence is a separate, open process. The ICO says its enquiries into recent agent testing are ongoing, and the consultation will inform future guidance and a statutory code of practice on AI and automated decision-making.
+
+So do not read "ten developers made changes" as "ten universal agents are compliant."
+
+The regulator has moved from the data used to build the model to the data the system touches while acting.
+
+That is a much larger surface.
+
+## What a runtime privacy layer should do
+
+The practical response is not to ban persistent agents or make every click require a legal memo.
+
+It is to make the purpose enforceable in software.
+
+For each delegated task, the system should be able to answer:
+
+- What is the declared purpose?
+- Which categories of personal data are necessary?
+- Which systems and records are allowed?
+- Which people may be affected, including non-users?
+- Can the agent infer sensitive information the task did not explicitly request?
+- Which action requires fresh human approval?
+- What can enter long-term memory?
+- How can a person inspect, correct, export, or delete the resulting data?
+- Do corrections propagate to subagents and downstream systems?
+- When do the task, credentials, temporary copies, and derived memories expire?
+
+This should produce a machine-readable purpose contract, scoped credentials, just-in-time notices, complete data lineage, and a human-readable receipt.
+
+It should also connect the privacy team to the security team.
+
+The ICO notes that short-lived shadow agents can create unanticipated processing faster than a data protection officer can discover it. A company cannot govern agents it does not know exist. Agent registries, approval paths, activity logs, and revocation controls are privacy infrastructure as much as security infrastructure.
+
+## The bottom line
+
+Google's universal-agent architecture is compelling because it treats context as the product.
+
+The same agent can remember the work, follow the user across tools, coordinate subagents, choose a model, and return to a task tomorrow without starting over.
+
+That is much closer to a coworker than a chatbot.
+
+It also means the agent can accumulate more personal information, infer more about more people, and carry mistakes farther than a chatbot ever could.
+
+The solution is not a universal privacy permission to match the universal agent.
+
+It is the opposite.
+
+One agent.
+
+Many tightly defined purposes.
+
+Different scopes for different tasks.
+
+Memory that can be inspected and corrected.
+
+Delegation that can be traced.
+
+Authority that expires.
+
+A universal AI agent can work almost everywhere.
+
+That does not mean it should know everything.

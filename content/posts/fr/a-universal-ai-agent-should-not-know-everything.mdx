@@ -1,0 +1,279 @@
+---
+title: "Un agent IA universel ne devrait pas tout savoir"
+date: "2026-10-11"
+description: "Le nouvel agent universel de Google conserve la même mémoire entre emails, documents, messageries, code et sous-agents. Le régulateur britannique pose la bonne question : comment empêcher un agent utile de transformer toute donnée personnelle disponible en contexte ?"
+tags: ["Agents IA", "Google", "Vie privée", "IA d'entreprise", "Régulation IA"]
+draft: false
+---
+
+## La version courte
+
+Google veut qu'un seul agent IA sache comment fonctionne votre entreprise.
+
+Le régulateur britannique des données personnelles aimerait savoir pourquoi il a besoin de chaque information.
+
+Ces deux idées ne s'opposent pas.
+
+Elles forment le cahier des charges du produit.
+
+Le 8 octobre, Google Cloud a [présenté l'agent Gemini](https://cloud.google.com/blog/products/ai-machine-learning/welcome-to-gemini-at-work-2026), décrit comme un agent de travail unique et universel. Il peut intervenir dans Google Workspace, Microsoft 365, Slack, le terminal, les fichiers locaux, les bases de données, les logiciels d'entreprise et les serveurs MCP. Il tourne dans le cloud, continue après la fermeture de l'ordinateur, transporte la même mémoire d'un canal à l'autre et peut créer des sous-agents temporaires pour les tâches complexes.
+
+Le même jour, l'Information Commissioner's Office britannique a [ouvert un appel à contributions de six semaines sur l'IA agentique](https://ico.org.uk/about-the-ico/ico-and-stakeholder-consultations/2026/10/agentic-ai-call-for-evidence/) et confirmé des demandes d'information sur de récents tests d'agents impliquant OpenAI, Anthropic, Meta et l'AI Security Institute britannique.
+
+Le message de l'ICO est simple :
+
+L'autonomie n'excuse pas le non-respect des règles.
+
+Cette phrase devrait être affichée au-dessus de chaque console d'agents en entreprise.
+
+Un agent n'échappe pas au droit des données parce que personne n'avait prévu quel fichier il ouvrirait, quelle déduction il ferait, quel sous-agent il créerait ou quel site il visiterait.
+
+L'organisation reste responsable du traitement.
+
+L'agent a toujours besoin d'une finalité.
+
+Et « tout le contexte de votre entreprise » n'est pas une finalité.
+
+## L'agent universel est une machine à contexte
+
+L'annonce de Google est ambitieuse d'une manière très précise.
+
+Gemini n'est pas seulement un chatbot intégré à plusieurs produits. Google dit qu'il conserve le même ensemble de mémoires, de contexte et de personnalisation partout où une personne travaille. Il peut réagir à un événement, tourner pendant des heures ou des jours, choisir entre les modèles Gemini et Anthropic, se connecter aux systèmes internes et créer à la volée des sous-agents spécialisés dotés de leur propre identité.
+
+Les agents-collègues peuvent recevoir leur propre adresse email, leur calendrier, leur espace de stockage et une place dans l'annuaire de l'entreprise. Google dit qu'ils agissent sous leur propre identité et ne voient que ce que leurs collègues partagent avec eux.
+
+C'est une bonne base.
+
+L'identité et les permissions sont les bonnes fondations.
+
+Mais le vrai avantage produit est la continuité.
+
+Gemini connaît les documents, les personnes, les tâches précédentes, les procédures et les systèmes qui entourent le travail. Inutile de tout lui réexpliquer quand l'utilisateur passe de Gmail à Sheets ou de Slack au terminal.
+
+C'est aussi le risque pour la vie privée.
+
+Un agent universel devient utile en faisant disparaître les frontières.
+
+La protection des données dépend de notre capacité à savoir où se trouvent ces frontières.
+
+## Potentiellement utile n'est pas une finalité légitime
+
+L'[analyse antérieure de l'ICO sur les risques de l'IA agentique](https://ico.org.uk/about-the-ico/research-reports-impact-and-evaluation/research-and-reports/technology-and-innovation/tech-horizons-and-ico-tech-futures/ico-tech-futures-agentic-ai/data-protection-and-privacy-risks/) formule le conflit avec une rare précision.
+
+Une organisation ne devrait pas donner à un agent accès à des informations personnelles au seul motif qu'elles pourraient devenir utiles plus tard.
+
+Elle doit avoir une finalité justifiable.
+
+Elle doit limiter les données, les outils et les bases accessibles à ce que cette finalité exige.
+
+L'ICO compare cette approche au principe du moindre privilège, cette vieille règle de sécurité selon laquelle un utilisateur ou un service ne reçoit que les accès nécessaires à sa mission.
+
+Les agents compliquent ce principe parce que leur mission est souvent décrite comme un résultat, pas comme une procédure.
+
+« Prépare la revue trimestrielle » peut entraîner l'agent vers des comptes financiers, des emails clients, des évaluations de salariés, des prévisions commerciales, des calendriers et des recherches externes. Un humain peut comprendre que certaines sources n'ont rien à faire là. Un agent généraliste peut les interpréter comme du contexte utile.
+
+La frontière de permission ne peut donc pas seulement être :
+
+Gemini peut-il lire Drive ?
+
+Elle doit devenir :
+
+Quels fichiers Drive cette tâche peut-elle utiliser, pour quelle finalité, pendant combien de temps, et que peut retenir l'agent ensuite ?
+
+Très simple. Le futur du travail vient de redécouvrir la limitation des finalités.
+
+## Quatre mémoires, quatre problèmes d'effacement
+
+Google dit que Gemini conserve quatre types de mémoire.
+
+La mémoire de session garde le contexte de la tâche en cours, y compris quand elle dure plusieurs jours.
+
+La mémoire sémantique construit une base de connaissances structurée à mesure que l'agent lit des documents, parle à des personnes et collabore avec d'autres agents.
+
+La mémoire procédurale retient la manière d'effectuer le travail, y compris les skills que l'agent écrit lui-même.
+
+La mémoire épisodique conserve ce qu'il a déjà fait.
+
+C'est un modèle produit réfléchi.
+
+C'est aussi une carte de gouvernance des données.
+
+Si un salarié corrige une information erronée, quelle mémoire est mise à jour ?
+
+Si un client demande l'effacement de ses données personnelles, l'entreprise peut-elle retrouver chaque tâche, résumé, procédure, trace de sous-agent et association apprise qui les contient ?
+
+Si l'accès à un document est révoqué, les connaissances dérivées de ce document restent-elles dans la mémoire sémantique ?
+
+Si un sous-agent temporaire invente une déduction sur une personne, corriger l'agent parent corrige-t-il aussi la trace du sous-agent, le document produit et tous les systèmes en aval qui l'ont reçu ?
+
+L'ICO alerte sur les hallucinations en cascade pour cette raison précise. Un agent peut inventer une donnée personnelle, la stocker, la transmettre à un autre agent puis l'inscrire dans un système qui la traitera ensuite comme un fait.
+
+Une mauvaise réponse est pénible.
+
+Une mauvaise réponse dotée de mémoire, d'outils et d'un accès en écriture devient un problème de gestion des données.
+
+## L'utilisateur n'est pas la seule personne dans les données
+
+Les démos d'agents d'entreprise se concentrent généralement sur la personne qui confie la tâche.
+
+Ce n'est pas la seule personne concernée par les données.
+
+Un agent qui organise une réunion lit les calendriers des collègues.
+
+Un agent qui prépare une revue commerciale peut traiter des messages de clients.
+
+Un agent RH peut déduire des informations de santé, de handicap, de syndicalisation ou de performance à partir de documents de travail ordinaires.
+
+Un agent financier peut croiser des fichiers internes avec des informations publiques sur des personnes qui n'ont jamais utilisé le produit.
+
+Le clic de l'utilisateur sur « déléguer » ne crée pas une base légale pour chaque personne dont l'agent découvre les informations en chemin.
+
+L'ICO parle de traitement invisible : certaines personnes ignorent que l'organisation utilise leurs données, n'ont aucune relation directe avec le fournisseur de l'agent et ne peuvent donc pas exercer leurs droits d'accès, de rectification, d'opposition ou d'effacement.
+
+C'est là que les politiques de confidentialité statiques commencent à céder.
+
+Une entreprise peut expliquer le déploiement prévu avant le lancement. Un agent généraliste peut tout de même créer un nouveau flux de données au milieu d'une tâche.
+
+La vie privée doit donc devenir un contrôle d'exécution.
+
+Pas une page de plus dans le pied de site.
+
+## Les sous-agents ont besoin d'un reçu de délégation
+
+Les sous-agents temporaires de Google sont une façon raisonnable de répartir un travail complexe.
+
+Ils sont aussi l'endroit où la responsabilité peut devenir floue très vite.
+
+Le parent reçoit un objectif.
+
+Il crée trois sous-agents.
+
+L'un cherche dans les documents. Un autre analyse une base de données. Le troisième rédige le résultat. Le parent combine leur travail et l'écrit dans un système de référence.
+
+Qui a consulté les données personnelles ?
+
+Quel modèle les a traitées ?
+
+Quelles permissions ont été héritées ?
+
+Qu'a retenu chaque sous-agent ?
+
+Quelle source a produit la déduction finale ?
+
+Google dit que chaque sous-agent possède sa propre identité. C'est utile. L'identité rend la chaîne observable.
+
+Il faut maintenant un reçu de délégation qui relie chaque identité :
+
+- à la tâche parente
+- à la finalité précise
+- aux données et aux outils accessibles
+- aux versions du modèle et des skills utilisées
+- aux informations créées ou modifiées
+- à la mémoire conservée
+- à l'heure d'expiration de l'autorité
+- à l'humain ou au système responsable du résultat
+
+Sans cette trace, l'architecture multi-agents peut devenir une machine à distribuer le déni de responsabilité.
+
+Le parent accuse le sous-agent.
+
+Le déployeur accuse le fournisseur.
+
+Le fournisseur renvoie à la configuration du client.
+
+La personne touchée reçoit un article du centre d'aide.
+
+## L'agent n'est pas le responsable du traitement
+
+L'ICO est admirablement direct sur ce point.
+
+Les systèmes agentiques ne sont pas des personnes juridiques. Les organisations restent responsables du traitement des informations personnelles, même lorsque le système choisit lui-même son chemin dans une tâche.
+
+« L'agent a décidé » n'est donc pas une explication d'incident.
+
+C'est une description du système.
+
+L'organisation qui déploie l'agent doit toujours décider quelle finalité est légitime, quelles données sont nécessaires, quels risques imposent une analyse d'impact, quelles décisions exigent une véritable intervention humaine et comment une personne peut contester un résultat automatisé.
+
+Le fournisseur doit toujours construire les contrôles qui rendent ces obligations possibles.
+
+C'est une répartition importante du travail.
+
+Google peut fournir l'identité, la gestion des politiques, les permissions, les sandboxes, les passerelles réseau, les journaux et des contrôles sur la mémoire.
+
+Le client doit configurer ces mécanismes autour d'une finalité et d'un modèle opérationnel réels.
+
+Aucun des deux ne peut transférer sa responsabilité au modèle placé entre eux.
+
+## L'annonce sur dix entreprises ne valide pas les agents
+
+L'ICO a [aussi annoncé](https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/10/ico-secures-changes-from-leading-ai-developers-as-scrutiny-extends-to-ai-agents) qu'Amazon, Anthropic, Apple, Cohere, DeepSeek, Google, Meta, Microsoft, OpenAI et Stability AI avaient effectué ou s'étaient engagés à effectuer des changements en matière de protection des données après son programme de supervision des modèles de fondation.
+
+Ces changements comprennent des explications plus claires sur les données d'entraînement, de meilleurs moyens pour les personnes d'exercer leurs droits et des preuves plus solides de l'efficacité des garde-fous.
+
+C'est un progrès utile.
+
+Ce n'est pas un certificat de conformité pour l'IA agentique.
+
+La supervision concernait principalement l'entraînement des modèles de fondation, la base légale, les données sensibles, la transparence, l'accès et l'opposition. L'appel à contributions sur les agents est une procédure distincte et toujours ouverte. L'ICO précise que ses demandes d'information sur de récents tests d'agents sont en cours et que la consultation nourrira de futures recommandations ainsi qu'un code de pratique sur l'IA et la décision automatisée prévu par la loi.
+
+Il ne faut donc pas traduire « dix développeurs ont changé leurs pratiques » par « dix agents universels sont conformes ».
+
+Le régulateur passe des données utilisées pour construire le modèle aux données que le système touche lorsqu'il agit.
+
+La surface est beaucoup plus vaste.
+
+## À quoi devrait servir une couche de protection des données à l'exécution
+
+La réponse pratique n'est pas d'interdire les agents persistants ni d'exiger une note juridique avant chaque clic.
+
+Elle consiste à rendre la finalité applicable dans le logiciel.
+
+Pour chaque tâche déléguée, le système devrait pouvoir répondre :
+
+- Quelle est la finalité déclarée ?
+- Quelles catégories de données personnelles sont nécessaires ?
+- Quels systèmes et quels enregistrements sont autorisés ?
+- Quelles personnes peuvent être touchées, y compris parmi les non-utilisateurs ?
+- L'agent peut-il déduire une information sensible que la tâche ne demande pas explicitement ?
+- Quelle action exige une nouvelle validation humaine ?
+- Qu'est-ce qui peut entrer dans la mémoire à long terme ?
+- Comment une personne peut-elle consulter, corriger, exporter ou effacer les données produites ?
+- Les corrections se propagent-elles aux sous-agents et aux systèmes en aval ?
+- Quand expirent la tâche, les identifiants, les copies temporaires et les mémoires dérivées ?
+
+Cela devrait produire un contrat de finalité lisible par la machine, des identifiants aux permissions limitées, des notifications au bon moment, une traçabilité complète des données et un reçu lisible par un humain.
+
+Il faut aussi relier l'équipe vie privée à l'équipe sécurité.
+
+L'ICO note que des agents éphémères et invisibles pour la gouvernance peuvent créer des traitements imprévus plus vite qu'un délégué à la protection des données ne peut les découvrir. Une entreprise ne peut pas gouverner les agents dont elle ignore l'existence. Les registres d'agents, les circuits d'approbation, les journaux d'activité et les contrôles de révocation sont autant une infrastructure de protection des données qu'une infrastructure de sécurité.
+
+## En clair
+
+L'architecture d'agent universel de Google est convaincante parce qu'elle traite le contexte comme le produit.
+
+Le même agent peut se souvenir du travail, suivre l'utilisateur entre les outils, coordonner des sous-agents, choisir un modèle et reprendre la tâche demain sans repartir de zéro.
+
+C'est beaucoup plus proche d'un collègue que d'un chatbot.
+
+Cela signifie aussi que l'agent peut accumuler davantage d'informations personnelles, déduire davantage de choses sur davantage de personnes et propager ses erreurs bien plus loin qu'un chatbot.
+
+La solution n'est pas une autorisation générale d'accès aux données pour accompagner l'agent universel.
+
+C'est l'inverse.
+
+Un seul agent.
+
+De nombreuses finalités strictement définies.
+
+Des périmètres différents selon les tâches.
+
+Une mémoire que l'on peut inspecter et corriger.
+
+Une délégation que l'on peut retracer.
+
+Des autorisations qui expirent.
+
+Un agent IA universel peut travailler presque partout.
+
+Cela ne veut pas dire qu'il devrait tout savoir.
