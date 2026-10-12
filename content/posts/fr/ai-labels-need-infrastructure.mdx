@@ -1,10 +1,125 @@
 ---
 title: "Les labels IA doivent être une infrastructure, pas des autocollants"
 date: "2026-08-15"
-description: "Les règles de transparence de l'AI Act européen deviennent applicables, et le watermark Claude d'Anthropic montre la version difficile du sujet. La vraie question n'est pas seulement de savoir si le contenu IA reçoit un autocollant, mais si les marques lisibles par machine, les APIs de détection, les métadonnées C2PA et les traces d'audit peuvent devenir une infrastructure de confiance sans prétendre prouver plus qu'elles ne prouvent."
+description: "Le watermark textuel d'OpenAI peut montrer que l'IA a touché aux mots. L'enquête d'OpenAI sur de faux journalistes et un faux institut montre ce qu'il ne peut pas vérifier : la personne, l'institution et l'intention derrière le texte."
 tags: ["AI Regulation", "EU AI Act", "AI Safety", "AI Products"]
 draft: false
 ---
+
+## Mise à jour : un watermark ne vérifie pas une signature
+
+OpenAI vient de publier le meilleur argument en faveur du watermark textuel.
+
+Puis, trois jours plus tard, l'entreprise a publié le meilleur argument pour expliquer pourquoi il ne suffit pas.
+
+Le 5 octobre, OpenAI a [présenté textGrain](https://openai.com/index/eu-text-provenance/), un watermark statistique invisible pour le texte. Les clients de l'API peuvent l'activer sur certains modèles. Les contenus éligibles produits par ChatGPT et Codex dans l'Union européenne le recevront dans les prochaines semaines. L'accès au détecteur sera d'abord réservé à des chercheurs et à des organisations spécialisées ayant reçu une autorisation.
+
+L'entreprise décrit ses limites avec une franchise bienvenue.
+
+Dans les évaluations d'OpenAI, le taux de détection atteignait environ 95 % sur certains passages de 400 tokens, pour un objectif de 1 % de faux positifs. Remplacer 10 % des mots par des synonymes faisait tomber la détection d'environ 92 % à 66 %. Avec 25 % de remplacement, elle chutait à 17 %. Les textes courts, contraints, mathématiques, édités ou traduits sont plus difficiles à repérer.
+
+Surtout, OpenAI précise que le watermark n'identifie ni l'utilisateur, ni l'organisation, ni le compte, ni le prompt, ni la conversation. Il n'établit ni la propriété ni la responsabilité. Il ne vérifie pas l'exactitude. Et l'absence de watermark détecté ne prouve pas qu'un humain a écrit le texte.
+
+Très bien.
+
+Voilà à quoi ressemble un outil de provenance honnête.
+
+Le 8 octobre, OpenAI a [décrit deux opérations d'influence](https://openai.com/index/disrupting-ai-enabled-false-front-operations/) qui rendent ces limites très concrètes. L'une utilisait sept fausses identités de journalistes pour proposer des articles à de vrais médias. L'autre semble avoir contrôlé un institut de recherche en Amérique latine par l'intermédiaire d'une fausse directrice, tandis que de vrais salariés, qui ignoraient qui les employait, menaient des entretiens et rédigeaient des rapports.
+
+Le problème ne se limitait pas au texte synthétique.
+
+C'était l'autorité qui était synthétique.
+
+Un watermark peut indiquer qu'un modèle a participé au choix des mots.
+
+Il ne peut pas dire à une rédaction si l'auteur existe.
+
+## Le texte n'était pas toujours la partie la plus fausse
+
+L'opération issue d'Iran fournit l'exemple le plus net.
+
+Selon OpenAI, les opérateurs utilisaient ChatGPT pour améliorer des articles en anglais, les adapter aux règles de soumission de chaque média, rédiger les emails d'approche, écrire au moins une biographie d'auteur et produire des séries de commentaires sur les réseaux sociaux. L'entreprise a identifié près de 100 articles publiés ou repris sous sept fausses signatures dans une douzaine de médias environ.
+
+Les commentaires sur les réseaux sociaux n'ont presque rien produit. OpenAI a constaté peu d'engagement et classé cette partie de la campagne en catégorie 2 de la [Breakout Scale](https://www.brookings.edu/articles/the-breakout-scale-measuring-the-impact-of-influence-operations/).
+
+Les articles, eux, sont passés.
+
+OpenAI a classé l'opération de faux journalistes en catégorie 4 parce qu'elle avait réussi à entrer à plusieurs reprises dans des médias extérieurs. Il s'agit de l'évaluation d'OpenAI appliquant la méthode de Brookings, pas d'une conclusion indépendante de Brookings. Mais la différence de résultat est essentielle.
+
+L'opération devenait plus efficace lorsqu'un vrai média lui prêtait son audience et sa crédibilité.
+
+Le [Washington Post a retracé le parcours d'un article](https://www.washingtonpost.com/technology/2026/10/09/chatgpt-users-iran-planted-ai-generated-articles-us-news-media/) jusqu'à un petit hebdomadaire de Floride. L'éditeur l'avait reçu par PeaceVoice, une organisation qui lui fournissait des tribunes depuis des années, et n'avait donc pas vérifié séparément l'identité de l'auteur. D'autres textes sous de fausses signatures sont apparus dans des espaces communautaires ou des médias spécialisés dans les relations internationales.
+
+Rien, dans ce parcours, n'exigeait que le texte final ait l'air robotique.
+
+C'était précisément l'objectif.
+
+Le modèle aidait les opérateurs à respecter les critères éditoriaux, améliorer leur anglais, créer des biographies plausibles et rédiger un message d'approche professionnel. L'article pouvait être cohérent. L'argument pouvait contenir des faits exacts. La signature pouvait disposer de profils sur les réseaux sociaux. L'intermédiaire pouvait être connu.
+
+L'identité restait fausse.
+
+L'opération russe va encore plus loin. Selon OpenAI, le prétendu Social Research Center semble avoir employé en Amérique latine des personnes qui ignoraient travailler pour une opération d'influence russe. Ces salariés menaient de vrais entretiens et produisaient des travaux majoritairement originaux. Les comptes ChatGPT servaient plus souvent à préparer des rapports internes qu'à écrire les contenus publics.
+
+Un détecteur pourrait inspecter chaque phrase et manquer la tromperie centrale.
+
+Les mots peuvent être humains.
+
+Le chercheur peut être réel.
+
+L'institution peut tout de même être une façade.
+
+Désinformation très avancée. Le contenu passe parce que le mensonge se trouve un étage au-dessus.
+
+## La provenance doit remonter jusqu'à la chaîne de soumission
+
+Cela ne rend pas le watermark textuel inutile.
+
+Cela lui donne une mission précise.
+
+Un watermark est un signal parmi d'autres sur l'intervention d'un modèle. Il peut servir à la transparence, aux règles des plateformes, aux audits et à la recherche. Il peut aider une rédaction à poser une meilleure question.
+
+Il ne peut pas clore l'enquête.
+
+Pour un média, la bonne unité de provenance n'est pas seulement le paragraphe. C'est toute la chaîne de soumission.
+
+Un système éditorial sérieux devrait pouvoir conserver :
+
+- une identité d'auteur vérifiée en privé, même si la signature publique est un pseudonyme
+- l'affiliation, le financeur, le client ou l'organisation que le contributeur représente
+- le canal vérifié par lequel le texte est arrivé
+- l'éditeur, la plateforme ou le service de diffusion qui s'en est porté garant
+- le rôle de l'IA dans la rédaction, la traduction, l'édition, la recherche et les images
+- les résultats des détecteurs avec leurs seuils, leur incertitude et leur version
+- les sources fournies à l'appui des affirmations factuelles
+- l'historique de la revue, des modifications, de l'approbation et de la publication
+- chaque média ou espace communautaire qui a repris le texte
+- un circuit de correction ou de retrait qui se propage lorsque l'identité s'effondre
+
+Cela ne veut pas dire publier un passeport à côté de chaque tribune.
+
+Cela veut dire que la rédaction doit savoir à qui elle a affaire avant de lui prêter son nom, et pouvoir montrer comment elle l'a vérifié sans exposer de données personnelles inutiles.
+
+Les contrôles doivent dépendre du risque. Une critique de restaurant et une tribune géopolitique non sollicitée n'exigent pas le même processus. Un contributeur de longue date et une nouvelle identité avec une adresse email récente, un portrait synthétique, un parcours professionnel peu documenté et une proposition urgente sur la politique étrangère ne devraient pas rencontrer le même niveau de friction non plus.
+
+Les plateformes communautaires ont besoin de frontières tout aussi claires. Un texte que n'importe quel compte peut publier ne devrait pas emprunter l'autorité visuelle d'un article de la rédaction. Les services de diffusion devraient conserver l'identité et l'historique de revue derrière un texte, pas seulement son titre, son corps et sa signature. Les fournisseurs de modèles et les plateformes devraient partager leurs indicateurs assez vite pour qu'un média retrouve toutes les soumissions concernées avant la republication suivante.
+
+C'est la couche qui manquait à l'argument initial sur les labels.
+
+La provenance du contenu demande :
+
+Un modèle a-t-il contribué à ceci ?
+
+La provenance de l'identité demande :
+
+Qui parle, pour qui, et à travers quelle chaîne de confiance ?
+
+Il faut les deux.
+
+La prochaine opération d'influence n'arrivera peut-être pas sous la forme d'un deepfake évident ou d'une armée de commentaires identiques. Elle peut prendre la forme d'un article soigné, signé par un pigiste au profil plausible, transmis par un intermédiaire connu et accompagné d'une mention indiquant que l'IA a aidé à l'édition.
+
+La mention peut être parfaitement exacte.
+
+L'auteur peut tout de même être inventé.
 
 ## La version courte
 

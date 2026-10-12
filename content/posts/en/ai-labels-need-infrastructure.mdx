@@ -1,10 +1,125 @@
 ---
 title: "AI Labels Need Infrastructure, Not Stickers"
 date: "2026-08-15"
-description: "The EU AI Act's transparency rules are now enforceable, and Anthropic's Claude watermark shows what the hard version looks like. The useful question is not whether AI content gets a sticker. It is whether machine-readable marks, detector APIs, C2PA metadata, and audit trails can become trust infrastructure without pretending they prove more than they do."
+description: "OpenAI's text watermark can show that AI touched the words. Its own investigation into fake journalists and a fake think tank shows what the watermark cannot verify: the person, institution, and intent behind them."
 tags: ["AI Regulation", "EU AI Act", "AI Safety", "AI Products"]
 draft: false
 ---
+
+## Update: the watermark cannot verify the byline
+
+OpenAI has just published the most useful argument for text watermarking.
+
+Then, three days later, it published the most useful argument for why text watermarking is not enough.
+
+On October 5, OpenAI [introduced textGrain](https://openai.com/index/eu-text-provenance/), an invisible statistical watermark for text. API customers can opt in for supported models. Eligible ChatGPT and Codex output in the European Union will receive the watermark over the coming weeks. Detector access will initially be limited to approved researchers and expert organizations.
+
+The company is unusually clear about the limits.
+
+In OpenAI's evaluations, detection reached about 95% on some 400-token passages at a target false-positive rate of 1%. Replace 10% of the words with synonyms and detection fell from about 92% to 66%. Replace 25% and it fell to 17%. Short, constrained, mathematical, edited, or translated text is harder.
+
+More importantly, OpenAI says its watermark does not identify the user, organization, account, prompt, or conversation. It does not establish ownership or responsibility. It does not verify accuracy. An absent watermark does not prove human authorship.
+
+Good.
+
+That is what an honest provenance tool sounds like.
+
+On October 8, OpenAI [reported two influence operations](https://openai.com/index/disrupting-ai-enabled-false-front-operations/) that make those limitations painfully concrete. One used seven fake journalist identities to pitch articles to real outlets. The other appears to have controlled a Latin American research organization through a fake director while real, unwitting staff conducted interviews and wrote reports.
+
+The problem was not only synthetic text.
+
+It was synthetic authority.
+
+A watermark can indicate that a model helped choose the words.
+
+It cannot tell an editor whether the writer exists.
+
+## The text was not always the fakest part
+
+The Iran-origin operation is the cleanest example.
+
+OpenAI says the operators used ChatGPT to refine English-language articles, check them against individual publications' submission rules, draft pitch emails, write at least one author biography, and generate batches of social comments. The company identified almost 100 articles published or syndicated under seven false bylines across roughly a dozen outlets.
+
+The social comments mostly went nowhere. OpenAI found little engagement and rated that part of the campaign at Category 2 on the [Breakout Scale](https://www.brookings.edu/articles/the-breakout-scale-measuring-the-impact-of-influence-operations/).
+
+The articles got through.
+
+OpenAI rated the fake-journalist operation at Category 4 because it repeatedly escaped into external media outlets. That is OpenAI's assessment using the Brookings framework, not an independent Brookings finding, but the underlying distinction matters.
+
+The influence operation became more effective when a real publication supplied the distribution and credibility.
+
+The [Washington Post traced one article](https://www.washingtonpost.com/technology/2026/10/09/chatgpt-users-iran-planted-ai-generated-articles-us-news-media/) to a small Florida newspaper. The publisher accepted it through PeaceVoice, an organization that had supplied columns for years, and therefore did not separately verify the author. Other fake bylines appeared in community publishing systems and outlets focused on international affairs.
+
+Nothing about that workflow required the final prose to look robotic.
+
+That was the point.
+
+The model helped the operators satisfy editorial criteria, improve fluency, create plausible biographies, and write a professional pitch. The article could be coherent. The argument could contain real facts. The byline could have social profiles. The intermediary could be familiar.
+
+The identity was still false.
+
+The Russian operation goes one step further. OpenAI says the supposed Social Research Center appears to have employed people in Latin America who did not know they were working for a Russian influence operation. Those staff members conducted real interviews and produced mostly original work. The ChatGPT accounts were used more often to prepare internal reports than to write the public material.
+
+A detector could inspect every sentence and miss the central deception.
+
+The words may be human.
+
+The researcher may be real.
+
+The institution may still be a front.
+
+Very advanced misinformation. The content can pass because the lie lives one layer above it.
+
+## Provenance has to reach the submission chain
+
+This does not make text watermarking useless.
+
+It gives it a proper job.
+
+A watermark is one signal about model involvement. It can support disclosure, platform policy, audits, and research. It can help a newsroom ask a better follow-up question.
+
+It cannot close the case.
+
+For publishers, the useful unit of provenance is not only the paragraph. It is the submission chain.
+
+A serious editorial system should be able to preserve:
+
+- a privately verified author identity, even when the public byline is a pseudonym
+- the affiliation, funder, client, or organization the contributor represents
+- the verified channel through which the submission arrived
+- the editor, platform, or syndication service that vouched for it
+- the role AI played in drafting, translation, editing, research, and imagery
+- detector results with their thresholds, uncertainty, and version
+- the sources supplied for factual claims
+- the review, edits, approval, and publication history
+- every outlet or community page that syndicated the piece
+- a correction or revocation path that propagates when the identity fails
+
+That does not mean publishing passports beside every op-ed.
+
+It means the newsroom should know who it is dealing with before lending that person its masthead, and should be able to show how it checked without exposing unnecessary personal data.
+
+The checks should be risk-based. A restaurant review and an unsolicited geopolitical column do not need the same process. A long-standing contributor and a new persona with a fresh email address, synthetic portrait, thin employment history, and urgent foreign-policy pitch should not receive the same friction either.
+
+Community platforms need equally clear boundaries. A post that any account can upload should not borrow the visual authority of staff reporting. Syndication services should retain the identity and review history behind a piece, not only the title, body, and byline. Model providers and platforms should share indicators quickly enough that an outlet can find every affected submission before the next copy is republished.
+
+This is the missing layer in the original labels argument.
+
+Content provenance asks:
+
+Did a model help create this?
+
+Identity provenance asks:
+
+Who is speaking, for whom, through which chain of trust?
+
+You need both.
+
+The next influence operation may not arrive as an obvious deepfake or a swarm of identical comments. It may arrive as a polished article from a reasonable-sounding freelancer, forwarded by a familiar intermediary, carrying a disclosure that AI helped with editing.
+
+The disclosure can be perfectly accurate.
+
+The author can still be invented.
 
 ## The Short Version
 
