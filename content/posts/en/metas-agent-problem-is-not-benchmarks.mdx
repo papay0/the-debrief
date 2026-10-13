@@ -1,10 +1,112 @@
 ---
 title: "Meta's Agent Problem Is Not Benchmarks"
 date: "2026-07-06"
-description: "Meta's reported Watermelon benchmark claim is interesting, but the harder question is whether Meta can turn model capability into agentic products people actually trust and use."
+description: "Meta has turned the Watermelon rumor into Muse Wonder, a real frontier model with serious agentic results. The harder question has not changed: can Meta turn model capability into agents people actually trust and use?"
 tags: ["AI Agents", "Meta", "AI Models", "AI Products"]
 draft: false
 ---
+
+## Update: Watermelon became Wonder
+
+The rumored model has arrived.
+
+On October 12, Meta [introduced Muse Wonder and Muse Wonder Full](https://research.meta.ai/blog/muse-wonder), the frontier models that grew out of the scaling program discussed in this article. Muse Wonder is available through Meta's API and Muse Code. The stronger Full version is available only through a Muse Code subscription. Both have a one-million-token context window and are built around two product ideas: Active Memory, which retrieves relevant personal context across conversations, and Active Focus, which keeps working through blockers, retries, and changing conditions.
+
+So one part of the July story is settled.
+
+Meta did not merely claim that an internal model had caught up.
+
+It shipped one.
+
+The early evidence says it belongs in the frontier conversation. [Artificial Analysis](https://artificialanalysis.ai/models/muse-wonder-full) gives Wonder Full a score of 56 on its independent Intelligence Index, just below the leading tier, while the standard [Muse Wonder scores 52](https://artificialanalysis.ai/models/muse-wonder). Meta's own launch table shows strong results across long-horizon coding, computer use, legal work, finance, health, memory, and business automation.
+
+That is a serious release.
+
+It is also an unusually clean test of the argument below.
+
+Meta's agent problem still is not benchmarks.
+
+Now we can say that with better benchmarks.
+
+## The scorecard needs footnotes
+
+Meta deserves credit for publishing a detailed [model card](https://research.meta.ai/static/muse-wonder-model-card). It explains where the numbers came from instead of placing fourteen scores in a launch graphic and hoping nobody asks follow-up questions.
+
+The follow-up questions still matter.
+
+The launch table combines several kinds of evidence: independent third-party runs, provider-reported results, Meta's internal evaluations, and internally run comparisons against competing proprietary models. Meta says those competitor runs are best-effort and may not be optimally tuned. It also uses maximum reasoning effort across the headline comparisons.
+
+That does not make the results fake.
+
+It means the table is a map, not a verdict.
+
+The independent result is encouraging but less dramatic than the launch language. Wonder Full is near the top of Artificial Analysis, not alone at the top. Standard Wonder, the version developers can buy by the token, is capable and fast but also expensive at $4 per million input tokens and $20 per million output tokens. Full has no public token-priced API at launch.
+
+Builders should compare the model they can actually deploy, at the reasoning level and harness they can actually afford.
+
+Very inconvenient. The benchmark winner has terms and conditions.
+
+## Active Memory is a product claim
+
+Meta's most important claims are not the coding scores.
+
+They are Active Memory and Active Focus.
+
+Those names describe the two things long-running agents need most: continuity and persistence. An agent should remember the lease clause from last week, recover after a website changes, ask when the goal is ambiguous, and keep moving when the first approach fails.
+
+But memory and focus are not only capabilities.
+
+They are control surfaces.
+
+If an agent carries personal context across conversations, users need to know what was saved, why it was retrieved, how to correct it, how to delete it, and when it expires. If an agent keeps trying after a failure, it needs a retry budget, a visible log, a stop condition, and a clear boundary between "try another route" and "work around the user's restriction."
+
+Meta says Wonder checks in before important actions. Its model card recommends human confirmation for irreversible actions. Good.
+
+That recommendation now has to survive the product.
+
+The launch demos include planning from personal preferences, ordering custom merchandise from Instagram photos, and working across browsers and apps. Each example combines model intelligence with permissions, identity, payment, private context, and recovery behavior. The model can be excellent while the agent around it remains unsafe, annoying, or impossible to audit.
+
+This is exactly the conversion problem from July.
+
+Compute became capability.
+
+Capability became an API and a coding product.
+
+The consumer habit comes next.
+
+## Meta is splitting its model strategy
+
+There is another useful signal in the release.
+
+Muse Wonder is proprietary.
+
+Meta recently [open-sourced Muse Glimmer](https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model), a smaller agentic model designed for local hardware. Wonder and Wonder Full are not open-weight releases. Meta is now running two model strategies at once: open models for distribution and local deployment, closed frontier models for its API, subscriptions, products, and most valuable agent capabilities.
+
+That is not hypocrisy. It is a business model.
+
+It also means "Meta is the open-model company" is no longer a complete description. Openness remains part of the stack. The frontier sits behind Meta's gate.
+
+For developers, that changes the comparison. Wonder is not only competing with Claude, GPT, and Gemini on capability. It is competing on price, availability, account continuity, data handling, observability, and the risk of building an agent around a model the developer does not control.
+
+The local model offers ownership.
+
+The frontier model offers more capability.
+
+Meta would very much like to sell both sides of that trade.
+
+## What the launch actually proves
+
+Muse Wonder proves that Meta's rebuilt research organization can train a frontier-class model and put a usable version behind an API.
+
+That is meaningful. Fourteen months is a fast turnaround for an effort of this scale, and independent testing supports the narrower claim that Meta is competitive again.
+
+The launch does not yet prove that people want a persistent Meta agent inside their messages, calendars, documents, browsers, glasses, and shopping flows. Wonder will come to the Muse consumer product later, first for subscribers. The real product test begins when ordinary people can see what it remembers, watch what it does, stop it cleanly, correct it, and decide whether the help is worth the access.
+
+In July, the model was a rumor and the agent was a promise.
+
+Now the model is real.
+
+The promise still has to ship.
 
 ## The Short Version
 
