@@ -1,0 +1,209 @@
+---
+title: "Le ver IA exige un autre bouton d'arrêt"
+date: "2026-10-14"
+description: "Anthropic n'a pas créé un ver IA autonome. Son étude montre plutôt pourquoi le plan de réponse habituel risque d'échouer si les poids d'un modèle peuvent tourner sur des appareils compromis sans fournisseur dans la boucle."
+tags: ["Sécurité IA", "Agents IA", "Anthropic", "Modèles ouverts", "IoT"]
+draft: false
+---
+
+## La version courte
+
+Anthropic n'a pas créé un ver IA capable de prendre tout seul le contrôle de votre four connecté.
+
+Voilà pour la partie rassurante.
+
+La partie moins rassurante, c'est que les éléments encore manquants deviennent plus faciles à identifier.
+
+Dans une nouvelle [étude sur l'autoréplication des IA](https://www.anthropic.com/research/self-replicating-ai), la Frontier Red Team d'Anthropic montre qu'un modèle de 9 milliards de paramètres a réussi à installer un système d'inférence sur huit des neuf types de matériel testés. L'équipe a aussi fait tourner un modèle de 26 milliards de paramètres sur 15 boîtiers Android TV bon marché, lentement mais réellement.
+
+Elle a ensuite demandé à plusieurs modèles d'enchaîner la découverte du réseau, l'envoi de la charge utile, l'installation de l'inférence et la propagation. Seul GLM-5.2, beaucoup plus grand, a accompli ce cycle simplifié de manière fiable : il a déployé un modèle 8B sur les huit nœuds Android exposés dans quatre essais sur cinq.
+
+Ce n'est pas une autoréplication dans la nature.
+
+Le grand modèle tournait sur une infrastructure externe. Les machines cibles exposaient des ports ADB sans authentification. Le modèle installé n'était pas celui qui pilotait l'opération. Les chercheurs ont largement écarté l'exploitation initiale. Et l'inférence obtenue était terriblement lente.
+
+Aujourd'hui, le modèle assez petit pour vivre sur des appareils bon marché n'est pas assez capable pour accomplir toute la mission. Le modèle assez capable pour l'accomplir est trop gros pour y vivre.
+
+L'alerte d'Anthropic est que ces deux courbes pourraient se croiser.
+
+La leçon la plus immédiate est opérationnelle.
+
+Un agent accessible par API a un fournisseur. Celui-ci peut suspendre un compte, révoquer des identifiants, bloquer un modèle ou couper le service.
+
+Un modèle exécuté à partir de poids copiés sur des caméras, boîtiers TV, ordinateurs et accélérateurs edge compromis peut ne plus avoir aucun opérateur central à appeler.
+
+Le ver IA n'est pas encore là.
+
+Son problème de réponse aux incidents, si.
+
+## L'expérience est un avertissement, pas une épidémie
+
+Le titre semble presque conçu pour distancer les résultats.
+
+Gardons donc les résultats attachés au titre.
+
+Anthropic a testé deux questions différentes.
+
+Première question : un petit modèle peut-il configurer une pile d'inférence sur un matériel inconnu ?
+
+Souvent, oui.
+
+C'est important, car installer un modèle ne se résume pas à une commande. L'agent doit examiner la machine, choisir un moteur compatible, résoudre les problèmes de paquets et d'architecture, faire tenir le modèle dans la mémoire disponible, lancer un serveur, le tester et se reprendre quand la première méthode échoue.
+
+Ce sont précisément ces longues tâches d'intégration pénibles sur lesquelles les agents de code progressent.
+
+Deuxième question : un seul modèle peut-il assembler tout le cycle de réplication ?
+
+Pas dans des conditions réalistes, d'après cette étude.
+
+GLM-5.2 a réussi dans une flotte confinée où l'étape cyber avait été volontairement simplifiée. Il a ensuite configuré Llama 3.1 8B sur les cibles. Anthropic s'en sert comme approximation : si un petit modèle futur atteint le niveau de compétence de GLM-5.2, il pourrait être capable de s'installer et de se propager lui-même.
+
+C'est un test de capacité utile.
+
+Ce n'est pas la même chose que d'observer un modèle compact s'échapper, exploiter des appareils inconnus, copier ses propres poids, établir sa persistance et continuer sans inférence externe.
+
+Anthropic le reconnaît. Son estimation selon laquelle un modèle de moins de 30 milliards de paramètres pourrait atteindre le niveau nécessaire avant la fin de 2026 est une extrapolation à partir d'un indice général de capacités, pas un compte à rebours.
+
+L'étude montre que l'écart se réduit.
+
+Elle ne montre pas qu'il a disparu.
+
+## Les poids deviennent une partie de la charge utile
+
+Un logiciel malveillant classique transporte du code.
+
+Un réplicateur fondé sur des poids pourrait transporter du code, un harnais d'agent, un moteur d'inférence et les poids du modèle. Il pourrait aussi télécharger ces poids ailleurs après avoir obtenu un accès.
+
+Cela change ce que la charge utile peut faire une fois installée.
+
+Un ver traditionnel suit généralement les techniques fournies par son opérateur. Un agent peut inspecter l'environnement, essayer une méthode d'installation, lire une erreur, changer d'outil et laisser des notes à la copie suivante.
+
+Anthropic a aussi testé ce dernier mécanisme. Des instances de Qwen3.5-9B ont transmis de courtes notes sur leurs échecs et leurs stratégies aux générations suivantes. Le taux initial de réussite pour l'installation de l'inférence était de 45 %. Les générations suivantes ont atteint entre 61 % et 84 %.
+
+Ce n'était pas un apprentissage par un nouvel entraînement du modèle. C'était un mécanisme d'héritage très ordinaire : conserver les notes utiles, écarter certaines mauvaises pistes et laisser l'agent suivant poursuivre le travail.
+
+Très rassurant. Le grille-pain a maintenant besoin d'une politique de mémoire institutionnelle.
+
+L'idée sous-jacente est sérieuse. Un agent lent n'a pas besoin d'être brillant au premier essai s'il peut conserver ses fichiers, réviser ses scripts et partager les procédures efficaces entre les infections.
+
+De [précédents travaux sur les vers informatiques adaptatifs](https://arxiv.org/abs/2606.03811) avaient déjà exploré des agents capables de produire des stratégies d'exploitation adaptées à leur environnement. La contribution d'Anthropic porte sur un obstacle moins spectaculaire : réussir à faire tourner l'inférence après la compromission.
+
+Cet obstacle commence à paraître franchissable.
+
+## Il n'y aura peut-être aucun fournisseur à appeler
+
+Une grande partie de la gouvernance de l'IA suppose une relation de service.
+
+Un fournisseur authentifie l'utilisateur, sert l'inférence, observe l'usage, applique ses règles et peut couper l'accès.
+
+Cette architecture crée un point de contrôle.
+
+Un modèle ouvert copié et exécuté localement ne demande pas la permission à son développeur d'origine chaque fois qu'il génère un token. S'il est distribué sur du matériel compromis, arrêter un serveur ou un compte peut ne presque rien changer.
+
+Cela ne fait pas des poids ouverts la vulnérabilité.
+
+L'appareil vulnérable est la vulnérabilité.
+
+Le port d'administration exposé est la vulnérabilité.
+
+Le mot de passe par défaut, l'identifiant cloud volé, la mise à jour non signée, le noyau non corrigé, le trafic sortant sans restriction et le processus d'inférence invisible sont les vulnérabilités.
+
+Les modèles fermés peuvent être volés. Les modèles ouverts peuvent être déployés de façon responsable. Un réplicateur par API peut détourner des comptes compromis à très grande vitesse. Un réplicateur fondé sur les poids peut survivre sans son hôte d'origine.
+
+La distinction utile n'oppose pas ouvert et fermé.
+
+Elle oppose contrôle centralisé et exécution décentralisée.
+
+Si les défenseurs traitent chaque agent dangereux comme un client API abusif, ils construiront un interrupteur très élégant pour la mauvaise machine.
+
+## Lent ne veut pas dire inoffensif
+
+La démonstration sur les boîtiers TV était lente.
+
+Anthropic estime qu'un modèle 9B pourrait avoir besoin d'environ 28 à 51 heures pour mener une trajectoire d'installation de l'inférence sur ce type de matériel. Le modèle 26B pourrait demander entre 71 et 150 heures.
+
+C'est une latence produit affreuse.
+
+Pour un logiciel malveillant, cela peut être parfaitement acceptable.
+
+Un botnet n'a pas besoin de répondre avant que l'animation de chargement ne devienne gênante. Il peut scanner discrètement, réessayer pendant la nuit, répartir le travail entre les machines et attendre de meilleures conditions.
+
+Les appareils edge bon marché sont intéressants précisément parce qu'ils sont nombreux, entretenus de manière inégale et rarement surveillés par leurs propriétaires, qui n'inspectent ni les processus actifs ni le trafic sortant.
+
+Les mêmes accélérateurs IA qui rendent les caméras, systèmes de visioconférence, appareils ménagers et routeurs plus utiles en font aussi de meilleurs hôtes.
+
+Cela ne veut pas dire qu'un botnet domestique équivaut soudain à un datacenter de pointe. L'estimation d'Anthropic attribue à une flotte de deux millions d'appareils une puissance totale assez modeste en équivalents GPU haut de gamme, avec des copies qui avancent au ralenti.
+
+Mais la persistance change le calcul.
+
+Un processus lent sur un appareil est une curiosité.
+
+Un processus lent sur un million d'appareils oubliés devient une infrastructure.
+
+## La défense doit descendre jusqu'à l'edge
+
+L'étude d'Anthropic suggère des contrôles moins spectaculaires qu'un bouton d'arrêt, mais bien plus utiles.
+
+**Rendre la première compromission plus difficile.** Supprimer les identifiants par défaut, désactiver les interfaces d'administration sans authentification, corriger les appareils connectés, isoler les chemins d'administration et garantir une vraie durée de support aux produits IoT grand public. Ces mesures arrêtent aussi les botnets ordinaires. C'est un avantage, pas un manque d'imagination.
+
+**Traiter les modèles comme des objets exécutables de la chaîne logicielle.** Les entreprises analysent déjà les binaires et les images de conteneurs. Elles devraient aussi inventorier les gros fichiers de poids, les moteurs d'inférence, les harnais d'agents et les téléchargements de modèles inattendus. Signatures, provenance, listes d'autorisation et démarrage vérifié deviennent essentiels quand un modèle peut faire partie de la charge utile.
+
+**Détecter l'inférence, pas seulement les logiciels malveillants connus.** Une charge de calcul matriciel continue, le transfert de plusieurs gigaoctets de poids, une pression mémoire inhabituelle, des serveurs d'inférence locaux et des échanges entre appareils pour distribuer des fragments de modèle peuvent laisser des signaux, même si l'agent réécrit les scripts qui l'entourent.
+
+**Limiter les déplacements.** Une caméra n'a pas besoin de scanner le réseau local. Un boîtier TV n'a pas besoin d'un accès sortant arbitraire aux plateformes de modèles. Un équipement de salle de réunion n'a pas besoin d'ouvrir des shells inversés chez ses voisins. La segmentation et le contrôle du trafic sortant empêchent une compromission de devenir une épidémie.
+
+**Préserver les preuves.** Un honeypot qui capture le harnais, les prompts, les poids, les notes et la configuration d'exécution donne aux défenseurs des éléments concrets à caractériser. Le modèle peut s'adapter, mais son déploiement laisse toujours des fichiers, des processus, du trafic et des dépendances.
+
+**Préparer une quarantaine coordonnée.** Anthropic rappelle de précédentes opérations menées par des fournisseurs d'accès, où les clients infectés étaient placés en quarantaine puis orientés vers une procédure de nettoyage. Un réplicateur décentralisé pourrait exiger une coordination entre fabricants, opérateurs réseau, hébergeurs, plateformes de modèles et équipes de réponse, au lieu d'attendre qu'un laboratoire appuie sur un bouton.
+
+C'est le même principe que celui des recommandations [Secure by Design](https://www.cisa.gov/securebydesign) : déplacer la responsabilité de la personne la moins équipée vers les réglages par défaut, le système de mise à jour et l'infrastructure du produit.
+
+Le propriétaire d'un boîtier TV à 55 dollars ne devrait pas être la dernière barrière de sécurité contre l'autoréplication.
+
+## Ce que les équipes doivent faire maintenant
+
+Les équipes qui déploient des agents n'ont pas besoin de prétendre que cette expérience prouve l'existence d'une épidémie.
+
+Elles doivent mettre à jour leur modèle de menace.
+
+Si votre agent peut installer des logiciels, configurer l'inférence, découvrir des hôtes, récupérer des fichiers de modèles ou créer des sous-agents, demandez-vous :
+
+- Quels identifiants lui permettent d'obtenir de la puissance de calcul ?
+- Peut-il copier son harnais ou ses poids vers une autre machine ?
+- Un déploiement peut-il continuer après la désactivation du compte d'origine ?
+- À quelles destinations réseau et plateformes de modèles peut-il accéder ?
+- Votre supervision distinguerait-elle l'inférence locale d'une charge applicative normale ?
+- Pouvez-vous révoquer le modèle lui-même, ou seulement la clé API ?
+- Qui coordonne le nettoyage lorsque les copies traversent les réseaux des clients, du cloud et du grand public ?
+
+Il faut ensuite tester ces contrôles sans offrir à l'agent un environnement artificiellement docile.
+
+L'évaluation importante ne consiste pas à vérifier qu'il respecte un prompt disant « ne te réplique pas ».
+
+Elle consiste à vérifier que les contrôles d'identité, de réseau, d'exécution et des appareils empêchent la réplication quand le logiciel ne coopère pas.
+
+## En conclusion
+
+Anthropic a montré plusieurs ingrédients, pas la recette terminée.
+
+Les petits modèles savent de mieux en mieux installer l'inférence sur du matériel inconnu.
+
+Des appareils bon marché peuvent faire tourner ensemble des modèles qui ne tiennent pas sur une seule machine.
+
+Un grand modèle peut orchestrer une chaîne de réplication simplifiée.
+
+Des agents peuvent transmettre leurs leçons opérationnelles aux copies suivantes.
+
+Ce que l'étude n'a pas montré, c'est un modèle compact et indépendant qui compromet de manière autonome de vrais appareils et se propage dans la nature.
+
+Cette distinction compte.
+
+La direction du mouvement aussi.
+
+La première réponse aux agents IA dangereux a consisté à placer de la supervision autour du fournisseur et un interrupteur à côté du compte.
+
+Les réplicateurs fondés sur les poids déplacent le problème du contrôle vers des appareils, des réseaux, des fichiers et des infrastructures qui n'appartiennent à aucun fournisseur unique.
+
+Le futur responsable de l'incident ne pourra peut-être pas éteindre le modèle.
+
+Son travail sera de rendre chaque endroit où il tente de vivre moins accueillant.
