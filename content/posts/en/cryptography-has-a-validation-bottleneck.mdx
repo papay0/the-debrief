@@ -1,10 +1,189 @@
 ---
 title: "Cryptography Has a Validation Bottleneck"
-date: "2026-07-29"
-description: "Anthropic says Claude Mythos Preview found new attacks on HAWK and a reduced version of AES. The practical lesson is not that production crypto is broken. It is that AI can generate serious research faster than humans can validate it."
-tags: ["AI Security", "Anthropic", "AI Research", "Cryptography"]
+date: "2026-10-15"
+description: "AI can generate technical claims faster than humans can validate them. Google's Deep Review is a serious attempt to scale the checking, but a verification agent is still evidence for a reviewer, not a replacement for one."
+tags: ["AI Security", "Anthropic", "Google", "AI Agents", "AI Research", "Cryptography"]
 draft: false
 ---
+
+## Update: the validator needs validation
+
+Google has now turned the bottleneck described in this article into a product.
+
+On October 14, Google Research [launched Deep Review publicly](https://research.google/blog/analyzing-technical-documents-with-deep-review/). Google says an earlier version was used across more than 16,000 opt-in submissions to STOC, ICML, NeurIPS, and ICLR.
+
+The service accepts PDFs and plain text, gives each user two complimentary reviews per week, and offers an API for higher-volume workflows. Google says it can inspect mathematical reasoning, logical consistency, experimental design, citations, and comparisons with prior work. It is also positioning the system beyond academic papers, for design documents, presentations, legal agreements, and financial reports.
+
+This is the sensible response to AI-generated technical abundance.
+
+If models make claims faster, use models to help check claims faster.
+
+But there is a dangerous product translation hiding inside that sentence.
+
+"The model reviewed it" can very easily become "the document was verified."
+
+Those are not the same state.
+
+Deep Review looks useful. The evidence behind it is meaningful. The architecture is more serious than asking the same chatbot to criticize its own answer.
+
+It is still an AI-generated review that a qualified person has to evaluate.
+
+The validation bottleneck has not disappeared.
+
+It has gained an API.
+
+## This is a review pipeline, not one clever prompt
+
+Deep Review uses a four-stage agentic system.
+
+A segmenter divides the document into logical sections. A budgeting stage assigns more compute to dense material. Specialized agents inspect the sections in parallel while retaining access to the full document. A final agent synthesizes the findings, checks consistency across sections, and uses external grounding tools.
+
+That design matters.
+
+A long technical document is not one question. A proof may depend on a definition 30 pages earlier. An experiment may contradict a claim in the introduction. A chart may not support the conclusion written beside it. A single model call can run out of useful reasoning budget, focus on the easy sections, or accept an impressive-looking statement without testing it.
+
+Google's system distributes the attention and then recombines the results.
+
+This is the same lesson we keep learning about agents: the model matters, but the harness determines whether the model can do sustained work.
+
+The interesting product is not Gemini saying, "I found three concerns."
+
+It is the machinery that decides where to look, how much effort to spend, what evidence to retrieve, and how to merge conflicting findings.
+
+That makes Deep Review more credible than a review prompt.
+
+It does not make the output true by construction.
+
+Several coordinated agents can still share the same blind spot. A synthesis agent can clean up a false critique until it sounds more authoritative. Grounding can confirm that a cited paper exists without proving that the paper supports the claim. More inference can improve recall while creating more plausible false positives for a human to investigate.
+
+Two AI agents checking each other are not peer review.
+
+They are a meeting.
+
+## The results are promising and narrower than the product
+
+Google's [Paper Assistant Tool research](https://arxiv.org/abs/2606.28277) gives us more than a launch demo.
+
+On a filtered subset of the SPOT benchmark containing 29 known equation or proof errors across 26 retracted mathematics and computer-science papers, the pipeline detected 89.7% of the errors. A zero-shot Gemini 3.1 Pro review detected 55.2%.
+
+That is a substantial result.
+
+It is also a Google-authored evaluation of a Google system on a small, selected subset, using a custom model-based grader whose decisions were audited by one of the paper's authors. It measures recall on known errors. It does not establish how many false allegations the system would produce across ordinary correct papers, unfamiliar fields, adversarial documents, or legal and financial work.
+
+The conference pilots provide useful real-world evidence.
+
+In the [ICML retrospective](https://blog.icml.cc/2026/03/30/retrospective-on-pat-x-icml-2026-ai-paper-assistant-program/), 92.1% of survey respondents said they would use the tool again. Among respondents with theoretical results, 35.4% said it found a significant gap that took more than an hour to fix. Among those with experiments, 31% said the feedback prompted new experiments.
+
+Those numbers are impressive.
+
+Another number deserves equal billing.
+
+In the paper's combined STOC and ICML survey, only 55.8% and 64.8% of respondents, respectively, described the feedback as mostly or entirely grounded.
+
+That does not make the system bad.
+
+It tells us what job the system is ready for.
+
+Deep Review is a powerful preflight review. It can surface places where an author should slow down, reproduce a result, explain an assumption, rerun an experiment, or ask an expert.
+
+It is not a certification stamp.
+
+## The pilot boundary was doing important work
+
+The conference deployments were carefully bounded.
+
+Authors opted in. The feedback was private. It arrived before submission. It was kept separate from the official review process. Authors remained responsible for deciding which findings were correct. The [NeurIPS program](https://blog.neurips.cc/2026/04/21/neurips-supports-authors-with-googles-paper-assistant-tool-pat/) explicitly warned that the model could flag correct statements as wrong or miss real flaws.
+
+That is a good operating model.
+
+The AI helps the author find work.
+
+It does not decide whether the paper is accepted.
+
+The public launch stretches the system into broader territory. Google now suggests reviewing legal and financial documents, where an apparently rigorous critique can influence contracts, compliance, investments, and disputes.
+
+The public evidence does not yet establish equivalent performance in those domains.
+
+Checking that two clauses conflict is useful.
+
+Determining which clause is enforceable is legal judgment.
+
+Finding that a table and a paragraph disagree is useful.
+
+Determining whether a financial projection is prudent is not an internal-consistency task.
+
+The product should preserve that boundary in its interface and API.
+
+A completed review means the system finished looking.
+
+It does not mean the document passed.
+
+## Every finding needs a receipt
+
+The best review agent should be easier to audit than the document it reviews.
+
+For every material finding, the system should produce a receipt:
+
+- the exact claim or passage under review
+- the type of concern: logical, mathematical, empirical, factual, legal, or editorial
+- the source, calculation, tool call, or counterexample behind the concern
+- the assumptions required for the critique to hold
+- a confidence level and a description of what remains uncertain
+- a reproduction path where reproduction is possible
+- the model, harness, tools, and version that generated the finding
+- the author's or reviewer's disposition: accepted, rejected, revised, or unresolved
+
+That last line matters.
+
+Rejected AI criticism should not vanish. It should remain attached to the record with the reason it was rejected. Otherwise, teams cannot measure recurring false positives, compare model versions, or see when a later reviewer raises the same issue with better evidence.
+
+High-stakes claims also need independence.
+
+If one model helped write the document, another run of the same model family should not be treated as independent verification. Use a different method, a different model or provider, executable checks, and human domain expertise. Preserve disagreements instead of asking a synthesis agent to turn them into one smooth paragraph.
+
+The goal is not consensus-shaped text.
+
+It is inspectable evidence.
+
+## The data policy is part of the review
+
+There is one more difference between the conference pilots and the public product.
+
+The NeurIPS pilot said submissions and feedback would be deleted within seven days after the program. Google says documents uploaded to the public Deep Review service are not used for training, but are stored for one year so users can see them in the interface.
+
+That may be a reasonable product choice.
+
+It is not a footnote for an unpublished theorem, a patent draft, a security analysis, a legal dispute, or a financial plan.
+
+Teams should decide whether the retention period fits the document before uploading it. An API integration should expose retention, deletion, region, access, and audit controls as configuration, not bury them in a policy page.
+
+The system is meant to identify hidden risks inside sensitive documents.
+
+It should not quietly create a new one around them.
+
+## The new bottom line
+
+Deep Review is one of the more useful agent products launched this year because it attacks a real constraint instead of generating more material for the pile.
+
+It has a thoughtful architecture, evidence from real conference pilots, and a sensible first role as a private tool for authors.
+
+The risk is not that the tool is useless.
+
+The risk is that usefulness becomes authority faster than the evidence justifies.
+
+Call it preflight.
+
+Make every finding auditable.
+
+Keep consequential decisions with accountable experts.
+
+Use independent methods for independent verification.
+
+And never turn an API response into a green checkmark just because the word `review` appears in the endpoint.
+
+AI can help scale validation.
+
+Now we need to avoid automating false assurance at the same speed.
 
 ## The Short Version
 

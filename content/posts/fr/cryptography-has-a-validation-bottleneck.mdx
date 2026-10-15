@@ -1,10 +1,189 @@
 ---
 title: "La cryptographie a un goulot de validation"
-date: "2026-07-29"
-description: "Anthropic dit que Claude Mythos Preview a trouvé de nouvelles attaques contre HAWK et une version réduite d'AES. La leçon pratique n'est pas que la crypto de production est cassée. C'est que l'IA peut produire de la recherche sérieuse plus vite que les humains ne peuvent la valider."
-tags: ["AI Security", "Anthropic", "AI Research", "Cryptography"]
+date: "2026-10-15"
+description: "L'IA peut produire des affirmations techniques plus vite que les humains ne peuvent les valider. Deep Review de Google tente sérieusement d'accélérer la vérification, mais un agent de revue reste une source d'indices pour l'expert, pas son remplaçant."
+tags: ["Sécurité IA", "Anthropic", "Google", "Agents IA", "Recherche IA", "Cryptographie"]
 draft: false
 ---
+
+## Mise à jour : le vérificateur doit être vérifié
+
+Google vient de transformer le goulot décrit dans cet article en produit.
+
+Le 14 octobre, Google Research a [ouvert Deep Review au public](https://research.google/blog/analyzing-technical-documents-with-deep-review/). Selon Google, une version antérieure a été utilisée sur plus de 16 000 soumissions volontaires à STOC, ICML, NeurIPS et ICLR.
+
+Le service accepte les PDF et le texte brut, offre deux revues gratuites par semaine à chaque utilisateur et propose une API pour les usages plus intensifs. Google dit qu'il peut examiner le raisonnement mathématique, la cohérence logique, les protocoles expérimentaux, les citations et les comparaisons avec les travaux antérieurs. Le système vise aussi des documents qui dépassent la recherche : dossiers de conception, présentations, contrats et rapports financiers.
+
+C'est une réponse raisonnable à l'abondance technique produite par l'IA.
+
+Si les modèles accélèrent la production d'affirmations, utilisons des modèles pour accélérer leur contrôle.
+
+Mais une traduction produit dangereuse se cache dans cette phrase.
+
+« Le modèle l'a relu » peut très vite devenir « le document a été vérifié ».
+
+Ce ne sont pas les mêmes états.
+
+Deep Review paraît utile. Les éléments qui l'étayent sont sérieux. Son architecture va bien plus loin que demander au même chatbot de critiquer sa propre réponse.
+
+Il produit tout de même une revue par IA qu'une personne qualifiée doit évaluer.
+
+Le goulot de validation n'a pas disparu.
+
+Il dispose maintenant d'une API.
+
+## C'est un pipeline de revue, pas un prompt malin
+
+Deep Review repose sur un système agentique en quatre étapes.
+
+Un premier agent découpe le document en sections logiques. Une étape de budgétisation attribue davantage de calcul aux passages denses. Des agents spécialisés examinent les sections en parallèle tout en conservant l'accès au document complet. Un dernier agent synthétise les résultats, vérifie la cohérence entre les sections et utilise des outils externes pour étayer ses conclusions.
+
+Cette architecture compte.
+
+Un long document technique n'est pas une seule question. Une preuve peut dépendre d'une définition donnée 30 pages plus tôt. Une expérience peut contredire une affirmation de l'introduction. Un graphique peut ne pas soutenir la conclusion écrite juste à côté. Un appel unique au modèle peut épuiser son budget de raisonnement utile, se concentrer sur les sections faciles ou accepter une déclaration impressionnante sans la tester.
+
+Le système de Google répartit l'attention, puis rassemble les résultats.
+
+Nous retrouvons la même leçon que pour tous les agents : le modèle compte, mais le harnais détermine sa capacité à mener un travail prolongé.
+
+Le produit intéressant n'est pas Gemini qui annonce : « J'ai trouvé trois problèmes. »
+
+C'est la machine qui décide où chercher, combien d'effort consacrer, quelles preuves récupérer et comment réunir des constats contradictoires.
+
+Deep Review est donc plus crédible qu'un simple prompt de relecture.
+
+Cela ne rend pas sa sortie vraie par construction.
+
+Plusieurs agents coordonnés peuvent partager le même angle mort. Un agent de synthèse peut polir une critique erronée jusqu'à la rendre plus autoritaire. L'ancrage externe peut confirmer l'existence d'un article sans prouver que celui-ci soutient l'affirmation. Davantage d'inférence peut améliorer le rappel tout en produisant plus de faux positifs plausibles qu'un humain devra examiner.
+
+Deux agents IA qui se contrôlent ne constituent pas une revue par les pairs.
+
+Ils constituent une réunion.
+
+## Les résultats sont prometteurs et plus étroits que le produit
+
+L'[article sur le Paper Assistant Tool](https://arxiv.org/abs/2606.28277) de Google offre davantage qu'une démonstration de lancement.
+
+Sur un sous-ensemble filtré du benchmark SPOT comprenant 29 erreurs connues d'équation ou de preuve dans 26 articles de mathématiques et d'informatique rétractés, le pipeline a détecté 89,7 % des erreurs. Une revue zero-shot par Gemini 3.1 Pro en a détecté 55,2 %.
+
+C'est un résultat important.
+
+C'est aussi une évaluation signée par Google d'un système Google, sur un petit sous-ensemble sélectionné, avec un évaluateur sur modèle conçu pour l'étude et dont les décisions ont été auditées par l'un des auteurs. Elle mesure le rappel sur des erreurs connues. Elle n'établit pas combien de fausses alertes le système produirait sur des articles ordinaires et corrects, dans des domaines inconnus, face à des documents adversariaux ou sur des sujets juridiques et financiers.
+
+Les pilotes menés avec les conférences apportent des éléments utiles en conditions réelles.
+
+Dans le [bilan publié par ICML](https://blog.icml.cc/2026/03/30/retrospective-on-pat-x-icml-2026-ai-paper-assistant-program/), 92,1 % des répondants ont déclaré qu'ils réutiliseraient l'outil. Parmi ceux dont les articles comportaient des résultats théoriques, 35,4 % disent qu'il a trouvé une lacune importante ayant demandé plus d'une heure de correction. Parmi les auteurs d'expériences, 31 % disent que les retours les ont conduits à en lancer de nouvelles.
+
+Ces chiffres sont impressionnants.
+
+Un autre chiffre mérite la même visibilité.
+
+Dans l'enquête combinée STOC-ICML de l'article, seuls 55,8 % puis 64,8 % des répondants ont qualifié les retours de majoritairement ou entièrement fondés.
+
+Cela ne fait pas de Deep Review un mauvais système.
+
+Cela nous indique la mission pour laquelle il est prêt.
+
+Deep Review est une puissante revue de précontrôle. Il peut signaler les endroits où un auteur devrait ralentir, reproduire un résultat, expliquer une hypothèse, relancer une expérience ou consulter un expert.
+
+Ce n'est pas un tampon de certification.
+
+## Les limites du pilote jouaient un rôle essentiel
+
+Les déploiements auprès des conférences étaient soigneusement encadrés.
+
+Les auteurs choisissaient de participer. Les retours restaient privés. Ils arrivaient avant la soumission. Ils étaient séparés de la revue officielle. Les auteurs restaient responsables de décider quels constats étaient corrects. Le [programme NeurIPS](https://blog.neurips.cc/2026/04/21/neurips-supports-authors-with-googles-paper-assistant-tool-pat/) avertissait explicitement que le modèle pouvait présenter un énoncé juste comme faux ou manquer une vraie erreur.
+
+C'est un bon modèle opérationnel.
+
+L'IA aide l'auteur à trouver le travail qui reste à faire.
+
+Elle ne décide pas si l'article est accepté.
+
+Le lancement public étend le système à un territoire beaucoup plus large. Google suggère maintenant de relire des documents juridiques et financiers, où une critique apparemment rigoureuse peut influencer des contrats, des obligations réglementaires, des investissements et des litiges.
+
+Les éléments publics ne démontrent pas encore une performance équivalente dans ces domaines.
+
+Repérer que deux clauses se contredisent est utile.
+
+Décider laquelle est applicable relève du jugement juridique.
+
+Repérer un désaccord entre un tableau et un paragraphe est utile.
+
+Décider si une prévision financière est prudente n'est pas une tâche de cohérence interne.
+
+Le produit doit préserver cette frontière dans son interface et dans son API.
+
+Une revue terminée signifie que le système a fini de chercher.
+
+Elle ne signifie pas que le document est validé.
+
+## Chaque constat a besoin d'un reçu
+
+Le meilleur agent de revue devrait être plus facile à auditer que le document qu'il examine.
+
+Pour chaque constat important, le système devrait produire un reçu comprenant :
+
+- l'affirmation ou le passage exact examiné
+- le type de problème : logique, mathématique, empirique, factuel, juridique ou éditorial
+- la source, le calcul, l'appel d'outil ou le contre-exemple qui étaye le constat
+- les hypothèses nécessaires pour que la critique soit valable
+- un niveau de confiance et une description de ce qui reste incertain
+- un chemin de reproduction lorsque la reproduction est possible
+- le modèle, le harnais, les outils et leur version
+- la décision de l'auteur ou du réviseur : accepté, rejeté, corrigé ou non résolu
+
+Cette dernière ligne est essentielle.
+
+Une critique rejetée ne devrait pas disparaître. Elle devrait rester attachée au dossier avec la raison du rejet. Sans cela, les équipes ne peuvent ni mesurer les faux positifs récurrents, ni comparer les versions du modèle, ni voir qu'un autre réviseur soulève plus tard le même problème avec de meilleures preuves.
+
+Les affirmations à fort enjeu exigent aussi de l'indépendance.
+
+Si un modèle a aidé à écrire le document, un autre passage de la même famille de modèles ne devrait pas compter comme vérification indépendante. Il faut une autre méthode, un autre modèle ou fournisseur, des contrôles exécutables et une expertise humaine du domaine. Il faut conserver les désaccords au lieu de demander à un agent de synthèse de les fondre dans un paragraphe fluide.
+
+L'objectif n'est pas un texte qui ressemble à un consensus.
+
+C'est une preuve inspectable.
+
+## La politique de données fait partie de la revue
+
+Une autre différence sépare les pilotes de conférences du produit public.
+
+Le pilote NeurIPS prévoyait la suppression des soumissions et des retours dans les sept jours suivant le programme. Google indique que les documents envoyés au service public Deep Review ne servent pas à l'entraînement, mais restent stockés pendant un an afin d'être consultables dans l'interface.
+
+Ce choix produit peut être raisonnable.
+
+Ce n'est pas une note de bas de page pour un théorème inédit, un projet de brevet, une analyse de sécurité, un litige ou un plan financier.
+
+Avant d'envoyer un document, les équipes doivent décider si cette durée de conservation lui convient. Une intégration par API devrait exposer la conservation, la suppression, la région, les accès et l'audit comme des paramètres, pas les enfouir dans une page de politique.
+
+Le système est conçu pour découvrir les risques cachés dans des documents sensibles.
+
+Il ne devrait pas en créer silencieusement un nouveau autour d'eux.
+
+## La nouvelle conclusion
+
+Deep Review est l'un des produits agentiques les plus utiles lancés cette année parce qu'il s'attaque à une vraie contrainte au lieu d'ajouter du contenu à la pile.
+
+Son architecture est réfléchie, il dispose d'éléments tirés de vrais pilotes auprès de conférences et son premier rôle, comme outil privé pour les auteurs, est raisonnable.
+
+Le risque n'est pas que l'outil soit inutile.
+
+Le risque est que son utilité se transforme en autorité plus vite que les preuves ne le permettent.
+
+Appelez cela un précontrôle.
+
+Rendez chaque constat auditable.
+
+Laissez les décisions lourdes de conséquences à des experts responsables.
+
+Utilisez des méthodes indépendantes pour obtenir une vérification indépendante.
+
+Et ne transformez jamais une réponse d'API en coche verte simplement parce que le mot `review` apparaît dans l'endpoint.
+
+L'IA peut aider à accélérer la validation.
+
+Évitons maintenant d'automatiser la fausse assurance au même rythme.
 
 ## La version courte
 
