@@ -1,10 +1,135 @@
 ---
 title: "Les modèles ouverts sont maintenant de la géopolitique"
 date: "2026-10-06"
-description: "Mistral Large 4 et Reflection Beam sont une réponse occidentale sérieuse à l'avance chinoise sur les modèles ouverts. Mais ces deux lancements exposent aussi une distinction essentielle : un modèle n'est pas open-weight parce que le communiqué l'affirme. Il le devient quand les poids, la licence, la fiche modèle et les outils de déploiement sont réellement publiés."
+description: "Meta a publié Muse Spark Open, un modèle de 816 milliards de paramètres qu'Apple parvient à exécuter localement sur plusieurs Mac Studio. Les poids sont réels. La facture hardware aussi. L'IA ouverte est désormais une stack de fichiers, de licences, de runtimes, de mémoire et de machines."
 tags: ["AI Policy", "Models", "Open Source", "AI Strategy"]
 draft: false
 ---
+
+## Mise à jour : l'ouverture a une facture hardware
+
+Meta vient de faire ce que les lancements précédents de cet article n'avaient pas encore fait.
+
+L'entreprise a publié les poids.
+
+Le 15 octobre, Meta a sorti [Muse Spark Open](https://research.meta.ai/blog/muse-spark-open), un modèle mixture-of-experts nativement multimodal de 816 milliards de paramètres au total, dont 42 milliards actifs, avec une fenêtre de contexte d'un million de tokens. Le checkpoint est téléchargeable. La fiche modèle et les conditions de licence sont publiques. Apple MLX, vLLM, SGLang, llama.cpp et d'autres runtimes proposent un chemin de déploiement.
+
+C'est donc une vraie sortie open-weight, pas une preview par API assortie d'une promesse.
+
+Elle rend aussi impossible à ignorer la barrière suivante.
+
+Le modèle est ouvert.
+
+La machine nécessaire pour l'exécuter n'a rien d'ordinaire.
+
+## « Sur votre bureau » désigne désormais un cluster de bureau
+
+Meta affirme que Muse Spark Open peut tourner localement sur deux Mac Studio équipés de puces M5 Ultra. C'est techniquement vrai.
+
+La [note d'ingénierie MLX d'Apple](https://machinelearning.apple.com/research/mlx-distributed-inference) donne la version moins confortable de cette phrase. En précision native BF16, les seuls paramètres exigent plus de 1,6 téraoctet de mémoire. La quantification en NVFP4 sur quatre bits ramène l'empreinte à environ 493 gigaoctets, mais les calculs intermédiaires la font dépasser les 512 gigaoctets disponibles sur un seul Mac Studio haut de gamme.
+
+La plus petite configuration locale présentée répartit donc le modèle sur deux machines. Apple les relie avec deux câbles Thunderbolt 5 et utilise RDMA avec MLX pour que la paire se comporte comme un seul système d'inférence. Avec quatre machines, le débit dépasse 36 tokens par seconde avec un contexte de 8 192 tokens, selon le benchmark d'Apple.
+
+C'est une belle prouesse d'ingénierie.
+
+C'est aussi une correction utile à l'expression « tourne en local ».
+
+Pour un petit modèle, local peut vouloir dire un laptop sous un bureau. Pour Muse Spark Open, local désigne un cluster privé composé d'ordinateurs de bureau.
+
+Le cloud n'a pas disparu.
+
+Il a été miniaturisé dans vos locaux.
+
+## La bande passante mémoire fait désormais partie du modèle
+
+L'architecture mixture-of-experts réduit la quantité de calcul activée par chaque token. Elle ne supprime pas le besoin de stocker tous les experts.
+
+Voilà pourquoi les chiffres importants ne sont pas seulement 42 milliards de paramètres actifs et un million de tokens de contexte. Ce sont aussi 493 gigaoctets après quantification, 512 gigaoctets de mémoire unifiée par machine, 1,2 téraoctet par seconde de bande passante mémoire et une connexion assez rapide pour déplacer les résultats intermédiaires d'une machine à l'autre.
+
+Cela change ce que contient vraiment une sortie open-weight.
+
+Le produit n'est plus seulement :
+
+- un fichier de poids
+- un tokenizer
+- une fiche modèle
+
+C'est aussi :
+
+- une quantification qui préserve suffisamment de capacités
+- des kernels efficaces sur les puces visées
+- un runtime qui comprend l'architecture
+- une couche réseau pour les modèles qui ne tiennent pas sur une seule machine
+- des besoins réalistes en mémoire et en énergie
+- une licence compatible avec l'activité prévue
+
+Meta a livré une grande partie de cette stack. Apple a rendu le chemin local remarquablement concret. C'est la vraie réussite de ce lancement.
+
+Mais l'accès reste graduel. Le checkpoint peut être téléchargé. Beaucoup moins de personnes peuvent l'exécuter en privé à une vitesse utile. Moins encore peuvent le fine-tuner ou l'évaluer à grande échelle.
+
+Les poids ouverts retirent la barrière d'autorisation.
+
+Le hardware décide de la largeur du passage.
+
+## La licence est ouverte, avec un business model attaché
+
+Une autre limite mérite d'être lue au-delà du titre.
+
+Muse Spark Open n'est pas publié sous Apache 2.0. La [licence Muse Model](https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B) de Meta autorise l'utilisation, la modification, les dérivés, la redistribution et les produits commerciaux, mais impose aussi une attribution. Et si les revenus bruts cumulés d'une entreprise et de ses filiales dépassent 20 millions de dollars sur douze mois consécutifs, elle doit prévenir Meta et conclure un accord séparé avant de proposer Muse Spark Open ou ses dérivés sous forme de service.
+
+Cela ne changera rien pour beaucoup de chercheurs, de déploiements internes en entreprise ou de petits acteurs.
+
+Cela compte énormément si la promesse est que les poids ouverts suppriment la dépendance stratégique au fournisseur d'origine.
+
+Ils suppriment une forme de dépendance. Ils n'effacent ni les conditions contractuelles, ni l'économie du calcul, ni le levier que conserve l'entreprise d'origine sur les grandes activités d'hébergement.
+
+C'est pourquoi le mot « ouvert » a besoin d'une phrase complète.
+
+Ouvert pour qui, sur quel matériel, selon quelles conditions et avec quel chemin de déploiement reproductible ?
+
+## Meta et Apple ont trouvé le même intérêt
+
+Cette collaboration surprend, car Apple et Meta se battent depuis des années sur la vie privée, le pouvoir des plateformes, la publicité et l'avenir de l'informatique personnelle.
+
+Ici, leurs intérêts convergent.
+
+Meta peut prouver qu'un modèle open-weight américain peut quitter le data center et tourner sous le contrôle du client. Apple peut transformer sa mémoire unifiée, MLX et son hardware de bureau à large bande passante en stack alternative de déploiement IA. Les deux entreprises apportent une réponse à un marché de plus en plus structuré par l'infrastructure Nvidia, les API fermées et les modèles ouverts chinois devenus très capables.
+
+Cela ne veut pas dire que deux Mac Studio remplaceront un cluster de GPU pour l'entraînement ou le serving à grand volume.
+
+Cela signifie que la frontière entre workstation et cluster IA privé est en train de bouger.
+
+Pour les entreprises qui se soucient de la confidentialité du code source, des données réglementées, du fonctionnement hors ligne ou de la continuité d'accès, cette frontière a une vraie valeur commerciale. Un modèle qui tourne dans les locaux peut être plus utile qu'un modèle légèrement meilleur derrière l'API de quelqu'un d'autre.
+
+Mais les acheteurs doivent évaluer le système entier, pas le récit géopolitique qui l'entoure.
+
+Ils doivent demander :
+
+- Le checkpoint exact qui a été publié tourne-t-il à la vitesse et avec la longueur de contexte nécessaires ?
+- Quelles capacités sont perdues dans la version quantifiée ?
+- La licence est-elle compatible avec le produit et son modèle de revenus ?
+- Le déploiement peut-il être corrigé, audité et reproduit ?
+- L'exécution locale garde-t-elle réellement en local les prompts, les fichiers, les traces d'outils et la télémétrie ?
+
+Les poids ne sont que le premier reçu.
+
+## Voilà à quoi ressemble une vraie sortie
+
+Muse Spark Open renforce l'argument en faveur d'un écosystème occidental de modèles ouverts, car Meta a livré un artefact inspectable, plusieurs runtimes, un support hardware, une fiche modèle et des instructions concrètes de déploiement local.
+
+Il détruit aussi l'idée confortable selon laquelle ouvert veut automatiquement dire accessible.
+
+La distinction utile ne sépare plus seulement un communiqué d'un checkpoint.
+
+Elle sépare un checkpoint d'un système réellement déployable.
+
+Meta a franchi la première ligne.
+
+Apple a montré ce qu'il faut pour franchir la seconde.
+
+Les poids sont ouverts.
+
+La bande passante mémoire est le ticket d'entrée.
 
 ## Mise à jour : l'ouverture est un état de livraison
 

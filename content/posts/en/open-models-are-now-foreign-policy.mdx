@@ -1,10 +1,135 @@
 ---
 title: "Open Models Are Now Foreign Policy"
 date: "2026-10-06"
-description: "Mistral Large 4 and Reflection Beam are a serious Western answer to China's open-model lead. But both launches also expose an important distinction: an open-weight model is not open because the press release says so. It is open when the weights, license, model card, and deployment artifacts actually ship."
+description: "Meta has shipped Muse Spark Open, an 816-billion-parameter model that Apple can run locally across multiple Mac Studios. The weights are real. So is the hardware bill. Open-weight AI is now a stack of files, licenses, runtimes, memory, and machines."
 tags: ["AI Policy", "Models", "Open Source", "AI Strategy"]
 draft: false
 ---
+
+## Update: open has a hardware bill
+
+Meta has now done the thing the earlier launches in this article had not.
+
+It shipped the weights.
+
+On October 15, Meta released [Muse Spark Open](https://research.meta.ai/blog/muse-spark-open), a natively multimodal mixture-of-experts model with 816 billion total parameters, 42 billion active parameters, and a one-million-token context window. The checkpoint is downloadable. The model card is public. The license is readable. Apple MLX, vLLM, SGLang, llama.cpp, and other runtimes have deployment paths.
+
+That makes this a real open-weight release, not an API preview with a promise attached.
+
+It also makes the next gate impossible to ignore.
+
+The model is open.
+
+The machine required to run it is not ordinary.
+
+## "On your desktop" now means a desktop cluster
+
+Meta says Muse Spark Open can run locally on two Mac Studio computers with M5 Ultra chips. That is technically true.
+
+Apple's own [MLX engineering write-up](https://machinelearning.apple.com/research/mlx-distributed-inference) supplies the less convenient version of the sentence. In native BF16 precision, the parameters alone require more than 1.6 terabytes of memory. Quantizing the model to four-bit NVFP4 reduces the footprint to roughly 493 gigabytes, but intermediate computations push it beyond the 512 gigabytes available on one top-end Mac Studio.
+
+So the smallest demonstrated local setup splits the model across two machines. Apple connects them with two Thunderbolt 5 cables and uses RDMA plus MLX to make the pair behave like one inference system. Four machines increase decode speed to more than 36 tokens per second at an 8,192-token context, according to Apple's benchmark.
+
+This is impressive engineering.
+
+It is also a useful correction to the phrase "runs locally."
+
+For a smaller model, local can mean a laptop under a desk. For Muse Spark Open, local means a private cluster that happens to be made of desktop computers.
+
+The cloud has not disappeared.
+
+It has been miniaturized into your office.
+
+## Memory bandwidth is part of the model now
+
+Mixture-of-experts architecture lowers how much compute each token activates. It does not remove the need to store the full set of experts.
+
+That is why the important numbers are not only 42 billion active parameters and one million tokens of context. They are also 493 gigabytes after quantization, 512 gigabytes of unified memory per machine, 1.2 terabytes per second of memory bandwidth, and enough low-latency connectivity to move intermediate results between boxes.
+
+This changes what an open-model release actually consists of.
+
+The product is no longer just:
+
+- a weight file
+- a tokenizer
+- a model card
+
+It is also:
+
+- a quantization that preserves enough capability
+- kernels that run efficiently on the target chips
+- a runtime that understands the architecture
+- a networking layer for models that do not fit on one host
+- realistic memory and power requirements
+- a license that matches the intended business
+
+Meta has shipped much of that stack. Apple has made the local path unusually concrete. That is the real achievement here.
+
+But it also means access is graduated. The checkpoint can be downloaded. Far fewer people can run it privately at useful speed. Fewer still can fine-tune or evaluate it at scale.
+
+Open weights remove the permission gate.
+
+Hardware decides how wide the opening is.
+
+## The license is open, with a business model attached
+
+There is another boundary worth reading past the headline.
+
+Muse Spark Open is not under Apache 2.0. Meta's custom [Muse Model License](https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B) allows use, modification, derivatives, redistribution, and commercial products, but it also requires attribution. And if a company offering models as a service has more than $20 million in aggregate annual revenue, it must notify Meta and enter a separate agreement before serving Muse Spark Open or its derivatives.
+
+That will not matter to many researchers, internal enterprise deployments, or smaller builders.
+
+It matters a great deal if the pitch is that open weights remove strategic dependence on the original vendor.
+
+They remove one kind of dependence. They do not erase contractual terms, compute economics, or the original company's leverage over large hosted businesses.
+
+This is why "open" needs a complete sentence.
+
+Open for whom, on what hardware, under which terms, and with which reproducible deployment path?
+
+## Meta and Apple found the same incentive
+
+The collaboration is surprising because Apple and Meta have spent years fighting over privacy, platform power, advertising, and the future of personal computing.
+
+Here, their incentives line up.
+
+Meta gets to prove that an American open-weight model can leave the data center and run under a customer's control. Apple gets to turn unified memory, MLX, and high-bandwidth desktop hardware into an alternative AI deployment stack. Both get an answer to a market increasingly shaped by Nvidia infrastructure, closed APIs, and capable Chinese open models.
+
+That does not mean two Mac Studios will replace a GPU cluster for training or high-volume serving.
+
+It means the boundary between a workstation and a private AI cluster is moving.
+
+For companies that care about source-code privacy, regulated data, offline operation, or continuity of access, that boundary is commercially important. A model running inside the office can be more valuable than a marginally stronger model behind someone else's API.
+
+But buyers should evaluate the whole system, not the geopolitical story wrapped around it.
+
+They should ask:
+
+- Can the exact released checkpoint run at the required speed and context length?
+- What capability is lost in the quantized version?
+- Is the license compatible with the product and revenue model?
+- Can the deployment be patched, audited, and reproduced?
+- Does local operation actually keep prompts, files, tool traces, and telemetry local?
+
+The weights are only the first receipt.
+
+## This is what a real release looks like
+
+Muse Spark Open strengthens the argument for a Western open-model ecosystem because Meta has delivered an inspectable artifact with multiple runtimes, hardware support, a model card, and concrete local deployment instructions.
+
+It also kills the comforting idea that open automatically means accessible.
+
+The useful distinction is no longer only between a press release and a checkpoint.
+
+It is between a checkpoint and a deployable system.
+
+Meta crossed the first line.
+
+Apple showed what it takes to cross the second.
+
+The weights are open.
+
+The memory bandwidth is the cover charge.
 
 ## Update: open is a delivery state
 
