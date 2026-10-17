@@ -1,10 +1,153 @@
 ---
 title: "Frontier AI Wants a FINRA Moment"
 date: "2026-08-13"
-description: "The FINRA-for-AI idea is moving from manifesto to operating contract. An embedded evaluator deal tests independence, while a new antitrust complaint tests the boundary between safety coordination and a private speed limit set by rivals."
+description: "Six METR evaluators now have employee-like access inside Anthropic. That is a serious advance for external scrutiny, but it also exposes the missing half of the bank-examiner analogy: access produces evidence; public authority turns evidence into consequences."
 tags: ["AI Regulation", "Google DeepMind", "AI Safety", "AI Models"]
 draft: false
 ---
+
+## Update: the examiner has a badge. It still needs an institution
+
+The embedded evaluator is no longer a proposal.
+
+Six people from METR now have Anthropic laptops, office space, and access to internal tools and systems roughly comparable to the access held by Anthropic's own risk-assessment teams.
+
+That is a meaningful development.
+
+It is also the cleanest test yet of the bank-examiner analogy AI labs keep borrowing.
+
+On October 15, [Anthropic described its new arrangement with METR](https://www.anthropic.com/news/an-update-on-independent-evaluators). The nonprofit will examine risks, incidents, and safety practices from inside the company. Anthropic says it cannot veto publication. METR can publish without company approval, subject to redactions for predefined categories such as customer information, attorney-client privileged material, security-sensitive information, and some model-architecture details.
+
+This is much stronger than a benchmark run through an API before launch.
+
+It is stronger than the Accenture arrangement discussed below, which was announced as a partnership still moving toward deeper access.
+
+And it is stronger than a risk report in which the company selects the evidence, writes the conclusions, and asks an outside group to comment afterward.
+
+The evaluator is now inside the building.
+
+The important question is what happens when it finds something the building does not want to hear.
+
+## Access is not a binary permission
+
+"Employee-like" sounds simple.
+
+It is not.
+
+Anthropic says METR's six-person team can use internal systems and receive information from employees much as an alignment-risk colleague would. But the access is not identical to an ordinary employee's, and it is not universal. Customer data, privileged legal material, and architecture information are excluded by default. Sharing especially relevant architecture information requires additional internal approval. The METR team is also siloed from the rest of its organization under enforceable agreements.
+
+Those limits may be reasonable. An evaluator does not need every customer record or every trade secret to do useful work. Broad access without security controls would create its own risk.
+
+But the shape of the exclusions matters more than the phrase used to market the arrangement.
+
+An evaluator needs to know whether it can see:
+
+- unreleased checkpoints and relevant training runs
+- internal agent transcripts, including failed and unflattering ones
+- incident reports and escalation records
+- monitoring coverage and the traffic that monitoring misses
+- code and runtime configuration on the critical control path
+- remediation decisions, restart decisions, and launch exceptions
+- employees privately, without management screening the questions or answers
+
+METR's own [assessment proposal](https://metr.org/blog/2026-10-14-better-informing-the-public-about-loss-of-control-risks/) asks for this kind of evidence. Its more detailed [control plan](https://metr.org/blog/2026-10-14-control-assessment-proposal/) calls for representative internal transcripts, severe-incident records, visibility into escalation, the ability to inject test attacks into monitoring systems, relevant code, and limited access to runtime clusters.
+
+The badge matters.
+
+The access map matters more.
+
+## Publication rights are real, but redaction power is still power
+
+Anthropic cannot simply veto a METR report.
+
+That is important.
+
+But Anthropic can require information to be removed when it decides the material falls into one of the predefined protected categories. Anthropic ultimately determines how those categories apply. METR retains the right to make some statements about the access and information it received, including whether limitations or redactions affected its conclusions.
+
+This is a serious attempt to balance public evidence with security, privacy, and legitimate confidentiality.
+
+It is not full editorial independence.
+
+METR's own [process-transparency policy](https://metr.org/blog/2026-10-14-our-approach-to-risk-assessment/) is unusually candid about the problem. The organization says it does not accept payment or donations from frontier AI companies and tries to disclose scope, access limits, redactions, conflicts, and informal pressure. It also says the voluntary regime leaves it dependent on companies to engage, provide access, and permit publication. Some evidence cannot be independently verified and may have been filtered in ways that bias the assessment.
+
+That honesty is a feature, not a weakness.
+
+An evaluator report should never arrive as a magic green checkmark.
+
+It should arrive with a process receipt:
+
+- the agreed scope and duration
+- the systems, models, logs, and staff made available
+- the material withheld or excluded
+- the redaction process and any disputed redactions
+- the methods used and their limitations
+- the findings, including unresolved uncertainty
+- the company's response and the changes actually made
+
+The public does not need every secret.
+
+It does need to know how much of the machine the evaluator was allowed to inspect.
+
+## A resident examiner is more than a resident expert
+
+Anthropic explicitly compares embedded evaluators to bank examiners.
+
+The comparison is useful because it shows what is still missing.
+
+A resident bank examiner does not enter the bank only because the bank volunteered. The examiner sits inside a legal and supervisory system. A regulator defines the mandate, can compel records, can compare institutions, can escalate findings, and can impose or recommend consequences. The bank cannot quietly end the entire regime when the relationship becomes inconvenient.
+
+METR has expertise, access, and some publication rights.
+
+It does not have public authority.
+
+It cannot require every frontier lab to participate. It cannot compel a missing log. It cannot fine Anthropic for an inadequate control, suspend a model launch, protect a source with statutory whistleblower powers, or guarantee that another evaluator receives comparable access at OpenAI, Google, Meta, or xAI.
+
+That does not make the arrangement fake.
+
+It makes it a prototype for examination, not a substitute for supervision.
+
+The distinction matters because voluntary oversight is easiest when the evaluator and the company agree. The useful test arrives when they disagree about a dangerous finding, a redaction, a remediation deadline, or whether development should continue.
+
+If Anthropic can choose the evaluator, define the protected categories, control the underlying systems, and end the engagement, then the outside institution still depends on the inside institution's continued consent.
+
+Good faith can produce valuable evidence.
+
+It cannot guarantee durable oversight.
+
+## The first report matters more than the announcement
+
+Anthropic deserves credit for moving from a promise to an operating arrangement.
+
+METR deserves credit for publishing the constraints under which it works instead of pretending that access automatically creates independence.
+
+Now the announcement needs receipts.
+
+The useful milestones are not more evaluator logos. They are public reports that show:
+
+- what METR examined
+- what it could not examine
+- what Anthropic redacted
+- whether any redaction changed the conclusion
+- where METR and Anthropic disagreed
+- what control changed because of the finding
+- who decided that the response was sufficient
+- whether a release, training run, or deployment was delayed or stopped
+
+For builders and buyers, the presence of an embedded evaluator should improve confidence only in proportion to the evidence it produces.
+
+Do not ask only whether a provider has outside evaluators.
+
+Ask whether their reports are public, comparable, timely, and attached to decisions.
+
+The AI industry has finally put an independent pair of eyes near the control room.
+
+That is progress.
+
+The next step is giving the public a durable institution that can act on what those eyes see.
+
+Access produces evidence.
+
+Authority produces consequences.
 
 ## The Short Version
 

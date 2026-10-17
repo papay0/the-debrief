@@ -1,10 +1,153 @@
 ---
 title: "L'IA frontier veut son moment FINRA"
 date: "2026-08-13"
-description: "L'idée d'une FINRA pour l'IA passe du manifeste au contrat. Un accord avec des évaluateurs intégrés teste leur indépendance ; une nouvelle plainte antitrust interroge la frontière entre coordination sur la sécurité et limitation privée de la concurrence."
+description: "Six évaluateurs de METR disposent désormais d'un accès proche de celui de salariés au sein d'Anthropic. C'est une avancée sérieuse pour le contrôle externe, mais aussi la preuve qu'il manque encore la seconde moitié de l'analogie bancaire : l'accès produit des preuves ; l'autorité publique transforme ces preuves en conséquences."
 tags: ["AI Regulation", "Google DeepMind", "AI Safety", "AI Models"]
 draft: false
 ---
+
+## Mise à jour : l'examinateur a un badge. Il lui manque encore une institution
+
+L'évaluateur intégré n'est plus une proposition.
+
+Six personnes de METR disposent maintenant d'ordinateurs Anthropic, d'un espace de travail dans les locaux et d'un accès aux outils et systèmes internes proche de celui des propres équipes d'évaluation des risques de l'entreprise.
+
+C'est une évolution importante.
+
+C'est aussi le test le plus net à ce jour de l'analogie avec les examinateurs bancaires que les labs IA aiment reprendre.
+
+Le 15 octobre, [Anthropic a détaillé son nouvel accord avec METR](https://www.anthropic.com/news/an-update-on-independent-evaluators). L'organisation à but non lucratif examinera les risques, les incidents et les pratiques de safety depuis l'intérieur de l'entreprise. Anthropic affirme ne pas pouvoir interdire une publication. METR pourra publier sans approbation de l'entreprise, sous réserve de caviardages dans des catégories définies à l'avance, comme les données clients, les informations couvertes par le secret professionnel, les éléments sensibles pour la sécurité et certains détails sur l'architecture des modèles.
+
+C'est beaucoup plus solide qu'un benchmark exécuté par API avant le lancement.
+
+C'est plus solide aussi que l'accord avec Accenture présenté plus bas, annoncé comme un partenariat encore en route vers un accès plus profond.
+
+Et c'est plus solide qu'un rapport de risque où l'entreprise sélectionne les preuves, rédige les conclusions, puis demande ensuite à un groupe externe de les commenter.
+
+L'évaluateur est désormais dans le bâtiment.
+
+La question importante est ce qui se passe quand il découvre quelque chose que le bâtiment ne veut pas entendre.
+
+## L'accès n'est pas une permission binaire
+
+« Proche de celui d'un salarié » paraît simple.
+
+Ça ne l'est pas.
+
+Anthropic dit que l'équipe de six personnes de METR peut utiliser des systèmes internes et recevoir des informations des salariés comme le ferait un collègue chargé des risques d'alignement. Mais l'accès n'est pas identique à celui d'un salarié ordinaire, ni universel. Les données clients, les éléments juridiques protégés et les informations sur l'architecture sont exclus par défaut. Le partage d'informations d'architecture particulièrement pertinentes exige des validations internes supplémentaires. L'équipe METR est aussi cloisonnée du reste de son organisation par des accords juridiquement contraignants.
+
+Ces limites peuvent être raisonnables. Un évaluateur n'a pas besoin de chaque dossier client ni de chaque secret industriel pour faire un travail utile. Un accès large sans contrôle de sécurité créerait son propre risque.
+
+Mais la forme des exclusions compte davantage que l'expression choisie pour présenter l'accord.
+
+Un évaluateur doit savoir s'il peut voir :
+
+- les checkpoints non publiés et les runs d'entraînement pertinents
+- les traces d'agents internes, y compris les échecs et les cas embarrassants
+- les rapports d'incident et les historiques d'escalade
+- la couverture du monitoring et le trafic qui lui échappe
+- le code et la configuration runtime sur le chemin critique des contrôles
+- les décisions de remédiation, de redémarrage et les exceptions accordées avant lancement
+- les salariés en privé, sans filtrage des questions ni des réponses par le management
+
+La propre [proposition d'évaluation de METR](https://metr.org/blog/2026-10-14-better-informing-the-public-about-loss-of-control-risks/) réclame ce type de preuves. Son [plan plus détaillé sur les contrôles](https://metr.org/blog/2026-10-14-control-assessment-proposal/) demande des traces internes représentatives, les dossiers des incidents graves, une visibilité sur les procédures d'escalade, la capacité d'injecter des attaques de test dans les systèmes de monitoring, le code pertinent et un accès limité aux clusters d'exécution.
+
+Le badge compte.
+
+La carte des accès compte davantage.
+
+## Les droits de publication sont réels, mais le pouvoir de caviarder reste un pouvoir
+
+Anthropic ne peut pas simplement interdire un rapport de METR.
+
+C'est important.
+
+Mais Anthropic peut exiger le retrait d'informations lorsqu'elle décide qu'elles entrent dans une des catégories protégées définies à l'avance. C'est Anthropic qui tranche en dernier ressort sur l'application de ces catégories. METR conserve le droit de faire certaines déclarations sur l'accès et les informations reçues, notamment pour dire si des limites ou des caviardages ont affecté ses conclusions.
+
+C'est une tentative sérieuse de concilier les preuves publiques avec la sécurité, la vie privée et une confidentialité légitime.
+
+Ce n'est pas une indépendance éditoriale totale.
+
+La [politique de transparence sur les processus de METR](https://metr.org/blog/2026-10-14-our-approach-to-risk-assessment/) est remarquablement franche sur ce problème. L'organisation dit ne pas accepter de paiements ni de dons des entreprises IA frontier et chercher à rendre publics le périmètre, les limites d'accès, les caviardages, les conflits et les pressions informelles. Elle reconnaît aussi que le régime volontaire la rend dépendante des entreprises pour accepter la mission, ouvrir leurs systèmes et autoriser la publication. Certaines preuves ne peuvent pas être vérifiées indépendamment et peuvent avoir été filtrées d'une manière qui biaise l'évaluation.
+
+Cette franchise est une qualité, pas une faiblesse.
+
+Un rapport d'évaluateur ne devrait jamais arriver comme une coche verte magique.
+
+Il devrait arriver avec un reçu de processus :
+
+- le périmètre et la durée convenus
+- les systèmes, modèles, logs et salariés rendus accessibles
+- les éléments retenus ou exclus
+- le processus de caviardage et les désaccords éventuels
+- les méthodes utilisées et leurs limites
+- les conclusions, y compris les incertitudes non résolues
+- la réponse de l'entreprise et les changements réellement appliqués
+
+Le public n'a pas besoin de connaître chaque secret.
+
+Il doit savoir quelle part de la machine l'évaluateur a été autorisé à inspecter.
+
+## Un examinateur résident est plus qu'un expert résident
+
+Anthropic compare explicitement les évaluateurs intégrés aux examinateurs bancaires.
+
+La comparaison est utile parce qu'elle montre ce qui manque encore.
+
+Un examinateur bancaire résident n'entre pas dans une banque uniquement parce qu'elle se porte volontaire. Il agit dans un système juridique et prudentiel. Un régulateur définit son mandat, peut exiger des documents, comparer les établissements, faire remonter ses conclusions et imposer ou recommander des sanctions. La banque ne peut pas mettre discrètement fin à tout le régime quand la relation devient gênante.
+
+METR dispose d'une expertise, d'un accès et de certains droits de publication.
+
+METR n'a pas d'autorité publique.
+
+L'organisation ne peut pas obliger tous les labs frontier à participer. Elle ne peut pas exiger un log manquant, infliger une amende à Anthropic pour un contrôle insuffisant, suspendre le lancement d'un modèle, protéger une source avec des garanties légales pour les lanceurs d'alerte, ni assurer qu'un autre évaluateur obtienne un accès comparable chez OpenAI, Google, Meta ou xAI.
+
+Cela ne rend pas l'accord factice.
+
+Cela en fait un prototype d'examen, pas un substitut à la supervision.
+
+La distinction compte, car le contrôle volontaire fonctionne le mieux quand l'évaluateur et l'entreprise sont d'accord. Le vrai test arrive lorsqu'ils ne le sont pas sur une conclusion dangereuse, un caviardage, un délai de remédiation ou la poursuite du développement.
+
+Si Anthropic peut choisir l'évaluateur, définir les catégories protégées, contrôler les systèmes sous-jacents et mettre fin à la mission, l'institution extérieure dépend encore du consentement continu de l'institution intérieure.
+
+La bonne foi peut produire des preuves précieuses.
+
+Elle ne peut pas garantir un contrôle durable.
+
+## Le premier rapport compte davantage que l'annonce
+
+Anthropic mérite qu'on lui reconnaisse le passage d'une promesse à un dispositif opérationnel.
+
+METR mérite qu'on lui reconnaisse la publication de ses contraintes, plutôt que de prétendre que l'accès crée automatiquement l'indépendance.
+
+L'annonce a maintenant besoin de reçus.
+
+Les jalons utiles ne sont pas davantage de logos d'évaluateurs. Ce sont des rapports publics qui montrent :
+
+- ce que METR a examiné
+- ce que METR n'a pas pu examiner
+- ce qu'Anthropic a caviardé
+- si un caviardage a changé la conclusion
+- les points de désaccord entre METR et Anthropic
+- quel contrôle a changé à la suite d'une conclusion
+- qui a décidé que la réponse était suffisante
+- si un lancement, un run d'entraînement ou un déploiement a été retardé ou arrêté
+
+Pour les builders et les acheteurs, la présence d'un évaluateur intégré ne doit renforcer la confiance qu'à hauteur des preuves qu'il produit.
+
+Ne demandez pas seulement si un fournisseur a des évaluateurs externes.
+
+Demandez si leurs rapports sont publics, comparables, rapides et reliés à des décisions.
+
+L'industrie IA vient enfin de placer une paire d'yeux indépendante près de la salle de contrôle.
+
+C'est un progrès.
+
+L'étape suivante consiste à donner au public une institution durable capable d'agir sur ce que ces yeux découvrent.
+
+L'accès produit des preuves.
+
+L'autorité produit des conséquences.
 
 ## En bref
 
