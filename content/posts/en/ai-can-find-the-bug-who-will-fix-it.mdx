@@ -1,10 +1,40 @@
 ---
 title: "AI Can Find the Bug. Who Is Going to Fix It?"
 date: "2026-10-09"
-description: "Anthropic's new OSS Scanner can send maintainers unreviewed vulnerability reports from frontier models. The scanner is free. Triage, disclosure, patching, testing, and release work are not."
-tags: ["AI Security", "Open Source", "Anthropic", "Developer Tools"]
+description: "Anthropic's OSS Scanner can send maintainers unreviewed findings. OpenAI's PHP response shows the harder model: fund expert validation, patching, coordinated disclosure, provider mitigations, and deployment support."
+tags: ["AI Security", "Open Source", "Anthropic", "OpenAI", "Developer Tools"]
 draft: false
 ---
+
+## Update: PHP shows what a remediation budget buys
+
+The useful AI-security number is not how many bugs a model found.
+
+It is how many organizations were ready before the bugs became public.
+
+On October 21, the PHP project [released four security updates](https://www.php.net/) for two critical vulnerabilities that can allow unauthenticated remote code execution. It urged all PHP users serving web requests to update immediately.
+
+OpenAI says one flaw was identified by Calif using GPT-5.6 Sol through its [Patch the Planet initiative](https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities/). [Wiz says](https://www.wiz.io/blog/php2shell-php-rce) it independently discovered and reported both vulnerabilities. The PHP advisory confirms the affected versions, severity, patched releases, and mitigations. That is the boundary between the verified security event and each vendor's account of who found what.
+
+The important part is what happened after discovery.
+
+According to OpenAI, PHP maintainers led the fixes while researchers, Cloudflare, infrastructure providers, security vendors, Linux distributors, long-term-support vendors, and government cyber agencies prepared patches, mitigations, detection, and public guidance before disclosure.
+
+That is the remediation budget this article argued for.
+
+Not only inference.
+
+Expert validation. Maintainer time. Embargo handling. Backports. Provider coordination. Government outreach. Version checkers. Deployment guidance. And enough patience to let the project, rather than the model company, control the release.
+
+OpenAI calls the period before offensive use catches up a "Defender's Window." Treat that as strategic framing, not a measured law of cybersecurity. Wiz describes the flaws as among the most severe in PHP's history, while OpenAI calls the response one of the most impactful security issues in recent memory. Those are consequential claims from participants in the disclosure.
+
+The less promotional fact is already strong enough:
+
+AI-assisted research helped surface critical flaws, and risk fell only after a network of humans and institutions carried the findings into patched software and deployable protections.
+
+That does not disprove the bottleneck.
+
+It shows what it takes to move it.
 
 ## The short version
 

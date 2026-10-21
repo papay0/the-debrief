@@ -1,10 +1,40 @@
 ---
 title: "L'IA peut trouver la faille. Qui va la corriger ?"
 date: "2026-10-09"
-description: "Le nouvel OSS Scanner d'Anthropic peut envoyer aux mainteneurs des rapports de vulnérabilité non relus, produits par des modèles de pointe. Le scan est gratuit. Le tri, la divulgation, le correctif, les tests et la publication ne le sont pas."
-tags: ["Sécurité IA", "Open Source", "Anthropic", "Outils développeurs"]
+description: "Le scanner OSS d'Anthropic peut envoyer aux mainteneurs des découvertes non relues. La réponse d'OpenAI autour de PHP montre le modèle plus exigeant : financer la validation experte, les correctifs, la divulgation coordonnée, les mitigations et le déploiement."
+tags: ["Sécurité IA", "Open Source", "Anthropic", "OpenAI", "Outils développeurs"]
 draft: false
 ---
+
+## Mise à jour : PHP montre ce qu'achète un budget de correction
+
+Le chiffre utile en cybersécurité n'est pas le nombre de failles trouvées par un modèle.
+
+C'est le nombre d'organisations prêtes avant que ces failles deviennent publiques.
+
+Le 21 octobre, le projet PHP a [publié quatre mises à jour de sécurité](https://www.php.net/) pour deux vulnérabilités critiques permettant une exécution de code à distance sans authentification. Il demande à tous les utilisateurs de PHP qui servent des requêtes web de mettre à jour immédiatement.
+
+OpenAI affirme qu'une des failles a été identifiée par Calif avec GPT-5.6 Sol dans le cadre de son initiative [Patch the Planet](https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities/). [Wiz affirme](https://www.wiz.io/blog/php2shell-php-rce) avoir découvert et signalé indépendamment les deux vulnérabilités. L'avis de PHP confirme les versions affectées, la gravité, les versions corrigées et les mitigations. Voilà la frontière entre l'événement de sécurité vérifié et le récit de chaque fournisseur sur l'origine des découvertes.
+
+L'essentiel vient après la découverte.
+
+Selon OpenAI, les mainteneurs de PHP ont dirigé les corrections pendant que des chercheurs, Cloudflare, des fournisseurs d'infrastructure, des entreprises de sécurité, des distributions Linux, des prestataires de support long terme et des agences publiques de cybersécurité préparaient patchs, mitigations, détection et documentation avant la divulgation.
+
+C'est le budget de correction défendu dans cet article.
+
+Pas seulement de l'inférence.
+
+De la validation experte. Du temps de maintenance. La gestion d'un embargo. Des rétroportages. La coordination avec les fournisseurs. Le relais des pouvoirs publics. Des vérificateurs de version. Une aide au déploiement. Et assez de patience pour laisser le projet, plutôt que l'entreprise qui fournit le modèle, contrôler la publication.
+
+OpenAI appelle la période avant que les usages offensifs ne rattrapent ces capacités la « Defender's Window ». Il faut y voir un cadrage stratégique, pas une loi mesurée de la cybersécurité. Wiz décrit ces failles comme faisant partie des plus graves de l'histoire de PHP, tandis qu'OpenAI présente cette réponse comme l'un des incidents de sécurité les plus importants de mémoire récente. Ce sont des affirmations fortes venues d'acteurs de la divulgation.
+
+Le fait le moins promotionnel est déjà assez solide :
+
+La recherche assistée par IA a contribué à faire remonter des failles critiques, et le risque n'a diminué qu'après qu'un réseau d'humains et d'institutions a transformé ces découvertes en logiciel corrigé et en protections déployables.
+
+Cela ne contredit pas l'existence du goulot d'étranglement.
+
+Cela montre ce qu'il faut pour le déplacer.
 
 ## La version courte
 

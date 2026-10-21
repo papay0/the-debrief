@@ -1,0 +1,185 @@
+---
+title: "OpenAI vient d'entrer dans le catalogue de Google"
+date: "2026-10-21"
+description: "Les modèles d'OpenAI et Codex arrivent dans Google Cloud, où les clients pourront les acheter avec leurs engagements cloud existants. Le modèle reste la tête d'affiche. La facturation, l'identité, les données et la gouvernance pourraient former l'activité la plus durable."
+tags: ["Infrastructure IA", "OpenAI", "Google", "IA en entreprise", "Outils développeurs"]
+draft: false
+---
+
+## La version courte
+
+OpenAI vient de devenir un produit vendu dans la boutique de Google.
+
+Le 21 octobre, OpenAI et Google Cloud ont [annoncé](https://openai.com/index/openai-models-google-cloud/) l'arrivée de GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna et des workflows Codex dans le Model Garden de Google Cloud.
+
+Les modèles commencent à être déployés en preview privée. Leur disponibilité générale est prévue dans les prochaines semaines. Les clients pourront les acheter via Google Cloud Marketplace, utiliser leurs engagements de dépenses Google Cloud existants et, à terme, y accéder depuis Google Antigravity et l'agent Gemini.
+
+Microsoft reste le principal partenaire cloud d'OpenAI.
+
+Amazon vend déjà les modèles d'OpenAI et Codex sur AWS.
+
+Google peut désormais proposer Gemini, Claude et OpenAI depuis la même plateforme.
+
+Cela ressemble à davantage de choix.
+
+C'est aussi un transfert de pouvoir.
+
+Le fournisseur de modèles apporte l'intelligence. Le cloud contrôle la facture, l'identité, les journaux d'audit, le périmètre des données, la sécurité, la relation d'achat et une part croissante du workflow développeur.
+
+Le marché de l'IA ne devient pas indifférent aux modèles.
+
+Il passe de plus en plus par les clouds.
+
+## Le vrai produit, c'est le bon de commande
+
+La phrase la plus révélatrice de l'annonce n'est pas la liste des modèles.
+
+C'est celle sur les engagements cloud.
+
+[Google indique](https://cloud.google.com/blog/products/ai-machine-learning/google-cloud-brings-openai-models-to-customers) que l'usage des modèles OpenAI apparaîtra sur la même facture Google Cloud, sera déduit des engagements de dépenses existants et comptera dans les Flexible Savings Plans communs à plusieurs fournisseurs de modèles.
+
+C'est moins spectaculaire qu'un benchmark.
+
+Pour l'adoption en entreprise, c'est peut-être plus important.
+
+Les grandes entreprises n'achètent pas leurs logiciels clé API par clé API. Elles négocient des engagements cloud pluriannuels, approuvent des fournisseurs, configurent les identités, définissent les frontières des données, construisent des procédures d'audit et passent des mois à faire valider une plateforme par les équipes sécurité et juridique.
+
+Une fois cette mécanique en place, un nouveau modèle accède beaucoup plus facilement à la production s'il arrive par le compte cloud déjà approuvé.
+
+L'intégration technique compte.
+
+L'intégration aux achats, c'est le canal de distribution.
+
+OpenAI atteint les clients de Google Cloud sans demander à chacun d'ouvrir une relation commerciale séparée. Google garde le client dans son système de facturation, de gouvernance et d'infrastructure même quand ce client choisit un modèle concurrent.
+
+C'est un bon accord pour les deux entreprises.
+
+Et c'est un rappel encore plus utile : le gagnant de l'IA en entreprise ne sera peut-être pas celui dont le modèle répond à chaque requête.
+
+Ce sera peut-être celui qui facture chaque réponse.
+
+## Google peut perdre le choix du modèle et garder le workload
+
+Google affirme être désormais le seul hyperscaler à proposer les trois principales familles de modèles fermés, aux côtés de plus de 200 modèles maison, tiers et ouverts.
+
+C'est la formulation de Google et sa propre classification. Il n'existe pas de comité universel du top 3.
+
+Mais la stratégie est limpide.
+
+Si le client préfère Gemini, Google gagne.
+
+S'il préfère Claude dans la plateforme de Google, Google vend toujours l'infrastructure et la couche de contrôle.
+
+S'il préfère OpenAI, Google peut maintenant conserver ce workload aussi.
+
+C'est la version cloud d'un constat : aucun modèle ne sera le meilleur pour chaque tâche. Alors autant construire l'endroit où les entreprises feront leur choix.
+
+Microsoft suit la même direction avec Foundry. Amazon le fait avec Bedrock. Google le fait avec Model Garden et sa plateforme Gemini pour les entreprises.
+
+Les catalogues convergent.
+
+Les couches de contrôle se font concurrence.
+
+Cette différence compte parce que les clouds possèdent des actifs durables qu'un nouveau classement de modèles n'efface pas du jour au lendemain : contrats enterprise, plateformes de données, capacité régionale, systèmes d'identité, programmes de conformité, réseau, observabilité et équipes chargées de faire réussir les audits.
+
+Un modèle peut mener un benchmark ce mois-ci et passer en deuxième position le mois prochain.
+
+Le cloud, lui, envoie toujours la facture.
+
+## « Sans dépendance architecturale » demande à être prouvé
+
+Google affirme que les clients pourront changer dynamiquement de modèle selon les performances, la latence et le coût, « sans dépendance architecturale ».
+
+C'est la promesse commerciale.
+
+Ce n'est pas encore une preuve de portabilité.
+
+Rassembler plusieurs modèles derrière une même plateforme peut réduire certains coûts de migration. Les équipes peuvent réutiliser la facturation, l'identité, les contrôles réseau, les logs et une partie de la couche API. C'est une vraie valeur.
+
+Mais les modèles ne sont pas des paquets de tokens interchangeables.
+
+Ils se comportent différemment avec les appels d'outils, les sorties structurées, les longs contextes, le contrôle d'ordinateur, les refus, la sensibilité aux prompts, la mémoire, le cache, les limites de débit et la reprise après échec. Un agent réglé autour des habitudes d'un modèle peut devenir très différent quand un autre modèle se cache derrière le même menu.
+
+Les produits qui les entourent diffèrent eux aussi.
+
+Codex n'est pas une simple requête d'inférence. C'est un workflow de code avec son propre environnement d'exécution, ses permissions, ses outils et son expérience de revue. Gemini Agent et Antigravity ont leurs propres systèmes d'orchestration et leurs intégrations enterprise. Déplacer un endpoint de modèle ne déplace pas automatiquement tout le produit.
+
+Nous avons vu la même leçon un étage plus bas quand AWS a transformé Trainium en device PyTorch natif : [la portabilité du code n'est pas celle du workload](/fr/posts/the-model-roadmap-is-a-chip-roadmap).
+
+Ici, la portabilité du catalogue n'est pas celle de l'agent.
+
+Le rayon commun facilite la comparaison.
+
+Il ne rend pas tous les produits identiques.
+
+## OpenAI choisit la distribution plutôt que l'exclusivité
+
+Cet accord n'est pas apparu de nulle part.
+
+En avril, OpenAI et Microsoft ont [modifié leur partenariat](https://openai.com/index/next-phase-of-microsoft-partnership/) : Microsoft restait le principal partenaire cloud, tandis qu'OpenAI gagnait le droit de proposer tous ses produits chez d'autres fournisseurs. La licence de Microsoft sur les modèles et produits d'OpenAI devenait non exclusive.
+
+Le 28 avril, OpenAI [annonçait ses modèles, Codex et des agents managés sur AWS](https://openai.com/index/openai-on-aws/).
+
+Voici maintenant Google Cloud.
+
+Cette séquence montre qu'OpenAI ne veut plus faire dépendre sa distribution enterprise de sa capacité à convaincre les entreprises de réorganiser leur infrastructure autour de lui.
+
+L'entreprise veut les rejoindre dans le cloud qu'elles ont déjà acheté.
+
+Cela élargit sa distribution.
+
+Cela rend aussi OpenAI plus facile à comparer.
+
+Quand GPT, Claude, Gemini et des modèles ouverts vivent dans la même couche d'achat et de gouvernance, les clients peuvent lancer des évaluations avec moins de friction organisationnelle. Ils peuvent demander si le modèle le plus cher vaut son prix, si un modèle plus petit suffit, si la latence change selon les régions et si le résultat du flagship survit à leur vrai workflow.
+
+C'est sain pour les clients.
+
+C'est moins confortable pour les marges des fournisseurs.
+
+Plus les modèles sont simples à comparer, plus il devient difficile de facturer seulement leur aura.
+
+## Les équipes doivent séparer trois décisions
+
+L'ancienne question était :
+
+Quel modèle devons-nous utiliser ?
+
+Les bonnes questions sont désormais :
+
+1. Quel modèle fonctionne le mieux pour ce workload ?
+2. Quelle couche de contrôle doit gouverner ce workload ?
+3. Quelle relation commerciale doit le financer ?
+
+Les trois réponses ne doivent pas forcément désigner la même entreprise.
+
+Une équipe peut préférer un modèle OpenAI, utiliser Google Cloud pour l'identité et la gouvernance des données, puis conserver un petit modèle ouvert comme solution de repli. Une autre peut utiliser Claude via Microsoft Foundry parce que toute l'entreprise a déjà standardisé Azure. Une troisième peut appeler directement l'API du fournisseur parce que les dernières fonctions y arrivent plus vite et que cette avance justifie l'intégration supplémentaire.
+
+Ne supposez pas que la marketplace et l'API directe sont équivalentes.
+
+Vérifiez les versions de modèles, les fonctions disponibles, le traitement et la conservation des données, les régions, les quotas, les prix, la latence, le calendrier des sorties, les contrôles de sécurité et l'accès à la télémétrie opérationnelle. Testez l'agent, pas seulement le prompt. Gardez des évaluations représentatives et des cas d'échec. Sachez quelles parties du workflow appartiennent au fournisseur de modèle et lesquelles appartiennent au cloud.
+
+Surtout, ne confondez pas facture unique et absence de dépendance.
+
+La dépendance est peut-être simplement remontée d'un étage.
+
+## En clair
+
+L'arrivée d'OpenAI dans Google Cloud n'est pas une histoire d'amitié.
+
+Ces entreprises restent concurrentes sur les modèles, les agents, les outils développeurs, la recherche, les logiciels enterprise, les talents, les puces et l'infrastructure.
+
+Elles s'associent parce que la distribution coûte cher et que les entreprises préfèrent acheter de nouvelles capacités dans des systèmes qu'elles connaissent déjà.
+
+OpenAI gagne de la distribution.
+
+Google garde le workload.
+
+Les clients gagnent du choix, mais seulement s'ils font le travail nécessaire pour le rendre réel.
+
+Le modèle de pointe reste important.
+
+L'activité la plus durable sera peut-être la couche qui permet à une entreprise de tester ce modèle, de le gouverner, de le connecter à ses données, de le mesurer, de le remplacer et de faire apparaître l'usage sur une facture déjà reconnue par la direction financière.
+
+La course aux modèles continue.
+
+Elle se déroule de plus en plus dans la boutique de quelqu'un d'autre.
