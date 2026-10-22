@@ -1,0 +1,217 @@
+---
+title: "Les cartes IA deviennent une infrastructure de conformité"
+date: "2026-10-22"
+description: "La nouvelle carte forestière de Google ne se contente pas d'identifier des arbres. Elle transforme des données satellite en catégories juridiques utiles à la conformité des chaînes d'approvisionnement. Le vrai produit n'est pas seulement la prédiction, mais l'incertitude, la validation, l'historique et les preuves qui l'entourent."
+tags: ["Google DeepMind", "AI", "Regulation", "Climate"]
+draft: false
+---
+
+## En bref
+
+Google DeepMind et Google Research viennent de publier une carte mondiale qui essaie de répondre à une question plus difficile que "y a-t-il des arbres ici ?"
+
+Elle cherche à savoir de quels arbres il s'agit.
+
+[Forest Typology 2020](https://deepmind.google/blog/beyond-tree-cover-mapping-the-worlds-forest-types/), ou ForTy, classe les terres en six catégories : forêt primaire, forêt en régénération naturelle, forêt plantée, plantation forestière, cultures arborées et agroforesterie, puis tout le reste. La carte couvre l'essentiel des terres émergées avec une résolution de 10 mètres. Google publie aussi une première série temporelle qui suit les changements annuels de 2017 à 2025.
+
+Cela ressemble à un projet de recherche environnementale.
+
+C'est aussi une infrastructure de conformité.
+
+Les catégories correspondent aux définitions utilisées par l'Organisation des Nations unies pour l'alimentation et l'agriculture et par le règlement européen contre la déforestation. Les opérateurs de taille moyenne et grande devront appliquer les règles européennes à partir du 30 décembre 2026. Ils devront montrer que des produits comme le café, le cacao, l'huile de palme, le caoutchouc, le soja, le bétail ou le bois ne viennent pas de terres récemment déforestées et ne contribuent pas à la dégradation des forêts.
+
+Une image satellite qui dit simplement "c'est vert" ne suffit pas.
+
+Une forêt naturelle remplacée par une plantation de bois peut rester verte. Une cacaoyère et une forêt en régénération peuvent toutes les deux contenir des arbres. La différence juridique et écologique se trouve dans l'histoire et l'usage du terrain, pas seulement dans la couleur d'un pixel.
+
+C'est là que le sujet IA devient intéressant.
+
+Le modèle ne se contente pas de détecter un objet.
+
+Il traduit un monde physique complexe en catégories que des entreprises, des régulateurs et des auditeurs pourront utiliser pour prendre des décisions.
+
+![Carte mondiale des forêts primaires, en régénération naturelle, plantées et de plantation, ainsi que des cultures arborées et de l'agroforesterie](/images/forest-typology-2020-global-map.png)
+
+*Forest Typology 2020. La figure publiée montre la catégorie majoritaire dans chaque kilomètre carré ; les données sous-jacentes sont disponibles avec une résolution de 10 mètres. Source : [Neumann et al., Scientific Data](https://www.nature.com/articles/s41597-026-08299-5), sous licence [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
+## La couverture arborée est la mauvaise abstraction
+
+Pendant des années, une grande partie du suivi mondial des forêts a commencé par une question binaire :
+
+Des arbres ou pas d'arbres ?
+
+C'est utile pour mesurer la disparition de la canopée. Ce n'est pas suffisant pour déterminer si une chaîne d'approvisionnement est exempte de déforestation.
+
+Une forêt primaire ne stocke pas le carbone et n'abrite pas la biodiversité comme une plantation d'une seule espèce récoltée sur un cycle court. Une culture arborée peut être dense, verte et économiquement productive tout en restant une terre agricole. Une forêt naturelle rasée peut redevenir verte sans redevenir le même écosystème.
+
+ForTy essaie de conserver ces différences.
+
+L'[article publié dans Scientific Data](https://www.nature.com/articles/s41597-026-08299-5) décrit une référence mondiale pour 2020 construite à partir d'observations satellitaires, de données sur l'usage des sols et d'environ 1,7 million de lieux étiquetés à partir d'enquêtes d'experts, de données nationales et régionales, et de revues ciblées des zones où le modèle avait du mal. Le modèle utilise les embeddings d'AlphaEarth Foundations, qui condensent plusieurs années d'observations satellitaires pour chaque emplacement. Il peut ainsi chercher des indices comme la géométrie des plantations, les cycles de coupe et les variations saisonnières au lieu de s'appuyer sur une seule image.
+
+Le résultat n'est pas seulement une étiquette par pixel.
+
+Le jeu de données public contient un score de confiance relatif pour chaque catégorie. Un utilisateur peut choisir un seuil plus strict lorsqu'un faux négatif créerait un risque réglementaire, ou accepter davantage d'incertitude lorsqu'il cherche surtout à estimer l'étendue totale des forêts.
+
+Ce choix de conception compte.
+
+Le système ne prétend pas que chaque parcelle est aussi facile à lire que les autres.
+
+Il expose l'incertitude, puis oblige l'utilisateur en aval à décider quoi en faire.
+
+## La carte est le produit
+
+Les annonces IA continuent de parler du modèle comme si le modèle était tout le produit.
+
+ForTy rappelle utilement que le produit durable est souvent le système de preuves construit autour du modèle.
+
+L'équipe publie :
+
+- une carte mondiale de référence pour 2020
+- des scores de confiance par catégorie plutôt qu'une simple étiquette définitive
+- un jeu de validation de 9 100 sites, dont 8 190 validés par consensus d'experts
+- une première série annuelle de changements de 2017 à 2025
+- des fichiers téléchargeables et une couche Earth Engine
+- le code d'entraînement, d'inférence et d'évaluation
+- des définitions reliées à un vrai cadre réglementaire
+
+Google affirme que le système a identifié le bon type de forêt sur 90 % des sites de validation et a distingué les forêts des autres terres dans 95 % des cas. Ce sont de très bons résultats pour une carte mondiale.
+
+Ce n'est pas un verdict juridique.
+
+À l'échelle de la planète, même un faible taux d'erreur peut concerner une surface immense. Les performances peuvent varier selon la région, le type de forêt, la couverture nuageuse, la saison et la qualité des données locales de référence. L'article précise aussi que les scores de confiance sont les sorties combinées de plusieurs modèles, pas des probabilités parfaitement calibrées. Il recommande une validation locale et des seuils adaptés à chaque usage.
+
+Ce n'est pas une note de bas de page à cacher.
+
+C'est le mode d'emploi.
+
+## Quatre-vingt-dix pour cent ne certifient pas une cargaison
+
+La [page de mise en œuvre actuelle de l'Union européenne](https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en) explique que les opérateurs et les commerçants doivent pouvoir prouver que les produits concernés ne proviennent pas de terres récemment déforestées et ne contribuent pas à la dégradation des forêts. Les règles s'appliqueront aux opérateurs moyens et grands à partir du 30 décembre 2026, puis à la plupart des micro et petites entreprises à partir du 30 juin 2027.
+
+ForTy peut aider à répondre à une partie du problème :
+
+Que semble-t-il s'être passé sur ce terrain ?
+
+La carte ne peut pas répondre à toute la chaîne :
+
+Ce sac de café vient-il vraiment de cette parcelle ?
+
+Les limites de l'exploitation ont-elles été correctement enregistrées ?
+
+Des grains de plusieurs origines ont-ils été mélangés ?
+
+L'identité du fournisseur est-elle authentique ?
+
+La conversion du terrain était-elle légale au regard des règles applicables ?
+
+La carte a-t-elle mal classé un paysage local inhabituel ?
+
+Ces questions demandent de la traçabilité, des documents, des contrôles fournisseurs, des coordonnées géographiques, des preuves locales et une procédure pour contester un résultat.
+
+La carte est une pièce du dossier.
+
+Elle n'est pas le dossier.
+
+Cette différence va devenir de plus en plus importante à mesure que les systèmes IA entrent dans la conformité. Une sortie de modèle peut sembler précise parce qu'elle arrive avec des coordonnées, des couleurs et un score de confiance. La précision de l'interface n'est pas la certitude du monde réel.
+
+Si une entreprise utilise ce type de carte pour bloquer un fournisseur, celui-ci doit pouvoir connaître l'emplacement, la date, la catégorie, le seuil et les observations qui ont produit la décision. Si un régulateur l'utilise pour choisir les dossiers à examiner, la carte doit ouvrir l'enquête, pas la refermer en silence.
+
+## La réglementation devient un problème de données
+
+Le règlement européen porte sur les produits de base, le commerce, les terres et la responsabilité des entreprises.
+
+Mais son application à grande échelle est aussi un problème d'ingénierie des données.
+
+Il faut associer des coordonnées à des millions d'exploitations et de parcelles forestières. Il faut comparer des séries historiques d'images satellite à une date de référence. Il faut définir les types de terrain de façon cohérente. Il faut relier un produit physique à un lieu dans les registres de la chaîne d'approvisionnement. Il faut examiner les cas incertains, suivre les changements dans le temps et conserver des preuves capables de survivre à un audit.
+
+C'est là que l'IA devient utile d'une façon moins spectaculaire.
+
+Pas comme un chatbot qui explique la déforestation.
+
+Comme un système qui transforme des années de télédétection en une couche structurée et inspectable dans un workflow de conformité plus large.
+
+La difficulté ne se limite pas à la précision de la classification.
+
+Il faut que le système fonctionne dans les institutions qui vont s'en servir.
+
+Un régulateur peut-il reproduire le résultat ?
+
+Une entreprise peut-elle régler le seuil sans faire disparaître discrètement le risque ?
+
+Un agriculteur peut-il corriger une mauvaise limite ou contester une étiquette fausse ?
+
+Un auditeur peut-il voir quelle version de la carte a été utilisée ?
+
+Le système peut-il distinguer "le modèle a changé d'avis" de "la forêt a changé" ?
+
+Ces questions détermineront si la carte devient une infrastructure de confiance ou simplement un nouveau dashboard coloré.
+
+## Le vrai avantage durable, c'est la boucle de mise à jour
+
+Une carte statique de 2020 est utile parce que le règlement européen utilise 2020 comme année de référence.
+
+Mais un système de conformité ne peut pas s'arrêter à une carte de départ.
+
+Les forêts brûlent, repoussent, sont exploitées, deviennent des plantations ou sont converties en terres agricoles. Les capteurs satellite changent. De meilleures données terrain arrivent. Les experts ne sont pas toujours d'accord. Les définitions juridiques évoluent. Une carte exacte à un instant peut devenir obsolète tout en gardant une apparence d'autorité.
+
+C'est pour cela que la première série temporelle 2017-2025 pourrait compter davantage que l'image de lancement.
+
+Le produit de long terme n'est pas une classification mondiale unique.
+
+C'est la boucle de mise à jour :
+
+- de nouvelles observations
+- des comparaisons historiques cohérentes
+- des corrections locales
+- une revue par des experts
+- des sorties versionnées
+- une incertitude transparente
+- une trace expliquant pourquoi une étiquette a changé
+
+L'accès ouvert aide aussi. La carte et les données de validation sont publiées sous licence ouverte, les fichiers sous-jacents sont téléchargeables et le code est public. Cela ne garantit pas que chaque résultat soit reproductible ou juste. Cela rend au moins l'examen plus facile qu'avec un score opaque livré par l'API d'un fournisseur.
+
+Pour une infrastructure réglementaire, la possibilité d'inspecter est une fonctionnalité.
+
+## Ce que les builders devraient retenir de ForTy
+
+La plupart des équipes ne cartographient pas des forêts.
+
+La leçon produit reste valable ailleurs.
+
+Si une sortie IA influence une décision importante, ne livrez pas seulement l'étiquette.
+
+Livrez la définition de la catégorie.
+
+Livrez les preuves sources.
+
+Livrez le niveau de confiance et ses limites.
+
+Livrez le jeu de validation.
+
+Livrez la version du modèle et des données.
+
+Livrez un moyen de contester le résultat.
+
+Et séparez la prédiction de la décision.
+
+ForTy prédit un type de terrain. Une entreprise décide si cette preuve suffit pour une cargaison. Un régulateur décide s'il faut enquêter. Un auditeur décide ce qui doit encore être vérifié.
+
+Ce sont des fonctions différentes.
+
+Les réduire à une seule réponse automatisée rendrait le workflow plus rapide et la responsabilité beaucoup plus floue.
+
+## Le fond du sujet
+
+La nouvelle carte forestière de Google impressionne parce qu'elle distingue des types de terrain qui peuvent se ressembler depuis l'espace.
+
+Elle compte parce que ces catégories vont entrer dans de vraies décisions de conformité.
+
+La qualité du système autour du modèle devient donc aussi importante que le modèle lui-même : définitions, probabilités, validation, provenance, mises à jour, recours et jugement humain.
+
+L'IA ne sert plus seulement à générer des réponses.
+
+Elle commence à organiser les preuves.
+
+Dans les domaines réglementés, ce sera peut-être son travail le plus utile.
+
+Mais une infrastructure de preuves ne mérite la confiance que si chacun peut comprendre d'où vient la réponse, mesurer son incertitude et la contester lorsque la carte décrit mal le monde.

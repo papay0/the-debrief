@@ -1,0 +1,215 @@
+---
+title: "AI Maps Are Becoming Compliance Infrastructure"
+date: "2026-10-22"
+description: "Google's new forest map does more than identify trees. It translates satellite data into legal categories for supply-chain compliance. The useful product is not the prediction alone. It is the uncertainty, validation, history, and evidence around it."
+tags: ["Google DeepMind", "AI", "Regulation", "Climate"]
+draft: false
+---
+
+## The Short Version
+
+Google DeepMind and Google Research have released a new global map that tries to answer a harder question than "are there trees here?"
+
+It asks what kind of trees they are.
+
+[Forest Typology 2020](https://deepmind.google/blog/beyond-tree-cover-mapping-the-worlds-forest-types/), or ForTy, classifies land into six categories: primary forest, naturally regenerating forest, planted forest, plantation forest, tree crops and agroforestry, and everything else. The map covers most of the world's land at 10-meter resolution. Google also released an early time series showing annual changes from 2017 through 2025.
+
+That sounds like an environmental research project.
+
+It is also compliance infrastructure.
+
+The categories are aligned with definitions used by the UN Food and Agriculture Organization and the EU Deforestation Regulation. Large and medium operators must begin applying the EU rules on December 30, 2026. They need to show that covered products such as coffee, cocoa, palm oil, rubber, soy, cattle, and wood do not come from recently deforested land or contribute to forest degradation.
+
+A satellite image that says "green" is not enough.
+
+A natural forest replaced by a timber plantation may still look green. A cocoa farm and a regenerating forest may both contain trees. The legal and ecological distinction lives in the history and use of the land, not just the color of a pixel.
+
+That is the important AI story.
+
+The model is not merely detecting an object.
+
+It is translating a messy physical world into categories that companies, regulators, and auditors may use to make decisions.
+
+![A global map showing primary, naturally regenerating, planted, and plantation forests, plus tree crops and agroforestry](/images/forest-typology-2020-global-map.png)
+
+*Forest Typology 2020. The published figure shows the majority class within each square kilometer; the underlying dataset is available at 10-meter resolution. Source: [Neumann et al., Scientific Data](https://www.nature.com/articles/s41597-026-08299-5), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
+## Tree cover is the wrong abstraction
+
+For years, a lot of global forest monitoring has started with a binary question:
+
+Trees or no trees?
+
+That is useful for measuring canopy loss. It is not enough for deciding whether a supply chain is deforestation-free.
+
+A primary forest stores carbon and supports biodiversity differently from a single-species plantation harvested on a short rotation. A tree-crop farm can be economically productive and visually dense while still being agricultural land. A cleared natural forest can become green again without becoming the same ecosystem.
+
+ForTy tries to preserve those distinctions.
+
+The [paper published in Scientific Data](https://www.nature.com/articles/s41597-026-08299-5) describes a global 2020 baseline built from satellite observations, land-use data, and about 1.7 million labeled locations assembled from expert surveys, national and regional datasets, and targeted review. The model uses AlphaEarth Foundations embeddings, which compress years of satellite observations for each location, so it can look for patterns such as planting geometry, harvest cycles, and seasonal behavior rather than relying on one image.
+
+The result is not just one label per pixel.
+
+The public dataset contains a relative confidence score for each class. A user can choose a stricter threshold when a false negative would create regulatory risk, or accept more uncertainty when estimating broad forest extent.
+
+That design decision matters.
+
+The system does not pretend every square of land is equally obvious.
+
+It exposes uncertainty so the downstream user has to decide what to do with it.
+
+## The map is the product
+
+AI announcements still focus on the model as if the model were the whole thing.
+
+ForTy is a useful reminder that the durable product is often the evidence system around the model.
+
+The team released:
+
+- a global baseline map for 2020
+- class-level confidence scores rather than only hard labels
+- a 9,100-site validation dataset, including 8,190 sites resolved by expert consensus
+- an early annual change series from 2017 through 2025
+- downloadable files and an Earth Engine layer
+- training, inference, and evaluation code
+- definitions connected to a real regulatory framework
+
+Google says the system identified the correct forest type at 90% of the validation sites and distinguished forest from non-forest land 95% of the time. Those are strong results for a global map.
+
+They are not a legal verdict.
+
+At global scale, even a small error rate can touch a very large area. Performance can vary by region, forest type, cloud cover, season, and the quality of local reference data. The paper also warns that its confidence scores are ensemble outputs, not perfectly calibrated probabilities, and recommends local validation and application-specific thresholds.
+
+That is not a footnote to hide.
+
+It is the operating manual.
+
+## Ninety percent is not a shipment certificate
+
+The [EU's current implementation page](https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en) says operators and traders must be able to prove that covered products do not originate from recently deforested land or contribute to forest degradation. The rules apply to large and medium operators from December 30, 2026, and most micro and small operators from June 30, 2027.
+
+ForTy can help answer one part of that problem:
+
+What appears to have happened on this land?
+
+It cannot answer the whole chain:
+
+Did this bag of coffee come from that plot?
+
+Was the farm boundary recorded correctly?
+
+Did beans from multiple sources get mixed?
+
+Was the supplier identity real?
+
+Was a land conversion legal under the relevant rules?
+
+Did the map misclassify a locally unusual landscape?
+
+Those questions require traceability, documentation, supplier controls, geolocation, local evidence, and a process for challenging a result.
+
+The map is evidence.
+
+It is not the case file.
+
+That distinction will become increasingly important as AI systems move into compliance. A model output can look precise because it arrives with coordinates, colors, and a confidence score. Precision in the interface is not the same thing as certainty in the world.
+
+If a company uses this kind of map to block a supplier, the supplier needs to know which location, which date, which class, which threshold, and which source observations produced the decision. If a regulator uses it to prioritize an investigation, the map should start the inquiry rather than silently finish it.
+
+## Regulation is becoming a data problem
+
+The EUDR is a law about commodities, trade, land, and corporate responsibility.
+
+But enforcing it at scale is also a data-engineering problem.
+
+Millions of farms and forest parcels need coordinates. Satellite histories need to be compared with a cutoff date. Different land types need consistent definitions. Supply-chain records need to connect a physical product to a place. Uncertain cases need review. Changes need to be tracked over time. Evidence needs to survive an audit.
+
+This is where AI becomes useful in a less cinematic way.
+
+Not as a chatbot explaining deforestation.
+
+As a system that turns years of remote-sensing data into a structured, inspectable layer inside a larger compliance workflow.
+
+The hard part is not only classification accuracy.
+
+It is institutional fit.
+
+Can a regulator reproduce the result?
+
+Can a company tune the threshold without quietly tuning away risk?
+
+Can a farmer correct a bad boundary or challenge a wrong label?
+
+Can an auditor see which version of the map was used?
+
+Can the system distinguish "the model changed its mind" from "the forest changed"?
+
+Those questions decide whether the map becomes trusted infrastructure or just another colorful dashboard.
+
+## The update loop is the real moat
+
+A static 2020 map is useful because the EU regulation uses 2020 as a reference point.
+
+But a compliance system cannot stop at a baseline.
+
+Forests burn, regrow, get logged, become plantations, or are converted to farms. Satellite sensors change. Better ground truth arrives. Experts disagree. Legal definitions evolve. A map that is accurate once can become stale while still looking authoritative.
+
+That is why the early 2017-2025 time series may matter more than the launch graphic.
+
+The long-term product is not a single global classification.
+
+It is the update loop:
+
+- new observations
+- consistent historical comparisons
+- local corrections
+- expert review
+- versioned outputs
+- transparent uncertainty
+- a record of why a label changed
+
+This is also where open access helps. The map and validation data are available under an open license, the underlying files can be downloaded, and the code is public. That does not guarantee that every result is reproducible or fair. It does make scrutiny more possible than a closed vendor score delivered through an API.
+
+For regulatory infrastructure, inspectability is a feature.
+
+## What builders should take from ForTy
+
+Most teams are not mapping forests.
+
+The product lesson still travels.
+
+If an AI output will influence a consequential decision, do not ship only the label.
+
+Ship the category definition.
+
+Ship the source evidence.
+
+Ship the confidence and its limits.
+
+Ship the validation set.
+
+Ship the model and data version.
+
+Ship a way to challenge the result.
+
+And separate the prediction from the decision.
+
+ForTy predicts a land type. A company decides whether that evidence is sufficient for a shipment. A regulator decides whether to investigate. An auditor decides what else must be checked.
+
+Those are different jobs.
+
+Collapsing them into one automated answer would make the workflow faster and the accountability much worse.
+
+## The bottom line
+
+Google's new forest map is impressive because it can distinguish land categories that look similar from space.
+
+It is important because those categories are about to sit inside real compliance decisions.
+
+That makes the quality of the surrounding system as important as the model: definitions, probabilities, validation, provenance, updates, appeals, and human judgment.
+
+AI is moving from generating answers to organizing evidence.
+
+In regulated domains, that may be the more valuable job.
+
+But evidence infrastructure only earns trust when people can inspect where the answer came from, understand how uncertain it is, and contest it when the map gets the world wrong.
