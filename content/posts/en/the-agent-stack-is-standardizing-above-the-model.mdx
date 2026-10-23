@@ -1,0 +1,214 @@
+---
+title: "The Agent Stack Is Standardizing Above the Model"
+date: "2026-10-23"
+description: "Anthropic, OpenAI, Hugging Face, and Alibaba just moved four layers of the agent stack under neutral governance. Skills, model APIs, training environments, and sandboxes are becoming portable. The managed control plane around them is becoming the real battleground."
+tags: ["AI Agents", "Open Source", "Developer Tools", "Anthropic", "OpenAI"]
+draft: false
+---
+
+## The Short Version
+
+Four companies that compete across the AI market just gave away four different pieces of the agent stack.
+
+On October 22, the Linux Foundation's [Agentic AI Foundation announced](https://www.linuxfoundation.org/press/agentic-ai-foundation-announces-four-new-projects-agent-skills-open-responses-openenv-and-opensandbox) that it had accepted:
+
+- Agent Skills from Anthropic
+- Open Responses from OpenAI
+- OpenEnv from Hugging Face
+- OpenSandbox from Alibaba
+
+The foundation now hosts ten projects, up from three when it launched in December 2025. Its existing portfolio already included MCP, Google's Agent2Agent protocol, OpenAI's AGENTS.md, Block's goose, agentgateway, and Agent Router.
+
+This could look like four unrelated open-source announcements bundled around a conference.
+
+It is more interesting than that.
+
+Together, the new projects describe most of the machinery around an agent:
+
+- how it receives instructions and procedures
+- how an application talks to a model
+- how it trains and gets evaluated inside a task
+- where its code and tools execute
+
+The model itself is conspicuously absent.
+
+That is the signal.
+
+The agent market is beginning to standardize above the model. Labs still want their models, clouds, and managed platforms to win. But they increasingly benefit from making the interfaces around those products common enough that developers will build on them.
+
+Open standards do not eliminate lock-in.
+
+They move it.
+
+## Four layers moved at once
+
+Agent Skills is the easiest layer to recognize.
+
+A skill is a folder containing a `SKILL.md` file, instructions, and optional scripts or reference material. It packages procedural knowledge that an agent can load when it needs to perform a specific task. Anthropic says [more than 70 agent platforms support the format](https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation), including ChatGPT, Cursor, GitHub Copilot, and VS Code. It also says one million skills have been published and installed nearly 280 million times.
+
+Those are ecosystem figures supplied by Anthropic and the foundation, not an independent census. The adoption is still large enough to make governance a practical concern. If companies encode review procedures, incident playbooks, filing instructions, and internal workflows in this format, they need to know who can change the format and how old skills will keep working.
+
+Open Responses works one layer lower.
+
+Model providers expose similar concepts through different APIs: messages, tools, tool results, streaming events, reasoning items, and multimodal inputs. The [Open Responses specification](https://www.openresponses.org/specification) defines a shared request and response format based on OpenAI's Responses API. An application can send the same basic shape to different compatible endpoints instead of maintaining a separate adapter for every provider.
+
+OpenEnv addresses training and evaluation.
+
+An agent cannot learn a task from a model alone. It needs an environment that defines what it can observe, which actions it can take, when an episode ends, and how success is scored. [OpenEnv separates that task logic from the training system](https://aaif.io/blog/training-agents-for-real-world-tasks-with-openenv) through common operations such as `reset()`, `step()`, and `state()`.
+
+OpenSandbox addresses execution.
+
+An agent that clones a repository, runs code, edits files, or drives a browser needs an isolated computer. [OpenSandbox defines common lifecycle and execution APIs](https://aaif.io/blog/the-sandbox-as-an-agent-primitive) for creating, pausing, resuming, snapshotting, operating, and deleting those environments. Its current backends include Docker and Kubernetes.
+
+Each project solves a different adapter problem.
+
+Together they begin to look like an operating contract for agents.
+
+## Why competitors give away interfaces
+
+The generous interpretation is that the industry believes open infrastructure is healthy.
+
+That may be true.
+
+There is also a very practical business reason.
+
+A standard can make the market around a product larger.
+
+Anthropic benefits when companies store more operating knowledge in Agent Skills because Claude can use those skills. OpenAI benefits when its Responses API shape becomes the default vocabulary for model calls. Hugging Face benefits when more training systems and task environments connect through OpenEnv. Alibaba benefits when more agent runtimes can talk to OpenSandbox.
+
+The format becomes neutral.
+
+The implementations still compete.
+
+This is familiar infrastructure strategy. Companies standardize the layer that would otherwise slow adoption, then compete on performance, reliability, security, integrations, hosting, support, and distribution.
+
+MCP did this for tools and data. A developer can expose one MCP server to several compatible agents. That does not make Claude, ChatGPT, Gemini, or an enterprise agent platform identical. It gives them shared plumbing.
+
+The new AAIF projects extend that logic across more of the stack.
+
+The industry is not agreeing on one agent.
+
+It is agreeing on more of the sockets.
+
+## Portability is real, but partial
+
+The danger is turning "open standard" into "drop-in replacement."
+
+Agent Skills can preserve the folder, instructions, and scripts while different products discover, interpret, permission, and execute them differently. A skill that works well in one agent may fail in another because the model plans differently, the runtime lacks a tool, or the host applies different security rules.
+
+Open Responses can standardize the common API surface while allowing provider-specific extensions. That is sensible. It is also where portability starts to leak. If an application depends on one provider's hosted search tool, reasoning item, caching behavior, or streaming metadata, the request may still be syntactically portable while the workflow is not.
+
+OpenEnv can reproduce the interaction contract for a task. It cannot guarantee that the reward represents the behavior people actually want. The project's own guidance is unusually honest here: a broken scorer can turn infrastructure failure into a bad reward, and an elaborate visual judge can still reward the wrong thing.
+
+OpenSandbox can standardize how an application asks for an environment. It does not make Docker and Kubernetes equivalent, and it does not prove that every implementation provides the same isolation, network policy, credential handling, startup time, persistence, or audit trail.
+
+A common contract lowers switching costs.
+
+It does not remove semantic differences.
+
+That distinction matters because agents are not simple stateless API calls. Their behavior emerges from the model, the instructions, the tools, the environment, the permissions, the state, and the loop connecting them.
+
+Moving one layer successfully does not prove the whole agent moved.
+
+## Google showed where the competition goes
+
+At the same conference, Google announced [Agent Compute Engine](https://cloud.google.com/blog/topics/ai-infrastructure/introducing-agent-compute-engine-and-expanded-agent-governance), a managed service that gives each agent a hardware-isolated microVM, a persistent disk, a verified identity, short-lived credentials, network policy, and checkpoint-and-resume behavior.
+
+It is not available to customers yet. Google says a preview is coming in the next few months.
+
+Google also released Agent Substrate, an open-source Kubernetes runtime based on similar ideas. Google says it can pause idle agents, resume them in under 500 milliseconds, and run across Kubernetes environments. Those are Google-reported benchmarks and design claims, not independent production evidence.
+
+Still, the product shape is revealing.
+
+The open contract can say:
+
+"Create a sandbox, run this command, preserve this workspace, and report the result."
+
+The managed platform competes on everything underneath and around that request:
+
+- how quickly the environment starts
+- how much idle state costs
+- whether credentials ever enter the sandbox
+- how identity is attested
+- which network destinations are allowed
+- how work is logged
+- how storage persists
+- how thousands of agents share hardware
+- which enterprise controls come attached
+
+That is where a lot of the durable value will sit.
+
+The standard makes the request portable.
+
+The platform makes the request trustworthy, fast, and economical enough to run in production.
+
+## Neutral governance is not a security review
+
+Moving projects to the Linux Foundation is meaningful.
+
+Anthropic is not merely publishing a repository and retaining unilateral control over the Agent Skills name. It says it is transferring the name, logo, GitHub organization, and domain, with maintainers from several companies serving as individuals. AAIF gives the projects public governance processes, technical committees, and a place to discuss compatibility.
+
+That is better than a de facto standard whose future depends on one vendor's product roadmap.
+
+It is not a certification.
+
+Neutral governance does not tell a company whether a downloaded skill is safe to run. It does not make a third-party Open Responses endpoint complete or correct. It does not prove that a sandbox resists escape. It does not validate that an OpenEnv reward measures the right outcome.
+
+Anthropic says the proposed Agent Skills roadmap includes versioned releases, a formal proposal process, and security guidance. "Proposed" is doing important work there.
+
+The next phase needs the boring institutions around a standard:
+
+- versioning and compatibility promises
+- conformance tests
+- reference implementations
+- signed releases and provenance
+- vulnerability disclosure
+- security profiles
+- migration guidance
+- clear extension rules
+
+An open format can become shared infrastructure.
+
+It can also become a shared attack surface.
+
+## What builders should standardize now
+
+The practical lesson is not to rewrite every agent around four young projects this week.
+
+It is to separate the parts of the system that should remain portable from the parts where vendor-specific value is worth buying.
+
+Keep operational knowledge in reviewable, versioned skills rather than burying it inside one product's prompt box.
+
+Put model-specific API features behind a narrow adapter. Use the common contract for the common path, then record exactly where an extension creates dependency.
+
+Define task environments independently from the trainer. Preserve the observations, actions, rewards, and failure cases needed to tell whether another model or harness learned the same job.
+
+Treat the sandbox interface and the sandbox guarantee as different things. Test isolation, credential handling, network policy, persistence, logging, and cleanup on every runtime you accept.
+
+Most importantly, run migration evals.
+
+Do not declare an agent portable because its files load and its API calls validate. Give the new stack representative work. Compare completion, latency, cost, tool use, failure recovery, safety, and the evidence it leaves behind.
+
+Portability is an outcome.
+
+The standard is only the invitation to test it.
+
+## The Bottom Line
+
+The agent stack is becoming easier to describe in public, reusable contracts.
+
+Skills can carry procedure. Open Responses can carry model interactions. OpenEnv can carry task structure. OpenSandbox can carry execution requests. MCP already carries tools and data.
+
+That is real progress.
+
+It also clarifies where the competition is moving.
+
+Model providers and clouds will fight over the implementation around those contracts: the best model, the fastest runtime, the safest credential path, the most useful control plane, the broadest enterprise distribution, and the invoice a company already knows how to approve.
+
+Open standards will make it easier to enter the agent market.
+
+They will not make the market flat.
+
+The shared interfaces are becoming infrastructure.
+
+The moat is moving into everything required to make those interfaces work reliably when an agent is allowed to act.
