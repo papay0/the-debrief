@@ -1,10 +1,173 @@
 ---
 title: "La cryptographie a un goulot de validation"
-date: "2026-10-15"
-description: "L'IA peut produire des affirmations techniques plus vite que les humains ne peuvent les valider. Deep Review de Google tente sérieusement d'accélérer la vérification, mais un agent de revue reste une source d'indices pour l'expert, pas son remplaçant."
-tags: ["Sécurité IA", "Anthropic", "Google", "Agents IA", "Recherche IA", "Cryptographie"]
+date: "2026-10-24"
+description: "Claude peut désormais produire des preuves vérifiées par machine à une échelle spectaculaire. Le goulot de validation se déplace : il faut surtout décider si le théorème, le modèle et les hypothèses décrivent bien le système réel qui nous intéresse."
+tags: ["Sécurité IA", "Anthropic", "Google", "Agents IA", "Recherche IA", "Cryptographie", "Open Source", "Outils développeurs"]
 draft: false
 ---
+
+## Mise à jour : le vérificateur de preuves déplace le goulot
+
+Anthropic et Theorem viennent de produire environ 180 millions de lignes de preuve vérifiée par machine.
+
+Personne n'a besoin de les lire.
+
+Ce n'est pas une plaisanterie sur la documentation. C'est précisément l'intérêt du projet.
+
+Le 22 octobre, Anthropic a [publié un travail de vérification formelle](https://www.anthropic.com/research/formal-verification) dans lequel Claude a corrigé des bugs, puis démontré qu'aucun crash n'était atteignable depuis 239 points d'entrée de fuzzing répartis dans 123 bibliothèques open source, sous un ensemble précis de conditions. Les preuves portent sur des instructions RISC-V compilées, pas sur le code source. Rocq, un assistant de preuve, vérifie que chacune satisfait son théorème.
+
+Selon Anthropic, les preuves qui ont abouti représentent environ 180 millions de lignes de Rocq. Une preuve typique en compte près de 600 000.
+
+Dans un processus de revue ordinaire, ce volume serait absurde.
+
+Ici, il devient surtout une facture de calcul. Le vérificateur ne se fatigue pas, ne survole pas les passages répétitifs et ne se laisse pas impressionner par une notation assurée. La preuve satisfait le théorème dans la logique de Rocq, ou elle échoue.
+
+C'est un vrai changement dans l'économie de la validation décrite dans cet article.
+
+Ce n'est pas la fin de la validation.
+
+Le jugement humain rare se déplace vers une surface plus petite et plus importante :
+
+Qu'avons-nous exactement demandé à la machine de prouver ?
+
+## Le résultat va plus loin qu'un nouveau scanner de sécurité
+
+Le fuzzing cherche une entrée qui fait échouer un programme. Il peut exécuter des milliers de milliards de tests sans jamais établir qu'aucune entrée défaillante n'existe.
+
+Anthropic et Theorem ont transformé des cibles OSS-Fuzz existantes en énoncés formels portant sur des binaires compilés. Pour les cibles traitées avec succès, Claude a généré des preuves qui couvrent chaque entrée modélisée dans les limites annoncées, pas seulement celles que le fuzzer a eu la chance d'essayer.
+
+Le processus a aussi fait remonter des bugs que les tests n'avaient pas trouvés. Une preuve ne peut pas se fermer tant qu'il reste un contre-exemple atteignable. Les tentatives qui échouent deviennent donc une manière de localiser le code ou l'hypothèse qui empêche le théorème d'être vrai.
+
+Cette combinaison compte.
+
+Un scanner IA dit : « J'ai trouvé un autre bug possible. »
+
+Une preuve vérifiée dit : « Pour ce binaire précis, ce point d'entrée précis, cette propriété précise et ces hypothèses précises, il n'existe aucun contre-exemple. »
+
+La seconde affirmation est plus étroite.
+
+Elle est aussi beaucoup plus forte.
+
+L'[annexe technique](https://www-cdn.anthropic.com/files/4zrzovbb/website/6867eadf760258fa8b42a504600cd3c036d16358.pdf) indique que Claude a généré environ un milliard de lignes de Rocq pendant ses tentatives. Environ 180 millions ont été conservées dans les preuves validées. Plus de la moitié d'une preuve typique correspond à des données émises par des outils, et le contrôle d'une seule preuve peut demander de trente minutes à plusieurs heures de calcul CPU.
+
+Cela ne ressemble pas à un ingénieur en méthodes formelles devenu un peu plus rapide.
+
+Cela ressemble à une production de preuves devenue une charge industrielle.
+
+## L'énoncé du théorème devient la frontière du produit
+
+Le titre public se résume facilement en « Claude a prouvé que 123 bibliothèques ne peuvent pas planter ».
+
+C'est trop large.
+
+Les affirmations réelles portent sur certains points d'entrée de fuzzing, dans des binaires RISC-V statiques précis, exécutés dans un modèle formel de processus Linux. Le travail suppose une exécution mono-thread, un budget mémoire fixe, musl plutôt que l'environnement glibc dynamique courant sous Linux, ainsi que des comportements modélisés du système d'exploitation.
+
+Il ne prouve pas que chaque bibliothèque entière est correcte.
+
+Il ne couvre pas le code inaccessible depuis le point d'entrée choisi.
+
+Il ne détecte pas toutes les erreurs de mémoire ou de logique que l'AddressSanitizer et le harnais n'expriment pas.
+
+Il ne prouve pas que les appelants utilisent correctement la bibliothèque.
+
+Et le [dépôt public des preuves](https://github.com/theorem-labs/oss-verify-proofs) ne contient pour l'instant qu'un sous-ensemble du travail annoncé : 60 points d'entrée dans 25 bibliothèques, pas les 239 points d'entrée des 123 bibliothèques. C'est assez pour permettre une inspection extérieure, mais pas pour reproduire indépendamment le résultat complet mis en avant.
+
+Le dépôt décrit ses propres limites avec une précision bienvenue. Il indique que les preuves publiées portent sur des binaires RISC-V statiques déterminés, que son modèle Linux Process Semantics est incomplet et qu'aucune preuve publiée n'exclut une exécution qui ne se termine jamais.
+
+Voilà à quoi ressemble une vérification formelle responsable.
+
+Pas « le logiciel est sûr ».
+
+Mais « ce théorème tient pour cet artefact dans ce modèle ».
+
+## On peut vérifier une preuve et prouver la mauvaise chose
+
+La vérification formelle change la nature des erreurs encore possibles.
+
+Elle supprime en grande partie le besoin de faire confiance à l'auteur de la preuve. Rocq la contrôle mécaniquement. Un modèle ne peut pas embobiner le noyau avec une prose élégante.
+
+Mais le vérificateur ne peut pas dire si le théorème capture la propriété qui compte pour les utilisateurs.
+
+Il ne peut pas dire si la sémantique formelle de RISC-V et de Linux reproduit assez fidèlement la vraie machine.
+
+Il ne peut pas dire si l'absence de crash exclut la faille pertinente dans le modèle de menace.
+
+Il ne peut pas dire si le binaire x86 ou ARM déployé se comporte comme le binaire RISC-V vérifié.
+
+Il ne peut pas dire si un correctif a préservé le comportement voulu par les mainteneurs.
+
+Anthropic signale directement ce dernier risque. Claude pouvait modifier le code avant d'en produire la preuve, ce qui ouvre une voie évidente au contournement de l'objectif : rendre le théorème facile en supprimant ou en court-circuitant le comportement. L'équipe dit avoir pénalisé les patchs, récompensé les changements de comportement minimaux, journalisé les modifications et les avoir auditées.
+
+Ces contrôles sont utiles.
+
+Ils montrent aussi que la spécification et la politique de modification font désormais partie du périmètre de sécurité.
+
+Quand la production de preuves devient bon marché, le travail humain précieux consiste à définir le théorème, examiner le modèle de confiance, relire les correctifs et décider si l'artefact vérifié correspond à la production.
+
+La preuve peut être parfaitement valide tandis que l'affirmation d'assurance est fausse.
+
+## L'artefact public compte plus que le nombre de lignes
+
+Cent quatre-vingts millions de lignes : c'est le chiffre irrésistible.
+
+Le dépôt est la publication la plus importante.
+
+Theorem y fournit les énoncés, les binaires, les traces de provenance, les versions d'outils épinglées, les axiomes autorisés, les instructions de contrôle et les workflows de vérification continue. Un tiers peut examiner l'affirmation, relier le binaire à ses entrées de compilation et lancer le vérificateur sans faire confiance à Claude.
+
+C'est la bonne architecture pour un travail technique généré par IA.
+
+Ne demandons pas à une personne de lire tout ce que le modèle a produit.
+
+Réduisons la surface de confiance. Figeons-la. Publions-la. Rendons l'affirmation décisive exécutable. Laissons un petit vérificateur rejeter l'immense artefact.
+
+L'écart restant doit rester visible, pas être lissé par un résumé.
+
+Ici, ces écarts séparent le résultat complet annoncé du sous-ensemble public, RISC-V des architectures réellement déployées, la couverture d'une cible de fuzzing de la correction d'une bibliothèque, et l'absence de crash d'une sécurité plus large.
+
+Ces réserves n'annulent pas le résultat.
+
+Elles le définissent.
+
+## La vérification formelle pourrait devenir une étape normale du build
+
+Theorem propose désormais [OSS Verify](https://theorem.dev/oss-verify/) gratuitement aux projets open source éligibles. Les mainteneurs peuvent soumettre leur recette de compilation et leurs cibles de fuzzing, recevoir en privé les bugs découverts en chemin, puis obtenir des preuves Rocq portant sur leurs binaires.
+
+Un workflow concret se dessine :
+
+1. Écrire un test qui échoue quand une propriété est violée.
+2. Le soumettre au fuzzing pour trouver rapidement les contre-exemples faciles.
+3. Utiliser des agents pour corriger ou expliquer les échecs restants.
+4. Transformer le harnais en théorème portant sur l'artefact compilé.
+5. Laisser un vérificateur établir qu'aucun contre-exemple couvert ne subsiste.
+6. Conserver le théorème, la provenance du binaire, les hypothèses et la version du vérificateur avec la release.
+
+Les tests ne disparaissent pas.
+
+Ils deviennent le premier filtre, peu coûteux, et une source de spécifications.
+
+La vérification formelle ne certifie pas tout le produit.
+
+Elle transforme certaines affirmations de sécurité en artefacts de build dont l'échec est déterministe.
+
+C'est bien plus utile que de traiter « formellement vérifié » comme un label.
+
+## Le nouveau bilan
+
+Claude n'a pas prouvé que 123 bibliothèques open source étaient exemptes de bugs.
+
+Anthropic et Theorem ont démontré quelque chose de plus crédible et, en pratique, de plus important : les modèles de pointe peuvent générer d'immenses preuves portant sur du logiciel compilé réel, et un petit noyau indépendant peut les contrôler sans faire confiance au modèle.
+
+Le goulot s'est déplacé.
+
+Un humain n'a plus besoin de relire chaque étape de la preuve.
+
+Il faut encore choisir la bonne propriété, examiner la sémantique de confiance, relire les patchs, relier le binaire vérifié à la production et décrire le résultat sans le gonfler.
+
+L'avenir de la validation technique contiendra peut-être bien plus de preuves générées par machine qu'une personne ne pourra jamais en absorber.
+
+Cela peut fonctionner.
+
+Mais seulement si l'affirmation de confiance rétrécit à mesure que la pile de preuves grandit.
 
 ## Mise à jour : le vérificateur doit être vérifié
 

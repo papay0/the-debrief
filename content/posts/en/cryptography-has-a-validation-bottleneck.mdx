@@ -1,10 +1,173 @@
 ---
 title: "Cryptography Has a Validation Bottleneck"
-date: "2026-10-15"
-description: "AI can generate technical claims faster than humans can validate them. Google's Deep Review is a serious attempt to scale the checking, but a verification agent is still evidence for a reviewer, not a replacement for one."
-tags: ["AI Security", "Anthropic", "Google", "AI Agents", "AI Research", "Cryptography"]
+date: "2026-10-24"
+description: "Claude can now generate machine-checked proofs at extraordinary scale. That moves the validation bottleneck from reading the proof to deciding whether the theorem, model, and deployment assumptions describe the system we actually care about."
+tags: ["AI Security", "Anthropic", "Google", "AI Agents", "AI Research", "Cryptography", "Open Source", "Developer Tools"]
 draft: false
 ---
+
+## Update: the proof checker changed the bottleneck
+
+Anthropic and Theorem just produced around 180 million lines of machine-checked proof.
+
+Nobody has to read them.
+
+That is not a joke about documentation. It is the point.
+
+On October 22, Anthropic [published a formal-verification project](https://www.anthropic.com/research/formal-verification) in which Claude patched bugs and then proved no crashes were reachable for 239 fuzzing entry points across 123 open-source libraries, under a defined set of conditions. The proofs operate on compiled RISC-V instructions rather than source code. Rocq, a proof assistant, checks that every proof satisfies its theorem.
+
+Anthropic says the successful proofs contain roughly 180 million lines of Rocq. A typical one is around 600,000 lines long.
+
+In an ordinary review process, that volume would be absurd.
+
+Here, volume is mostly a compute bill. The proof checker does not get tired, skim the repetitive section, or become impressed by confident notation. Either the proof satisfies the theorem inside Rocq's logic or it does not.
+
+This is a real change in the validation economics described in this article.
+
+It is not the end of validation.
+
+It moves the scarce human judgment to a smaller and more important surface:
+
+What, exactly, did we ask the machine to prove?
+
+## The result is stronger than another security scan
+
+Fuzzing looks for an input that makes a program fail. It can run trillions of tests and still never establish that no failing input exists.
+
+Anthropic and Theorem turned existing OSS-Fuzz targets into formal statements about compiled binaries. For the successful targets, Claude generated proofs covering every modeled input within the stated limits, not merely the inputs a fuzzer happened to try.
+
+The process also surfaced bugs that testing had missed. A proof cannot close while a reachable counterexample remains, so failed attempts become a way to locate the code or assumption preventing the theorem from being true.
+
+That combination matters.
+
+An AI scanner says, "I found another possible bug."
+
+A checked proof says, "For this exact binary, this exact entry point, this exact property, and these exact assumptions, there is no counterexample."
+
+The second statement is narrower.
+
+It is also much stronger.
+
+The [technical appendix](https://www-cdn.anthropic.com/files/4zrzovbb/website/6867eadf760258fa8b42a504600cd3c036d16358.pdf) says Claude generated about one billion lines of Rocq while attempting the work. Roughly 180 million lines ended up in successful proofs. More than half of a typical proof is machine-emitted data, and checking one proof can take from 30 minutes to several hours of CPU time.
+
+This does not look like a human proof engineer becoming slightly faster.
+
+It looks like proof production becoming an industrial workload.
+
+## The theorem statement is now the product boundary
+
+The public headline is easy to compress into "Claude proved 123 libraries cannot crash."
+
+That is too broad.
+
+The actual claims concern particular fuzzing entry points in particular static RISC-V binaries running under a formal Linux-process model. The work assumes single-threaded execution, a fixed memory budget, musl rather than the dynamically linked glibc environment common in deployed Linux systems, and modeled operating-system behavior.
+
+It does not prove that each entire library is correct.
+
+It does not cover code unreachable from the selected entry point.
+
+It does not catch every class of memory or logic error that AddressSanitizer and the harness fail to express.
+
+It does not prove that callers use the library correctly.
+
+And the [public proof repository](https://github.com/theorem-labs/oss-verify-proofs) is currently a subset of the reported work: 60 entry points across 25 libraries, not all 239 entry points across 123 libraries. That is enough to make outside inspection possible, but not enough to independently reproduce the full headline.
+
+The repository is admirably precise about its own boundary. It says the released proofs concern specific static RISC-V binaries, that its Linux Process Semantics model is incomplete, and that none of the published proofs rules out a run that never terminates.
+
+This is what responsible formal verification sounds like.
+
+Not "the software is safe."
+
+"This theorem holds for this artifact inside this model."
+
+## You can check a proof and still prove the wrong thing
+
+Formal verification changes which errors remain possible.
+
+It largely removes the need to trust the author of the proof. Rocq checks the proof mechanically. A model cannot bluff the kernel with elegant prose.
+
+But the checker cannot tell us whether the theorem captures the property users care about.
+
+It cannot tell us whether the formal RISC-V and Linux semantics match the real machine closely enough.
+
+It cannot tell us whether a no-crash property excludes the security failure in the threat model.
+
+It cannot tell us whether the deployed x86 or ARM build behaves like the verified RISC-V binary.
+
+It cannot tell us whether a patch preserved the behavior maintainers wanted.
+
+Anthropic flags the last risk directly. Claude was allowed to patch code before proving it, which creates an obvious reward-hacking route: make the theorem easy by deleting or bypassing the behavior. The team says it penalized patches, rewarded minimal behavioral changes, logged them, and audited them.
+
+Those are useful controls.
+
+They are also evidence that the specification and change policy are now part of the security perimeter.
+
+Once proof generation becomes cheap, the valuable human work is defining the theorem, reviewing the trusted model, examining patches, and deciding whether the verified artifact corresponds to production.
+
+The proof can be perfectly valid while the assurance claim is wrong.
+
+## The public artifact matters more than the line count
+
+One hundred eighty million lines is the irresistible number.
+
+The repository is the more important release.
+
+Theorem publishes theorem statements, binaries, provenance records, pinned tool versions, allowed axioms, checking instructions, and continuous verification workflows. A third party can inspect the claim, trace the binary to its build inputs, and run the checker without trusting Claude.
+
+That is the right architecture for AI-generated technical work.
+
+Do not ask a reviewer to read everything the model produced.
+
+Reduce the trusted surface. Pin it. Publish it. Make the decisive claim executable. Let a small checker reject the enormous artifact.
+
+The remaining gap should be visible, not smoothed over by a summary.
+
+In this case, the visible gaps include the difference between the full reported result and the public subset, between RISC-V and common production architectures, between fuzz-target coverage and library correctness, and between crash freedom and broader security.
+
+Those caveats do not cancel the achievement.
+
+They define it.
+
+## Formal verification may become a normal build stage
+
+Theorem is now [offering OSS Verify](https://theorem.dev/oss-verify/) free to qualifying open-source projects. Maintainers can submit their build recipe and fuzz targets, receive private bug reports discovered along the way, and eventually receive Rocq proofs about their binaries.
+
+That points toward a practical workflow:
+
+1. Write a test that fails when a property is violated.
+2. Fuzz it to find cheap counterexamples quickly.
+3. Use agents to patch or explain the remaining failures.
+4. Convert the harness into a theorem about the compiled artifact.
+5. Let a proof checker establish that no covered counterexample remains.
+6. Preserve the theorem, binary provenance, assumptions, and checker version beside the release.
+
+Testing does not disappear.
+
+It becomes the first, inexpensive filter and a source of specifications.
+
+Formal verification does not certify the whole product.
+
+It turns selected security claims into build artifacts that can fail deterministically.
+
+That is much more useful than treating "formally verified" as a badge.
+
+## The new bottom line
+
+Claude did not prove that 123 open-source libraries are bug-free.
+
+Anthropic and Theorem demonstrated something more credible and, in practice, more consequential: frontier models can generate enormous proofs about real compiled software, and a small independent kernel can check those proofs without trusting the model.
+
+The bottleneck has moved.
+
+We no longer need a human to read every proof step.
+
+We need humans to choose the right property, inspect the trusted semantics, review the patches, connect the verified binary to production, and state the result without inflating it.
+
+The future of technical validation may involve far more machine-generated evidence than any person could consume.
+
+That can work.
+
+But only if the trusted claim becomes smaller as the evidence pile becomes larger.
 
 ## Update: the validator needs validation
 
