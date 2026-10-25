@@ -1,10 +1,161 @@
 ---
 title: "OpenAI vend l'usine à agents"
-date: "2026-09-30"
-description: "Avec l'Agents API, OpenAI transforme l'usine à agents en infrastructure louée : exécution hébergée, sessions durables, sous-agents, navigateur et connexions MCP privées. Le produit stratégique n'est plus seulement le modèle, mais le control plane autour du travail."
+date: "2026-10-25"
+description: "L'Agents API d'OpenAI peut maintenant planifier des tâches récurrentes ou ponctuelles. Le control plane devient plus utile, mais révèle aussi une distinction essentielle : livrer une tâche ne veut pas dire l'avoir terminée."
 tags: ["OpenAI", "AI Agents", "Enterprise AI", "Developer Tools", "AI Strategy"]
 draft: false
 ---
+
+## Mise à jour : l'usine contrôle maintenant l'horloge
+
+OpenAI vient d'ajouter une horloge à son usine à agents.
+
+L'Agents API peut désormais lancer des [automatisations planifiées](https://developers.openai.com/api/docs/guides/agents-api/sessions/automations) selon une expression cron ou à une date précise. Une planification peut ouvrir une nouvelle session pour un travail indépendant ou revenir dans une session existante pour reprendre le fil du contexte. OpenAI propose aussi un outil facultatif qui permet à l'agent de créer et gérer les planifications de sa session en langage naturel.
+
+Cela ressemble à une petite commodité.
+
+Ce n'en est pas une.
+
+Dès qu'un agent peut décider qu'un travail doit avoir lieu plus tard, l'application ne sert plus seulement à lancer des tâches. Elle devient le système d'exploitation des promesses.
+
+« Vérifie ce prix chaque matin. »
+
+« Reviens sur ces incidents dans une heure. »
+
+« Poursuis l'enquête après la prochaine mise à jour des données. »
+
+Ces promesses survivent maintenant au tour de conversation qui les a créées. Elles ont besoin d'un propriétaire, d'un budget, d'un mécanisme d'annulation, d'une piste d'audit et d'un compte rendu honnête de ce qui s'est réellement passé.
+
+Cron est la partie facile.
+
+Le produit, c'est tout ce qui se trouve entre « lance-toi à 9 h » et « le travail est terminé ».
+
+## Une invocation terminée n'est pas un travail terminé
+
+La documentation d'OpenAI énonce la distinction la plus importante avec une franchise bienvenue.
+
+Chaque exécution planifiée crée une invocation. Si cette invocation est marquée comme terminée, cela signifie que le message a bien été livré à la session cible.
+
+Cela ne signifie **pas** que l'agent a terminé sa tâche.
+
+Cette seule phrase devrait dicter toute l'interface.
+
+Un agent planifié traverse au moins quatre états différents :
+
+- la planification existe et peut se déclencher
+- une invocation a tenté de livrer la tâche
+- la session a accepté puis exécuté le travail
+- le travail a produit le résultat attendu
+
+Il existe un cinquième état si l'utilisateur doit être prévenu : l'application a bien affiché ou envoyé le résultat.
+
+Réunir ces états sous une seule coche verte, c'est condamner le système à mentir.
+
+Un rapport matinal peut être livré à une session occupée, accepté plus tard, échouer pendant un appel d'outil et ne jamais atteindre l'utilisateur. Le planificateur peut malgré tout avoir parfaitement rempli sa mission.
+
+C'est la même erreur qu'avec les files de messages : accuser réception de l'enveloppe ne veut pas dire que le processus métier qu'elle contient est terminé.
+
+OpenAI fournit les invocations et les événements de session. L'application doit encore les relier pour construire un statut honnête.
+
+## Mettre en pause ne veut pas dire arrêter
+
+Le deuxième avertissement utile concerne l'annulation.
+
+Mettre une planification en pause ou la supprimer empêche les prochaines livraisons. Cela n'arrête pas le travail déjà accepté par une session. Il faut annuler séparément le tour actif.
+
+Là encore, le détail d'implémentation devient une exigence produit.
+
+Lorsqu'un utilisateur appuie sur « pause », il veut généralement dire l'une de ces deux choses :
+
+- ne lance pas une nouvelle exécution
+- arrête ce que cette automatisation est en train de faire
+
+Ce sont deux commandes différentes. Une interface sérieuse doit proposer les deux.
+
+La même séparation vaut pour les modifications. Mettre à jour une planification ne réécrit pas une invocation déjà placée dans la file. Un nouveau prompt, un nouveau budget ou une nouvelle destination peuvent ne s'appliquer qu'à la prochaine exécution, tandis que l'ancienne instruction attend toujours son tour.
+
+Si cette différence reste invisible, le système finira parfois par suivre exactement l'ordre reçu tout en donnant l'impression de désobéir.
+
+## Les planifications créées par l'agent ont besoin d'un propriétaire humain
+
+Le nouvel outil d'automatisation permet à un agent de créer, consulter, modifier, mettre en pause, reprendre et supprimer les planifications de sa session.
+
+C'est puissant, car l'agent peut transformer un engagement pris dans la conversation en comportement persistant.
+
+C'est aussi le moment où une phrase anodine devient une infrastructure.
+
+« Continue de vérifier » peut vouloir dire trois exécutions, trois mois ou jusqu'à ce qu'une clé API oubliée épuise son budget. Retirer ensuite l'outil d'automatisation ne supprime pas les planifications déjà enregistrées. Elles continuent d'exister tant que l'application ne les suspend pas ou ne les efface pas.
+
+Chaque planification créée par un agent a donc besoin d'un propriétaire et de limites :
+
+- qui l'a autorisée
+- à quelle session et à quel objectif elle appartient
+- quand elle expire
+- combien elle peut dépenser par exécution et au total
+- quels outils et quelles données elle peut utiliser
+- si plusieurs exécutions peuvent se chevaucher
+- quels résultats exigent une approbation
+- où les résultats et les échecs sont signalés
+- comment un humain peut la retrouver et l'arrêter
+
+La planification en langage naturel est une bonne interface de saisie.
+
+Ce n'est pas un modèle de gouvernance.
+
+## Nouvelle session ou ancien contexte : un choix d'architecture
+
+OpenAI permet de cibler une nouvelle session ou une session existante.
+
+Ce choix paraît minuscule dans une requête API. Il change pourtant le modèle d'échec.
+
+Une nouvelle session est plus facile à isoler et à reproduire. Elle démarre sans le poids des conversations accumulées, mais l'application doit lui fournir les faits, les identifiants et les artefacts nécessaires à l'exécution.
+
+Une session existante préserve la continuité. Elle peut se souvenir de la raison de l'automatisation et de ce qui s'est passé auparavant. Elle peut aussi hériter d'hypothèses périmées, d'un contexte gonflé, d'un outil resté dans un état ambigu ou d'une instruction raisonnable la semaine dernière et dangereuse aujourd'hui.
+
+OpenAI recommande de réserver l'agent principal à l'objectif durable, à la planification et aux résumés concis, puis de déléguer le détail des exécutions à des sous-agents. C'est une approche saine : sans cela, les résultats récurrents peuvent remplir le contexte censé préserver la continuité.
+
+La leçon plus profonde est simple : la mémoire n'est pas gratuite sous prétexte que le fournisseur la stocke.
+
+Il faut toujours décider ce qui mérite de survivre.
+
+## Le nouveau lock-in inclut le temps
+
+L'Agents API avait déjà déplacé le lock-in au-dessus du modèle.
+
+Sessions, compaction, sandboxes, sous-agents, état du navigateur, événements d'approbation et connexions aux outils privés vivent tous dans le runtime autour du modèle.
+
+Les automatisations planifiées ajoutent une nouvelle couche : l'état temporel.
+
+Le fournisseur peut désormais conserver non seulement ce que l'agent sait et l'endroit où il s'exécute, mais aussi ce qu'il a promis de faire plus tard. Migrer signifie alors reconstruire les planifications, les fuseaux horaires, les invocations en attente, la logique de retry, les pauses, les liens vers les sessions et les preuves qu'une exécution a eu lieu ou non.
+
+OpenAI précise aussi que les exécutions récurrentes reçoivent un léger délai aléatoire et qu'une session occupée peut les retarder davantage. C'est un comportement d'infrastructure raisonnable. Cela veut aussi dire qu'une planification n'est pas un minuteur de précision.
+
+Avant de lui confier un travail sérieux, il faut décider :
+
+- Le workflow est-il idempotent en cas de retry ?
+- Que se passe-t-il lorsqu'une exécution est en retard, manquée ou chevauche la suivante ?
+- Quel fuseau horaire gouverne la planification, y compris lors des changements d'heure ?
+- L'utilisateur peut-il distinguer la prochaine exécution, la dernière livraison, le tour actif et le dernier résultat réussi ?
+- Les exigences d'approbation expirent-elles entre la planification et l'exécution ?
+- Le budget ou les permissions d'outils peuvent-ils changer avant le lancement ?
+- Comment réconcilier les exécutions après une panne du fournisseur ?
+- Peut-on exporter les planifications et leur historique vers un autre runtime ?
+
+Le planificateur est un ajout utile.
+
+Il montre aussi très clairement ce qu'OpenAI vend vraiment.
+
+Pas seulement de l'intelligence.
+
+Pas seulement de l'exécution.
+
+De la continuité, de l'infrastructure et maintenant du temps.
+
+L'usine à agents peut continuer de tourner après le départ de tout le monde.
+
+Cela rend le control plane plus précieux.
+
+Cela fait aussi des contrôles honnêtes une partie du produit, pas une couche que les développeurs pourront ajouter plus tard.
 
 ## Mise à jour : l'usine est devenue une API
 

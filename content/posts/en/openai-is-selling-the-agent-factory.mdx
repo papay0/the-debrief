@@ -1,10 +1,161 @@
 ---
 title: "OpenAI Is Selling the Agent Factory"
-date: "2026-09-30"
-description: "OpenAI's Agents API turns the agent factory into rented infrastructure: hosted execution, durable sessions, subagents, browser use, and private MCP connections. The strategic product is no longer only the model. It is the control plane around the work."
+date: "2026-10-25"
+description: "OpenAI's Agents API can now schedule recurring and one-off work. That makes the control plane more useful, but it also exposes a crucial distinction: delivering a task is not the same as completing it."
 tags: ["OpenAI", "AI Agents", "Enterprise AI", "Developer Tools", "AI Strategy"]
 draft: false
 ---
+
+## Update: the factory owns the clock now
+
+OpenAI has added a clock to the agent factory.
+
+The Agents API can now run [scheduled automations](https://developers.openai.com/api/docs/guides/agents-api/sessions/automations) on a recurring cron schedule or at a one-time future timestamp. A schedule can start a clean session for independent work or return to an existing session for a context-aware follow-up. OpenAI has also added an optional tool that lets an agent create and manage schedules for its current session from natural language.
+
+That sounds like a modest convenience.
+
+It is not.
+
+The moment an agent can decide that work should happen later, the application stops being only a place where a user starts tasks. It becomes an operating system for promises.
+
+Check this price every morning.
+
+Review these incidents in an hour.
+
+Continue the investigation after the next data refresh.
+
+Those promises now survive the chat turn that created them. They need ownership, budgets, cancellation, auditability, and a truthful account of what actually happened.
+
+Cron is the easy part.
+
+The product is everything between "run at 9" and "the work is done."
+
+## A completed invocation is not completed work
+
+OpenAI's documentation makes the most important distinction unusually explicit.
+
+Every scheduled run creates an invocation. If the invocation is marked completed, that means the message was delivered to the target session.
+
+It does **not** mean the agent finished the task.
+
+That one sentence should shape the entire interface.
+
+A scheduled agent has at least four different states:
+
+- the schedule exists and is eligible to run
+- an invocation attempted to deliver the task
+- the session accepted and executed the work
+- the work produced the expected outcome
+
+There is a fifth state if the user needs to know about it: the application displayed or delivered the result.
+
+Collapse those states into one green checkmark and the system will lie.
+
+A morning report can be delivered to a busy session, accepted later, fail during a tool call, and never reach the user. The scheduler can still have done its job perfectly.
+
+This is the same mistake teams make with message queues: acknowledging the envelope is not the same as completing the business process inside it.
+
+OpenAI supplies invocation records and session events. The application still has to join them into an honest status model.
+
+## Pause is not stop
+
+The second useful warning is about cancellation.
+
+Pausing or deleting a schedule prevents future deliveries. It does not stop work that a session has already accepted. That active turn must be cancelled separately.
+
+Again, the implementation detail becomes a product requirement.
+
+A user who presses "pause" usually means one of two things:
+
+- do not start another run
+- stop whatever this automation is doing now
+
+Those are different commands. A serious interface should expose both.
+
+The same split matters for edits. Updating a schedule does not rewrite an invocation that is already queued. A changed prompt, budget, or destination may apply only to the next run while the old instruction is still waiting to execute.
+
+If that difference is hidden, the system will occasionally do exactly what it was told and still look disobedient.
+
+## Agent-created schedules need human ownership
+
+The new automation tool lets an agent create, inspect, update, pause, resume, and delete schedules for its current session.
+
+That is powerful because the agent can turn a conversational commitment into persistent behavior.
+
+It is also where a harmless sentence becomes infrastructure.
+
+"Keep checking" could mean three runs, three months, or until a forgotten API key drains its budget. Removing the automation tool later does not remove schedules that were already saved. They keep existing until the application pauses or deletes them.
+
+So every agent-created schedule needs an owner and a boundary:
+
+- who authorized it
+- which session and goal it belongs to
+- when it expires
+- how much it may spend per run and in total
+- which tools and data it may use
+- whether overlapping runs are allowed
+- which outcomes require approval
+- where results and failures are reported
+- how a human finds and kills it
+
+Natural-language scheduling is a good input surface.
+
+It is not a governance model.
+
+## New session or old context is an architecture choice
+
+OpenAI lets a schedule target a new session or an existing one.
+
+That choice looks small in an API request. It changes the failure model.
+
+A new session is easier to isolate and reproduce. It starts without accumulated conversational baggage, but the application must provide the facts, credentials, and artifacts needed for that run.
+
+An existing session preserves continuity. It can remember why the automation exists and what happened before. It can also inherit stale assumptions, a bloated context, unresolved tool state, or an instruction that was sensible last week and dangerous today.
+
+OpenAI recommends keeping a main agent focused on the durable goal, schedule, and concise summaries while delegating detailed runs to subagents. That is a sensible pattern because recurring output can otherwise fill the very context meant to preserve continuity.
+
+The deeper lesson is that memory is not free just because the provider stores it.
+
+Someone still has to decide what deserves to survive.
+
+## The new lock-in includes time
+
+The Agents API already moved lock-in above the model.
+
+Sessions, compaction, sandboxes, subagents, browser state, approval events, and private tool connections all live in the runtime around the model.
+
+Scheduled automations add another layer: temporal state.
+
+Now the provider can hold not only what the agent knows and where it runs, but also what it has promised to do later. Migration means reconstructing schedules, time zones, queued invocations, retry behavior, pause state, session links, and the evidence that a run did or did not happen.
+
+OpenAI also says recurring runs receive a small randomized delay, and a run can wait longer when its target session is busy. That is reasonable infrastructure behavior. It also means a schedule is not a precision timer.
+
+Before using it for serious work, builders should decide:
+
+- Is the workflow idempotent if a run is retried?
+- What happens when a run is late, missed, or overlaps the next one?
+- Which time zone owns the schedule, including daylight-saving changes?
+- Can the user see the next run, last delivery, active turn, and last successful outcome separately?
+- Do approval requirements expire between scheduling and execution?
+- Can spending or tool permissions change before the run begins?
+- How is a provider outage reconciled after service returns?
+- Can schedules and their history be exported to another runtime?
+
+The scheduler is a useful addition.
+
+It is also a clean demonstration of what OpenAI is really selling.
+
+Not just intelligence.
+
+Not just execution.
+
+Continuity, infrastructure, and now time.
+
+The agent factory can keep running after everyone leaves the room.
+
+That makes the control plane more valuable.
+
+It also makes honest controls part of the product, not a layer developers can add later.
 
 ## Update: the factory is now an API
 
