@@ -1,10 +1,126 @@
 ---
 title: "La cryptographie a un goulot de validation"
-date: "2026-10-24"
-description: "Claude peut désormais produire des preuves vérifiées par machine à une échelle spectaculaire. Le goulot de validation se déplace : il faut surtout décider si le théorème, le modèle et les hypothèses décrivent bien le système réel qui nous intéresse."
-tags: ["Sécurité IA", "Anthropic", "Google", "Agents IA", "Recherche IA", "Cryptographie", "Open Source", "Outils développeurs"]
+date: "2026-10-28"
+description: "OpenAI et Anthropic ont publié des artefacts vérifiés par machine autour d'une réfutation annoncée de l'hypothèse du temps exponentiel. Une preuve contrôlée n'est pas encore un consensus scientifique."
+tags: ["Sécurité IA", "Anthropic", "OpenAI", "Google", "Agents IA", "Recherche IA", "Cryptographie", "Open Source", "Outils développeurs"]
 draft: false
 ---
+
+## Mise à jour : deux preuves contrôlées ne font pas encore consensus
+
+OpenAI et Anthropic affirment désormais que leurs modèles ont réfuté indépendamment l'hypothèse du temps exponentiel, ou ETH.
+
+Les deux laboratoires ont publié des artefacts Lean.
+
+Cela ne signifie pas que la communauté informatique a accepté le résultat.
+
+La distinction compte, car ETH n'est pas un benchmark obscur. C'est une hypothèse fondamentale utilisée pour montrer que des centaines de problèmes ne peuvent pas être résolus beaucoup plus vite. Sa réfutation redessinerait la carte de la théorie de la complexité.
+
+Elle ne démontrerait pas que P est égal à NP. Elle ne rendrait pas SAT facile. Et elle ne transformerait pas soudain les problèmes d'optimisation difficiles d'aujourd'hui en tâches pratiques.
+
+L'[artefact de recherche d'Anthropic](https://github.com/anthropics/formal-math/tree/main/eth) le précise lui-même : l'algorithme annoncé est purement asymptotique et ne dit rien sur la résolution pratique de formules.
+
+Voilà exactement le type de résultat pour lequel « Lean l'a vérifié » semble clore le débat.
+
+En réalité, c'est le début d'un processus d'examen bien plus intéressant.
+
+## La preuve formelle a une frontière
+
+Un assistant de preuve répond à une question précise :
+
+Cette dérivation formelle établit-elle cet énoncé formel dans cette logique ?
+
+C'est une question extrêmement précieuse. Elle élimine une immense catégorie d'erreurs de calcul, de cas oubliés et de raisonnements séduisants mais incomplets. Un modèle ne peut pas embobiner le noyau de Lean.
+
+Mais ce noyau ne sait pas ce que l'article voulait affirmer.
+
+Anthropic le dit sans détour. Son court fichier [`MainResults.lean`](https://github.com/anthropics/formal-math/blob/main/eth/MainResults.lean) contient les théorèmes que le lecteur doit examiner. Lean contrôle les preuves qui les sous-tendent mais, comme le précise le dépôt, aucune machine ne vérifie que le fichier dit bien la même chose que l'article.
+
+Le projet rend cet écart exceptionnellement visible. Il fige les versions de Lean et Mathlib, consigne les axiomes standards utilisés, relie les énoncés de l'article à leurs équivalents formels et soumet la preuve à `nanoda`, un second noyau écrit indépendamment.
+
+Nous obtenons ainsi des éléments solides sur la dérivation.
+
+Cela n'établit pas automatiquement la correspondance entre l'article et le théorème, la pertinence de chaque choix d'encodage ni l'interprétation du résultat.
+
+OpenAI expose une autre frontière. Sa [note sur le périmètre de la formalisation Lean](https://github.com/openai/math/blob/main/lean/docs/378.md) vérifie un algorithme de comptage exact, en temps sous-exponentiel, pour des formules CNF de largeur fixe. Mais la borne contrôlée contient un facteur `log log n` supplémentaire par rapport à la borne plus fine de l'article associé.
+
+Les deux bornes suffiraient à réfuter ETH si l'énoncé formel, la preuve et leur interprétation résistent tous à l'examen.
+
+Ce ne sont tout de même pas des affirmations identiques.
+
+Voilà à quoi ressemble la vérification formelle quand le titre dépasse le fichier du théorème : la preuve peut être contrôlée tandis que l'affirmation scientifique exige encore un rapprochement humain minutieux.
+
+## OpenAI publie un processus de revue, pas un tour d'honneur
+
+La décision la plus importante d'OpenAI n'est peut-être pas la publication de la preuve Lean.
+
+C'est le vocabulaire qui l'accompagne.
+
+L'entreprise [décrit ses nouveaux manuscrits](https://openai.com/index/building-scientific-understanding-with-academic-communities/) comme des données de recherche brutes qu'il faut transformer en compréhension scientifique. Pour l'affirmation sur ETH, elle a constitué un groupe extérieur dirigé par Russell Impagliazzo, Ramamohan Paturi et Ryan Williams.
+
+Impagliazzo et Paturi ont contribué à formuler ETH.
+
+Les participants ne sont pas rémunérés, n'ont signé aucun accord de confidentialité et restent libres de publier leurs propres conclusions. OpenAI a accepté de fournir les données brutes et de financer une conférence pendant laquelle le domaine pourra examiner l'affirmation et ses conséquences.
+
+Cela ne certifie pas le résultat.
+
+À ce stade, cela fait quelque chose de plus utile : séparer la découverte de son acceptation.
+
+Le modèle a produit un artefact. L'assistant de preuve a contrôlé une dérivation formelle. Des spécialistes doivent maintenant comprendre l'argument, comparer les affirmations formelles et informelles, le replacer dans la littérature et décider ce qui en découle.
+
+Ce sont des tâches différentes.
+
+Les réduire à « l'IA a résolu ETH » ferait disparaître la partie la plus mature de cette publication.
+
+## Le mot « vérifié » a désormais besoin de niveaux
+
+Les laboratoires d'IA produisent des artefacts techniques plus vite que les communautés expertes ne peuvent les absorber. Une étiquette binaire ne résistera pas à ce volume.
+
+Il nous faut une échelle de validation :
+
+1. **Contrôlé par un noyau :** la preuve formelle passe dans un petit vérificateur de confiance.
+2. **Énoncé audité :** les spécialistes conviennent que le théorème formel exprime l'affirmation visée.
+3. **Correspondance auditée :** l'article, le théorème, les encodages et l'implémentation décrivent le même résultat.
+4. **Compris indépendamment :** des chercheurs extérieurs peuvent reconstruire l'argument, pas seulement relancer le vérificateur.
+5. **Situé scientifiquement :** la communauté comprend ce que le résultat change, ce qu'il laisse ouvert et quels travaux antérieurs dépendaient de l'hypothèse abandonnée.
+
+Les publications d'OpenAI et d'Anthropic semblent solides au premier niveau.
+
+Elles fournissent un matériau inhabituellement riche pour atteindre les suivants.
+
+Elles n'ont pas gravi toute l'échelle simplement parce que les contrôles sont au vert.
+
+Ce n'est pas du scepticisme envers les méthodes formelles. C'est précisément ce qui les rend utiles. Elles divisent une grande question floue en plusieurs questions plus petites dont les réponses peuvent être examinées séparément.
+
+## La nouvelle unité de publication est toute la pile de revue
+
+L'article scientifique traditionnel réunissait la découverte, l'explication et la persuasion dans un même document.
+
+La recherche produite par IA a besoin d'une unité de publication plus épaisse :
+
+- l'argument en langage naturel,
+- l'énoncé formel exact,
+- la preuve contrôlée par machine,
+- les dépendances figées et les axiomes autorisés,
+- une table de correspondance entre l'article et la formalisation,
+- une expertise extérieure,
+- et un historique public de ce qui a été accepté, corrigé ou rejeté.
+
+L'artefact de preuve n'est pas une annexe décorative.
+
+Le processus de revue n'est pas un délai protocolaire.
+
+Ensemble, ils constituent le produit.
+
+Si les affirmations sur ETH tiennent, ce sera un résultat majeur en théorie de la complexité et une démonstration saisissante de découverte assistée par IA.
+
+Si un décalage caché les modifie ou les invalide, ces publications nous auront tout de même appris quelque chose d'important sur l'évaluation de la science produite par machine.
+
+Dans les deux cas, la leçon est déjà visible.
+
+Quand les modèles peuvent générer des preuves plus vite que les humains ne peuvent les comprendre, la validation ne peut pas s'arrêter à « le fichier compile ».
+
+C'est là que la compréhension commence.
 
 ## Mise à jour : le vérificateur de preuves déplace le goulot
 

@@ -1,10 +1,126 @@
 ---
 title: "Cryptography Has a Validation Bottleneck"
-date: "2026-10-24"
-description: "Claude can now generate machine-checked proofs at extraordinary scale. That moves the validation bottleneck from reading the proof to deciding whether the theorem, model, and deployment assumptions describe the system we actually care about."
-tags: ["AI Security", "Anthropic", "Google", "AI Agents", "AI Research", "Cryptography", "Open Source", "Developer Tools"]
+date: "2026-10-28"
+description: "OpenAI and Anthropic have published machine-checked artifacts for a claimed refutation of the Exponential Time Hypothesis. The proofs make one thing clear: a checked derivation is not yet scientific consensus."
+tags: ["AI Security", "Anthropic", "OpenAI", "Google", "AI Agents", "AI Research", "Cryptography", "Open Source", "Developer Tools"]
 draft: false
 ---
+
+## Update: two checked proofs are not yet a consensus
+
+OpenAI and Anthropic now say their models have independently refuted the Exponential Time Hypothesis.
+
+Both have published Lean artifacts.
+
+That is not the same as the computer-science community accepting the result.
+
+The distinction matters because ETH is not an obscure benchmark. It is a foundational assumption used to argue that hundreds of problems cannot be solved substantially faster. Refuting it would change the map of complexity theory.
+
+It would not prove P equals NP. It would not make SAT easy. And it would not suddenly make today's hard optimization problems practical.
+
+Anthropic's [own research artifact](https://github.com/anthropics/formal-math/tree/main/eth) is explicit about that last point: the claimed algorithm is purely asymptotic and says nothing about solving formulas in practice.
+
+This is exactly the kind of result where “Lean checked it” sounds like the end of the story.
+
+It is actually the beginning of a more interesting review process.
+
+## The formal proof has a boundary
+
+A proof assistant answers a precise question:
+
+Does this formal derivation establish this formal statement inside this logic?
+
+That is an extraordinarily valuable question. It removes a huge class of arithmetic mistakes, missing cases, and persuasive hand-waving. A model cannot bluff Lean's kernel.
+
+But the kernel does not know what the paper meant to claim.
+
+Anthropic says this directly. Its short [`MainResults.lean`](https://github.com/anthropics/formal-math/blob/main/eth/MainResults.lean) file states the theorems a reader should inspect. Lean checks the proofs behind those statements, but, as the repository notes, no machine checks that the file says what the paper says.
+
+The project makes that gap unusually inspectable. It pins Lean and Mathlib, records the standard axioms used, maps paper statements to formal counterparts, and runs the proof through `nanoda`, a second independently written kernel.
+
+That gives us strong evidence about the derivation.
+
+It does not automatically establish the paper-to-theorem correspondence, the relevance of every encoding choice, or the interpretation of the result.
+
+OpenAI exposes a different boundary. Its [Lean scope note](https://github.com/openai/math/blob/main/lean/docs/378.md) verifies an exact counting algorithm for fixed-width CNF formulas in subexponential time. But the checked bound includes an extra `log log n` factor compared with the sharper bound in the accompanying manuscript.
+
+Both bounds would be enough to refute ETH if the formal statement, proof, and interpretation all survive scrutiny.
+
+They are still not identical claims.
+
+This is what formal verification looks like when the headline is larger than the theorem file: the proof may be checked while the scientific claim still needs careful human reconciliation.
+
+## OpenAI is publishing a review process, not a victory lap
+
+OpenAI's most important decision may not be the Lean release.
+
+It is the language around it.
+
+The company [describes its new manuscripts](https://openai.com/index/building-scientific-understanding-with-academic-communities/) as raw research data that must be converted into scientific understanding. For the ETH claim, it has formed an external group led by Russell Impagliazzo, Ramamohan Paturi, and Ryan Williams.
+
+Impagliazzo and Paturi helped formulate ETH in the first place.
+
+The participants are unpaid, have no nondisclosure agreements, and are free to publish their own conclusions. OpenAI has agreed to release the raw data and fund a conference where the field can examine the claim and its consequences.
+
+That does not certify the result.
+
+It does something more useful at this stage: it separates discovery from acceptance.
+
+The model produced an artifact. The proof assistant checked a formal derivation. Domain experts now have to understand the argument, compare the formal and informal claims, place it in the literature, and decide what follows.
+
+Those are different jobs.
+
+Collapsing them into “AI solved ETH” would throw away the most mature part of the release.
+
+## “Verified” now needs levels
+
+AI labs are producing technical artifacts faster than expert communities can absorb them. A binary label will not survive that volume.
+
+We need a validation ladder:
+
+1. **Kernel-checked:** the formal proof passes a small trusted checker.
+2. **Statement-audited:** experts agree the formal theorem expresses the intended claim.
+3. **Correspondence-audited:** the paper, theorem, encodings, and implementation describe the same result.
+4. **Independently understood:** outside researchers can reconstruct the argument rather than merely rerun the checker.
+5. **Scientifically situated:** the community understands what the result changes, what it leaves open, and whether earlier work depended on the discarded assumption.
+
+The OpenAI and Anthropic releases appear strong at the first level.
+
+They provide unusually good material for the next ones.
+
+They have not completed the ladder simply by publishing green checks.
+
+This is not skepticism about formal methods. It is the reason formal methods are useful. They turn one large, fuzzy question into several smaller questions whose answers can be examined separately.
+
+## The new publication unit is the review stack
+
+The old scientific paper bundled discovery, explanation, and persuasion into one document.
+
+AI-generated research needs a thicker publication unit:
+
+- the natural-language argument,
+- the exact formal statement,
+- the machine-checked proof,
+- pinned dependencies and allowed axioms,
+- a map between the paper and the formalization,
+- independent expert review,
+- and a public record of what was accepted, corrected, or rejected.
+
+The proof artifact is not a decorative appendix.
+
+The review process is not a ceremonial delay.
+
+Together, they are the product.
+
+If the ETH claims hold, this will be a major result in complexity theory and a striking demonstration of AI-assisted discovery.
+
+If a hidden mismatch changes or defeats them, the releases will still teach us something important about how to evaluate machine-generated science.
+
+Either way, the lesson is already visible.
+
+When models can generate proofs faster than people can understand them, validation cannot end at “the file compiles.”
+
+That is where understanding begins.
 
 ## Update: the proof checker changed the bottleneck
 
