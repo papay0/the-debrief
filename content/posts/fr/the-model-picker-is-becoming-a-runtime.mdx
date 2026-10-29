@@ -1,0 +1,204 @@
+---
+title: "Le sélecteur de modèles devient un moteur d'exécution"
+date: "2026-10-29"
+description: "GitHub Copilot Fusion peut confier le brouillon à un modèle, le contrôle à un autre, escalader les tâches difficiles et en traiter certaines en local. Le produit durable n'est plus le sélecteur, mais le moteur de décision qui se cache derrière."
+tags: ["GitHub", "Microsoft", "Agents IA", "Outils développeurs", "Modèles IA", "Génie logiciel"]
+draft: false
+---
+
+## La version courte
+
+GitHub vient de placer un moteur d'exécution dans le sélecteur de modèles.
+
+Le 28 octobre, l'entreprise a lancé la version générale de [Copilot Fusion](https://docs.github.com/en/copilot/concepts/models/copilot-fusion). Fusion apparaît à côté des modèles individuels dans GitHub Copilot, mais ce n'est pas un modèle.
+
+Le système décide quel modèle, ou quels modèles, doivent traiter chaque demande.
+
+Pour une requête simple, il peut n'en appeler qu'un. Face à une tâche plus difficile, il peut laisser un modèle efficace produire un brouillon, demander à un juge si le résultat suffit, puis passer à un modèle plus puissant si nécessaire. Il peut aussi faire critiquer le brouillon en parallèle par plusieurs modèles avant de demander au premier de le réviser.
+
+L'utilisateur choisit un niveau d'effort.
+
+GitHub choisit le plan d'exécution.
+
+C'est une évolution plus importante qu'une nouvelle mise à jour des classements.
+
+Depuis des années, le marché de l'IA apprend aux développeurs à comparer les noms de modèles, leurs scores, leurs fenêtres de contexte et leurs prix au jeton. Fusion leur propose de déléguer cette comparaison à la plateforme pendant qu'ils travaillent.
+
+Si cette approche s'impose, la couche précieuse ne sera plus seulement le modèle.
+
+Ce sera le système qui sait quand employer quel modèle, quel niveau de revue mérite une tâche, quelles politiques s'appliquent, combien l'exécution devrait coûter et à quel moment le résultat est assez bon pour s'arrêter.
+
+Le sélecteur de modèles devient un moteur de décision.
+
+## Fusion choisit un workflow, pas seulement un modèle
+
+La sélection automatique n'est pas nouvelle. Un routeur peut examiner une demande et l'envoyer vers un modèle rapide, économique ou puissant.
+
+Fusion va un cran plus loin.
+
+GitHub décrit trois modes d'exécution :
+
+- **Simple :** un seul modèle réalise la tâche.
+- **Cascade :** un modèle efficace prépare une solution, puis un juge l'accepte ou la transmet à un modèle plus puissant.
+- **Critique :** un modèle produit un brouillon pendant que plusieurs autres le relisent en parallèle, puis le premier révise sa réponse.
+
+Le mode peut changer d'une demande à la suivante dans une même session. GitHub précise aussi que le routeur tient compte de la disponibilité des modèles, de l'état des systèmes, de la complexité de la conversation et des frontières du cache pour organiser le travail.
+
+Il ne s'agit plus seulement de choisir un cerveau.
+
+Il s'agit de constituer une équipe temporaire.
+
+La distinction compte, car un workflow composé peut dépasser un appel unique et coûteux sans mobiliser le modèle le plus puissant à chaque étape. Un petit modèle peut suffire pour le brouillon. Un second peut apporter davantage comme critique. Le modèle de pointe ne devient nécessaire que lorsque la solution économique échoue au contrôle qualité.
+
+Les développeurs le font déjà à la main.
+
+Ils demandent à un modèle d'implémenter, à un autre de relire et à un troisième d'enquêter sur l'erreur récalcitrante.
+
+Fusion transforme cette habitude en infrastructure.
+
+## Le benchmark mesure l'économie de la tâche
+
+GitHub affirme que Fusion Max atteint des performances proches de la frontière pour beaucoup moins cher.
+
+Des données indépendantes étayent une version plus étroite de cette affirmation.
+
+Artificial Analysis a testé Fusion Max dans Copilot CLI avec son Coding Agent Index. [Sa comparaison actuelle](https://artificialanalysis.ai/agents/coding-agents/comparisons/github-copilot-vs-claude-code) attribue à Fusion un score composite de 60 pour un coût API estimé à 5,59 dollars par tâche. Claude Code avec Opus 5.5 obtient environ 62 pour 11,42 dollars dans le même indice.
+
+Le résultat est utile.
+
+Il ne prouve pas que Fusion divisera la facture de chaque équipe par deux.
+
+Le score réunit trois évaluations différentes. Fusion s'est montré particulièrement solide sur les tâches de terminal et moins performant que la configuration Opus sur le benchmark de modification de dépôts. Les montants indiqués estiment le coût des modèles sur ces exercices, pas la somme qu'une entreprise retrouvera sur sa facture GitHub. Ils n'incluent ni la revue humaine, ni les intégrations ratées, ni le travail de sécurité, ni le coût d'une modification erronée arrivée en production.
+
+GitHub affirme séparément que Fusion a terminé les tâches comparées 40 % plus vite. Ce chiffre de durée vient de GitHub, pas du rapport indépendant qui appuie le lancement.
+
+La conclusion honnête reste intéressante.
+
+L'orchestration de modèles peut améliorer le rapport entre qualité et coût.
+
+L'unité pertinente n'est plus le prix au jeton.
+
+C'est le coût par tâche acceptée.
+
+Cela change la manière d'évaluer les agents de programmation. Un modèle économique qui provoque davantage de reprises peut coûter cher. Une étape de critique coûteuse qui évite une mauvaise pull request peut être bon marché. Un routeur qui consacre plus d'inférence aux dix pour cent de tâches difficiles peut battre une politique uniforme, même si aucun de ses modèles n'est nouveau.
+
+Le benchmark ne dit pas que les modèles ont cessé de compter.
+
+Il dit que leur allocation compte aussi.
+
+## Le routeur hérite de la confiance
+
+Déléguer le choix du modèle retire une décision au développeur.
+
+Cela en confie plusieurs à GitHub.
+
+Fusion choisit le mode d'exécution, l'effort de raisonnement, l'ensemble de modèles, le seuil d'escalade et le comportement de repli. Cet ensemble peut changer à mesure que GitHub évalue de nouveaux modèles. Le routage peut également évoluer selon l'état et la disponibilité des systèmes.
+
+C'est utile pendant une panne.
+
+Cela signifie aussi que la même demande pourra passer par un système différent le mois prochain sans que le développeur touche à un réglage.
+
+La qualité peut dériver.
+
+Le coût peut dériver.
+
+La latence peut dériver.
+
+Le périmètre de traitement des données peut dériver.
+
+GitHub fournit des contrôles d'entreprise qui excluent certains modèles selon la politique d'administration, l'abonnement, la résidence des données ou les exigences FedRAMP. Ces garde-fous sont essentiels, car un routeur intelligent reste soumis aux contraintes juridiques et de sécurité de l'organisation.
+
+Mais le respect des règles ne suffit pas à créer la confiance.
+
+Les équipes devront aussi savoir quelle politique de routage a été appliquée, quels modèles ont participé, ce que chacun a vu, quels outils ils pouvaient utiliser et pourquoi le système a décidé que le travail était terminé.
+
+Quand un modèle nommé déçoit, la question de débogage est simple.
+
+Quand un moteur composé déçoit, l'échec peut venir du brouillon, du juge, de la règle d'escalade, du partage du contexte, des permissions accordées aux outils ou de la synthèse finale.
+
+Le routeur ne supprime pas le risque lié aux modèles.
+
+Il l'agrège.
+
+## Le routage local rend la frontière dynamique
+
+GitHub expérimente aussi le routage vers des modèles locaux.
+
+Fusion Standard peut sélectionner MAI Code 1.1 Flash de Microsoft sur certaines machines Windows. Dans Copilot CLI, il peut choisir un Qwen3.8 Flash Next installé en local avec un fournisseur comme Ollama, sous Windows, macOS ou Linux.
+
+L'inférence locale pourrait ainsi devenir une étape normale d'un workflow plus large au lieu de constituer un choix de produit séparé.
+
+Les tâches ordinaires peuvent rester près de la machine. Les plus difficiles peuvent utiliser des modèles cloud. Le routeur peut optimiser la puissance sans demander au développeur de changer d'outil.
+
+Mais installer un modèle local ne rend pas Fusion entièrement local.
+
+La fonction est expérimentale, ne concerne que le niveau Standard et autorise Fusion à choisir le modèle local lorsqu'il le juge pertinent. Elle ne promet pas que chaque demande, fragment de contexte ou étape de revue restera sur l'appareil.
+
+Pour les dépôts sensibles, l'exécution locale ne peut pas être une simple préférence proposée à l'optimiseur.
+
+Elle doit devenir une règle.
+
+L'interface devrait distinguer clairement :
+
+- l'exécution locale obligatoire,
+- l'exécution locale privilégiée,
+- l'exécution cloud autorisée,
+- et l'exécution cloud nécessaire pour cette capacité.
+
+Sans cela, « compatible avec les modèles locaux » ressemblera à une garantie de confidentialité que le produit ne donne pas réellement.
+
+## L'orchestration a besoin de reçus
+
+Fusion expose une partie de sa provenance.
+
+Les développeurs peuvent suivre les étapes pendant l'exécution, voir quels modèles travaillent et consulter la liste des modèles participants après la réponse. GitHub masque les brouillons intermédiaires parce qu'ils peuvent être révisés ou abandonnés.
+
+C'est un choix d'interface raisonnable.
+
+Ce n'est pas encore une piste d'audit complète.
+
+La documentation de GitHub mentionne une limite particulièrement révélatrice : si un brouillon abandonné a déjà modifié des fichiers dans l'espace de travail, ces changements ne sont pas annulés automatiquement.
+
+Le moteur peut rejeter une réponse sans en effacer entièrement les effets.
+
+Voilà pourquoi les agents composés ont besoin de plus qu'une transcription finale du chat.
+
+Un historique d'exécution sérieux devrait répondre à ces questions :
+
+1. Quel mode d'exécution a été utilisé ?
+2. Quel modèle a réalisé chaque étape ?
+3. Quel contexte et quels outils chaque étape a-t-elle reçus ?
+4. Quelles modifications proviennent d'un brouillon ensuite rejeté ?
+5. Quels tests ou contrôles ont autorisé l'arrêt de l'exécution ?
+6. Combien chaque étape a-t-elle coûté ?
+7. Quelle version de la politique de routage a pris ces décisions ?
+
+Le précédent [rapport de recherche sur HydraFusion](https://github.blog/ai-and-ml/project-hydrafusion-frontier-quality-via-multi-model-orchestration/) indique que le moteur interne consigne le rôle, le résultat, le coût, la latence et les diagnostics de chaque étape.
+
+C'est la bonne matière première.
+
+Les entreprises devront en retrouver assez dans le produit pour enquêter sur les échecs, reproduire les travaux importants, faire respecter les budgets et comparer les politiques de routage dans le temps.
+
+Si la plateforme demande aux développeurs de ne plus penser aux modèles, elle doit donner aux administrateurs de meilleures preuves sur les choix qu'elle effectue à leur place.
+
+## Le produit durable est la politique
+
+GitHub affirme que [63 % des utilisateurs payants de Copilot](https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/) ont essayé la sélection automatique au moins une fois en septembre. C'est une donnée fournie par GitHub, pas un recensement indépendant, mais elle indique une direction crédible.
+
+La plupart des développeurs ne veulent pas d'un second métier consistant à suivre chaque nouveau modèle.
+
+Ils veulent un bon résultat à un prix acceptable, dans les outils et les règles qu'ils utilisent déjà.
+
+Le routeur devient donc stratégiquement précieux.
+
+La plateforme observe les vraies tâches, les résultats des modèles, les reprises, la latence, le coût, le contexte du dépôt et l'acceptation par l'utilisateur. Elle peut apprendre où chaque modèle fonctionne, où il échoue et quand un appel supplémentaire mérite son prix. Un fournisseur ne voit que les inférences exécutées par son modèle. L'orchestrateur voit l'ensemble du workflow.
+
+Cela ne transforme pas les modèles de fondation en produits interchangeables. Le meilleur modèle disponible fixe encore le plafond de nombreuses tâches.
+
+Mais le moteur peut tirer parti de chaque progrès plus vite qu'une intégration statique. Il suffit d'ajouter un meilleur modèle à l'ensemble et d'actualiser la politique de routage pour que tous les produits qui s'appuient sur ce moteur progressent sans apprendre un nouveau nom à chaque utilisateur.
+
+La guerre des modèles ne s'arrête pas.
+
+Elle passe derrière le sélecteur.
+
+Le prochain avantage concurrentiel appartiendra peut-être au système capable de prouver qu'il a fait le bon choix.

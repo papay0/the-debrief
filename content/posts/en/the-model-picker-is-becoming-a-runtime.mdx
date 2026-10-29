@@ -1,0 +1,204 @@
+---
+title: "The Model Picker Is Becoming a Runtime"
+date: "2026-10-29"
+description: "GitHub Copilot Fusion can draft with one model, judge with another, escalate difficult work, and route some tasks locally. The durable product is no longer the model picker. It is the policy engine behind it."
+tags: ["GitHub", "Microsoft", "AI Agents", "Developer Tools", "AI Models", "Software Engineering"]
+draft: false
+---
+
+## The Short Version
+
+GitHub just put a runtime inside the model picker.
+
+On October 28, it made [Copilot Fusion generally available](https://docs.github.com/en/copilot/concepts/models/copilot-fusion). Fusion appears beside individual models in GitHub Copilot, but it is not a model.
+
+It decides which model or models should handle each prompt.
+
+For a simple request, it can call one model. For harder work, it can let an efficient model draft, ask a judge whether the result is good enough, and escalate to a stronger model when it is not. It can also have several models critique a draft in parallel before the original model revises it.
+
+The user chooses an effort level.
+
+GitHub chooses the execution plan.
+
+That is a more important product shift than another leaderboard update.
+
+The AI market has spent years teaching developers to compare model names, benchmark scores, context windows, and token prices. Fusion asks them to delegate that comparison to the platform while they work.
+
+If this approach succeeds, the valuable layer is no longer only the model.
+
+It is the system that knows when to use which model, how much review a task deserves, which policies apply, what the run should cost, and whether the result is good enough to stop.
+
+The model picker is becoming a policy engine.
+
+## Fusion chooses a workflow, not just a model
+
+Automatic model selection is not new. A router can inspect a request and send it to a fast model, a cheap model, or a capable model.
+
+Fusion goes one step further.
+
+GitHub documents three execution patterns:
+
+- **Single:** one model completes the task.
+- **Cascade:** an efficient model drafts a solution, then a judge accepts it or escalates to a stronger model.
+- **Critique:** one model drafts while several models review in parallel, then the drafting model revises its answer.
+
+The pattern can change from one prompt to the next inside the same session. GitHub also says the router considers model availability, system health, conversation complexity, and cache boundaries when deciding how to run the work.
+
+This is not merely choosing a brain.
+
+It is constructing a temporary team.
+
+The distinction matters because a compound workflow can outperform a single expensive call without using the strongest model for every step. A smaller model may be good enough to draft. A second model may be more valuable as a critic. A frontier model may only be necessary when the cheaper path fails a quality gate.
+
+Developers already do this manually.
+
+They ask one model to implement, another to review, and a third to investigate the stubborn failure.
+
+Fusion turns that habit into infrastructure.
+
+## The benchmark is about task economics
+
+GitHub's headline is that Fusion Max reached near-frontier performance for much less money.
+
+There is independent evidence for a narrower version of that claim.
+
+Artificial Analysis tested Fusion Max in Copilot CLI on its Coding Agent Index. [Its current comparison](https://artificialanalysis.ai/agents/coding-agents/comparisons/github-copilot-vs-claude-code) gives Fusion a composite score of 60 with an estimated API cost of $5.59 per task. Claude Code with Opus 5.5 scored about 62 at $11.42 per task in the same index.
+
+The result is useful.
+
+It is not proof that Fusion cuts every team's bill in half.
+
+The score combines three different evaluations. Fusion was particularly strong on terminal tasks and weaker on the repository-change benchmark than the Opus configuration. The reported dollars are estimated model costs for benchmark tasks, not the amount an enterprise will see on its GitHub invoice. They do not include human review, failed integrations, security work, or the cost of an incorrect change reaching production.
+
+GitHub separately says Fusion completed the comparison tasks 40% faster. That timing claim is GitHub's, not a number exposed in the independent report supporting the launch.
+
+The honest conclusion is still interesting.
+
+Model orchestration can improve the quality-to-cost frontier.
+
+The unit that matters is no longer price per token.
+
+It is cost per accepted task.
+
+That changes how teams should evaluate AI coding systems. A cheap model that creates more retries may be expensive. A costly critic that prevents one bad pull request may be cheap. A router that spends more inference on the difficult ten percent of work can beat a uniform policy even if none of its underlying models is new.
+
+The benchmark is not saying models no longer matter.
+
+It is saying model allocation matters too.
+
+## The router inherits the trust
+
+Delegating model choice removes one decision from the developer.
+
+It gives several decisions to GitHub.
+
+Fusion chooses the execution pattern, reasoning effort, model pool, escalation threshold, and fallback behavior. The available pool can change as GitHub evaluates new models. Routing can also change with system health and availability.
+
+That is useful during an outage.
+
+It also means the same prompt may travel through a different system next month without the developer changing a setting.
+
+Quality can drift.
+
+Cost can drift.
+
+Latency can drift.
+
+The data boundary can drift.
+
+GitHub provides enterprise controls that exclude models based on administrator policy, subscription, data residency, or FedRAMP requirements. Those controls are essential because a smart router is still subordinate to an organization's legal and security constraints.
+
+But policy compliance is only one part of trust.
+
+Teams will also need to know which routing policy ran, which models participated, what each one saw, which tools they could use, and why the system decided the work was complete.
+
+When a named model disappoints, the debugging question is simple.
+
+When a compound runtime disappoints, the failure may belong to the draft, the judge, the escalation rule, the context split, the tool permissions, or the final synthesis.
+
+The router does not remove model risk.
+
+It aggregates it.
+
+## Local routing makes the boundary dynamic
+
+GitHub is also previewing local-model routing.
+
+Fusion Standard can select Microsoft's MAI Code 1.1 Flash on supported Windows hardware. In Copilot CLI, it can select a locally installed Qwen3.8 Flash Next through a provider such as Ollama on Windows, macOS, or Linux.
+
+That could make local inference a normal step inside a larger workflow instead of a separate product choice.
+
+Routine work can stay close to the machine. Harder work can use cloud models. The router can optimize for capability without asking the developer to switch tools.
+
+But installing a local model does not make Fusion local-only.
+
+The feature is an experimental preview, applies only to the Standard effort level, and lets Fusion choose the local model when it considers that appropriate. It is not a promise that every prompt, context fragment, or review step remains on the device.
+
+For sensitive repositories, locality cannot be a suggestion to the optimizer.
+
+It has to be a policy.
+
+The interface should distinguish clearly among:
+
+- local execution required,
+- local execution preferred,
+- cloud execution permitted,
+- and cloud execution required for this capability.
+
+Otherwise “supports local models” will sound like a privacy guarantee that the product does not actually make.
+
+## Orchestration needs receipts
+
+Fusion does expose some provenance.
+
+Developers can follow the stages while it runs, see which models are being used, and inspect the list of participating models after the response. GitHub hides intermediate drafts because they may be revised or discarded.
+
+That is a reasonable user experience.
+
+It is not yet a complete audit trail.
+
+GitHub's documentation includes a particularly revealing limitation: if a discarded draft has already changed files in the workspace, those edits are not automatically undone.
+
+The runtime can reject an answer without fully reversing its effects.
+
+This is why compound agents need more than a final chat transcript.
+
+A serious run record should answer:
+
+1. Which execution pattern ran?
+2. Which model performed each step?
+3. What context and tools did each step receive?
+4. Which edits came from a draft that was later rejected?
+5. Which tests or quality gates allowed the run to stop?
+6. What did each leg cost?
+7. Which routing-policy version made those decisions?
+
+GitHub's earlier [HydraFusion research report](https://github.blog/ai-and-ml/project-hydrafusion-frontier-quality-via-multi-model-orchestration/) says its internal runtime records the role, outcome, cost, latency, and diagnostics of each leg.
+
+That is the right raw material.
+
+Enterprise users will need enough of it in the product to investigate failures, reproduce important work, enforce budgets, and compare routing policies over time.
+
+If the platform asks developers to stop thinking about models, it must give administrators better evidence about what the platform decided for them.
+
+## The durable product is the policy
+
+GitHub says [63% of paying Copilot developers](https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/) used automatic model selection at least once in September. That is GitHub's own usage figure, not an independent census, but it points in a believable direction.
+
+Most developers do not want a permanent side job tracking model releases.
+
+They want good work at an acceptable price, inside the tools and policies they already use.
+
+That makes the router strategically valuable.
+
+The platform sees real tasks, model outcomes, retries, latency, cost, repository context, and user acceptance. It can learn where each model works, where it fails, and when another call is worth paying for. A model provider sees its own inference. The orchestrator sees the workflow.
+
+That does not make foundation models commodities. The best available model still sets the ceiling for many tasks.
+
+It does mean the harness can capture more of each model improvement than a static integration can. Swap a better model into the pool, update the routing policy, and every product using the runtime can improve without teaching every user a new model name.
+
+The model wars are not ending.
+
+They are moving behind the picker.
+
+The next competitive advantage may belong to the system that can prove it chose well.
