@@ -1,10 +1,116 @@
 ---
 title: "Open Models Are Now Foreign Policy"
-date: "2026-10-06"
-description: "Meta has shipped Muse Spark Open, an 816-billion-parameter model that Apple can run locally across multiple Mac Studios. The weights are real. So is the hardware bill. Open-weight AI is now a stack of files, licenses, runtimes, memory, and machines."
+date: "2026-10-30"
+description: "Beam and Mistral Large 4 have turned two Western open-weight promises into downloadable checkpoints. The files arrived. So did the hardware bill, the license boundaries, and a more useful definition of AI sovereignty."
 tags: ["AI Policy", "Models", "Open Source", "AI Strategy"]
 draft: false
 ---
+
+## Update: the calendar has an answer
+
+Earlier this month, I wrote that the Western open-model comeback had produced two impressive previews and two promises to ship.
+
+The calendar was the next benchmark.
+
+Both companies passed it.
+
+Reflection [released Beam's weights](https://reflection.ai/blog/beam-is-available) on October 16 under Apache 2.0, together with BF16, FP8, and NVFP4 checkpoints, a model card, a safety report, deployment containers, and integrations across more than 40 infrastructure and agent-tooling partners.
+
+Then, on October 29, Mistral [released the weights of Mistral Large 4](https://mistral.ai/news/mistral-large-4-oss/), three weeks after opening the model through its API. The downloadable release includes FP8 and NVFP4 checkpoints, a one-million-token context window, tool calling, structured output, image input, and launch support in Transformers, vLLM, SGLang, and llama.cpp.
+
+That matters more than another benchmark chart.
+
+A roadmap became files.
+
+The sovereignty pitch can finally be tested without asking either company for API permission.
+
+## Shipping the weights does not ship the data center
+
+The release also makes the word "open" less romantic.
+
+Beam has 501 billion parameters in total and 23 billion active per token. Mistral Large 4 has roughly one trillion total and 49 billion active. Sparse architectures reduce the work done for each token. They do not make the whole checkpoint small.
+
+Hugging Face's [Mistral Large 4 deployment guide](https://huggingface.co/blog/mistral-large4) uses eight H200 GPUs for its FP8 endpoint recipe. The NVFP4 version has a smaller memory footprint, but its reference paths target Blackwell hardware. Community GGUF conversions appeared on day one, which is useful, but a quantized file that can load is not automatically a production system that meets a team's latency, context, concurrency, and accuracy requirements.
+
+So Mistral delivered the artifact.
+
+The buyer still has to deliver the infrastructure.
+
+That is not a technicality. It is the line between owning a model and operating one.
+
+## The two licenses define two different kinds of control
+
+Reflection chose Apache 2.0 for Beam.
+
+Mistral chose its new Mistral Ecosystem Open-Weight License, a modified MIT license. It allows commercial and non-commercial use, modification, fine-tuning, and redistribution. But a business operating a model-as-a-service offering needs a separate commercial license from Mistral before using Large 4 commercially.
+
+For an enterprise running the model internally, that condition may not matter.
+
+For a cloud, inference provider, or startup whose product is hosted access to models, it matters immediately.
+
+The checkpoint cannot be switched off like an API key. But "we downloaded the weights" still does not mean "we are free of the original vendor's business terms."
+
+This is why open weight is a useful technical category and an incomplete procurement category.
+
+The license has to be evaluated with the same seriousness as the model card and the hardware plan.
+
+## Mistral opened the model and kept a higher-risk lane gated
+
+Cybersecurity makes the boundary even clearer.
+
+Mistral says the public checkpoint improved sharply during the three weeks between preview and release. It reports a 51% score on the Artificial Analysis Cyber Index and a 96.6% average refusal rate on malicious cyber prompts drawn from JailbreakBench, StrongREJECT, and AgentHarm. Those are company-presented results and should be tested independently, especially once builders modify the checkpoint or its system policy.
+
+The more specialized cyber version is not simply sitting beside the public weights.
+
+Mistral says Orange Cyberdefense and other design partners receive preview access to a variant optimized for penetration testing, vulnerability assessment, and red teaming. That access remains subject to vetting, contracts, controlled environments, and work on systems the customer owns or is explicitly authorized to test.
+
+That split is sensible.
+
+It is also revealing.
+
+"The model is open" does not mean every post-trained capability, private fine-tune, or operational package is open. A lab can release a strong general checkpoint while keeping a sharper vertical variant behind identity, authorization, and monitoring.
+
+Open weights remove the serving monopoly.
+
+They do not end product segmentation.
+
+## The independent numbers make the story less dramatic and more useful
+
+Mistral describes Large 4 as the best open-weight coding model. Current [Artificial Analysis comparisons](https://artificialanalysis.ai/models/comparisons/gpt-6-1-terra-vs-mistral-large-4) put the released model well behind GPT-6.1 Terra on the broad Intelligence Index, 26 to 51, while pricing Large 4 lower per million API tokens. In the coding-agent harness comparison, [Mistral Vibe scores 48](https://artificialanalysis.ai/agents/coding-agents/comparisons/codex-vs-mistral-vibe) against 55 for Codex with GPT-6 Astra, while using more time and tokens per task in that test.
+
+That does not make the release disappointing.
+
+It clarifies the product.
+
+Large 4 is not a magic file that erases the closed frontier. It is a capable, commercially usable checkpoint that an organization can retain, inspect, customize, and deploy under its own operating policy, if it can afford and run the stack around it.
+
+The strategic advantage is continuity and control.
+
+The performance claim still has to survive the buyer's own evaluations.
+
+## Open is a release state, then an operating discipline
+
+The October test now has a real answer.
+
+Reflection shipped Beam. Mistral shipped Large 4. Meta shipped Muse Spark Open. Three Western labs have put large agentic checkpoints, documentation, and deployment paths into developers' hands in the same month.
+
+That strengthens the geopolitical argument in this article. The open-model ecosystem is no longer a story in which capable Chinese releases move and Western companies promise to catch up later.
+
+But the releases also make the practical argument stricter.
+
+Owning the weights means owning more responsibility:
+
+- the infrastructure and inference bill
+- the license interpretation
+- the safety policy after customization
+- the provenance of derivatives
+- the evaluation harness
+- the patch and version strategy
+- the evidence that local deployment really keeps data local
+
+The download button is the moment vendor permission ends.
+
+It is also the moment the operator's work begins.
 
 ## Update: open has a hardware bill
 

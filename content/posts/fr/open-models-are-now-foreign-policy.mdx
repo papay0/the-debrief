@@ -1,10 +1,116 @@
 ---
 title: "Les modèles ouverts sont maintenant de la géopolitique"
-date: "2026-10-06"
-description: "Meta a publié Muse Spark Open, un modèle de 816 milliards de paramètres qu'Apple parvient à exécuter localement sur plusieurs Mac Studio. Les poids sont réels. La facture hardware aussi. L'IA ouverte est désormais une stack de fichiers, de licences, de runtimes, de mémoire et de machines."
+date: "2026-10-30"
+description: "Beam et Mistral Large 4 ont transformé deux promesses occidentales en checkpoints téléchargeables. Les fichiers sont arrivés. La facture hardware, les limites de licence et une définition plus utile de la souveraineté IA aussi."
 tags: ["AI Policy", "Models", "Open Source", "AI Strategy"]
 draft: false
 ---
+
+## Mise à jour : le calendrier a rendu son verdict
+
+Plus tôt ce mois-ci, j'écrivais que le retour occidental dans la course aux modèles ouverts avait produit deux previews impressionnantes et deux promesses de livraison.
+
+Le calendrier serait le prochain benchmark.
+
+Les deux entreprises l'ont passé.
+
+Reflection a [publié les poids de Beam](https://reflection.ai/blog/beam-is-available) le 16 octobre sous licence Apache 2.0, avec des checkpoints BF16, FP8 et NVFP4, une fiche modèle, un rapport safety, des containers de déploiement et des intégrations avec plus de 40 partenaires d'infrastructure et de tooling agentique.
+
+Puis, le 29 octobre, Mistral a [publié les poids de Mistral Large 4](https://mistral.ai/news/mistral-large-4-oss/), trois semaines après l'ouverture du modèle via son API. La sortie téléchargeable comprend des checkpoints FP8 et NVFP4, une fenêtre de contexte d'un million de tokens, les appels d'outils, les sorties structurées, les images en entrée et, dès le lancement, le support de Transformers, vLLM, SGLang et llama.cpp.
+
+Cela compte davantage qu'un nouveau graphique de benchmark.
+
+Une roadmap est devenue un ensemble de fichiers.
+
+La promesse de souveraineté peut enfin être testée sans demander à l'une ou l'autre entreprise l'autorisation d'utiliser son API.
+
+## Publier les poids ne livre pas le data center
+
+Cette sortie rend aussi le mot « ouvert » moins romantique.
+
+Beam compte 501 milliards de paramètres au total, dont 23 milliards actifs par token. Mistral Large 4 en compte environ mille milliards, dont 49 milliards actifs. Les architectures sparse réduisent le travail effectué pour chaque token. Elles ne rendent pas le checkpoint complet léger.
+
+Le [guide de déploiement de Mistral Large 4](https://huggingface.co/blog/mistral-large4) publié par Hugging Face utilise huit GPU H200 pour sa recette d'endpoint FP8. La version NVFP4 occupe moins de mémoire, mais ses chemins de référence visent du hardware Blackwell. Des conversions GGUF communautaires sont apparues dès le premier jour, ce qui est utile, mais un fichier quantifié qui se charge n'est pas automatiquement un système de production capable de tenir les objectifs de latence, de contexte, de requêtes simultanées et de précision d'une équipe.
+
+Mistral a donc livré l'artefact.
+
+Il reste à l'acheteur de livrer l'infrastructure.
+
+Ce n'est pas un détail technique. C'est la frontière entre posséder un modèle et savoir l'exploiter.
+
+## Les deux licences définissent deux formes de contrôle
+
+Reflection a choisi Apache 2.0 pour Beam.
+
+Mistral a choisi sa nouvelle Mistral Ecosystem Open-Weight License, dérivée de la licence MIT. Elle autorise les usages commerciaux et non commerciaux, les modifications, le fine-tuning et la redistribution. Mais une entreprise qui exploite une offre de Model-as-a-Service doit obtenir une licence commerciale séparée auprès de Mistral avant d'utiliser Large 4 commercialement.
+
+Pour une entreprise qui exécute le modèle en interne, cette condition peut ne rien changer.
+
+Pour un cloud, un fournisseur d'inférence ou une startup dont le produit consiste à héberger l'accès à des modèles, elle compte immédiatement.
+
+Le checkpoint ne peut pas être coupé comme une clé API. Mais « nous avons téléchargé les poids » ne veut toujours pas dire « nous sommes libérés des conditions commerciales du fournisseur d'origine ».
+
+C'est pourquoi open-weight est une catégorie technique utile, mais une catégorie d'achat incomplète.
+
+La licence doit être évaluée avec autant de sérieux que la fiche modèle et le plan hardware.
+
+## Mistral a ouvert le modèle tout en gardant une voie plus risquée sous contrôle
+
+La cybersécurité rend cette limite encore plus nette.
+
+Mistral affirme que le checkpoint public a fortement progressé pendant les trois semaines séparant la preview de la sortie. L'entreprise annonce un score de 51 % sur l'Artificial Analysis Cyber Index et un taux moyen de refus de 96,6 % sur des requêtes cyber malveillantes issues de JailbreakBench, StrongREJECT et AgentHarm. Ce sont des résultats présentés par Mistral. Ils devront être vérifiés indépendamment, surtout lorsque des équipes modifieront le checkpoint ou sa politique système.
+
+La version cyber plus spécialisée n'est pas simplement posée à côté des poids publics.
+
+Mistral explique qu'Orange Cyberdefense et d'autres partenaires de conception reçoivent un accès en preview à une variante optimisée pour les tests d'intrusion, l'évaluation de vulnérabilités et le red teaming. Cet accès reste soumis à une vérification, à des contrats, à des environnements contrôlés et à un travail limité aux systèmes que le client possède ou qu'il est explicitement autorisé à tester.
+
+Cette séparation est raisonnable.
+
+Elle est aussi révélatrice.
+
+« Le modèle est ouvert » ne veut pas dire que chaque capacité ajoutée en post-training, chaque fine-tune privé ou chaque package opérationnel l'est aussi. Un lab peut publier un checkpoint général solide tout en gardant une variante verticale plus tranchante derrière une identité, une autorisation et du monitoring.
+
+Les poids ouverts suppriment le monopole du serving.
+
+Ils ne mettent pas fin à la segmentation produit.
+
+## Les chiffres indépendants rendent l'histoire moins spectaculaire et plus utile
+
+Mistral présente Large 4 comme le meilleur modèle open-weight pour le code. Les [comparaisons actuelles d'Artificial Analysis](https://artificialanalysis.ai/models/comparisons/gpt-6-1-terra-vs-mistral-large-4) placent le modèle publié loin derrière GPT-6.1 Terra sur l'Intelligence Index général, 26 contre 51, tout en affichant un prix par million de tokens API plus bas pour Large 4. Dans la comparaison des harnesses d'agents de code, [Mistral Vibe obtient 48](https://artificialanalysis.ai/agents/coding-agents/comparisons/codex-vs-mistral-vibe) contre 55 pour Codex avec GPT-6 Astra, avec davantage de temps et de tokens consommés par tâche dans ce test.
+
+Cela ne rend pas la sortie décevante.
+
+Cela clarifie le produit.
+
+Large 4 n'est pas un fichier magique qui efface l'avance des modèles frontier fermés. C'est un checkpoint capable et exploitable commercialement qu'une organisation peut conserver, inspecter, personnaliser et déployer selon sa propre politique opérationnelle, si elle sait financer et faire tourner la stack qui l'entoure.
+
+L'avantage stratégique tient à la continuité et au contrôle.
+
+La promesse de performance doit encore survivre aux évaluations propres de l'acheteur.
+
+## L'ouverture est un état de livraison, puis une discipline opérationnelle
+
+Le test d'octobre a maintenant une vraie réponse.
+
+Reflection a publié Beam. Mistral a publié Large 4. Meta a publié Muse Spark Open. Trois labs occidentaux ont placé de gros checkpoints agentiques, leur documentation et des chemins de déploiement entre les mains des développeurs au cours du même mois.
+
+Cela renforce l'argument géopolitique de cet article. L'écosystème ouvert n'est plus seulement une histoire dans laquelle les modèles chinois capables avancent pendant que les entreprises occidentales promettent de les rattraper plus tard.
+
+Mais ces sorties rendent aussi l'argument pratique plus exigeant.
+
+Posséder les poids, c'est assumer davantage de responsabilités :
+
+- l'infrastructure et la facture d'inférence
+- l'interprétation de la licence
+- la politique safety après personnalisation
+- la provenance des dérivés
+- le harness d'évaluation
+- la stratégie de versioning et de correctifs
+- les preuves qu'un déploiement local garde réellement les données en local
+
+Le bouton de téléchargement marque le moment où l'autorisation du fournisseur cesse.
+
+C'est aussi le moment où le travail de l'opérateur commence.
 
 ## Mise à jour : l'ouverture a une facture hardware
 
