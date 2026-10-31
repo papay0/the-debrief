@@ -1,7 +1,7 @@
 ---
 title: "Claude Science parle de workflow, pas de magie"
-date: "2026-09-26"
-description: "Des agents Claude ont repéré un motif réellement intéressant dans l'ADN de virus. Des humains ont quand même dû choisir le problème, mener les expériences, interpréter le résultat et reconnaître qu'ils ignorent encore la fonction du système. Voilà à quoi ressemble la science assistée par IA."
+date: "2026-10-31"
+description: "GPT-6 Rosalind utilise exactement les mêmes poids que GPT-6 Astra. Sa spécialisation vient du déploiement : règles de refus différentes, accès de confiance, outils scientifiques, surveillance et revue humaine obligatoire. Le workflow est le produit."
 tags: ["AI Agents", "Anthropic", "Science", "AI Workflows"]
 draft: false
 ---
@@ -33,6 +33,90 @@ Le modèle compte toujours.
 Mais le produit devient le modèle plus les outils, les données, le calcul, les permissions, les traces d'audit, et une interface spécialisée qui comprend à quoi ressemble le vrai travail.
 
 Très glamour. Nous avons réinventé le cahier de labo avec des sous-agents.
+
+## Mise à jour : GPT-6 Rosalind est un déploiement, pas un nouveau cerveau
+
+OpenAI vient de rendre l'argument du workflow encore plus clair, mais en partant de l'autre direction.
+
+Le 30 octobre, l'entreprise a [lancé GPT-6 Rosalind](https://developers.openai.com/api/docs/changelog), son nouveau modèle pour la biologie avancée, la découverte de médicaments et la médecine translationnelle. La présentation promet un raisonnement biologique spécialisé et l'usage d'outils scientifiques.
+
+Dit comme ça, on imagine un nouveau modèle entraîné pour la biologie.
+
+L'[addendum à la fiche système](https://deploymentsafety.openai.com/gpt-rosalind-6) raconte quelque chose de plus intéressant : GPT-6 Rosalind utilise exactement les mêmes poids que GPT-6 Astra. OpenAI n'a ajouté aucune donnée d'entraînement et n'a effectué aucun post-entraînement supplémentaire pour cette version.
+
+Alors, où se trouve le produit spécialisé ?
+
+Dans le déploiement autour du modèle.
+
+Rosalind peut se montrer plus utile sur des questions légitimes de biologie à double usage que la version grand public d'Astra refuserait. En échange, OpenAI le place derrière un programme d'accès de confiance, examine la mission et la gouvernance du candidat, limite l'usage aux personnes autorisées, surveille les usages, conserve des interdictions strictes sur la création d'armes biologiques, et impose une revue par une personne qualifiée avant qu'une réponse influence une expérience, une publication ou une décision importante.
+
+Le modèle n'est pas devenu biologiste pendant la nuit.
+
+Le régime d'exploitation a changé.
+
+## Un checkpoint, deux périmètres d'autorisation
+
+La distinction compte, parce que les entreprises d'IA nous poussent à considérer chaque nom de modèle comme une intelligence différente.
+
+Parfois, c'est vrai.
+
+Ici, OpenAI dit explicitement que ce n'est pas le cas.
+
+GPT-6 Astra et GPT-6 Rosalind partagent le même checkpoint. Rosalind reçoit un périmètre d'autorisation différent pour une catégorie étroite d'utilisateurs et de travaux. Il peut répondre à des questions biologiques plus avancées, mais uniquement dans un déploiement avec contrôle d'identité, principe du moindre privilège, procédures contre le risque interne, surveillance, sanctions, contrats et supervision humaine.
+
+OpenAI classe cette version au niveau High dans le domaine biologique et chimique, sous son seuil Critical. C'est l'évaluation de l'entreprise, fondée sur ses propres tests. Ce n'est pas une démonstration indépendante que le modèle maîtrise de façon fiable toutes les formes de recherche biologique.
+
+Mais le design du produit est révélateur avant même que le débat sur les benchmarks soit tranché.
+
+Les capacités de pointe deviennent configurables.
+
+Le même modèle sous-jacent peut être vendu comme assistant généraliste dans un couloir et comme système scientifique plus puissant dans un autre. La différence ne tient pas seulement à ce que savent les poids. Elle tient à ce que le déploiement autorise le modèle à répondre, aux outils qu'il peut utiliser, aux personnes qui peuvent y accéder, à ce qui est journalisé, et à la personne qui reste responsable du résultat.
+
+C'est une définition beaucoup plus utile d'un produit IA vertical que « nous avons demandé au modèle de parler comme un scientifique ».
+
+## La procédure d'accès fait partie de l'interface
+
+Les détails rendent le point encore plus clair.
+
+La [documentation de configuration](https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research) d'OpenAI indique que GPT-6 Rosalind Research est disponible pour les organisations approuvées dans Work et Codex, et dans l'API uniquement après une autorisation séparée. Il n'est pas disponible dans l'onglet Chat classique. Installer le plugin Life Sciences Research ne donne pas accès au modèle. L'API est réservée aux outils et workflows de recherche internes approuvés, pas aux produits destinés aux clients ni aux applications commerciales externes.
+
+Autrement dit, le produit n'est pas un identifiant de modèle qui attend un développeur malin.
+
+C'est une relation institutionnelle.
+
+Une organisation dépose une demande. OpenAI examine le cas d'usage, la sécurité et la gouvernance. Un administrateur active des utilisateurs précis. Ces personnes travaillent dans les interfaces autorisées. L'organisation doit contrôler les accès et placer des humains qualifiés entre la réponse du modèle et les décisions scientifiques réelles.
+
+Cette friction n'est pas séparée de GPT-6 Rosalind.
+
+C'est GPT-6 Rosalind.
+
+## Ce que les équipes scientifiques doivent évaluer
+
+La question d'achat change.
+
+Ne demandez pas seulement si Rosalind bat Astra, Claude ou un modèle open source spécialisé sur un benchmark de biologie.
+
+Demandez ce que le système entier rend possible et inspectable :
+
+- Quels outils et bases de données scientifiques peut-il utiliser ?
+- À quelles questions à double usage répond-il, et où continue-t-il de refuser ?
+- Les administrateurs peuvent-ils limiter l'accès aux personnes qui en ont réellement besoin ?
+- Les prompts, appels d'outils, réponses et décisions prises ensuite sont-ils auditables ?
+- Qui relit le résultat avant de modifier une expérience ?
+- L'organisation peut-elle reproduire l'analyse sans faire confiance à une réponse bien présentée ?
+- Que se passe-t-il quand le modèle est utile, se trompe, et reste parfaitement conforme aux règles ?
+
+OpenAI n'a pas publié assez d'éléments pour répondre de l'extérieur à toutes ces questions. La fiche système présente des évaluations du fournisseur, et certains détails du red teaming restent privés. Cette version mérite d'être testée par de vraies équipes de recherche, pas crue automatiquement parce que le modèle porte le nom d'une scientifique.
+
+Mais l'architecture est déjà le signal.
+
+Claude Science part d'un modèle généraliste et construit autour de lui un environnement scientifique. GPT-6 Rosalind part des mêmes poids qu'un modèle généraliste et modifie l'accès, les limites de comportement, les outils et les garde-fous qui les entourent.
+
+Ces stratégies semblent différentes dans un billet de lancement.
+
+Elles aboutissent à la même conclusion.
+
+Le vertical, c'est le workflow.
 
 ## Mise à jour : Claude a trouvé quelque chose. La biologie garde le dernier mot
 
