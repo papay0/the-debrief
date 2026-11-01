@@ -1,0 +1,160 @@
+---
+title: "The Web Has One AI Training Switch. It Is Not a Lock"
+date: "2026-11-01"
+description: "A new robots.txt signal gives websites one shared way to reject generative AI training. It is useful, narrow, voluntary, unfinished, and separate from crawling, search, grounding, and enforcement."
+tags: ["AI Training", "OpenAI", "Google", "Anthropic", "Web Standards", "Copyright"]
+draft: false
+---
+
+## The Short Version
+
+The web is getting one switch for AI training.
+
+Not a lock.
+
+On October 30, an [Internet-Draft](https://datatracker.ietf.org/doc/draft-kelley-aipref-training-preference-signal/) proposed a shared policy token that websites can place in `robots.txt`:
+
+```text
+User-Agent: __usage_ai-training
+Disallow: /
+Allow: /press-kit/
+```
+
+That says the site prefers its content not be used to train generative AI models, except for material under `/press-kit/`.
+
+OpenAI [says it will honor the signal](https://openai.com/index/helping-websites-express-ai-training-preferences/) in the coming months. Google [plans support in early 2027](https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers). The draft was written by Kevin Kelley of Anthropic and is being discussed around the IETF's AI Preferences work.
+
+This is useful.
+
+Website operators currently maintain a small museum of provider-specific controls: GPTBot, Google-Extended, ClaudeBot, and whatever arrives next. One shared expression is simpler.
+
+But the announcement is easy to overread.
+
+The signal is not yet an IETF standard. It is not implemented everywhere. It does not block crawling. It does not necessarily cover AI search, retrieval, grounding, ranking, or classification. It does not erase data already used. It does not force a provider to comply.
+
+It is a common sentence for saying no.
+
+The enforcement still lives somewhere else.
+
+## One token is better than crawler whack-a-mole
+
+The practical improvement is real.
+
+Until now, a publisher that wanted search visibility but not model training had to understand each company's crawler taxonomy. [OpenAI separates](https://developers.openai.com/api/docs/bots) GPTBot from OAI-SearchBot and user-directed retrieval. [Anthropic separates](https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler) ClaudeBot, Claude-SearchBot, and Claude-User. Google uses Google-Extended as a control token for some Gemini training and grounding while Googlebot still handles search crawling.
+
+Those distinctions are sensible.
+
+They are also tedious.
+
+Every provider can add another bot, rename a product, split one purpose into three, or interpret a generic rule differently. Website operators have to track the changes and update files that were originally designed to tell search-engine crawlers which paths they could fetch.
+
+The proposed `__usage_ai-training` token creates one cross-vendor expression. It reuses the existing `Allow` and `Disallow` path rules, including their longest-match behavior. A site can reject training broadly while allowing a press kit, public dataset, or licensed section.
+
+That is a good standards instinct.
+
+Make the common choice easy.
+
+## Training is narrower than crawling
+
+The most important line in the draft is not the syntax.
+
+It is the scope.
+
+The draft defines AI training as using an asset to modify the learned parameters of a generative model. It explicitly excludes models used exclusively for classification, ranking, or scoring.
+
+It also says the policy token is independent from crawler rules and is not a directive for crawling behavior.
+
+That means a provider may still fetch a page for a purpose outside generative-model training. Search indexing, user-directed retrieval, AI grounding, safety analysis, and other uses may depend on different controls and provider definitions.
+
+Google makes the boundary especially visible. Its current Google-Extended token covers both training future Gemini models and grounding Gemini with Google Search. Google's note about the new shared signal calls it a training preference. Those are not automatically the same scope.
+
+So do not delete provider-specific rules because a new universal token exists on paper.
+
+The shared signal answers one question:
+
+May this content be used to change the parameters of a generative model?
+
+It does not answer every question about how AI systems may access or use the page.
+
+## The switch is not live everywhere
+
+There is another important timing detail.
+
+OpenAI says it aims to implement the signal in the coming months.
+
+Google says early 2027.
+
+The draft itself is an active individual Internet-Draft, not an RFC. It can be updated, replaced, or abandoned. Its own status language calls it work in progress.
+
+That does not make the effort fake.
+
+Standards often begin as drafts and become useful because major implementers converge before the paperwork is final.
+
+It does mean website operators should treat the signal as additive for now.
+
+Keep the current controls. Add the shared preference when it matches your policy. Watch implementation dates. Test what providers actually document and do.
+
+A future commitment is not current enforcement.
+
+## A preference is not permission infrastructure
+
+The draft is careful to call this a preference signal.
+
+That wording matters.
+
+`robots.txt` is a public declaration consumed by systems that choose to read and honor it. It is not authentication. It is not encryption. It does not stop a scraper from downloading a page. It does not create a licensing agreement or a payment rail. The draft even notes that private agreements may override the public preference.
+
+If the token is absent, the draft says no preference has been expressed.
+
+That is not the same as informed consent.
+
+It is also not retroactive deletion. The draft binds the relevant preference to the `robots.txt` file in effect when the asset is retrieved. Nothing in it promises to remove a work from an existing dataset or untrain a model.
+
+This is why the signal is useful but insufficient.
+
+It reduces ambiguity for compliant providers.
+
+It does not solve the harder disputes over copyright, lawful acquisition, contracts, provenance, past training, model memorization, or what happens when a crawler ignores the rule.
+
+The web finally has a more legible sign.
+
+It still needs law, contracts, audits, and technical enforcement behind the sign.
+
+## What site owners should do now
+
+Do not wait for a perfect standard, and do not pretend the draft already is one.
+
+Start by separating four policies that are often collapsed together:
+
+- whether bots may crawl the site
+- whether content may appear in search
+- whether AI products may retrieve or ground answers in it
+- whether content may train generative models
+
+Then document the choice for each provider and content category.
+
+Keep existing crawler-specific rules until providers confirm their implementations. Add the shared token if the training preference is clear. Use path exceptions deliberately. Preserve a dated history of your `robots.txt` changes. Pair the signal with contracts and licenses where the content is commercially important. Monitor logs for bots that ignore declared rules. Give legal and publishing teams one owner for the policy instead of letting SEO, security, and licensing each maintain a different answer.
+
+Most importantly, do not confuse visibility with permission.
+
+A page can be public and still carry a stated use preference.
+
+A crawler can be technically able to fetch it and still be contractually or legally restricted.
+
+A provider can promise compliance and still need verification.
+
+## The bottom line
+
+The shared AI-training signal is a good piece of web plumbing.
+
+It gives publishers one simple way to express a training preference across participating providers. It preserves path-level choices. It reduces the need to maintain a growing list of model-company tokens.
+
+But it is not a universal opt-out button yet.
+
+The draft is unfinished. Implementations are pending. Its scope is training, not every AI use. It does not block crawling, remove old data, settle copyright, or enforce itself.
+
+The web has spent three years arguing over whether public content means free training data.
+
+One shared signal will not settle that argument.
+
+It will make it harder to claim the website never answered.

@@ -1,0 +1,160 @@
+---
+title: "Le web a un bouton pour l'entraînement IA. Pas un verrou"
+date: "2026-11-01"
+description: "Un nouveau signal robots.txt offre aux sites une manière commune de refuser l'entraînement des IA génératives. Il est utile, étroit, volontaire, inachevé et séparé du crawl, de la recherche, du grounding et de l'application réelle."
+tags: ["Entraînement IA", "OpenAI", "Google", "Anthropic", "Standards web", "Copyright"]
+draft: false
+---
+
+## La version courte
+
+Le web va recevoir un bouton commun pour l'entraînement IA.
+
+Pas un verrou.
+
+Le 30 octobre, un [Internet-Draft](https://datatracker.ietf.org/doc/draft-kelley-aipref-training-preference-signal/) a proposé un token commun que les sites peuvent placer dans leur fichier `robots.txt` :
+
+```text
+User-Agent: __usage_ai-training
+Disallow: /
+Allow: /press-kit/
+```
+
+Cela signifie que le site préfère que son contenu ne serve pas à entraîner des modèles génératifs, à l'exception des éléments placés sous `/press-kit/`.
+
+OpenAI [dit vouloir respecter le signal](https://openai.com/index/helping-websites-express-ai-training-preferences/) dans les prochains mois. Google [prévoit de le prendre en charge début 2027](https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers). Le texte a été rédigé par Kevin Kelley d'Anthropic et s'inscrit dans les discussions autour du groupe AI Preferences de l'IETF.
+
+C'est utile.
+
+Les propriétaires de sites entretiennent aujourd'hui un petit musée de contrôles propres à chaque fournisseur : GPTBot, Google-Extended, ClaudeBot, puis le prochain nom qui arrivera. Une expression commune simplifie le travail.
+
+Mais il est facile de surinterpréter l'annonce.
+
+Le signal n'est pas encore un standard IETF. Il n'est pas déployé partout. Il ne bloque pas le crawl. Il ne couvre pas nécessairement la recherche IA, la récupération de pages, le grounding, le classement ou la classification. Il n'efface pas les données déjà utilisées. Il ne force pas un fournisseur à obéir.
+
+C'est une phrase commune pour dire non.
+
+L'application réelle se trouve encore ailleurs.
+
+## Un token vaut mieux qu'une chasse infinie aux crawlers
+
+Le progrès pratique est réel.
+
+Jusqu'ici, un éditeur qui voulait rester visible dans les moteurs de recherche sans contribuer à l'entraînement devait comprendre la taxonomie de chaque entreprise. [OpenAI sépare](https://developers.openai.com/api/docs/bots) GPTBot d'OAI-SearchBot et de la récupération demandée par un utilisateur. [Anthropic distingue](https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler) ClaudeBot, Claude-SearchBot et Claude-User. Google utilise Google-Extended comme token de contrôle pour certains usages d'entraînement et de grounding de Gemini, tandis que Googlebot continue de crawler pour la recherche.
+
+Ces distinctions ont du sens.
+
+Elles sont aussi pénibles à suivre.
+
+Chaque fournisseur peut ajouter un robot, renommer un produit, séparer une finalité en trois ou interpréter différemment une règle générique. Les propriétaires de sites doivent suivre les changements et modifier des fichiers initialement conçus pour indiquer aux moteurs de recherche quels chemins ils pouvaient explorer.
+
+Le token `__usage_ai-training` crée une expression commune à plusieurs fournisseurs. Il réutilise les règles `Allow` et `Disallow`, avec la même logique de priorité du chemin le plus précis. Un site peut refuser globalement l'entraînement tout en autorisant un dossier presse, un jeu de données public ou une section licenciée.
+
+C'est un bon réflexe de standardisation.
+
+Il faut rendre simple le choix le plus courant.
+
+## L'entraînement est plus étroit que le crawl
+
+La ligne la plus importante du draft n'est pas la syntaxe.
+
+C'est son périmètre.
+
+Le texte définit l'entraînement IA comme l'usage d'un contenu pour modifier les paramètres appris d'un modèle génératif. Il exclut explicitement les modèles utilisés uniquement pour la classification, le classement ou le scoring.
+
+Il précise aussi que ce token est indépendant des règles de crawl et qu'il ne constitue pas une instruction de comportement pour les crawlers.
+
+Un fournisseur peut donc encore récupérer une page pour un usage extérieur à l'entraînement d'un modèle génératif. L'indexation, la récupération à la demande d'un utilisateur, le grounding, l'analyse de sécurité et d'autres usages peuvent dépendre de contrôles et de définitions différents.
+
+Google rend la frontière particulièrement visible. Son token actuel Google-Extended couvre à la fois l'entraînement des futures générations de Gemini et le grounding de Gemini avec Google Search. La note de Google sur le nouveau signal commun parle d'une préférence d'entraînement. Ces périmètres ne sont pas automatiquement identiques.
+
+Ne supprimez donc pas vos règles propres à chaque fournisseur simplement parce qu'un token universel existe sur le papier.
+
+Le signal commun répond à une question :
+
+Ce contenu peut-il servir à modifier les paramètres d'un modèle génératif ?
+
+Il ne répond pas à toutes les questions sur la manière dont une IA peut accéder à la page ou l'utiliser.
+
+## Le bouton ne fonctionne pas encore partout
+
+Le calendrier apporte une autre nuance importante.
+
+OpenAI dit viser une mise en oeuvre dans les prochains mois.
+
+Google parle du début de l'année 2027.
+
+Le texte est un Internet-Draft individuel actif, pas un RFC. Il peut être modifié, remplacé ou abandonné. Son propre statut le décrit comme un travail en cours.
+
+Cela ne rend pas l'effort factice.
+
+Les standards commencent souvent par des drafts et deviennent utiles parce que les grands acteurs convergent avant la fin de la procédure.
+
+Mais les propriétaires de sites doivent, pour l'instant, traiter ce signal comme un ajout.
+
+Gardez les contrôles actuels. Ajoutez la préférence commune si elle correspond à votre politique. Suivez les dates de déploiement. Vérifiez ce que les fournisseurs documentent et font réellement.
+
+Une promesse future n'est pas une protection actuelle.
+
+## Une préférence n'est pas une infrastructure de permission
+
+Le draft prend soin de parler d'un signal de préférence.
+
+Le choix des mots compte.
+
+`robots.txt` est une déclaration publique lue par les systèmes qui choisissent de la consulter et de la respecter. Ce n'est ni une authentification, ni un chiffrement. Le fichier n'empêche pas un scraper de télécharger une page. Il ne crée ni contrat de licence ni mécanisme de paiement. Le texte note même qu'un accord privé peut remplacer la préférence publique.
+
+Si le token est absent, le draft considère qu'aucune préférence n'a été exprimée.
+
+Ce n'est pas la même chose qu'un consentement éclairé.
+
+Ce n'est pas non plus une suppression rétroactive. Le draft associe la préférence au fichier `robots.txt` en vigueur au moment où le contenu est récupéré. Rien ne promet de retirer une oeuvre d'un jeu de données existant ou d'annuler un entraînement déjà effectué.
+
+Voilà pourquoi le signal est utile mais insuffisant.
+
+Il réduit l'ambiguïté pour les fournisseurs qui le respectent.
+
+Il ne règle pas les conflits plus difficiles autour du droit d'auteur, de l'acquisition licite, des contrats, de la provenance, des entraînements passés, de la mémorisation ou du sort réservé aux crawlers qui ignorent la règle.
+
+Le web possède enfin un panneau plus lisible.
+
+Il faut encore du droit, des contrats, des audits et des moyens techniques derrière ce panneau.
+
+## Ce que les propriétaires de sites doivent faire maintenant
+
+N'attendez pas un standard parfait, mais ne prétendez pas que ce draft en est déjà un.
+
+Commencez par séparer quatre politiques trop souvent confondues :
+
+- l'autorisation donnée aux robots de crawler le site
+- l'apparition du contenu dans les résultats de recherche
+- la récupération du contenu ou son usage pour le grounding des réponses IA
+- l'entraînement de modèles génératifs avec ce contenu
+
+Documentez ensuite le choix pour chaque fournisseur et chaque catégorie de contenu.
+
+Gardez les règles propres aux crawlers tant que les fournisseurs n'ont pas confirmé leur mise en oeuvre. Ajoutez le token commun si votre préférence d'entraînement est claire. Utilisez les exceptions de chemin volontairement. Conservez un historique daté des modifications de `robots.txt`. Associez le signal à des contrats et licences quand le contenu a une valeur commerciale. Surveillez les logs pour repérer les robots qui ignorent les règles déclarées. Donnez la responsabilité de cette politique à une seule personne plutôt que de laisser les équipes SEO, sécurité et licences maintenir trois réponses différentes.
+
+Surtout, ne confondez pas visibilité et permission.
+
+Une page peut être publique et porter une préférence d'usage explicite.
+
+Un crawler peut être techniquement capable de la récupérer tout en restant limité par un contrat ou par la loi.
+
+Un fournisseur peut promettre de respecter le signal et avoir encore besoin d'être vérifié.
+
+## Le fond du sujet
+
+Le signal commun pour l'entraînement IA est un bon morceau de plomberie web.
+
+Il donne aux éditeurs une façon simple d'exprimer une préférence auprès des fournisseurs participants. Il conserve les choix par chemin. Il évite de maintenir une liste toujours plus longue de tokens propres aux entreprises de modèles.
+
+Mais ce n'est pas encore un bouton universel de refus.
+
+Le draft est inachevé. Les implémentations arrivent plus tard. Son périmètre couvre l'entraînement, pas tous les usages IA. Il ne bloque pas le crawl, ne retire pas les anciennes données, ne tranche pas le droit d'auteur et ne se fait pas respecter tout seul.
+
+Depuis trois ans, le web se demande si un contenu public devient automatiquement une donnée d'entraînement gratuite.
+
+Un signal commun ne réglera pas ce débat.
+
+Il rendra seulement plus difficile de prétendre que le site n'avait jamais répondu.
