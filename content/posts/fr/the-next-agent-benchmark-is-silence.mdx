@@ -1,0 +1,174 @@
+---
+title: "Le prochain benchmark agentique, c'est le silence"
+date: "2026-11-02"
+description: "StreamVibe teste un assistant plus difficile à construire : il observe une tâche, suit une intention qui change et décide quand ne pas interrompre. Ses évaluations continues montrent pourquoi une bonne réponse isolée ne suffit pas à produire un agent proactif fiable."
+tags: ["AI Agents", "Google", "IA multimodale", "Évaluation IA", "Stratégie produit"]
+draft: false
+---
+
+## La version courte
+
+La plupart des benchmarks IA récompensent le modèle quand il produit une réponse.
+
+La prochaine génération d'agents doit aussi être récompensée quand elle se tait.
+
+Des chercheurs de Google et de six universités ont publié [StreamVibe](https://arxiv.org/abs/2610.34662), à la fois benchmark, modèle et système de mémoire pour agents vidéo proactifs. Ces systèmes observent une personne qui cuisine, monte un objet ou utilise un logiciel, puis décident chaque seconde s'ils doivent aider ou rester silencieux.
+
+Cela ressemble à un petit détail d'interface.
+
+C'est le produit.
+
+Le benchmark réunit 4 100 exemples d'évaluation, 183,4 heures de vidéo et 20 546 moments annotés où une intervention peut être utile. Certaines demandes sont explicites : préviens-moi quand l'eau bout. D'autres sont implicites : aide-moi si je bloque. D'autres encore changent pendant la tâche : arrête les points d'avancement et dis-moi seulement quand je fais une erreur.
+
+Les chercheurs rapportent que leur modèle entraîné améliore le timing et la qualité des réponses face à plusieurs baselines, et qu'un système séparé de suivi d'état réduit les réponses périmées ou répétitives.
+
+Le résultat le plus important est moins flatteur.
+
+Des modèles qui semblent compétents quand on les teste sur des instants isolés se dégradent lorsqu'ils doivent parcourir une vidéo entière en utilisant leurs propres réponses précédentes comme historique. Le timing baisse avec la longueur de l'interaction. Les intentions non dites ou changeantes restent particulièrement difficiles. Une meilleure couverture produit souvent davantage d'interruptions inutiles.
+
+C'est le vrai problème des agents proactifs.
+
+Un agent ne devient pas utile en répondant plus souvent.
+
+Il devient utile quand il sait si sa réponse mérite d'interrompre l'utilisateur.
+
+## L'action la plus difficile, c'est de ne rien faire
+
+Les assistants réactifs bénéficient d'un contrat confortable.
+
+L'utilisateur demande. Le modèle répond.
+
+Même quand la réponse est mauvaise, le système sait au moins qu'on l'a invité à parler.
+
+Un agent proactif perd cette certitude. Une demande comme « aide-moi à finir cette tâche » ne définit aucun déclencheur. L'agent doit deviner si l'utilisateur est bloqué, si l'étape actuelle est terminée, si un conseil précédent reste valable et si parler maintenant améliorera vraiment le résultat.
+
+Le silence devient une action.
+
+Parler trop tôt distrait. Parler trop tard ne sert à rien. Répéter un conseil donne l'impression que le produit est cassé. Continuer à suivre une ancienne consigne après un changement de direction devient franchement agaçant. Rester silencieux pendant une vraie erreur fait échouer le produit au moment exact où il devait aider.
+
+Ce problème ne concerne pas seulement les assistants vidéo.
+
+Il vaut pour les agents de code qui surveillent un repo, les agents de sécurité qui suivent une activité, les agents bureautiques qui accompagnent un projet, les assistants intégrés à des lunettes ou à d'autres appareils portés qui voient le monde physique et les systèmes de support qui décident quand escalader.
+
+Chaque produit proactif fait deux prédictions :
+
+De quoi l'utilisateur a-t-il besoin ?
+
+Et est-ce le bon moment pour intervenir ?
+
+La plupart des démos agentiques insistent sur la première.
+
+La seconde détermine si les gens garderont la fonction activée.
+
+## Les tests point par point flattent l'agent
+
+StreamVibe distingue utilement l'évaluation ponctuelle de l'évaluation en trajectoire.
+
+Dans un test ponctuel, le modèle est placé près d'un moment où une aide pourrait être utile et doit décider s'il faut répondre. L'historique peut lui être fourni. Les erreurs précédentes ne contaminent pas nécessairement la décision suivante.
+
+C'est pratique pour isoler une capacité.
+
+C'est aussi une version très généreuse du produit.
+
+Dans le test en trajectoire, le modèle parcourt tout le flux. Il doit vivre avec ce qu'il a déjà dit, suivre les demandes encore actives, mettre à jour l'état de la tâche et éviter de se répéter. Une réponse prématurée modifie l'historique utilisé pour les décisions suivantes. Une mise à jour ratée peut maintenir en vie une intention devenue obsolète.
+
+Les auteurs indiquent que la qualité du timing baisse régulièrement avec la longueur de l'interaction. Leur analyse montre aussi que les agents peinent à arbitrer entre couverture et faux déclenchements : les systèmes qui captent davantage de moments utiles interrompent souvent davantage quand ils devraient se taire.
+
+[L'analyse de The Decoder](https://the-decoder.com/google-wants-video-ai-to-understand-what-people-need-as-they-workgoogle-researchers-are-teaching-a-video-assistant-when-to-offer-help/) illustre brutalement cet écart. Quand les modèles doivent parcourir des vidéos entières en s'appuyant sur leur propre historique, une métrique de contenu baisse de 61,5 % au maximum par rapport au cadre d'évaluation plus propre.
+
+C'est pour cela que les benchmarks agentiques à un seul tour peuvent donner une fausse confiance.
+
+Une bonne décision locale ne garantit pas un comportement stable.
+
+L'agent doit survivre à son propre passé.
+
+## Le système autour du modèle fait partie de l'intelligence
+
+Les chercheurs n'ont pas essayé de résoudre tout le problème dans un seul modèle.
+
+StreamVibe-Harness conserve les demandes actives, l'avancement de la tâche, les réponses précédentes et l'historique pertinent. Le modèle décide toujours quand et quoi dire, mais il reçoit une représentation plus propre de l'état de l'interaction.
+
+Cette séparation compte.
+
+Un long contexte n'est pas un état à jour. Une transcription peut contenir toutes les consignes précédentes sans indiquer clairement laquelle a été remplacée, quelle étape est terminée et quelle promesse reste ouverte.
+
+Le papier rapporte que le harness réduit les réponses inutiles et améliore la qualité du contenu dans la plupart des cas, avec les gains les plus nets quand l'intention change pendant la tâche.
+
+C'est une autre correction utile à la course aux modèles.
+
+Le produit proactif n'est pas seulement le modèle visuel.
+
+C'est la machine à états autour du modèle.
+
+Les équipes ont besoin de représentations explicites pour les objectifs actifs, les consignes remplacées, les étapes terminées, les demandes non résolues, le niveau de confiance et les conditions qui autorisent une interruption. Sinon, l'agent relit sans cesse une conversation et devine quels morceaux comptent encore.
+
+Très intelligent.
+
+L'assistant vient d'inventer l'amnésie de réunion à la vitesse machine.
+
+## C'est un résultat de recherche, pas un assistant terminé
+
+Le papier est prometteur.
+
+Ce n'est ni un lancement produit ni une validation indépendante.
+
+Les auteurs ont construit le benchmark, entraîné le modèle et publié les gains. Gemini 3.8 Flash a proposé les moments où une intervention pouvait être utile avant leur validation par quatre évaluateurs, tandis que Claude Sonnet 4.6 a noté la qualité des réponses dans l'évaluation principale. Le benchmark est construit avec soin, mais la génération d'annotations et le jugement par des modèles font toujours partie de la chaîne de mesure.
+
+Les modèles propriétaires ne figurent pas non plus dans la comparaison complète en trajectoire du papier, ce qui limite la conclusion la plus propre entre systèmes. Les gains annoncés de 10,7 % pour le modèle et de 12,3 % pour le harness restent des résultats rapportés par les auteurs dans ce cadre d'évaluation, pas des performances de production reproduites indépendamment.
+
+La [page du projet](https://stream-vibe.github.io/) indique que le code et la publication sur Hugging Face arriveront prochainement et restent soumis à une validation interne. Au moment d'écrire ces lignes, les artefacts publics sont le papier et le site de démonstration, pas un système publié que des équipes externes peuvent exécuter de bout en bout.
+
+Les auteurs reconnaissent eux-mêmes la frontière principale : les interactions réelles peuvent contenir des changements d'intention plus riches et un lien plus étroit entre les besoins de l'utilisateur et l'évolution de l'environnement.
+
+Autrement dit, le test contrôlé est déjà difficile.
+
+La réalité sera moins polie.
+
+## Ce que les équipes devraient mesurer
+
+Si vous construisez un agent proactif, ne mesurez pas seulement sa capacité à produire la bonne réponse après une demande.
+
+Mesurez sa politique d'intervention.
+
+Au minimum, suivez :
+
+- les interventions utiles détectées
+- les interruptions inutiles
+- les moments importants ratés
+- les réponses trop tôt ou trop tard
+- les conseils répétés ou périmés
+- le comportement après une modification de la demande
+- la performance sur des sessions complètes, pas sur des instants échantillonnés
+- la dégradation quand la session s'allonge
+- l'effet réel d'une intervention sur le résultat de l'utilisateur
+- la fréquence à laquelle les utilisateurs coupent, désactivent ou corrigent l'assistant
+
+Testez avec l'historique produit par l'agent lui-même, pas seulement avec une transcription propre assemblée par l'évaluateur. Incluez des utilisateurs qui changent d'avis, abandonnent une tâche, ajoutent un second objectif ou font quelque chose que le benchmark n'avait pas prévu.
+
+Et choisissez une valeur par défaut conservatrice.
+
+Pour un assistant proactif, les faux positifs ne sont pas un simple bruit statistique. C'est une dette produit prélevée directement sur l'attention de l'utilisateur.
+
+Le modèle doit gagner le droit d'interrompre.
+
+## Le fond du sujet
+
+StreamVibe est utile parce qu'il mesure une dimension du comportement agentique que les benchmarks habituels ignorent presque toujours.
+
+Pas ce que le modèle sait.
+
+Pas seulement ce qu'il peut faire.
+
+Le moment où il doit entrer dans la situation.
+
+La recherche montre pourquoi cette question ne se réduit pas à un score de réponse. L'intention peut rester implicite. Les consignes peuvent changer. L'état peut dériver. Les réponses précédentes peuvent empoisonner les décisions suivantes. Un modèle performant sur des instants isolés peut devenir peu fiable le long d'une vraie trajectoire.
+
+Le prochain agent personnel sera toujours à une seconde de dire quelque chose.
+
+Cela ne le rend pas utile.
+
+Le meilleur système proactif sera peut-être celui qui comprend davantage, suit davantage et parle moins.
+
+Le silence n'est pas une absence d'intelligence.
+
+C'est aussi une décision.

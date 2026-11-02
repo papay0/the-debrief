@@ -1,7 +1,7 @@
 ---
 title: "Free AI Still Has a Bill"
-date: "2026-09-23"
-description: "Anthropic and OpenAI just pushed frontier-class models down the price curve on the same day. The important number is still not the token price. It is the cost of a completed workflow after context, retries, tools, latency, and human review."
+date: "2026-11-02"
+description: "OpenAI is merging ChatGPT and Codex into one token allowance. The subscription is becoming a compute budget across chat and agent work, making the meter part of the product."
 tags: ["AI Strategy", "Startups", "Enterprise AI", "AI Agents", "AI Pricing"]
 draft: false
 ---
@@ -35,6 +35,50 @@ The dangerous part is not that AI companies charge money.
 Of course they do.
 
 The dangerous part is that the real bill usually arrives after the workflow has already changed.
+
+## Update: the subscription is becoming a compute budget
+
+OpenAI is making the meter much more explicit.
+
+Starting in December, the company [says](https://help.openai.com/en/articles/20001625-understanding-chatgpt-and-codex-usage-limits) Plus, Pro, and Business plans will share one usage allowance across ChatGPT and Codex as the agentic capabilities of Work move into the main ChatGPT experience.
+
+The allowance will be measured in tokens.
+
+Advanced models and complex tasks will consume more of it. Instant chat will not consume the shared allowance. Users will see the combined balance and reset time in Settings. When the pool runs out, the options are familiar: wait, upgrade, or buy credits for eligible features.
+
+This sounds like a billing update.
+
+It is also the product architecture becoming visible.
+
+Chat and agent work used to feel like separate categories. One answered questions. The other opened files, used tools, wrote code, browsed, and ran longer tasks. A shared token pool turns them into competing uses of the same compute budget.
+
+That is economically honest.
+
+It also changes the subscription contract.
+
+The plan no longer buys a clean number of conversations or agent runs. It buys access to a pool whose useful capacity depends on the model, context, reasoning level, tools, task duration, and where the work runs. OpenAI's broader [Codex usage documentation](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan) already says eligible Codex, ChatGPT Work, ChatGPT for Excel, and Workspace Agents can draw from the same allowance or credit pool.
+
+The names are merging because the economics already did.
+
+The important missing number is the conversion rate.
+
+OpenAI says heavier models and tasks consume more, but the announcement does not publish one simple table showing how much usable work each plan buys across every model and surface. Tokens are more precise than prompts, yet a token counter still does not tell a normal user whether the remaining balance is enough to finish a repository migration, analyze a workbook, or complete a research task.
+
+The user needs two views:
+
+The raw meter.
+
+And an estimate of what the meter can still accomplish.
+
+For teams, the operational lesson is immediate. A long Codex run can compete with another agentic workflow for the same pool. Budget alerts, per-task cost visibility, model defaults, and graceful fallbacks stop being admin polish. They decide which work finishes before the allowance resets.
+
+One subscription.
+
+Several products.
+
+One compute budget underneath.
+
+That is the bill becoming the interface.
 
 ## Update: the bill is becoming the product
 

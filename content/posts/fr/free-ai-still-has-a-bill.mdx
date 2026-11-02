@@ -1,7 +1,7 @@
 ---
 title: "L'IA gratuite a quand même une facture"
-date: "2026-09-23"
-description: "Anthropic et OpenAI viennent de faire baisser le prix de modèles proches de la frontier le même jour. Le chiffre important n'est toujours pas le prix du token, mais le coût d'un workflow terminé après le contexte, les tentatives, les outils, la latence et la validation humaine."
+date: "2026-11-02"
+description: "OpenAI fusionne les quotas de ChatGPT et Codex. L'abonnement devient un budget de calcul partagé entre conversation et travail agentique, et le compteur entre directement dans le produit."
 tags: ["AI Strategy", "Startups", "Enterprise AI", "AI Agents", "AI Pricing"]
 draft: false
 ---
@@ -35,6 +35,50 @@ Le problème n'est pas que les entreprises d'IA fassent payer.
 Évidemment qu'elles font payer.
 
 Le problème est que la vraie facture arrive souvent après que le workflow a déjà changé.
+
+## Mise à jour : l'abonnement devient un budget de calcul
+
+OpenAI rend le compteur beaucoup plus explicite.
+
+À partir de décembre, l'entreprise [indique](https://help.openai.com/en/articles/20001625-understanding-chatgpt-and-codex-usage-limits) que les plans Plus, Pro et Business partageront un même quota entre ChatGPT et Codex, au moment où les capacités agentiques de Work entrent dans l'expérience ChatGPT principale.
+
+Ce quota sera mesuré en tokens.
+
+Les modèles avancés et les tâches complexes en consommeront davantage. Le chat instantané ne puisera pas dans ce quota commun. Les utilisateurs verront le solde combiné et la date de réinitialisation dans les réglages. Une fois le quota épuisé, les options sont familières : attendre, changer de plan ou acheter des crédits pour les fonctions éligibles.
+
+Cela ressemble à une mise à jour de facturation.
+
+C'est aussi l'architecture produit qui devient visible.
+
+La conversation et le travail agentique donnaient jusqu'ici l'impression d'appartenir à deux catégories séparées. L'une répondait aux questions. L'autre ouvrait des fichiers, utilisait des outils, écrivait du code, naviguait sur le web et exécutait des tâches plus longues. Un quota commun les transforme en usages concurrents du même budget de calcul.
+
+C'est économiquement honnête.
+
+Cela change aussi le contrat de l'abonnement.
+
+Le plan n'achète plus un nombre propre de conversations ou d'exécutions agentiques. Il donne accès à un réservoir dont la capacité utile dépend du modèle, du contexte, du niveau de raisonnement, des outils, de la durée et du lieu d'exécution. La [documentation plus large sur l'usage de Codex](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan) indique déjà que Codex, ChatGPT Work, ChatGPT pour Excel et les agents d'espace de travail éligibles peuvent puiser dans le même quota ou la même réserve de crédits.
+
+Les noms fusionnent parce que l'économie l'avait déjà fait.
+
+Le chiffre important qui manque encore est la règle de conversion entre usage et quota.
+
+OpenAI explique que les modèles et tâches plus lourds consomment davantage, mais l'annonce ne publie pas un tableau simple indiquant combien de travail chaque plan achète selon les modèles et les interfaces. Les tokens sont plus précis que les requêtes. Un compteur de tokens ne dit pourtant pas à un utilisateur normal si le solde restant suffira à finir la migration d'un repo, analyser un tableur ou terminer une recherche.
+
+Il faut deux vues :
+
+Le compteur brut.
+
+Et une estimation de ce qu'il permet encore d'accomplir.
+
+Pour les équipes, la leçon opérationnelle est immédiate. Une longue exécution Codex peut entrer en concurrence avec un autre workflow agentique pour le même quota. Les alertes de budget, la visibilité du coût par tâche, les modèles par défaut et les solutions de repli ne sont plus de simples finitions administratives. Ils décident quel travail se terminera avant la réinitialisation.
+
+Un abonnement.
+
+Plusieurs produits.
+
+Un seul budget de calcul en dessous.
+
+C'est la facture qui devient l'interface.
 
 ## Mise à jour : la facture devient le produit
 
