@@ -1,0 +1,203 @@
+---
+title: "Les agents de code percutent le mur du contrôle de version"
+date: "2026-11-03"
+description: "OpenAI a conservé Git et reconstruit son backend. Anthropic a remplacé Git par Scion. Ces choix opposés révèlent le même basculement : quand le code devient abondant, le contrôle de version, la CI, la revue et l'intégration deviennent les ressources rares."
+tags: ["AI Agents", "Outils développeurs", "OpenAI", "Anthropic", "Ingénierie logicielle"]
+draft: false
+---
+
+## La version courte
+
+Les agents de code ne changent pas seulement qui écrit le logiciel.
+
+Ils changent ce que l'infrastructure logicielle doit être capable d'encaisser.
+
+OpenAI vient de publier l'architecture de [Pando](https://openai.com/index/scaling-git-at-openai/), le backend interne qui sert désormais son monorepo. Selon l'entreprise, Codex a multiplié les branches parallèles, les pushs, les merges, les fetchs, les clones, les jobs de recherche et la CI jusqu'à faire tomber la fiabilité de l'ancien système de contrôle de version sous les 90 % par moments.
+
+Pando conserve le client et le protocole Git, mais change les hypothèses du serveur qui se trouve derrière. Il coordonne les branches indépendamment, relâche la cohérence à l'échelle de tout le dépôt, stocke des packfiles réutilisables et les sert depuis des caches régionaux.
+
+OpenAI affirme que la migration a réduit la latence médiane d'un push de près de 80 % et que Pando livre désormais près d'un pétaoctet de données Git par jour.
+
+Trois semaines plus tôt, Anthropic décrivait la même pression et choisissait le chemin opposé.
+
+L'entreprise a [remplacé Git par Scion](https://www.anthropic.com/research/redesigning-source-control), un système de contrôle de version centré sur le serveur et conçu pour des agents et des jobs toujours connectés. Anthropic dit être passée d'environ 2 500 changements fusionnés par jour en mai à plus de 30 000 en septembre, tandis que sa CI effectuait à elle seule quelque 25 millions de checkouts quotidiens.
+
+OpenAI a conservé Git.
+
+Anthropic l'a quitté.
+
+Leur accord compte davantage que leur désaccord.
+
+Les deux laboratoires montrent qu'à leur échelle, produire du code n'est plus la seule contrainte. Le goulot d'étranglement s'est déplacé vers la machine qui stocke, transporte, teste, relit, fusionne et déploie toute cette production.
+
+Le modèle peut écrire un patch supplémentaire en quelques secondes.
+
+L'organisation doit toujours décider si ce patch mérite d'entrer dans le réel.
+
+## Le même mur, deux architectures opposées
+
+Pando et Scion ne sont pas deux versions du même produit.
+
+Ils font des paris différents sur ce qui doit rester compatible.
+
+OpenAI a décidé que ses ingénieurs et ses agents devaient continuer à utiliser les workflows Git ordinaires. Le client pousse toujours des commits et récupère l'historique. Les outils existants continuent à parler le protocole Git. Le nouveau travail se fait derrière l'interface.
+
+Pour mettre à l'échelle les écritures parallèles, Pando ne prétend plus que chaque lecture de branches représente un instantané parfaitement synchronisé de tout le dépôt. Les changements d'une même branche restent ordonnés, mais deux clients qui lisent plusieurs branches au même moment peuvent observer des combinaisons différentes de leurs états récents.
+
+C'est un compromis assumé.
+
+Les ingénieurs et les agents tiennent beaucoup à ce qu'une branche donnée avance correctement. Ils ont rarement besoin que toutes les branches de fonctionnalités sans rapport reflètent exactement le même instant.
+
+Pour les lectures, Pando réutilise les packfiles au lieu de fabriquer un bundle sur mesure pour chaque client. Un client peut recevoir certains objets qu'il possède déjà, mais les caches peuvent servir les mêmes octets à répétition avec très peu de calcul. OpenAI indique que le taux de succès des caches locaux dépasse 99 % et que Pando a déjà servi plus de 57 téraoctets en une heure.
+
+Anthropic a abandonné davantage de compatibilité pour supprimer davantage d'hypothèses.
+
+Scion traite le serveur comme la source de vérité et le client comme une surface de travail légère. Les commits, merges, rebases, recherches dans l'historique et blames sont calculés côté serveur. Les clients conservent des caches limités et ne matérialisent que les fichiers dont ils ont besoin. De nombreux jobs peuvent interroger un diff ou l'historique via une API sans créer le moindre checkout.
+
+Cette architecture correspond à la charge décrite par Anthropic : un historique de la branche principale proche de 100 Go, une copie de travail compressée de plus de 25 Go et des millions de clients agentiques ou de CI en ligne. L'indépendance hors connexion qui fait la force de Git pour les humains perd de sa valeur quand presque chaque client est un worker éphémère et connecté.
+
+OpenAI s'est demandé jusqu'où Git pouvait s'étirer.
+
+Anthropic s'est demandé quelles parties de Git ses agents utilisaient encore.
+
+Ce sont deux réponses rationnelles à une quantité irrationnelle de code.
+
+## La compatibilité est une décision produit
+
+Le contraste technique est aussi une stratégie de distribution.
+
+Pando peut se cacher derrière une interface familière. OpenAI a migré des centaines d'intégrations internes, mais les ingénieurs et les agents ont gardé le client Git et leur workflow de base. L'entreprise peut contribuer des améliorations du client en amont sans imposer son backend privé au reste de l'industrie.
+
+Cela réduit le coût de migration.
+
+Cela limite aussi la profondeur des changements possibles.
+
+Scion peut optimiser plus agressivement parce qu'il possède le client, le protocole, le modèle de données, la revue de code, la recherche, les permissions et l'intégration CI autour du dépôt. Anthropic annonce une infrastructure 200 fois plus petite en CPU et en mémoire que son ancienne flotte de miroirs Git, des checkouts accélérés de deux ordres de grandeur et un gain de 25 % sur la capacité CPU de la CI.
+
+Ces chiffres sont impressionnants.
+
+Ils exigent en contrepartie une surface de dépendance beaucoup plus vaste.
+
+[L'analyse d'InfoQ](https://www.infoq.com/news/2026/10/anthropic-source-control/) pose clairement la limite : Scion n'est pas un remplacement généraliste de Git. L'adopter demanderait de migrer tout le cycle de développement qui l'entoure, et Anthropic explique qu'il serait difficile de publier son implémentation interne sous une forme réellement utile à beaucoup d'organisations.
+
+Pando n'est pas non plus un produit.
+
+OpenAI dit explorer des façons de partager cette technologie. L'entreprise a publié des patchs pour le client Git et contribué certains changements en amont, mais le serveur Pando n'est pas disponible publiquement. [La couverture de The New Stack](https://thenewstack.io/openai-pando-git-backend/) décrit elle aussi Pando comme un backend interne à OpenAI ; l'annonce ne donne ni date de sortie publique ni conditions commerciales.
+
+Ce n'est donc pas un comparatif d'achat.
+
+C'est un comparatif de conception.
+
+Un laboratoire optimise la compatibilité avec l'écosystème.
+
+L'autre optimise le contrôle sur toute la stack.
+
+Ce choix se répétera à chaque couche que les agents mettront sous pression.
+
+## Plus de code crée plus de travail qui n'est pas du code
+
+L'interprétation séduisante est que les agents accélèrent radicalement l'ingénierie.
+
+L'interprétation utile est qu'ils déplacent la file d'attente.
+
+Si un ingénieur peut superviser plusieurs agents, l'organisation obtient plus de branches. Plus de branches déclenchent plus de builds. Plus de builds récupèrent plus d'historique. Plus de changements exigent des tests, des revues, de la résolution de conflits, des contrôles de politique, du scanning de sécurité, des décisions de déploiement, de l'observabilité et des plans de rollback.
+
+Générer du code peut coûter moins cher tandis que l'intégrer coûte plus cher.
+
+Les deux laboratoires montrent déjà la récursion.
+
+Les agents ont créé la charge sur le contrôle de version.
+
+Les agents ont ensuite aidé à construire les systèmes qui l'absorbent.
+
+OpenAI dit avoir fait passer Pando du lancement du projet à la production en dix semaines. Un ingénieur en a conçu le cœur, des équipes d'agents l'ont implémenté et une poignée d'ingénieurs l'ont déployé. Des agents ont écrit des spécifications en Lean et TLA+, lancé des sessions continues pendant des centaines d'heures et mènent maintenant un red teaming permanent de Git et Pando.
+
+Anthropic raconte qu'une équipe de sept personnes a construit Scion, son outil de revue Antique et les services associés tout en migrant le monorepo en cinq mois. L'entreprise précise aussi que ses ingénieurs relisent encore chaque changement et que l'une de leurs tâches les plus précieuses consiste à dire « non » à Claude quand il viole une contrainte du système ou complexifie à l'excès un risque hypothétique.
+
+Ce dernier détail contient toute l'histoire.
+
+La compétence rare n'est plus d'écrire vite.
+
+C'est la capacité à maintenir un système cohérent pendant que l'offre de changements plausibles explose.
+
+## Ce ne sont pas des charges normales
+
+Pando et Scion sont des preuves utiles.
+
+Ce ne sont pas des consignes demandant à chaque équipe de remplacer son serveur Git.
+
+Tous les chiffres de performance viennent des entreprises qui ont construit ces systèmes. Leurs points de comparaison sont internes. Leurs dépôts, profils de trafic, flottes d'agents, topologies de CI, machines et coûts d'exploitation ne permettent pas une comparaison indépendante propre.
+
+La simulation publiée par OpenAI compare Pando à des alternatives modélisées. C'est un outil pédagogique sur l'architecture, pas un benchmark de production qu'une autre équipe peut reproduire à partir de l'artefact public.
+
+Anthropic souligne explicitement que sa charge est inhabituelle et que Git reste le bon choix pour l'immense majorité des dépôts. Les gains de Scion reposent en partie sur des hypothèses que beaucoup d'entreprises ne peuvent pas adopter : les clients sont en ligne, le serveur reste joignable, le monorepo fait autorité et l'organisation contrôle les outils environnants.
+
+Il manque aussi une métrique plus gênante.
+
+Aucun des deux billets ne prouve que davantage de changements fusionnés créent proportionnellement davantage de valeur pour les utilisateurs.
+
+Trente mille changements par jour peuvent représenter un levier extraordinaire.
+
+Ils peuvent aussi produire une quantité extraordinaire de revue, de maintenance et de suppression.
+
+La latence d'un push mesure la vitesse à laquelle le code entre dans le système d'intégration. Elle ne dit pas si ce code devait exister, si l'architecture s'est simplifiée, si les incidents ont diminué ou si le produit s'est amélioré.
+
+L'infrastructure agentique a besoin de métriques de débit.
+
+Elle a aussi besoin d'une raison d'arrêter de produire.
+
+## Ce que les équipes devraient mesurer maintenant
+
+La plupart des équipes n'ont besoin ni de Pando ni de Scion.
+
+Elles ont besoin de savoir où le travail en parallèle des agents déplace leur goulot d'étranglement.
+
+Suivez le parcours de développement comme une file d'attente, pas comme un unique chiffre de productivité :
+
+- le délai entre l'assignation d'une tâche et un workspace prêt
+- le temps d'un clone ou d'un fetch à froid puis répété
+- le nombre de branches et de pushs simultanés par ingénieur
+- les jobs de CI, octets transférés et calcul consommé par changement accepté
+- le délai dans la merge queue et le taux de conflits
+- le temps de revue par changement, revue agentique comprise
+- les changements échoués, annulés ou abandonnés
+- le temps passé à maintenir le code généré
+- les failles et violations de politique par changement
+- le délai entre le patch généré et la production
+- les résultats déployés par unité de coût de modèle, de CI et de revue humaine
+
+Gardez le travail rejeté dans le dénominateur.
+
+Un agent qui produit dix patchs pour en faire accepter un n'a pas rendu les neuf autres gratuits. Ils ont consommé de l'inférence, du trafic sur le dépôt, de la capacité de test, de l'attention humaine et peut-être une partie de la confiance de l'équipe.
+
+Examinez ensuite les hypothèses avant de remplacer l'infrastructure.
+
+Les workers ont-ils besoin de clones complets ? Les jobs ont-ils besoin d'une copie de travail pour répondre à une question sur les métadonnées ? Les fetchs répétés téléchargent-ils les mêmes objets ? Des branches sans rapport se disputent-elles un coordinateur unique ? Chaque contrôle exige-t-il tout le dépôt ? Les données immuables peuvent-elles être mises en cache une fois et réutilisées sans risque ?
+
+La leçon de Pando et Scion n'est pas « construisez votre propre VCS ».
+
+C'est « cessez de supposer que l'ancien goulot d'étranglement est encore le bon ».
+
+## Le fond du sujet
+
+Le code agentique est entré dans sa phase infrastructure.
+
+La première phase demandait si un modèle pouvait écrire une fonction, corriger un bug ou terminer une tâche dans un dépôt.
+
+La suivante demande ce qui se passe quand des milliers de ces tâches tournent en même temps.
+
+OpenAI et Anthropic ont atteint cette phase tôt parce que leurs charges sont extrêmes. Leurs architectures divergent parce qu'ils donnent la priorité à des contraintes différentes. Pando conserve l'interface Git et assouplit le modèle de cohérence du backend. Scion remplace cette interface et centralise une plus grande partie du cycle de développement.
+
+Mais les deux exposent le même basculement économique.
+
+Quand le code devient abondant, l'intégration devient rare.
+
+Le contrôle de version n'est que le premier point de pression visible. La CI, la revue, les politiques de merge, les permissions, la provenance, le déploiement et la maintenance suivront.
+
+La meilleure plateforme développeur ne sera pas celle qui génère le plus de code.
+
+Ce sera celle qui absorbe davantage de changements sans perdre en correction, en lisibilité ni en contrôle.
+
+Les agents peuvent créer une branche supplémentaire.
+
+L'ingénierie consiste à décider si elle mérite d'être fusionnée.

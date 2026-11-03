@@ -1,0 +1,203 @@
+---
+title: "Coding Agents Hit the Source-Control Wall"
+date: "2026-11-03"
+description: "OpenAI kept Git and rebuilt its backend. Anthropic replaced Git with Scion. Their opposite choices reveal the same shift: when agents make code abundant, source control, CI, review, and integration become the scarce resources."
+tags: ["AI Agents", "Developer Tools", "OpenAI", "Anthropic", "Software Engineering"]
+draft: false
+---
+
+## The Short Version
+
+Coding agents are not only changing who writes software.
+
+They are changing what software infrastructure has to survive.
+
+OpenAI has published the architecture behind [Pando](https://openai.com/index/scaling-git-at-openai/), the internal backend that now serves its monorepo. The company says Codex multiplied parallel branches, pushes, merges, fetches, clones, research jobs, and CI work until its previous source-control system sometimes fell below 90% reliability.
+
+Pando keeps the Git client and protocol, but changes the server assumptions underneath them. It coordinates branches independently, relaxes repository-wide consistency, stores reusable packfiles, and serves them through regional caches.
+
+OpenAI reports that the move cut median push latency by nearly 80% and that Pando now delivers close to a petabyte of Git data per day.
+
+Three weeks earlier, Anthropic described the same pressure and chose the opposite path.
+
+It [replaced Git with Scion](https://www.anthropic.com/research/redesigning-source-control), a server-centric source-control system designed around agents and jobs that are always online. Anthropic says its merged changes rose from roughly 2,500 per day in May to more than 30,000 in September, while CI alone performed about 25 million checkouts per day.
+
+OpenAI preserved Git.
+
+Anthropic left it.
+
+The agreement matters more than the disagreement.
+
+Both labs show that, at their scale, producing code is no longer the only constraint. The bottleneck has moved into the machinery that stores, moves, tests, reviews, merges, and deploys all that output.
+
+The model can write another patch in seconds.
+
+The organization still has to decide whether the patch belongs in reality.
+
+## The same wall produced opposite architectures
+
+Pando and Scion are not two versions of the same product.
+
+They make different bets about what must remain compatible.
+
+OpenAI decided that engineers and agents should continue using ordinary Git workflows. The client still pushes commits and fetches history. Existing tools keep speaking the Git protocol. The new work happens behind the interface.
+
+To make parallel writes scale, Pando stops pretending that every branch read represents one perfectly synchronized snapshot of the entire repository. Updates to one branch remain ordered, but two clients reading several branches at once may see different combinations of recent branch states.
+
+That is a deliberate trade.
+
+Most engineers and agents care deeply that a single branch moves correctly. They rarely need every unrelated feature branch to appear at one global instant.
+
+For reads, Pando reuses packfiles instead of generating a custom bundle for every client. That can send a client some objects it already has, but it lets caches serve the same bytes repeatedly with little computation. OpenAI says local pack caches exceed 99% hit rates and that Pando has served more than 57 terabytes in one hour.
+
+Anthropic gave up more compatibility to remove more assumptions.
+
+Scion treats the server as the source of truth and the client as a thin working surface. Commits, merges, rebases, history, and blame happen on the server. Clients keep bounded caches and materialize only the files they need. Many jobs can query a diff or repository history through an API without creating a checkout at all.
+
+That architecture makes sense for Anthropic's stated workload: a main-branch history approaching 100 GB, a compressed working copy above 25 GB, and millions of online agent and CI clients. The offline independence that makes Git powerful for humans becomes less valuable when nearly every client is a disposable, connected worker.
+
+OpenAI asked how far Git could stretch.
+
+Anthropic asked which parts of Git its agents still needed.
+
+Both are rational answers to an irrational amount of code.
+
+## Compatibility is a product decision
+
+The technical contrast is also a distribution strategy.
+
+Pando can hide behind a familiar interface. OpenAI migrated hundreds of internal integrations, but engineers and agents kept the Git client and basic workflow. The company can contribute client improvements upstream without requiring the rest of the industry to adopt its private backend.
+
+That lowers migration cost.
+
+It also limits how radically the system can change.
+
+Scion can optimize more aggressively because it owns the client, protocol, data model, code review, code search, permissions, and CI integration around the repository. Anthropic reports a 200-fold reduction in CPU and memory compared with its previous Git-mirror fleet, checkout speedups of two orders of magnitude, and a 25% CI CPU capacity gain.
+
+Those are striking numbers.
+
+They come with a much larger dependency surface.
+
+[InfoQ's review](https://www.infoq.com/news/2026/10/anthropic-source-control/) makes the boundary clear: Scion is not a general-purpose Git replacement. Adopting it would mean migrating the surrounding development lifecycle, and Anthropic says releasing the internal implementation in a broadly useful form would be difficult.
+
+Pando is not a product either.
+
+OpenAI says it is exploring ways to share the technology. It has published Git client patches and contributed some changes upstream, but the Pando server itself is not publicly available. [The New Stack's coverage](https://thenewstack.io/openai-pando-git-backend/) likewise describes Pando as OpenAI's internal backend; the announcement gives no public release date or commercial terms.
+
+So this is not a shopping comparison.
+
+It is a design comparison.
+
+One lab optimized for compatibility with the ecosystem.
+
+The other optimized for control over the whole stack.
+
+That choice will repeat across every layer agents put under pressure.
+
+## More code creates more non-coding work
+
+The seductive interpretation is that agents are making engineering dramatically faster.
+
+The useful interpretation is that they are moving the queue.
+
+If an engineer can supervise several agents, the organization gets more branches. More branches trigger more builds. More builds fetch more history. More changes need tests, review, conflict resolution, policy checks, security scanning, deployment decisions, observability, and rollback plans.
+
+Generating code can become cheaper while integrating code becomes more expensive.
+
+The two labs already show the recursion.
+
+Agents created the source-control load.
+
+Agents then helped build the source-control systems that absorb it.
+
+OpenAI says Pando went from kickoff to production in ten weeks. One engineer designed the core, teams of agents implemented it, and a handful of engineers deployed it. Agents wrote Lean and TLA+ specifications, ran continuous sessions for hundreds of hours, and now red-team Git and Pando around the clock.
+
+Anthropic says a seven-person team built Scion, its Antique review system, and related services while migrating the monorepo in five months. It also says engineers still review every change request and that one of their most valuable jobs is telling Claude "no" when it violates a system constraint or over-engineers a hypothetical concern.
+
+That last detail is the whole story.
+
+The scarce skill is not typing.
+
+It is maintaining a coherent system while the supply of plausible changes explodes.
+
+## These are not normal workloads
+
+Pando and Scion are useful evidence.
+
+They are not instructions for every engineering team to replace its Git server.
+
+All of the performance figures come from the companies that built the systems. Their baselines are internal. Their repositories, traffic patterns, agent fleets, CI topologies, hardware, and operating costs are not available for a clean independent comparison.
+
+OpenAI's published simulation compares Pando with modeled alternatives. It is an architectural teaching tool, not a production benchmark another team can reproduce from the public artifact.
+
+Anthropic explicitly says its workload is unusual and that Git remains the right design for the vast majority of repositories. Scion's gains depend partly on assumptions that many companies cannot make: clients are online, the server is always reachable, the monorepo is authoritative, and the organization controls the surrounding tools.
+
+There is another uncomfortable missing metric.
+
+Neither post proves that more merged changes create proportionally more customer value.
+
+Thirty thousand changes a day can represent extraordinary leverage.
+
+It can also create extraordinary review, maintenance, and deletion work.
+
+Push latency measures how quickly code enters the integration system. It does not measure whether the code should exist, whether the architecture became simpler, whether incidents declined, or whether users received a better product.
+
+Agent-scale infrastructure needs throughput metrics.
+
+It also needs a reason to stop producing.
+
+## What teams should measure now
+
+Most teams do not need Pando or Scion.
+
+They do need to know where agent concurrency is moving their bottleneck.
+
+Track the development path as a queue, not as one productivity number:
+
+- time from task assignment to a ready workspace
+- cold and repeated clone or fetch time
+- concurrent branches and pushes per engineer
+- CI jobs, bytes transferred, and compute consumed per accepted change
+- merge-queue delay and conflict rate
+- review time per change, including agent-generated review
+- failed, reverted, and abandoned changes
+- time spent maintaining generated code
+- security findings and policy violations per change
+- lead time from generated patch to production
+- deployed outcomes per unit of model, CI, and human-review cost
+
+Keep the rejected work in the denominator.
+
+An agent that creates ten patches and lands one has not made nine patches free. They consumed inference, repository traffic, test capacity, reviewer attention, and perhaps the confidence of the team.
+
+Then inspect assumptions before replacing infrastructure.
+
+Do workers need complete clones? Do jobs need a working copy to answer a metadata question? Are repeated fetches downloading the same objects? Do unrelated branches contend on one coordinator? Does every check require the whole repository? Can immutable data be cached once and reused safely?
+
+The lesson from Pando and Scion is not "build a custom VCS."
+
+It is "stop assuming the old bottleneck is still the bottleneck."
+
+## The bottom line
+
+AI coding has entered the infrastructure phase.
+
+The first phase was about whether a model could write a function, fix a bug, or complete a repository task.
+
+The next phase is about what happens when thousands of those tasks run at once.
+
+OpenAI and Anthropic reached that phase early because their workloads are extreme. Their architectures diverged because they valued different constraints. Pando preserves the Git surface and relaxes the backend. Scion replaces the surface and centralizes more of the development lifecycle.
+
+But both expose the same economic shift.
+
+When code becomes abundant, integration becomes scarce.
+
+Source control is only the first visible pressure point. CI, review, merge policy, permissions, provenance, deployment, and maintenance will follow.
+
+The winning developer platform will not be the one that can generate the most code.
+
+It will be the one that can absorb more change without losing correctness, legibility, or control.
+
+Agents can create another branch.
+
+Engineering is deciding whether it deserves to merge.
