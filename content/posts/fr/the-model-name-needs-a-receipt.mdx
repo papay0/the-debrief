@@ -1,0 +1,196 @@
+---
+title: "Le nom du modèle a besoin d'un reçu"
+date: "2026-11-04"
+description: "FlashProve, le prototype d'Anthropic, peut joindre une preuve cryptographique à une réponse d'IA. Il ne prouve pas qu'elle est bonne, mais quelque chose de plus étroit dont les acheteurs ont besoin : quels poids engagés l'ont produite."
+tags: ["Sécurité de l'IA", "Anthropic", "Modèles d'IA", "Cryptographie", "Infrastructure IA", "Open Source"]
+draft: false
+---
+
+## La version courte
+
+Acheter un modèle d'IA exige encore une étonnante dose de confiance.
+
+La facture nomme un modèle. L'API renvoie des tokens. Entre les deux, le client n'a généralement aucun moyen indépendant de savoir si le fournisseur a servi les poids promis, routé la requête vers un modèle moins cher, changé de modèle après une évaluation ou modifié la réponse en transit.
+
+Juger la qualité du texte ne résout pas le problème. Un petit modèle peut produire une excellente réponse. Un modèle de pointe peut en produire une très mauvaise.
+
+Anthropic vient de publier [FlashProve](https://www.anthropic.com/research/provable-inference), un prototype de recherche open source qui tente de rendre l'identité du modèle vérifiable.
+
+Le fournisseur publie d'abord un engagement cryptographique sur un jeu précis de poids. Pour chaque requête, il peut ensuite produire une preuve que ces poids ont généré la sortie annoncée. Le vérificateur n'a besoin ni des poids ni d'un second GPU. Il lui faut l'engagement, la requête, la réponse et un CPU ordinaire.
+
+Anthropic a testé le système sur une version entière en 4 bits de Llama 4 Maverick de Meta, un modèle de 400 milliards de paramètres. L'entreprise annonce environ 110 tokens prouvés par seconde sur un seul H100, avec une preuve proche de 19 Mo pour une affirmation d'inférence portant sur un token dans une fenêtre de 1 024 tokens. La vérification prend 17 secondes sur 24 threads CPU, ou 21 secondes sur un seul thread.
+
+C'est impressionnant.
+
+C'est aussi environ 70 à 95 fois plus de travail GPU que l'inférence ordinaire dans la comparaison d'Anthropic. Le prototype actuel traite des contextes courts, un décodage glouton, une architecture à experts particulière et une approximation entière du modèle. Il n'a pas été audité indépendamment, n'est pas déployé dans Claude et son dépôt indique qu'il n'est pas maintenu.
+
+FlashProve n'est pas une annonce produit.
+
+C'est la preuve qu'un nom de modèle pourrait devenir davantage qu'une étiquette dans une réponse d'API.
+
+Le basculement important ne va pas d'une IA indigne de confiance vers une IA digne de confiance.
+
+Il va d'une affirmation sur le modèle à un reçu que l'on peut vérifier.
+
+## Il prouve l'identité, pas l'intelligence
+
+FlashProve utilise une preuve cryptographique à divulgation nulle de connaissance.
+
+« Nulle de connaissance » ne signifie pas que le système ne sait rien. Cela signifie que le vérificateur peut contrôler une affirmation sur un calcul caché sans apprendre les poids du modèle qui l'a effectué.
+
+Le mécanisme comporte deux étapes.
+
+Hors ligne, le fournisseur s'engage sur les poids. Cet engagement ressemble à une empreinte qui le lie à un modèle sans publier le modèle lui-même.
+
+En ligne, il fournit une preuve pour une entrée et une sortie précises. Si elle est acceptée face à l'engagement de confiance, le vérificateur obtient une preuve cryptographique que les poids liés par cet engagement ont produit ces tokens.
+
+Cette affirmation est volontairement étroite.
+
+Elle ne prouve pas que la réponse est exacte.
+
+Elle ne prouve pas que le modèle est sûr, impartial, licencié, approuvé par un régulateur ou qu'il vaut son prix.
+
+Elle ne prouve pas que les poids engagés correspondent au nom commercial imprimé sur la facture. Un fournisseur peut s'engager sur les poids de son choix, y compris ceux d'un modèle petit ou défectueux. Le [document consacré aux limites du projet](https://github.com/anthropics/FlashProve/blob/main/guide/known-limits.md) précise que l'identifiant d'engagement doit venir d'une partie à laquelle le vérificateur fait confiance, pas du serveur dont il contrôle la réponse.
+
+FlashProve ressemble donc davantage à un scellé inviolable qu'à un certificat de qualité.
+
+Le scellé peut montrer que le contenu correspond au colis enregistré.
+
+Quelqu'un doit encore établir ce qu'est ce colis.
+
+## Le routage a rendu ce problème urgent
+
+Pendant des années, l'identité du modèle était surtout un détail d'achat.
+
+Le client choisissait un point d'accès, recevait une réponse et faisait confiance aux journaux et au contrat du fournisseur. Cet arrangement devient plus difficile à défendre à mesure que les produits ajoutent du routage automatique, des modèles de secours, du décodage spéculatif, des modèles à experts, des variantes régionales, des passerelles tierces et des agents composés qui appellent plusieurs modèles dans une seule tâche.
+
+L'utilisateur choisit parfois un nom de produit tandis que le système d'exécution prend une douzaine de décisions invisibles.
+
+Certaines sont utiles. Un routeur peut réduire le coût, éviter une panne, garder les données dans une région ou envoyer une tâche difficile vers un modèle plus puissant. Mais chaque optimisation ouvre un nouvel endroit où le calcul livré peut s'écarter du calcul promis.
+
+Le problème devient critique quand l'identité du modèle fait partie de la promesse :
+
+- un évaluateur qui veut savoir si la version publiée correspond à celle qu'il a testée avant son lancement
+- une entreprise qui paie plus cher pour un modèle précis
+- un processus réglementé limité à une version approuvée
+- une place de marché qui revend l'accès aux modèles de plusieurs fournisseurs
+- une enquête d'incident qui cherche quels poids ont produit une sortie lourde de conséquences
+- un engagement de sécurité qui exige qu'un modèle reste inchangé pendant un audit
+
+Aujourd'hui, ces utilisateurs reçoivent surtout des journaux.
+
+Les journaux sont utiles. Ils sont aussi produits par le système audité.
+
+FlashProve suggère une architecture plus forte : le système peut continuer à router, mais chaque étape importante peut porter la preuve des poids engagés qui l'ont exécutée.
+
+Cela ne supprimerait pas le pouvoir discrétionnaire du routeur.
+
+Cela le rendrait inspectable.
+
+## La chaîne de preuve conserve des frontières de confiance
+
+L'expression « formellement vérifié » est facile à lire trop largement.
+
+Anthropic fournit une implémentation du vérificateur en Lean et des énoncés vérifiés par machine sur la complétude, la solidité et la divulgation nulle de connaissance. Le protocole mathématique repose donc sur une base bien plus robuste qu'une simple démo de performance.
+
+Mais le chemin rapide que les utilisateurs voudraient réellement exécuter n'est pas entièrement couvert par cette preuve.
+
+Le [rapport technique](https://www.anthropic.com/document/flashprove-technical-report) indique que les programmes C++ du prouveur et du vérificateur ont été produits par des agents d'IA à partir de représentations Lean, sans que leur équivalence formelle avec la spécification Lean soit démontrée. Le vérificateur Lean, plus lent, possède ce lien formel. Le vérificateur C++ rapide et le prouveur CUDA sont testés par rapport au protocole.
+
+Cette distinction n'est pas académique.
+
+Une preuve sur un vérificateur ne vaut que par le chemin qui relie les octets de production à ce vérificateur. Les parseurs, fichiers de configuration, mécanismes de distribution des engagements, la quantification, le traitement par lots, les pannes matérielles et les écarts d'implémentation se trouvent tous autour du théorème.
+
+Anthropic parle de ces frontières avec une franchise rare. Son [inventaire détaillé de ce qui est réellement prouvé](https://github.com/anthropics/FlashProve/blob/main/guide/what-is-proved.md) sépare les théorèmes Lean des programmes exécutables. Le document des limites précise qu'aucun audit de sécurité indépendant n'a eu lieu et que des systèmes d'IA, sous direction humaine, ont écrit la quasi-totalité du logiciel, des preuves, de la documentation et des tests rapportés.
+
+Cette transparence rend l'artefact plus utile, pas moins.
+
+Elle permet aux acheteurs de poser la bonne question.
+
+Pas « FlashProve est-il vérifié ? »
+
+Mais « quel énoncé est vérifié, pour quelle implémentation, sous quelle configuration, et quelles parties reposent encore sur des tests ou sur la confiance opérationnelle ? »
+
+## Le coût est encore très visible
+
+L'assurance cryptographique a un prix.
+
+Le benchmark d'Anthropic traite 24 requêtes en lot. Produire leurs preuves prend environ 223 secondes sur un H100. Chaque requête reçoit une preuve de 18,78 Mo. La vérification prend quelques secondes sur CPU, mais la production des preuves coûte environ deux ordres de grandeur de temps GPU de plus que le service du modèle dans la comparaison d'Anthropic.
+
+Ce n'est pas un réglage par défaut que l'on peut glisser sans douleur dans chaque autocomplétion, tour de chatbot ou action d'agent en arrière-plan.
+
+Le premier marché pratique sera peut-être celui de l'assurance sélective.
+
+Un évaluateur pourrait échantillonner des requêtes pendant un audit. Une banque pourrait exiger des preuves seulement pour une catégorie étroite de décisions à fort impact. Une place de marché de modèles pourrait prouver un sous-ensemble aléatoire de ses appels haut de gamme. Un régulateur pourrait demander des attestations autour d'une période de test contrôlée. Une équipe de réponse à incident pourrait conserver les preuves des actions ayant modifié de l'argent, des permissions, du code ou un état physique.
+
+L'échantillonnage changerait l'économie sans supprimer toute la valeur dissuasive. Le fournisseur ne saurait pas quelles requêtes éligibles l'auditeur compte vérifier plus tard.
+
+Mais même cet usage sélectif exige une infrastructure que FlashProve ne fournit pas seul :
+
+- un registre de confiance qui relie noms de produits, versions et identifiants d'engagement
+- des horodatages signés et un historique du cycle de vie des modèles
+- des règles pour renouveler les engagements sans perdre la continuité
+- des politiques de conservation et de suppression des preuves
+- un format de requête commun qui capture le contexte pertinent
+- des audits indépendants du prouveur, du vérificateur et du chemin de déploiement
+- une sémantique claire lorsqu'une preuve manque, arrive en retard ou échoue
+
+La cryptographie peut lier une réponse à des poids.
+
+L'institution doit lier ces poids à une promesse.
+
+## Un reçu doit couvrir toute la transaction d'IA
+
+L'identité du modèle n'est qu'une couche d'un système d'IA moderne.
+
+Le résultat d'un agent peut aussi dépendre d'une instruction système, de documents récupérés, de sorties d'outils, d'une mémoire, de filtres de sécurité, d'une politique de routage, d'un prétraitement caché, d'un post-traitement et d'une validation humaine. Prouver quels poids ont émis le dernier token ne prouve pas automatiquement quelles informations ont atteint ces poids ni ce qui s'est produit après leur réponse.
+
+Cela ne rend pas les reçus de modèle inutiles.
+
+Cela indique comment les composer.
+
+Le journal sérieux d'une exécution d'IA devrait un jour pouvoir relier :
+
+1. l'engagement du modèle
+2. la requête exacte, ou un engagement respectueux de sa confidentialité
+3. les entrées des outils et de la recherche documentaire
+4. la preuve de la sortie
+5. la version du routeur et de ses politiques
+6. l'acteur qui a approuvé les actions lourdes de conséquences
+7. le changement d'état qui en a résulté
+
+FlashProve traite les premier et quatrième éléments dans un prototype étroit.
+
+Le reste demeure de l'ingénierie système, de la gouvernance et du design produit ordinaires.
+
+C'est pourquoi cette publication compte au-delà de la cryptographie. Elle transforme une assurance vague, « nous avons servi le modèle que vous avez choisi », en une affirmation qui peut en principe être contrôlée indépendamment. Dès qu'une couche possède un reçu, l'absence de reçus autour des autres devient plus visible.
+
+## Le fond du sujet
+
+L'industrie de l'IA a passé des années à présenter les noms de modèles comme des produits stables.
+
+Ils désignent souvent des infrastructures mouvantes.
+
+Les fournisseurs mettent à jour les poids, routent entre plusieurs versions, quantifient les modèles, ajoutent des systèmes de sécurité, déplacent les charges entre régions et combinent plusieurs modèles derrière une seule interface. Beaucoup de ces changements sont légitimes. Le problème est que les clients distinguent rarement une optimisation légitime d'une substitution non déclarée.
+
+FlashProve ne résout pas tout ce problème de confiance.
+
+Il prouve une affirmation plus étroite sur un système de recherche étroit, à un coût important et avec plusieurs écarts d'implémentation explicitement documentés. Anthropic n'a pas promis de le déployer dans Claude. Des chercheurs externes n'ont pas encore audité la publication. Le dépôt lui-même prévient qu'une vérification réussie n'identifie pas le modèle réel si l'engagement ne vient pas d'une source de confiance.
+
+Ces limites doivent empêcher le tour d'honneur.
+
+Elles ne doivent pas masquer la direction prise.
+
+Les benchmarks doivent savoir si le modèle testé est celui qui est servi. Les acheteurs doivent savoir si le modèle haut de gamme n'est pas remplacé par une solution de secours moins chère. Les régulateurs ont besoin de preuves qu'un engagement a tenu pendant la période inspectée. Les journaux d'agents ont besoin de davantage qu'un nom de modèle autodéclaré.
+
+Le nom du modèle entre dans le périmètre de sécurité.
+
+Un périmètre de sécurité exige des preuves.
+
+La contribution la plus importante de FlashProve n'est pas que chaque réponse d'IA puisse désormais recevoir une preuve pratique.
+
+C'est que « faites-nous confiance, c'était bien ce modèle » ne ressemble plus à la seule réponse possible.
+
+La prochaine génération d'infrastructure d'IA ne se contentera pas de router des requêtes et de renvoyer des tokens.
+
+Pour le travail qui compte, elle devra aussi rendre un reçu.

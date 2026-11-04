@@ -1,0 +1,196 @@
+---
+title: "The Model Name Needs a Receipt"
+date: "2026-11-04"
+description: "Anthropic's FlashProve can attach a cryptographic proof to an AI reply. It does not prove the answer is good. It proves something narrower that AI buyers increasingly need: which committed model produced it."
+tags: ["AI Security", "Anthropic", "AI Models", "Cryptography", "AI Infrastructure", "Open Source"]
+draft: false
+---
+
+## The Short Version
+
+Buying an AI model still requires a surprising amount of faith.
+
+The invoice names one model. The API returns tokens. Between those two events, the customer usually has no independent way to know whether the provider served the promised weights, routed the request to a cheaper substitute, changed the model after an evaluation, or modified the response in transit.
+
+Judging the prose does not solve that problem. A smaller model can produce an excellent answer. A frontier model can produce a terrible one.
+
+Anthropic has now released [FlashProve](https://www.anthropic.com/research/provable-inference), an open-source research prototype that tries to make model identity verifiable.
+
+The provider first publishes a cryptographic commitment to one exact set of model weights. For each request, it can then produce a proof that those committed weights generated the claimed output. The verifier does not need the weights or another GPU. It needs the commitment, the request, the reply, and an ordinary CPU.
+
+Anthropic tested the system on a 4-bit integer version of Meta's 400-billion-parameter Llama 4 Maverick. It reports proof generation at roughly 110 tokens per second on one H100, with a proof of about 19 MB for a one-token inference claim over a 1,024-token window. Checking a proof takes 17 seconds on 24 CPU threads, or 21 seconds on one thread.
+
+That is impressive.
+
+It is also roughly 70 to 95 times the GPU work of ordinary inference in Anthropic's comparison. The current prototype handles short contexts, greedy decoding, a particular mixture-of-experts architecture, and an integer approximation of the model. It has not been independently audited, is not deployed in Claude, and its repository says it is not maintained.
+
+FlashProve is not a product announcement.
+
+It is evidence that a model name could become more than a label in an API response.
+
+The important shift is not from untrusted AI to trusted AI.
+
+It is from trusting a model claim to checking a model receipt.
+
+## It proves identity, not intelligence
+
+FlashProve uses a zero-knowledge cryptographic proof.
+
+"Zero knowledge" does not mean the system knows nothing. It means the verifier can check a claim about a hidden computation without learning the model weights that performed it.
+
+The workflow has two stages.
+
+In the offline stage, the provider commits to the weights. Think of the commitment as a fingerprint that binds the provider to one model without publishing the model itself.
+
+In the online stage, the provider supplies a proof for a specific input and output. If the proof passes against the trusted commitment, the verifier has cryptographic evidence that the committed computation produced those tokens.
+
+That statement is narrow by design.
+
+It does not prove that the answer is factually correct.
+
+It does not prove that the model is safe, unbiased, licensed, approved by a regulator, or worth the price.
+
+It does not prove that the committed weights correspond to the brand name printed on the invoice. A provider can commit to any weights it chooses, including a small or broken model. The [project's own known-limits document](https://github.com/anthropics/FlashProve/blob/main/guide/known-limits.md) says the commitment ID must come from a party the verifier trusts, not from the same server whose answer is being checked.
+
+That makes FlashProve closer to a tamper-evident seal than a quality certificate.
+
+A seal can show that the contents match the registered package.
+
+Someone still has to establish what the registered package is.
+
+## Model routing made this problem urgent
+
+For years, model identity was mostly a procurement detail.
+
+A customer selected an API endpoint, received a response, and trusted the provider's logs and contract. That arrangement becomes harder to defend as AI products add automatic routing, fallback models, speculative decoding, expert mixtures, regional variants, third-party gateways, and compound agents that call several models inside one task.
+
+The user may choose one product name while the runtime makes a dozen hidden decisions.
+
+Some of those decisions are useful. A router can lower cost, avoid an outage, keep data inside a region, or send difficult work to a stronger model. But every optimization creates another place where the delivered computation can diverge from the promised one.
+
+This matters most when the model identity is part of the claim:
+
+- an evaluator testing whether a released model matches its pre-release version
+- an enterprise paying a premium for a specific model tier
+- a regulated workflow restricted to an approved model and version
+- a marketplace reselling access to models from several providers
+- an incident investigation asking which weights produced a consequential output
+- a safety commitment requiring one model to remain unchanged during an audit
+
+Today, those users mostly receive logs.
+
+Logs are useful evidence. They are also generated by the system being audited.
+
+FlashProve suggests a stronger architecture: the runtime can still route, but each consequential leg can carry a proof of the exact committed model that ran.
+
+That would not remove the router's discretion.
+
+It would make the discretion inspectable.
+
+## The proof stack still has trust boundaries
+
+The phrase "formally verified" is easy to overread.
+
+Anthropic provides a Lean implementation of the verifier and machine-checked statements about completeness, soundness, and zero knowledge. That gives the mathematical protocol a much stronger foundation than an ordinary performance demo.
+
+But the fast path people would actually want to run is not fully inside that proof.
+
+The [technical report](https://www.anthropic.com/document/flashprove-technical-report) says the C++ prover and verifier were generated by AI agents from Lean representations, while formal equivalence between the executable C++ and the Lean specification has not been proved. The slower Lean verifier has the formal connection. The fast C++ verifier and CUDA prover are tested against the protocol.
+
+The distinction is not academic.
+
+A proof about a verifier is only as useful as the path connecting the production bytes to that verifier. Parsers, configuration files, commitment distribution, quantization, batching, hardware faults, and implementation differences all sit around the theorem.
+
+Anthropic is unusually direct about those seams. Its [detailed account of what is proved](https://github.com/anthropics/FlashProve/blob/main/guide/what-is-proved.md) separates the Lean theorems from the executable programs. The known-limits document says there has been no independent security audit and that AI systems, under human direction, wrote nearly all the software, proofs, documentation, and reported tests.
+
+That transparency makes the artifact more useful, not less.
+
+It lets buyers ask the correct question.
+
+Not "is FlashProve verified?"
+
+"Which statement is verified, for which implementation, under which configuration, and which parts still depend on testing or operational trust?"
+
+## The economics are nowhere near invisible
+
+Cryptographic assurance has a price.
+
+Anthropic's benchmark batches 24 requests. Producing their proofs takes about 223 seconds on one H100. Each request receives an 18.78 MB proof. Verification takes seconds on a CPU, but proving costs around two orders of magnitude more GPU time than serving the underlying model in Anthropic's comparison.
+
+That is not a drop-in default for every autocomplete, chatbot turn, or background agent action.
+
+The first practical market may be selective assurance.
+
+An evaluator could sample requests during a model audit. A bank could require proofs only for a narrow class of high-impact decisions. A model marketplace could prove a random subset of premium calls. A regulator could request attestations around a controlled test period. An incident-response team could preserve proofs for actions that changed money, permissions, code, or physical state.
+
+Sampling would change the economics without changing the deterrent value completely. A provider would not know which eligible requests an auditor intends to verify later.
+
+But even selective use needs infrastructure that FlashProve does not provide by itself:
+
+- a trusted registry mapping product names and versions to commitment IDs
+- signed timestamps and model-lifecycle records
+- rules for rotating commitments without losing continuity
+- proof retention and deletion policies
+- a common request format that captures the relevant context
+- independent audits of the prover, verifier, and deployment path
+- clear failure semantics when a proof is missing, late, or invalid
+
+The cryptography can bind an answer to weights.
+
+The institution has to bind those weights to a promise.
+
+## A receipt should cover the whole AI transaction
+
+Model identity is only one layer of a modern AI system.
+
+An agent's result may also depend on a system prompt, retrieved documents, tool outputs, memory, safety filters, a routing policy, hidden preprocessing, post-processing, and human approval. Proving which weights emitted the final token does not automatically prove what information reached those weights or what happened after they responded.
+
+That does not make model receipts pointless.
+
+It tells us how to compose them.
+
+A serious AI run record should eventually be able to link:
+
+1. the model commitment
+2. the exact request or a privacy-preserving commitment to it
+3. the tool and retrieval inputs
+4. the output proof
+5. the routing and policy version
+6. the actor who approved consequential actions
+7. the resulting state change
+
+FlashProve addresses the first and fourth pieces for a narrow prototype.
+
+The rest remains ordinary systems engineering, governance, and product design.
+
+This is why the release matters beyond cryptography. It converts one vague assurance, "we served the model you selected," into a statement that can in principle be checked independently. Once one layer has a receipt, the absence of receipts around the other layers becomes easier to see.
+
+## The bottom line
+
+The AI industry has spent years making model names feel like stable products.
+
+They are often aliases for changing infrastructure.
+
+Providers update weights, route between versions, quantize models, add safety systems, move workloads across regions, and combine several models behind one interface. Most of those changes can be legitimate. The problem is that customers usually cannot distinguish a legitimate optimization from an undisclosed substitution.
+
+FlashProve does not solve that entire trust problem.
+
+It proves a narrower claim on a narrow research system, at a substantial cost, with several explicitly documented implementation gaps. Anthropic has not promised to deploy it in Claude. Outside researchers have not yet audited the release. The repository itself warns that a successful verification does not identify the real-world model unless the commitment came from a trusted source.
+
+Those limitations should prevent a victory lap.
+
+They should not hide the direction of travel.
+
+Benchmarks need to know that the tested model is the served model. Buyers need to know that the premium model is not a cheaper fallback. Regulators need evidence that a commitment held during the period they inspected. Agent logs need more than a self-reported model string.
+
+The model name is becoming part of the security boundary.
+
+Security boundaries need evidence.
+
+FlashProve's most important contribution is not that every AI response can now carry a practical proof.
+
+It is that "trust us, that was the model" no longer looks like the only possible answer.
+
+The next generation of AI infrastructure will not only route requests and return tokens.
+
+For the work that matters, it will have to return a receipt.
