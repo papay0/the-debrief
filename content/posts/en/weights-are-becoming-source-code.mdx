@@ -1,0 +1,189 @@
+---
+title: "Weights Are Becoming Source Code"
+date: "2026-11-05"
+description: "MIT researchers asked GPT-6 Astra to patch another model by editing its weights directly. The result is early and narrow, but it turns the weight diff into a new object that AI teams will need to review, test, sign, and roll back."
+tags: ["AI Models", "AI Research", "OpenAI", "Model Editing", "AI Infrastructure", "AI Security"]
+draft: false
+---
+
+## The Short Version
+
+Model weights have mostly been treated like build artifacts.
+
+Training produces them. Fine-tuning produces another set. Quantization compresses them. Operators download, hash, load, and serve them. Even when the weights are open, few people inspect a checkpoint the way they inspect a code change.
+
+That boundary is starting to move.
+
+Four MIT CSAIL researchers have published early experiments in [weight-space programming](https://rikiyat.github.io/blog/weight-space-programming/): asking a general-purpose frontier model to read and write the numerical weights of another neural network directly, without gradient descent or a training loop.
+
+The headline experiment gave OpenAI's GPT-6 Astra a Python environment containing the weights of Qwen3.5-0.8B, practice questions, and a budget of 50 forward passes. Astra diagnosed the small model's tendency to enter reasoning loops, identified one direction written by two MLP layers, and subtracted that direction from 64 output columns in each layer.
+
+The patch changed 131,072 weights, 0.016% of the model.
+
+The researchers report that MATH-500 rose from 7.9% to 48.1%, GSM8K from 13.8% to 67.1%, and IFEval from 21.0% to 62.3%. The share of MATH-500 runs that exhausted the 32,768-token limit fell from 93% to 33%.
+
+The important caveat is hiding inside that last number.
+
+Astra did not teach the model mathematics. It removed a failure that prevented the model from finishing answers it could already produce. When the researchers tried to improve a Gemma 3 270M model that did not have the same localized loop, the edit did almost nothing.
+
+This is a blog post, not a peer-reviewed paper. The largest edited model has 0.8 billion parameters. The experiments use one frontier model, and there is not yet a benchmark for the task.
+
+But the release includes the [prompts, tool transcripts, weight diffs, and evaluations](https://github.com/RikiyaT/lm_understand-logs). Hugging Face rebuilt the edited checkpoint, verified its hashes, and reproduced the large MATH-500 gain. A [separate public rerun](https://huggingface.co/JonathanColetti/Qwen3.5-0.8B-Astra-WeightEdit) found a more revealing comparison: with thinking disabled, the base model already scored 45.8%; the edited model with thinking enabled scored 50.2%.
+
+That does not kill the result.
+
+It defines it.
+
+Weight-space programming has not shown that an AI can add arbitrary abilities to another AI. It has shown that a model can sometimes locate a narrow defect in weight space and produce a small, reviewable patch that removes it.
+
+If that becomes repeatable, weights stop looking like inert binaries.
+
+They become another surface where agents write changes and humans need a pull request.
+
+## A patch is not training
+
+The phrase "editing weights without training" is technically accurate and easy to misunderstand.
+
+Astra did not receive gradients. It did not launch a fine-tuning job or use an optimizer such as Adam. It worked in a CPU Python kernel over the tensors, selected practice prompts from the GSM8K and MATH training sets, observed batches of model outputs, and revised its edits across a budget of forward passes.
+
+That is not conventional training.
+
+It is also not a blind one-shot miracle.
+
+The model had a specification, examples, an executable test loop, access to the checkpoint, and room to iterate. The closest software analogy is not a developer staring at raw machine code and instantly understanding an application. It is an agent debugging a program with source, tests, traces, and a constrained number of runs.
+
+The other experiments make that distinction useful.
+
+Astra identified which small game policies, diffusion models, and character-level language models it had been given by inspecting their weights. It repaired a 171,664-weight control policy that had learned to drive a car directly into a ramp. It also wrote small game-playing networks from zeroed weights.
+
+Those results suggest that neural weights contain structures a capable model can sometimes translate into familiar concepts and programs.
+
+They do not show that this works generally.
+
+In the sycophancy experiment, Astra could not tell the honest and sycophantic Gemma models apart from weights alone in four attempts. It succeeded only after receiving attention patterns from model runs. In the math follow-up, it could remove Qwen's localized loop but could not create missing mathematical ability in Gemma.
+
+The honest description is narrow.
+
+An LLM can sometimes use reasoning, tools, and evaluation feedback to make targeted edits in weight space.
+
+That is already interesting enough.
+
+## The weight diff becomes the review object
+
+Fine-tuning usually produces a new checkpoint and a report about the process.
+
+The dataset changed. The optimizer ran. Many or all of the weights moved. Teams compare aggregate evaluations, but the actual parameter delta is too diffuse to review meaningfully.
+
+This experiment produced something closer to a patch.
+
+The [released checkpoint](https://huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming) names the exact base revision, identifies the two changed tensors, publishes their hashes, and provides a script that applies the edit and verifies every rebuilt tensor. Everything else is supposed to remain byte-identical.
+
+That is a different operational object from "we fine-tuned the model."
+
+It can be stored as a diff. It can be applied to a known base. It can be inspected for scope. It can be reverted without retaining another full checkpoint. Two patches can, at least in principle, be compared for overlap. A release can state exactly which tensors changed and why.
+
+None of that proves the patch is safe.
+
+A tiny diff can have a large behavioral effect. The Qwen patch is the evidence. Changing 0.016% of the weights moved several benchmark scores by tens of percentage points because those weights controlled a pervasive failure mode.
+
+Code review has the same trap. A three-line authorization change can be riskier than a thousand-line refactor.
+
+The value of the diff is not that small means harmless.
+
+It is that change becomes explicit.
+
+## Direct editing expands the supply-chain surface
+
+Yesterday's AI supply chain mostly asked where a checkpoint came from.
+
+Tomorrow's will also have to ask which patches were applied to it.
+
+A direct weight edit can be beneficial, like removing a reasoning loop. It could also weaken refusal behavior, insert a trigger, alter tool-selection preferences, or create a regression that appears only under rare prompts. A malicious patch does not need to replace the whole model if it can change one consequential circuit.
+
+That makes weight-space programming both an interpretability technique and a software-supply-chain problem.
+
+The editor matters. The prompt matters. The harness matters. The practice data and forward-pass budget matter. The base checkpoint matters. The application script matters. The evaluation suite matters. The resulting tensor hashes matter.
+
+Publishing only the final model erases that history.
+
+Publishing only the agent transcript is not enough either. The transcript explains intent, not behavior. A plausible explanation can accompany a bad patch. The edited model still needs adversarial evaluations, capability checks, safety tests, and deployment monitoring.
+
+If models start patching models, the artifact chain should look more like a signed release pipeline:
+
+1. identify the base model by immutable revision and tensor hashes
+2. record the editing model, prompt, tools, data access, and iteration budget
+3. store the minimal weight diff and the script that applies it
+4. sign the patch manifest and resulting checkpoint
+5. run broad regression tests, not only the objective the editor optimized
+6. preserve a clean rollback path
+7. report every evaluation that got worse, not only the headline gains
+
+The ability to generate a patch is not the same as permission to ship it.
+
+## Evaluation has to widen, not shrink
+
+Targeted edits are attractive because they promise to change less.
+
+That can encourage the wrong testing instinct: if only two tensors changed, perhaps only the target behavior needs to be checked.
+
+The independent Qwen rerun shows why that is insufficient.
+
+With thinking enabled, the patch produced a large gain by stopping loops. With thinking disabled, the edited model scored 43.6% on MATH-500 versus 45.8% for the base model, a small decline in that evaluation. The editor fixed one operating mode and did not improve the model in every configuration.
+
+That is normal engineering, not a scandal.
+
+Patches have tradeoffs.
+
+The test matrix should therefore expand across sampling settings, context lengths, languages, tool use, safety policies, quantizations, hardware backends, and adjacent capabilities. It should include behavioral tests that the editor never saw and long-tail prompts designed to find unintended changes.
+
+The closer a patch sits to the weights, the less confidence we should place in a neat natural-language explanation of what it does.
+
+The explanation is a hypothesis.
+
+The evaluations are evidence.
+
+Production behavior remains the final test.
+
+## This is not recursive self-improvement yet
+
+The most dramatic interpretation is obvious.
+
+An AI improved another AI by changing its brain directly. Therefore, recursive self-improvement has arrived.
+
+That story outruns the evidence.
+
+GPT-6 Astra is a much stronger external model operating on a small open checkpoint inside a human-designed harness. It received a goal, practice data, tools, and an evaluation budget. Humans selected the experiment, ran the environment, scored the result, reconstructed the checkpoint, and published the artifact.
+
+The target model did not autonomously inspect and improve itself.
+
+The edit also removed a specific defect rather than creating a capability the target lacked. The failed Gemma experiment is not a footnote. It is the boundary of the current result.
+
+There is still a long path from "a frontier model can debug a small model's localized failure" to "models can repeatedly design better successors."
+
+That path includes scaling to much larger checkpoints, finding distributed behaviors rather than single directions, preventing regressions, defending the editing loop against poisoned feedback, and establishing that improvements compound instead of collapsing elsewhere.
+
+Calling this recursive self-improvement today makes the work sound bigger while making the useful lesson smaller.
+
+The useful lesson is that model maintenance may gain a new primitive.
+
+Not retrain.
+
+Patch.
+
+## The bottom line
+
+Weight-space programming is early research with unusually concrete artifacts.
+
+The researchers published failures alongside wins. They released complete logs and exact diffs. The most striking result was rebuilt and independently reproduced. The best interpretation is narrower than the headline and stronger than a demo.
+
+A frontier model found a localized failure in another model's weights and wrote a small patch that substantially changed its behavior.
+
+It did not add mathematical knowledge. It did not prove that arbitrary model behavior can be read from weights. It did not show that direct edits scale to frontier checkpoints or that they are safer than fine-tuning.
+
+But it changed the shape of the engineering question.
+
+If weights can be patched deliberately, teams will need the model equivalent of source control: immutable bases, minimal diffs, authorship, signatures, regression suites, approvals, release notes, and rollback.
+
+The checkpoint can no longer be the beginning of the audit trail.
+
+It has to be the result of one.

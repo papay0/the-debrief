@@ -1,0 +1,189 @@
+---
+title: "Les poids commencent à ressembler à du code source"
+date: "2026-11-05"
+description: "Des chercheurs du MIT ont demandé à GPT-6 Astra de corriger un autre modèle en modifiant directement ses poids. Le résultat reste précoce et étroit, mais il transforme le diff de poids en un nouvel objet qu'il faut relire, tester, signer et pouvoir annuler."
+tags: ["Modèles d'IA", "Recherche en IA", "OpenAI", "Édition de modèles", "Infrastructure IA", "Sécurité de l'IA"]
+draft: false
+---
+
+## La version courte
+
+Jusqu'ici, les poids d'un modèle ressemblaient surtout à des artefacts de compilation.
+
+L'entraînement les produit. Le fine-tuning en produit un nouveau jeu. La quantification les compresse. Les opérateurs les téléchargent, calculent leur empreinte, les chargent et les servent. Même quand ils sont ouverts, rares sont ceux qui examinent un checkpoint comme ils reliraient une modification de code.
+
+Cette frontière commence à bouger.
+
+Quatre chercheurs du MIT CSAIL viennent de publier de premières expériences de [programmation dans l'espace des poids](https://rikiyat.github.io/blog/weight-space-programming/) : demander à un modèle généraliste de pointe de lire et d'écrire directement les valeurs numériques d'un autre réseau, sans descente de gradient ni boucle d'entraînement.
+
+Dans l'expérience phare, OpenAI GPT-6 Astra reçoit un environnement Python contenant les poids de Qwen3.5-0.8B, des problèmes d'entraînement et un budget de 50 passes d'inférence. Astra diagnostique la tendance du petit modèle à entrer dans des boucles de raisonnement, isole une direction produite par deux couches MLP et la soustrait de 64 colonnes de sortie dans chacune d'elles.
+
+Le patch modifie 131 072 poids, soit 0,016 % du modèle.
+
+Les chercheurs annoncent un score MATH-500 qui passe de 7,9 % à 48,1 %, GSM8K de 13,8 % à 67,1 % et IFEval de 21,0 % à 62,3 %. La part des réponses MATH-500 qui épuisent la limite de 32 768 tokens tombe de 93 % à 33 %.
+
+La principale réserve se cache dans ce dernier chiffre.
+
+Astra n'a pas enseigné les mathématiques au modèle. Il a retiré une panne qui l'empêchait de terminer des réponses qu'il savait déjà produire. Quand les chercheurs ont tenté d'améliorer Gemma 3 270M, qui ne souffrait pas de la même boucle localisée, la modification n'a presque rien changé.
+
+Il s'agit d'un billet de blog, pas d'un article relu par les pairs. Le plus grand modèle édité ne compte que 0,8 milliard de paramètres. Les expériences reposent sur un seul modèle de pointe et il n'existe pas encore de benchmark pour cette tâche.
+
+Mais les auteurs publient les [prompts, transcriptions d'outils, diffs de poids et évaluations](https://github.com/RikiyaT/lm_understand-logs). Hugging Face a reconstruit le checkpoint modifié, vérifié ses empreintes et reproduit le bond sur MATH-500. Une [autre réévaluation publique](https://huggingface.co/JonathanColetti/Qwen3.5-0.8B-Astra-WeightEdit) apporte une comparaison plus révélatrice : sans mode de raisonnement, le modèle de base atteignait déjà 45,8 % ; avec ce mode, la version modifiée obtient 50,2 %.
+
+Cela n'annule pas le résultat.
+
+Cela le délimite.
+
+La programmation dans l'espace des poids ne montre pas qu'une IA peut ajouter n'importe quelle capacité à une autre. Elle montre qu'un modèle peut parfois repérer un défaut localisé dans les poids et produire un petit patch, vérifiable comme artefact, qui le supprime.
+
+Si cette méthode devient reproductible, les poids cessent de ressembler à des binaires inertes.
+
+Ils deviennent une nouvelle surface où les agents écrivent des modifications et où les humains ont besoin d'une pull request.
+
+## Un patch n'est pas un entraînement
+
+L'expression « modifier les poids sans entraînement » est techniquement exacte et facile à mal comprendre.
+
+Astra ne reçoit aucun gradient. Il ne lance ni fine-tuning ni optimiseur comme Adam. Il travaille dans un noyau Python sur CPU avec les tenseurs, sélectionne des problèmes d'entraînement de GSM8K et MATH, observe des lots de sorties puis révise ses modifications dans la limite du budget de passes d'inférence.
+
+Ce n'est pas un entraînement conventionnel.
+
+Ce n'est pas non plus un miracle aveugle en un seul essai.
+
+Le modèle dispose d'une spécification, d'exemples, d'une boucle de test exécutable, du checkpoint et d'un droit à l'itération. L'analogie logicielle la plus juste n'est pas celle d'un développeur qui contemple du code machine brut et comprend instantanément une application. C'est celle d'un agent qui débogue un programme avec son code, ses tests, ses traces et un nombre limité d'exécutions.
+
+Les autres expériences rendent cette distinction utile.
+
+Astra identifie les jeux, les formes et les langues auxquels de petits réseaux ont été entraînés en inspectant leurs poids. Il répare une politique de contrôle de 171 664 poids qui avait appris à envoyer une voiture tout droit dans une rampe. Il écrit aussi de petits réseaux de jeu à partir de poids initialisés à zéro.
+
+Ces résultats suggèrent que les poids contiennent parfois des structures qu'un modèle capable peut traduire en concepts et en programmes familiers.
+
+Ils ne prouvent pas que la méthode fonctionne en général.
+
+Dans l'expérience sur la complaisance, Astra échoue quatre fois à distinguer les modèles Gemma honnête et complaisant à partir des seuls poids. Il n'y parvient qu'après avoir reçu les motifs d'attention issus d'exécutions. Dans l'expérience mathématique, il supprime la boucle localisée de Qwen, mais ne crée pas la capacité mathématique absente de Gemma.
+
+La description honnête est plus étroite.
+
+Un LLM peut parfois utiliser son raisonnement, des outils et un retour d'évaluation pour apporter des modifications ciblées dans l'espace des poids.
+
+C'est déjà suffisamment intéressant.
+
+## Le diff de poids devient l'objet à relire
+
+Un fine-tuning produit généralement un nouveau checkpoint et un rapport sur le processus.
+
+Le jeu de données a changé. L'optimiseur a tourné. Beaucoup de poids, parfois tous, ont bougé. Les équipes comparent des évaluations agrégées, mais le delta réel des paramètres est trop diffus pour être relu de façon utile.
+
+Cette expérience produit quelque chose qui ressemble davantage à un patch.
+
+Le [checkpoint publié](https://huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming) nomme la révision exacte du modèle de base, identifie les deux tenseurs modifiés, publie leurs empreintes et fournit un script qui applique le changement puis vérifie chaque tenseur reconstruit. Tout le reste est censé rester identique octet par octet.
+
+C'est un objet opérationnel différent de « nous avons fine-tuné le modèle ».
+
+On peut le stocker sous forme de diff. L'appliquer à une base connue. Examiner son périmètre. L'annuler sans conserver un autre checkpoint complet. Deux patchs peuvent, au moins en théorie, être comparés pour détecter leurs chevauchements. Une version peut dire exactement quels tenseurs ont changé et pourquoi.
+
+Rien de tout cela ne prouve que le patch est sûr.
+
+Un diff minuscule peut avoir un effet comportemental immense. Le patch de Qwen en est la preuve : modifier 0,016 % des poids déplace plusieurs benchmarks de dizaines de points parce que ces valeurs contrôlaient une panne omniprésente.
+
+Le code possède le même piège. Trois lignes qui changent une autorisation peuvent être plus risquées qu'un refactoring de mille lignes.
+
+La valeur du diff n'est pas que petit signifie inoffensif.
+
+C'est que la modification devient explicite.
+
+## L'édition directe élargit la chaîne d'approvisionnement
+
+Hier, la chaîne d'approvisionnement de l'IA demandait surtout d'où venait un checkpoint.
+
+Demain, elle devra aussi demander quels patchs lui ont été appliqués.
+
+Une modification directe peut être bénéfique, comme la suppression d'une boucle de raisonnement. Elle pourrait aussi affaiblir les refus, introduire un déclencheur, changer les préférences de sélection d'outils ou créer une régression qui n'apparaît qu'avec de rares prompts. Un patch malveillant n'a pas besoin de remplacer tout le modèle s'il peut modifier un seul circuit décisif.
+
+La programmation dans l'espace des poids devient donc à la fois une technique d'interprétabilité et un problème de chaîne d'approvisionnement logicielle.
+
+Le modèle éditeur compte. Son prompt compte. Le harnais compte. Les données d'entraînement accessibles et le budget de passes comptent. Le checkpoint de base compte. Le script d'application compte. La suite d'évaluation compte. Les empreintes des tenseurs obtenus comptent.
+
+Ne publier que le modèle final efface cette histoire.
+
+Ne publier que la transcription de l'agent ne suffit pas non plus. Elle explique une intention, pas un comportement. Une explication plausible peut accompagner un mauvais patch. Le modèle modifié doit toujours subir des évaluations adversariales, des tests de capacités et de sécurité, puis une surveillance en production.
+
+Si des modèles commencent à en corriger d'autres, la chaîne d'artefacts devrait ressembler à un pipeline de publication signé :
+
+1. identifier le modèle de base par une révision immuable et les empreintes de ses tenseurs
+2. enregistrer le modèle éditeur, son prompt, ses outils, son accès aux données et son budget d'itération
+3. conserver le diff minimal et le script qui l'applique
+4. signer le manifeste du patch et le checkpoint obtenu
+5. exécuter de larges tests de régression, pas seulement l'objectif optimisé par l'éditeur
+6. préserver un chemin de retour arrière propre
+7. publier toutes les évaluations qui reculent, pas seulement les gains
+
+Savoir produire un patch ne donne pas la permission de le déployer.
+
+## L'évaluation doit s'élargir, pas se rétrécir
+
+Les modifications ciblées séduisent parce qu'elles promettent de changer moins de choses.
+
+Cette promesse peut encourager le mauvais réflexe : si seuls deux tenseurs ont changé, peut-être suffit-il de tester le comportement visé.
+
+La réévaluation indépendante de Qwen montre pourquoi ce serait insuffisant.
+
+Avec le mode de raisonnement, le patch apporte un gain massif en stoppant les boucles. Sans ce mode, le modèle modifié obtient 43,6 % sur MATH-500 contre 45,8 % pour la base, une petite baisse dans cette évaluation. L'éditeur corrige un mode de fonctionnement sans améliorer le modèle dans toutes ses configurations.
+
+C'est de l'ingénierie normale, pas un scandale.
+
+Les patchs ont des compromis.
+
+La matrice de test doit donc s'étendre aux réglages d'échantillonnage, longueurs de contexte, langues, appels d'outils, politiques de sécurité, quantifications, backends matériels et capacités voisines. Elle doit inclure des tests comportementaux que l'éditeur n'a jamais vus et des prompts de longue traîne conçus pour révéler des effets imprévus.
+
+Plus un patch agit près des poids, moins il faut accorder de confiance à une explication bien formulée de ce qu'il fait.
+
+L'explication est une hypothèse.
+
+Les évaluations apportent des preuves.
+
+Le comportement en production reste le test final.
+
+## Ce n'est pas encore de l'auto-amélioration récursive
+
+L'interprétation spectaculaire est évidente.
+
+Une IA a amélioré une autre IA en modifiant directement son cerveau. L'auto-amélioration récursive est donc arrivée.
+
+Ce récit dépasse largement les preuves.
+
+GPT-6 Astra est un modèle externe bien plus puissant qui agit sur un petit checkpoint ouvert dans un harnais conçu par des humains. Il reçoit un objectif, des données d'entraînement, des outils et un budget d'évaluation. Des humains choisissent l'expérience, exécutent l'environnement, notent le résultat, reconstruisent le checkpoint et publient l'artefact.
+
+Le modèle cible ne s'est pas inspecté et amélioré de façon autonome.
+
+La modification retire aussi une panne précise au lieu de créer une capacité absente. L'échec sur Gemma n'est pas une note de bas de page. C'est la frontière du résultat actuel.
+
+Il reste un long chemin entre « un modèle de pointe sait déboguer une panne localisée d'un petit modèle » et « les modèles savent concevoir de meilleurs successeurs de manière répétée ».
+
+Ce chemin passe par le passage à de bien plus grands checkpoints, la détection de comportements distribués plutôt que d'une seule direction, la prévention des régressions, la protection de la boucle d'édition contre un retour empoisonné et la preuve que les améliorations se cumulent sans provoquer d'effondrement ailleurs.
+
+Parler aujourd'hui d'auto-amélioration récursive agrandit artificiellement le résultat tout en rapetissant la leçon utile.
+
+La leçon utile est que la maintenance des modèles pourrait gagner une nouvelle primitive.
+
+Pas réentraîner.
+
+Patcher.
+
+## L'essentiel
+
+La programmation dans l'espace des poids est une recherche précoce accompagnée d'artefacts inhabituellement concrets.
+
+Les chercheurs publient leurs échecs avec leurs réussites. Ils diffusent les journaux complets et les diffs exacts. Le résultat le plus frappant a été reconstruit et reproduit indépendamment. La meilleure interprétation est plus étroite que le titre spectaculaire et plus solide qu'une simple démo.
+
+Un modèle de pointe a trouvé une panne localisée dans les poids d'un autre modèle et écrit un petit patch qui modifie fortement son comportement.
+
+Il n'a pas ajouté de connaissances mathématiques. Il n'a pas prouvé que n'importe quel comportement peut être lu dans les poids. Il n'a pas montré que les modifications directes passent à l'échelle des modèles de pointe ni qu'elles sont plus sûres que le fine-tuning.
+
+Mais il change la forme de la question d'ingénierie.
+
+Si les poids peuvent être patchés délibérément, les équipes auront besoin de l'équivalent du contrôle de source pour les modèles : bases immuables, diffs minimaux, auteurs, signatures, suites de régression, validations, notes de version et retour arrière.
+
+Le checkpoint ne peut plus être le début de la piste d'audit.
+
+Il doit en être le résultat.
