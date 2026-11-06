@@ -1,10 +1,69 @@
 ---
 title: "AI Can Find the Bug. Who Is Going to Fix It?"
-date: "2026-10-09"
-description: "Anthropic's OSS Scanner can send maintainers unreviewed findings. OpenAI's PHP response shows the harder model: fund expert validation, patching, coordinated disclosure, provider mitigations, and deployment support."
+date: "2026-11-06"
+description: "OpenAI's GPT-6 Cyber pipeline produced 948 working Linux privilege-escalation exploits and candidate patches. The result industrializes discovery and validation, but it does not erase the human bottleneck between a generated patch and risk removed."
 tags: ["AI Security", "Open Source", "Anthropic", "OpenAI", "Developer Tools"]
 draft: false
 ---
+
+## Update: OpenAI has industrialized the exploit
+
+The discovery bottleneck did not merely move.
+
+OpenAI has now put it on a production line.
+
+In one mid-October run, the company's [GPT-6 Cyber Linux pipeline](https://openai.com/index/a-thousand-fewer-paths-to-root/) selected 5,034 audit targets covering about 2.8 million lines of kernel code, produced 2,308 candidate findings, dynamically reproduced 1,724 vulnerabilities, and developed 948 distinct local privilege-escalation exploits.
+
+The API bill was $1.21 million, or $1,279 per distinct exploit after the rest of the pipeline was included.
+
+That is not a scanner producing a long list of suspicious functions.
+
+It is an autonomous system moving from source review to a root shell, then bundling the root-cause analysis, crashing proof of concept, full exploit, and candidate patch for a human researcher.
+
+OpenAI [classifies GPT-6 Cyber as Critical](https://openai.com/index/introducing-gpt-6-cyber/) under its own cybersecurity framework. Access begins through Daybreak Red for selected approved customers, with identity checks, managed devices, monitoring, and other controls around a model explicitly designed to build working exploits.
+
+The useful headline is not that AI can find bugs anymore.
+
+It is that exploit development can now be measured as throughput.
+
+## 948 exploits are not 948 fixed bugs
+
+OpenAI says the pipeline generated 948 distinct patches and that human researchers reviewed outputs before reporting vulnerabilities and patches to maintainers.
+
+That is meaningful progress.
+
+It is not the same as 948 fixes accepted upstream, released in supported kernels, backported by distributions, deployed by cloud providers, and installed by users.
+
+The paper itself contains the warning labels.
+
+In an early run, 20 of 200 apparent exploit successes reached root through a different zero-day than the vulnerability assigned to the agent. OpenAI had to add an independent check that verified the path, not only the result.
+
+Its first generated patches could stop the proof of concept while adding too much code, creating performance tradeoffs, missing related variants, or diverging from kernel conventions. Better instructions and iteration improved them. Human judgment did not disappear; it moved later in the pipeline, where each mistake was attached to a working exploit.
+
+The economics are moving faster than the institutions.
+
+OpenAI compares the run with historical bug bounties and calculates a hypothetical value far above the API cost. That is a capability comparison, not realized security value. A generated exploit can be counted the moment it opens a root shell. A fix only counts after review, coordination, integration, release, and deployment.
+
+## The metric now has a numerator and a denominator
+
+This is the strongest evidence yet for the argument below.
+
+Discovery, reproduction, exploit development, and candidate patching can all scale together. Maintainer attention cannot.
+
+The Linux campaign does improve the equation because it brings reproducible evidence and proposed patches, not raw static-analysis reports. But it also makes the missing number more visible: how much of the generated work becomes accepted, deployed risk reduction, and how long that conversion takes.
+
+The next serious report should publish both sides:
+
+- exploits independently validated
+- patches accepted upstream
+- fixes released and backported
+- median human review time per accepted patch
+- variants caught before merge
+- affected systems actually updated
+
+GPT-6 Cyber turns exploit generation into an industrial process.
+
+Security will depend on whether remediation can become one too.
 
 ## Update: PHP shows what a remediation budget buys
 

@@ -1,10 +1,69 @@
 ---
 title: "L'IA peut trouver la faille. Qui va la corriger ?"
-date: "2026-10-09"
-description: "Le scanner OSS d'Anthropic peut envoyer aux mainteneurs des découvertes non relues. La réponse d'OpenAI autour de PHP montre le modèle plus exigeant : financer la validation experte, les correctifs, la divulgation coordonnée, les mitigations et le déploiement."
+date: "2026-11-06"
+description: "Le pipeline GPT-6 Cyber d'OpenAI a produit 948 exploits Linux d'élévation de privilèges et autant de patchs candidats. La découverte et la validation passent à l'échelle, mais le goulot d'étranglement humain entre un correctif généré et un risque réellement supprimé reste entier."
 tags: ["Sécurité IA", "Open Source", "Anthropic", "OpenAI", "Outils développeurs"]
 draft: false
 ---
+
+## Mise à jour : OpenAI a industrialisé l'exploit
+
+Le goulot d'étranglement de la découverte ne s'est pas contenté de se déplacer.
+
+OpenAI vient de le mettre sur une chaîne de production.
+
+Lors d'un run réalisé à la mi-octobre, son [pipeline Linux alimenté par GPT-6 Cyber](https://openai.com/index/a-thousand-fewer-paths-to-root/) a sélectionné 5 034 cibles d'audit couvrant environ 2,8 millions de lignes du noyau, produit 2 308 signalements, reproduit dynamiquement 1 724 vulnérabilités et développé 948 exploits distincts d'élévation locale de privilèges.
+
+La facture API atteint 1,21 million de dollars, soit 1 279 dollars par exploit distinct une fois l'ensemble du pipeline pris en compte.
+
+Il ne s'agit plus d'un scanner qui produit une longue liste de fonctions suspectes.
+
+C'est un système autonome qui passe de la revue du code à un shell root, puis rassemble l'analyse de la cause, la preuve de concept qui déclenche le crash, l'exploit complet et un patch candidat pour un chercheur humain.
+
+OpenAI [classe GPT-6 Cyber au niveau Critical](https://openai.com/index/introducing-gpt-6-cyber/) de son propre cadre de cybersécurité. L'accès commence via Daybreak Red pour certains clients approuvés, avec vérification d'identité, appareils administrés, monitoring et autres contrôles autour d'un modèle explicitement conçu pour produire des exploits fonctionnels.
+
+Le titre utile n'est plus que l'IA sait trouver des bugs.
+
+C'est que le développement d'exploits peut désormais se mesurer en débit.
+
+## 948 exploits ne sont pas 948 bugs corrigés
+
+OpenAI affirme que son pipeline a généré 948 patchs distincts et que des chercheurs humains ont examiné les résultats avant d'envoyer vulnérabilités et correctifs aux mainteneurs.
+
+C'est un progrès réel.
+
+Ce n'est pas la même chose que 948 corrections acceptées en amont, publiées dans les noyaux maintenus, rétroportées par les distributions, déployées par les clouds puis installées par les utilisateurs.
+
+Le rapport contient lui-même les avertissements nécessaires.
+
+Lors d'un premier run, 20 exploits apparemment réussis sur 200 avaient obtenu les droits root grâce à une autre faille zero-day que celle assignée à l'agent. OpenAI a dû ajouter une vérification indépendante du chemin suivi, et pas seulement du résultat final.
+
+Les premiers patchs générés pouvaient bloquer la preuve de concept tout en ajoutant trop de code, en créant des compromis de performance, en oubliant des variantes proches ou en s'écartant des conventions du noyau. De meilleures consignes et plusieurs itérations ont amélioré leur qualité. Le jugement humain n'a pas disparu : il s'est déplacé vers la fin du pipeline, là où chaque erreur est accompagnée d'un exploit fonctionnel.
+
+L'économie avance plus vite que les institutions.
+
+OpenAI compare le run à d'anciens bug bounties et calcule une valeur hypothétique très supérieure au coût API. C'est une comparaison de capacités, pas une valeur de sécurité réalisée. Un exploit généré peut être compté dès qu'il ouvre un shell root. Une correction ne compte qu'après revue, coordination, intégration, publication et déploiement.
+
+## La métrique a maintenant un numérateur et un dénominateur
+
+Voilà la preuve la plus forte, à ce jour, de la thèse défendue plus bas.
+
+La découverte, la reproduction, le développement d'exploits et la génération de patchs candidats peuvent tous passer à l'échelle. Pas l'attention des mainteneurs.
+
+La campagne Linux améliore tout de même l'équation, car elle fournit des preuves reproductibles et des correctifs proposés, pas de simples rapports d'analyse statique. Mais elle rend aussi le chiffre manquant plus visible : quelle part de ce travail généré devient une réduction de risque acceptée et déployée, et combien de temps cette conversion demande-t-elle ?
+
+Le prochain rapport sérieux devrait publier les deux côtés :
+
+- les exploits validés indépendamment
+- les patchs acceptés en amont
+- les corrections publiées et rétroportées
+- le temps médian de revue humaine par patch accepté
+- les variantes détectées avant le merge
+- les systèmes affectés réellement mis à jour
+
+GPT-6 Cyber transforme la génération d'exploits en processus industriel.
+
+La sécurité dépendra de notre capacité à industrialiser aussi la correction.
 
 ## Mise à jour : PHP montre ce qu'achète un budget de correction
 
