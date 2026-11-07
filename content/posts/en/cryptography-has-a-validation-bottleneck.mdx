@@ -1,10 +1,83 @@
 ---
 title: "Cryptography Has a Validation Bottleneck"
-date: "2026-10-28"
-description: "OpenAI and Anthropic have published machine-checked artifacts for a claimed refutation of the Exponential Time Hypothesis. The proofs make one thing clear: a checked derivation is not yet scientific consensus."
+date: "2026-11-07"
+description: "Google DeepMind's human-guided agents produced one measured RSA-1024 implementation gain and one unimplemented batch-factorization algorithm. The release shows why AI-assisted science needs separate labels for computation, theory, formal verification, and real-world risk."
 tags: ["AI Security", "Anthropic", "OpenAI", "Google", "AI Agents", "AI Research", "Cryptography", "Open Source", "Developer Tools"]
 draft: false
 ---
+
+## Update: DeepMind did not break modern RSA
+
+The least useful version of this story is that AI broke encryption.
+
+It did not.
+
+Google DeepMind and outside cryptographers have published two working papers on legacy 1024-bit RSA. Both explicitly say their results do not threaten deployed systems using 2048-bit or larger RSA.
+
+That caveat should not be hidden after the exciting number.
+
+The interesting result is what human-guided agents did inside the research process, and how differently the two papers establish their claims.
+
+The first paper, [Modular Roots from a Restricted Oracle](https://storage.googleapis.com/deepmind-media/papers/Faster_Affine_Root_and_a_1024bit%20Computation.pdf), combines new analysis with a full computation on an RSA-1024 instance that had already been solved by earlier researchers. Two cooperating agents designed, implemented, ran, and debugged the computation. It used 391 CPU core-years for the first root, compared with 1,380 in the earlier run.
+
+That is a 3.5x measured reduction in CPU work.
+
+It is not a 3.5x better cryptanalytic algorithm. The paper used the same algorithm, polynomials, and bounds. The gain came from implementation and execution, especially faster sieving. Its 3.2-day calendar time also relied on enormous parallelism, peaking at about 300,000 CPU cores and 16 GPUs.
+
+The second paper, [Fan Factories](https://storage.googleapis.com/deepmind-media/papers/Fan_Factories_Multiple_Number_Fields_in_Factorization_Factories_and_Batch_NFS.pdf), proposes a new way to share precomputation when factoring many integers of the same size. At 1024 bits, its leading-order analysis estimates that each additional target could cost about 30 times less than the previous method under a particular precomputation budget.
+
+That is a theoretical estimate.
+
+No fan factory has been implemented. The authors say hidden factors may be large and do not claim to know when the method would beat a tuned number field sieve in practice.
+
+Two papers. Two serious results. Two very different kinds of evidence.
+
+## The validation ladder needs a label for every rung
+
+The RSA release is almost a perfect test for the validation ladder below.
+
+In the first paper, the agents produced a root and checked it independently. That is an end-to-end computation on a known instance. The authors can count the CPU work and compare it with the earlier run.
+
+In the second, one model generated proofs and another verified them. Lean 4 checks algebraic identities and feasibility witnesses behind the analysis. That is strong evidence that the formal derivation says what the authors think it says.
+
+Lean does not turn asymptotic notation into a running implementation.
+
+It does not reveal the hidden constants.
+
+It does not show that the proposed factory is economical on real hardware.
+
+And neither paper shows that modern RSA-2048 has been practically compromised. The first computation stops at 1024 bits. The larger-key costs are asymptotic. The second method reduces the marginal cost of factoring many same-size keys only after a large shared precomputation; it does not make one modern key suddenly cheap to factor.
+
+The public vocabulary needs to preserve those boundaries:
+
+- **measured:** a computation actually ran at the stated scale
+- **derived:** an algorithmic cost follows from stated assumptions
+- **machine-checked:** a formal system accepted specified identities or proofs
+- **implemented:** working code exists for the proposed method
+- **independently reproduced:** an outside team obtained the result
+- **deployment-relevant:** the assumptions match systems people actually use
+
+Calling every rung “verified” is how a careful result becomes a misleading headline.
+
+## The agent achievement is operational, not magical
+
+The strongest AI result may be the research operation itself.
+
+The first paper describes a supervisor agent and an executor agent working through a shared design document, repository, logs, and compute cluster. They wrote about 33,500 lines of new code, launched 336 distributed experiments, and made more than 16,000 tool calls. A human researcher sent around 20 short messages, mostly approvals.
+
+The agents also hit real full-scale failures. A 32-bit offset overflow made the first root wrong. The system localized the fault, changed the offset to 64 bits, reran the affected work, and independently checked the final root.
+
+That is more substantial than a model suggesting a promising lemma in chat.
+
+It is also not autonomous science without humans. A researcher chose the problem, oracle bound, and target instance, then approved gates before irreversible steps. The paper names the systems only as Model A and Model B, so the result is not a reproducible benchmark of a commercial model. The work also built on an existing smaller-scale pipeline and a known cryptanalytic computation.
+
+The mature claim is still impressive:
+
+With a carefully gated harness, access to extreme compute, and a human choosing the scientific objective, agents can now execute and debug a cryptographic research program that previously took a specialist team months.
+
+That changes the speed of research.
+
+It does not remove the need to say exactly what was measured, what was proved, what was implemented, and what remains safe.
 
 ## Update: two checked proofs are not yet a consensus
 

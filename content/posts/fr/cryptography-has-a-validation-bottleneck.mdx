@@ -1,10 +1,83 @@
 ---
 title: "La cryptographie a un goulot de validation"
-date: "2026-10-28"
-description: "OpenAI et Anthropic ont publié des artefacts vérifiés par machine autour d'une réfutation annoncée de l'hypothèse du temps exponentiel. Une preuve contrôlée n'est pas encore un consensus scientifique."
+date: "2026-11-07"
+description: "Des agents guidés par des humains chez Google DeepMind ont produit un gain mesuré sur un calcul RSA-1024 et un algorithme non implémenté de factorisation par lots. Cette publication montre pourquoi la science assistée par IA doit distinguer calcul, théorie, vérification formelle et risque réel."
 tags: ["Sécurité IA", "Anthropic", "OpenAI", "Google", "Agents IA", "Recherche IA", "Cryptographie", "Open Source", "Outils développeurs"]
 draft: false
 ---
+
+## Mise à jour : DeepMind n'a pas cassé le RSA moderne
+
+La version la moins utile de cette histoire serait que l'IA a cassé RSA.
+
+Ce n'est pas le cas.
+
+Google DeepMind et des cryptanalystes extérieurs ont publié deux documents de travail sur le RSA à 1024 bits, désormais obsolète. Les deux précisent explicitement que leurs résultats ne menacent pas les systèmes déployés avec des clés RSA de 2048 bits ou plus.
+
+Cette réserve ne devrait pas être reléguée après le chiffre spectaculaire.
+
+Le résultat intéressant concerne le rôle d'agents guidés par des humains dans le processus de recherche, ainsi que les preuves très différentes apportées par les deux articles.
+
+Le premier, [Modular Roots from a Restricted Oracle](https://storage.googleapis.com/deepmind-media/papers/Faster_Affine_Root_and_a_1024bit%20Computation.pdf), combine une nouvelle analyse et un calcul complet sur une instance RSA-1024 déjà résolue par d'autres chercheurs. Deux agents ont conçu, implémenté, exécuté et débogué ce calcul ensemble. La première racine a demandé 391 années-cœur CPU, contre 1 380 lors de l'expérience précédente.
+
+C'est une réduction mesurée de 3,5x du travail CPU.
+
+Ce n'est pas un algorithme cryptanalytique 3,5x plus efficace. L'article reprend le même algorithme, les mêmes polynômes et les mêmes bornes. Le gain vient de l'implémentation et de l'exécution, en particulier d'un crible plus rapide. Les 3,2 jours de temps écoulé reposent aussi sur un parallélisme massif, avec un pic d'environ 300 000 cœurs CPU et 16 GPU.
+
+Le second article, [Fan Factories](https://storage.googleapis.com/deepmind-media/papers/Fan_Factories_Multiple_Number_Fields_in_Factorization_Factories_and_Batch_NFS.pdf), propose une nouvelle manière de partager un précalcul lorsqu'il faut factoriser de nombreux entiers de même taille. Pour 1024 bits, son analyse au premier ordre estime que chaque cible supplémentaire pourrait coûter environ 30 fois moins que la méthode précédente, avec un budget de précalcul précis.
+
+C'est une estimation théorique.
+
+Aucune « fan factory » n'a été implémentée. Les auteurs indiquent que les facteurs cachés peuvent être importants et ne prétendent pas savoir à partir de quelle taille la méthode dépasserait en pratique un crible général bien optimisé.
+
+Deux articles. Deux résultats sérieux. Deux types de preuves très différents.
+
+## Chaque niveau de validation a besoin de son étiquette
+
+Cette publication sur RSA constitue presque un test parfait pour l'échelle de validation décrite plus bas.
+
+Dans le premier article, les agents ont produit une racine puis l'ont contrôlée de manière indépendante. Il s'agit d'un calcul de bout en bout sur une instance connue. Les auteurs peuvent mesurer le travail CPU et le comparer à l'expérience précédente.
+
+Dans le second, un modèle a généré les preuves et un autre les a vérifiées. Lean 4 contrôle les identités algébriques et les témoins de faisabilité qui sous-tendent l'analyse. C'est un élément solide montrant que la dérivation formelle dit bien ce que les auteurs pensent qu'elle dit.
+
+Lean ne transforme pas une notation asymptotique en implémentation fonctionnelle.
+
+Il ne révèle pas les constantes cachées.
+
+Il ne montre pas que la méthode proposée serait rentable sur du matériel réel.
+
+Et aucun des deux articles ne montre que RSA-2048 a été compromis en pratique. Le premier calcul s'arrête à 1024 bits. Les coûts pour les clés plus grandes restent asymptotiques. La seconde méthode réduit le coût marginal de la factorisation de nombreuses clés de même taille seulement après un important précalcul partagé ; elle ne rend pas soudain bon marché la factorisation d'une clé moderne isolée.
+
+Le vocabulaire public doit préserver ces frontières :
+
+- **mesuré :** un calcul a réellement été exécuté à l'échelle annoncée
+- **dérivé :** un coût algorithmique découle des hypothèses formulées
+- **contrôlé par machine :** un système formel a accepté des identités ou des preuves précises
+- **implémenté :** il existe un code fonctionnel pour la méthode proposée
+- **reproduit indépendamment :** une équipe extérieure a obtenu le résultat
+- **pertinent en production :** les hypothèses correspondent aux systèmes réellement utilisés
+
+Utiliser le mot « vérifié » pour chaque niveau transforme un résultat prudent en titre trompeur.
+
+## La réussite des agents est opérationnelle, pas magique
+
+Le résultat le plus fort sur l'IA concerne peut-être l'organisation de la recherche elle-même.
+
+Le premier article décrit un agent superviseur et un agent exécutant qui travaillent avec un document de conception, un dépôt, des logs et un cluster de calcul partagés. Ils ont écrit environ 33 500 lignes de nouveau code, lancé 336 expériences distribuées et effectué plus de 16 000 appels d'outils. Un chercheur humain a envoyé une vingtaine de messages courts, surtout des validations.
+
+Les agents ont aussi rencontré de vrais problèmes à pleine échelle. Un débordement d'indice sur 32 bits a rendu la première racine incorrecte. Le système a localisé l'erreur, remplacé l'indice par une valeur sur 64 bits, relancé le travail affecté puis contrôlé indépendamment la racine finale.
+
+C'est bien plus qu'un modèle qui suggère un lemme prometteur dans une conversation.
+
+Ce n'est pas non plus de la science autonome sans humains. Un chercheur a choisi le problème, la borne de l'oracle et l'instance cible, puis validé les étapes irréversibles. L'article désigne seulement les systèmes comme Model A et Model B : le résultat ne constitue donc pas un benchmark reproductible d'un modèle commercial. Le travail repose aussi sur un pipeline existant à plus petite échelle et sur un calcul cryptanalytique déjà connu.
+
+L'affirmation rigoureuse reste impressionnante :
+
+Avec un harnais assorti de points de contrôle rigoureux, un accès à des ressources de calcul extrêmes et un humain qui choisit l'objectif scientifique, des agents peuvent désormais exécuter et déboguer un programme de recherche cryptographique qui demandait auparavant des mois à une équipe de spécialistes.
+
+Cela change la vitesse de la recherche.
+
+Cela ne supprime pas la nécessité de préciser ce qui a été mesuré, démontré, implémenté et ce qui reste sûr.
 
 ## Mise à jour : deux preuves contrôlées ne font pas encore consensus
 
