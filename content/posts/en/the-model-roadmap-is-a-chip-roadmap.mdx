@@ -1,10 +1,143 @@
 ---
 title: "The Model Roadmap Is Becoming a Chip Roadmap"
-date: "2026-08-08"
-description: "Amazon's TorchNeuron turns Trainium into a native PyTorch device and makes alternative AI hardware cheaper to try. But code compatibility is only the first layer: operator coverage, numerical behavior, kernels, scaling, observability, capacity, and total cost still decide whether a workload can really move."
-tags: ["AI Infrastructure", "AI Chips", "Amazon", "NVIDIA", "Developer Tools"]
+date: "2026-11-09"
+description: "Google has made Cloud Pathways, the distributed runtime behind Gemini, generally available on GKE. The chip race now includes the software that schedules whole training runs, survives hardware failures, and turns accelerator fleets into useful model progress."
+tags: ["AI Infrastructure", "AI Chips", "Google", "Google Cloud", "TPU", "Developer Tools"]
 draft: false
 ---
+
+## Update: the chip war has a runtime layer
+
+Google just made the runtime behind Gemini available to Google Cloud customers.
+
+[Cloud Pathways is now generally available](https://cloud.google.com/blog/topics/ai-infrastructure/cloud-pathways-a-distributed-ml-runtime-is-ga) on Google Kubernetes Engine in every region that supports TPU v5e, TPU v5p, Trillium, or Ironwood. Google says the system processed more than 130 million Cloud TPU chip-hours for customers during the last 90 days.
+
+That is a Google-reported usage figure, not an independent performance result. It does not tell us what those customers trained, how efficiently they used the hardware, or what they paid.
+
+It still reveals where the infrastructure competition is moving.
+
+The AI chip race is not only about who can manufacture the fastest accelerator or reserve the largest data center.
+
+It is also about who can make thousands of imperfect machines behave like one useful computer.
+
+Pathways is Google's answer to that problem. One JAX client describes the whole computation. A distributed runtime decides where its pieces run, moves tensors between them, orders operations, reallocates capacity, and keeps the training job alive when hardware fails.
+
+The model roadmap is becoming a chip roadmap.
+
+The chip roadmap is becoming a runtime roadmap too.
+
+## A training run is no longer one program repeated everywhere
+
+The standard distributed-training pattern is called Single Program, Multiple Data, or SPMD.
+
+Every accelerator runs the same program on a different shard of data. The workers synchronize through collective operations such as AllReduce. This works well when the job is uniform and every device moves in lockstep.
+
+Modern frontier-model work is less tidy.
+
+A reinforcement-learning loop may have samplers generating rollouts, a reward model scoring them, and a trainer updating the policy. Pipeline parallelism assigns different model stages to different devices. Disaggregated inference splits prefill, decoding, and cache movement across specialized resources.
+
+Those pieces do not need the same number of chips at the same time.
+
+They do need to exchange tensors in the right order without leaving expensive hardware idle or deadlocking the job.
+
+Google's [technical explanation of Pathways](https://developers.googleblog.com/what-is-pathways-single-controller-training-for-large-models/) calls this Multiple Programs, Multiple Data. Instead of asking each worker to understand only its local devices, one client declares a global dataflow graph. The runtime sees the dependencies across the whole cluster and schedules the work centrally.
+
+That is the important abstraction.
+
+The developer still chooses how to partition the model and which virtual devices each stage should use. Pathways maps those virtual devices onto physical TPU slices, prepares transfers before outputs are ready, and gives every communicating operation a consistent order.
+
+The product is not “one Python process performs all the computation.”
+
+The product is that one Python process can describe and inspect the computation while the distributed system keeps the controller off the critical path.
+
+## Hardware failure becomes a software event
+
+At frontier scale, hardware failure is not an exception.
+
+Google says Gemini 2.5 training was interrupted by hardware failures multiple times per hour. In a conventional multi-controller job, one failed host can break a collective, terminate every worker, and force the entire workload to restart from its last checkpoint.
+
+Pathways keeps the controller process separate from the accelerator workers. When a TPU slice disappears, the controller can receive an exception, remap virtual devices, restore valid state, and continue without relaunching the whole job.
+
+Google demonstrated an earlier version of that recovery path in July. Its [48-chip MaxText test](https://developers.googleblog.com/we-terminated-a-tpu-mid-training-and-it-recovered-in-seconds-introduction-to-elastic-training-with-maxtext/) force-killed one worker, replaced only the failed slice, restored a checkpoint, and resumed in the same process after about one minute and 50 seconds. The run lost 88 steps because it rewound to the last committed checkpoint.
+
+The demo also exposed the rough edges.
+
+A larger checkpoint initially exhausted the controller proxy because 135 GiB of model and optimizer state flowed through it. Google fixed that path by having TPU hosts read their own shards directly from Cloud Storage. The current GA announcement adds host-memory snapshots and dynamic resharding so a job can continue on fewer slices while replacement hardware arrives.
+
+That progression matters more than a perfect demo.
+
+The reliability feature is not a magical property of the TPU. It comes from the controller, checkpoint format, storage path, scheduler, worker health signals, Kubernetes behavior, and training library agreeing on what recovery means.
+
+The chip is one participant in the system.
+
+## Google is selling vertical integration
+
+Cloud Pathways is not a neutral abstraction over every accelerator and framework.
+
+The generally available path runs JAX workloads on Cloud TPUs through GKE. Google says it supports current TPU generations and JAX 0.10.1 or newer. Slurm integration through Cluster Director remains in preview.
+
+The architecture uses the open-source Interim Framework Runtime as an interface, and Google publishes utilities and deployment guides. The runtime that turns those pieces into a managed TPU fleet is still a Google Cloud product.
+
+That is not a flaw hidden in the announcement. It is the strategy.
+
+Nvidia sells hardware plus CUDA and its distributed software stack. Amazon is making Trainium look more native inside PyTorch. Google is packaging the internal runtime used for Gemini with TPUs, JAX, GKE, storage, scheduling, and observability.
+
+Each vendor is trying to make its hardware easier to use by owning more of the path above it.
+
+The result is a better developer experience and a deeper procurement decision.
+
+A team adopting Pathways is not only choosing a chip. It is choosing a programming model, cluster manager, failure model, checkpoint path, debugging workflow, and cloud control plane.
+
+That bundle may be exactly why the system works well.
+
+It is also the part that will be hardest to move.
+
+## The next benchmark is useful work per fleet-hour
+
+Google's 130 million chip-hours show that Pathways is operating at meaningful scale.
+
+They do not establish that it is the best runtime for a particular workload.
+
+The useful comparison is not chips allocated. It is useful model progress produced by the entire fleet after idle time, failed hosts, checkpoint overhead, data movement, compilation, recovery, and engineering effort are counted.
+
+Teams evaluating a distributed training runtime should ask:
+
+- What fraction of accelerator time is spent doing useful model work?
+- Which pipeline, reinforcement-learning, and inference patterns can overlap safely?
+- What happens to the controller, workers, and checkpoints when one slice fails?
+- How much progress is lost during recovery?
+- Can capacity shrink and grow without changing model behavior?
+- Which components are generally available, and which are still preview features?
+- Can the workload be reproduced outside this cloud and accelerator stack?
+- What evidence will the vendor expose beyond aggregate chip-hours?
+
+This is where AI infrastructure becomes difficult to benchmark.
+
+A faster chip can lose to a slower fleet with better utilization. A cheaper chip can become expensive if engineers spend weeks coordinating heterogeneous stages. A resilient system can save enormous training time while making the workload more dependent on one cloud's runtime.
+
+There is no single number that resolves those tradeoffs.
+
+There should at least be a receipt.
+
+## The runtime is now part of the model
+
+Model companies like to present training as a clean equation: more compute, better data, stronger architecture, better model.
+
+At scale, the runtime sits inside that equation.
+
+It decides whether the samplers wait for the trainer. Whether a failed host destroys an hour of work. Whether a researcher can inspect one process or chase a distributed hang across dozens of workers. Whether idle capacity can return to a shared pool. Whether a new training recipe is practical before the next hardware generation arrives.
+
+Cloud Pathways does not prove that Google has won that layer.
+
+It proves that Google believes the layer is valuable enough to productize.
+
+That is the signal worth keeping.
+
+The frontier labs are no longer distinguished only by the models they train or the chips they can buy. They are increasingly distinguished by the software that turns an unreliable fleet into a repeatable experiment.
+
+The next great model may still need a better accelerator.
+
+It will definitely need a better runtime.
 
 ## Update: compatibility is the new chip war
 

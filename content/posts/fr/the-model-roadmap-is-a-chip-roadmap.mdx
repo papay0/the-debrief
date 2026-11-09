@@ -1,10 +1,143 @@
 ---
 title: "La roadmap des modèles devient une roadmap silicium"
-date: "2026-08-08"
-description: "Avec TorchNeuron, Amazon transforme Trainium en device PyTorch natif et rend les alternatives hardware moins coûteuses à tester. Mais la compatibilité du code n'est que la première couche : couverture des opérateurs, comportement numérique, kernels, passage à l'échelle, observabilité, capacité et coût total décident encore si une charge peut vraiment migrer."
-tags: ["AI Infrastructure", "AI Chips", "Amazon", "NVIDIA", "Developer Tools"]
+date: "2026-11-09"
+description: "Google vient de rendre Cloud Pathways, le runtime distribué derrière Gemini, disponible sur GKE. La guerre des puces inclut désormais le software qui orchestre un entraînement entier, survit aux pannes et transforme une flotte d'accélérateurs en progrès utile."
+tags: ["AI Infrastructure", "AI Chips", "Google", "Google Cloud", "TPU", "Developer Tools"]
 draft: false
 ---
+
+## Mise à jour : la guerre des puces a désormais une couche runtime
+
+Google vient d'ouvrir aux clients de Google Cloud le runtime utilisé derrière Gemini.
+
+[Cloud Pathways est maintenant disponible](https://cloud.google.com/blog/topics/ai-infrastructure/cloud-pathways-a-distributed-ml-runtime-is-ga) sur Google Kubernetes Engine dans toutes les régions qui proposent les TPU v5e, TPU v5p, Trillium ou Ironwood. Google affirme que ses clients ont consommé plus de 130 millions d'heures-puce de Cloud TPU avec ce système au cours des 90 derniers jours.
+
+C'est un chiffre d'usage fourni par Google, pas un résultat de performance indépendant. Il ne dit pas ce que ces clients ont entraîné, avec quelle efficacité ils ont utilisé le hardware, ni combien ils ont payé.
+
+Il montre néanmoins où se déplace la compétition dans l'infrastructure IA.
+
+La guerre des puces ne consiste plus seulement à fabriquer l'accélérateur le plus rapide ou à réserver le plus grand data center.
+
+Elle consiste aussi à faire se comporter des milliers de machines imparfaites comme un seul ordinateur utile.
+
+Pathways est la réponse de Google à ce problème. Un client JAX décrit le calcul entier. Un runtime distribué décide où exécuter chaque morceau, déplace les tenseurs, ordonne les opérations, réalloue la capacité et maintient l'entraînement en vie lorsqu'un composant tombe en panne.
+
+La roadmap des modèles devient une roadmap silicium.
+
+La roadmap silicium devient aussi une roadmap runtime.
+
+## Un entraînement n'est plus le même programme répété partout
+
+Le pattern traditionnel de l'entraînement distribué s'appelle Single Program, Multiple Data, ou SPMD.
+
+Chaque accélérateur exécute le même programme sur un fragment différent des données. Les workers se synchronisent grâce à des opérations collectives comme AllReduce. Ce modèle fonctionne bien lorsque la charge est uniforme et que tous les devices avancent au même rythme.
+
+Le travail sur les modèles frontier est moins propre.
+
+Une boucle de reinforcement learning peut comporter des samplers qui produisent des trajectoires, un reward model qui les note et un trainer qui met à jour la policy. Le pipeline parallelism confie des étages différents du modèle à des devices différents. L'inférence désagrégée sépare le prefill, le décodage et les mouvements de cache entre des ressources spécialisées.
+
+Ces morceaux n'ont pas besoin du même nombre de puces au même moment.
+
+Ils doivent en revanche s'échanger leurs tenseurs dans le bon ordre, sans laisser du hardware coûteux inactif ni bloquer le job.
+
+L'[explication technique de Pathways](https://developers.googleblog.com/what-is-pathways-single-controller-training-for-large-models/) donnée par Google appelle cela Multiple Programs, Multiple Data. Au lieu de laisser chaque worker ne comprendre que ses devices locaux, un client unique déclare un graphe global de flux de données. Le runtime voit les dépendances à l'échelle du cluster et orchestre le travail de manière centralisée.
+
+C'est l'abstraction importante.
+
+Le développeur choisit toujours comment partitionner le modèle et quels devices virtuels chaque étape doit utiliser. Pathways associe ces devices virtuels à des tranches physiques de TPU, prépare les transferts avant que les résultats soient disponibles et impose un ordre cohérent aux opérations qui doivent communiquer.
+
+Le produit n'est pas qu'« un seul processus Python effectue tous les calculs ».
+
+Le produit, c'est qu'un seul processus Python peut décrire et inspecter le calcul pendant que le système distribué maintient le contrôleur hors du chemin critique.
+
+## La panne hardware devient un événement software
+
+À l'échelle frontier, une panne hardware n'est pas une exception.
+
+Google indique que l'entraînement de Gemini 2.5 a été interrompu plusieurs fois par heure par des défaillances matérielles. Dans une charge multi-controller classique, la perte d'un seul hôte peut casser une opération collective, arrêter tous les workers et forcer le redémarrage complet depuis le dernier checkpoint.
+
+Pathways sépare le processus contrôleur des workers qui pilotent les accélérateurs. Quand une tranche de TPU disparaît, le contrôleur peut recevoir une exception, réassocier les devices virtuels, restaurer un état valide et continuer sans relancer tout le job.
+
+Google a montré une première version de ce mécanisme en juillet. Dans son [test MaxText sur 48 puces](https://developers.googleblog.com/we-terminated-a-tpu-mid-training-and-it-recovered-in-seconds-introduction-to-elastic-training-with-maxtext/), l'entreprise a tué de force un worker, remplacé seulement la tranche défaillante, restauré un checkpoint puis repris dans le même processus après environ une minute et 50 secondes. L'entraînement a perdu 88 étapes en revenant au dernier checkpoint validé.
+
+La démonstration a aussi révélé les aspérités.
+
+Un checkpoint plus volumineux a d'abord saturé la mémoire du proxy du contrôleur, car 135 Gio de paramètres et d'état de l'optimiseur le traversaient. Google a corrigé ce chemin en laissant chaque hôte TPU lire directement ses propres fragments depuis Cloud Storage. L'annonce de disponibilité générale ajoute des snapshots en mémoire sur les hôtes et un resharding dynamique afin qu'un job puisse continuer avec moins de tranches pendant l'arrivée du hardware de remplacement.
+
+Cette progression compte davantage qu'une démonstration parfaite.
+
+La résilience n'est pas une propriété magique du TPU. Elle vient de l'accord entre le contrôleur, le format des checkpoints, le chemin de stockage, le scheduler, les signaux de santé des workers, Kubernetes et la bibliothèque d'entraînement sur ce que signifie « reprendre ».
+
+La puce n'est qu'un participant dans le système.
+
+## Google vend de l'intégration verticale
+
+Cloud Pathways n'est pas une abstraction neutre pour tous les accélérateurs et tous les frameworks.
+
+Le chemin disponible en production exécute des charges JAX sur des Cloud TPU via GKE. Google annonce le support des générations actuelles de TPU et de JAX 0.10.1 ou plus récent. L'intégration Slurm par Cluster Director reste en preview.
+
+L'architecture utilise Interim Framework Runtime, une interface open source, et Google publie des utilitaires ainsi que des guides de déploiement. Le runtime qui transforme ces pièces en flotte de TPU managée reste un produit Google Cloud.
+
+Ce n'est pas un défaut caché dans l'annonce. C'est la stratégie.
+
+Nvidia vend du hardware avec CUDA et sa stack distribuée. Amazon rend Trainium plus natif dans PyTorch. Google assemble le runtime interne de Gemini avec ses TPU, JAX, GKE, le stockage, le scheduling et l'observabilité.
+
+Chaque fournisseur tente de rendre son hardware plus simple à utiliser en possédant une part plus grande de la couche supérieure.
+
+Il en résulte une meilleure expérience développeur et une décision d'achat plus profonde.
+
+Une équipe qui adopte Pathways ne choisit pas seulement une puce. Elle choisit un modèle de programmation, un gestionnaire de cluster, un modèle de panne, un chemin de checkpoint, un workflow de débogage et un plan de contrôle cloud.
+
+Ce bundle explique peut-être précisément pourquoi le système fonctionne bien.
+
+C'est aussi la partie qui sera la plus difficile à déplacer.
+
+## Le prochain benchmark mesure le travail utile par heure de flotte
+
+Les 130 millions d'heures-puce annoncées par Google montrent que Pathways opère à une échelle significative.
+
+Elles ne prouvent pas qu'il s'agit du meilleur runtime pour une charge donnée.
+
+La comparaison utile ne porte pas sur le nombre de puces allouées. Elle porte sur le progrès utile produit par toute la flotte après avoir compté le temps d'inactivité, les hôtes en panne, le coût des checkpoints, les mouvements de données, la compilation, la reprise et le travail d'ingénierie.
+
+Une équipe qui évalue un runtime d'entraînement distribué devrait demander :
+
+- Quelle part du temps des accélérateurs produit réellement du travail utile pour le modèle ?
+- Quels patterns de pipeline, de reinforcement learning et d'inférence peuvent se chevaucher sans risque ?
+- Que deviennent le contrôleur, les workers et les checkpoints quand une tranche tombe ?
+- Quelle quantité de progrès disparaît pendant la reprise ?
+- La capacité peut-elle diminuer puis remonter sans changer le comportement du modèle ?
+- Quels composants sont disponibles en production et lesquels restent en preview ?
+- La charge peut-elle être reproduite en dehors de cette stack cloud et hardware ?
+- Quelles preuves le fournisseur publie-t-il au-delà d'un total agrégé d'heures-puce ?
+
+C'est ici que l'infrastructure IA devient difficile à comparer.
+
+Une puce plus rapide peut perdre face à une flotte plus lente mais mieux utilisée. Une puce moins chère peut coûter très cher si des ingénieurs passent des semaines à coordonner des étapes hétérogènes. Un système résilient peut économiser énormément de temps d'entraînement tout en rendant la charge plus dépendante du runtime d'un seul cloud.
+
+Aucun chiffre ne résout seul ces compromis.
+
+Il faut au moins un reçu.
+
+## Le runtime fait désormais partie du modèle
+
+Les entreprises de modèles aiment présenter l'entraînement comme une équation propre : plus de compute, de meilleures données, une architecture plus forte, un meilleur modèle.
+
+À grande échelle, le runtime entre dans cette équation.
+
+Il décide si les samplers attendent le trainer. Si la panne d'un hôte détruit une heure de travail. Si un chercheur peut inspecter un seul processus ou doit poursuivre un deadlock distribué sur des dizaines de workers. Si la capacité inutilisée peut revenir dans un pool partagé. Si une nouvelle recette d'entraînement devient praticable avant l'arrivée de la prochaine génération de hardware.
+
+Cloud Pathways ne prouve pas que Google a gagné cette couche.
+
+Il prouve que Google la juge assez précieuse pour en faire un produit.
+
+C'est le signal à retenir.
+
+Les labs frontier ne se distinguent plus seulement par les modèles qu'ils entraînent ou les puces qu'ils peuvent acheter. Ils se distinguent de plus en plus par le software qui transforme une flotte peu fiable en expérience reproductible.
+
+Le prochain grand modèle aura peut-être encore besoin d'un meilleur accélérateur.
+
+Il aura forcément besoin d'un meilleur runtime.
 
 ## Mise à jour : la compatibilité devient le nouveau front de la guerre des puces
 
