@@ -1,10 +1,112 @@
 ---
 title: "Cryptography Has a Validation Bottleneck"
-date: "2026-11-07"
-description: "Google DeepMind's human-guided agents produced one measured RSA-1024 implementation gain and one unimplemented batch-factorization algorithm. The release shows why AI-assisted science needs separate labels for computation, theory, formal verification, and real-world risk."
-tags: ["AI Security", "Anthropic", "OpenAI", "Google", "AI Agents", "AI Research", "Cryptography", "Open Source", "Developer Tools"]
+date: "2026-11-10"
+description: "Google DeepMind used AI agents to prove security properties of a compiled libsignal build. The 6.5 million lines of checked proof are impressive, but the 26,000 trusted lines that define the claim are now the real product boundary."
+tags: ["AI Security", "Anthropic", "OpenAI", "Google", "AI Agents", "AI Research", "Cryptography", "Formal Verification", "Signal", "Open Source", "Developer Tools"]
 draft: false
 ---
+
+## Update: Signal's proof moves the bottleneck to the specification
+
+Google DeepMind has used AI agents to produce a formal security proof for compiled Signal code.
+
+That sentence is both more important and more limited than "AI proved Signal is unhackable."
+
+The new [AlphaProof Code paper](https://google-deepmind.github.io/code-verification/) connects protocol-level security properties to an AArch64 executable built from `libsignal`, Signal's official Rust implementation. The agents generated about 6.5 million lines of Lean proof. Lean's kernel checks those proofs against a specification approved by human researchers.
+
+The result covers Signal's PQXDH handshake and Triple Ratchet in symbolic and computational models. It establishes properties including forward secrecy, authentication, post-compromise security, and handshake secrecy for the scenarios the paper formalizes.
+
+It also reaches below the Rust source.
+
+Because the theorem is stated over the compiled machine code, the proof does not have to assume that the Rust compiler preserved the intended behavior. A compiler bug that violated one of the formalized properties would make the theorem false and prevent the proof from closing.
+
+That is a meaningful step beyond checking a protocol on paper or verifying source code while trusting the compiler.
+
+It is not a proof about every behavior of the Signal apps people install.
+
+The target is one reproducible `libsignal-cli` build, compiled from `libsignal` 0.105.4 and SPQR 1.6.0 into a single-threaded, statically linked AArch64 Linux executable. Some low-level cryptographic routines and output functions are represented by trusted contracts. The result does not cover group messaging, multi-device state, side channels, Signal's mobile applications, or every intended post-quantum guarantee.
+
+The paper says this explicitly.
+
+The headline should too.
+
+## Six million checked lines rest on 26,000 trusted ones
+
+The scale of the generated proof is the spectacular number.
+
+It is not the number a security reviewer should inspect first.
+
+DeepMind says the 6.5 million lines of machine-checked proof rest on about 18,000 lines of trusted definitions and theorem statements, plus roughly 8,000 lines describing AArch64 semantics. The result also depends on Lean's kernel, the formal Linux process model, contracts for hooked routines, and assumptions about the cryptographic primitives.
+
+That is the trust boundary.
+
+The proof agents are allowed to be unreliable. If they invent an invalid proof step, Lean rejects it. A gatekeeper also compares the completed theorem with a held-out copy of the approved specification so the agents cannot quietly weaken the challenge while solving it.
+
+But Lean cannot decide whether the approved specification captures everything users mean by "Signal is secure."
+
+Humans still have to decide which attacker capabilities matter, which environment behaviors belong in the model, which cryptographic assumptions are acceptable, and which security properties deserve a theorem.
+
+The paper's limitations show how concrete those choices are. The machine semantics exclude threads, signals, dynamic linking, and files outside the working directory. The computational theorem is classical rather than quantum. Some bounds become uninformative at large scales. The symbolic ratchet result does not prove the post-quantum healing SPQR is designed to provide.
+
+None of this invalidates the proof.
+
+It defines the proof.
+
+## The bug test is the right kind of skepticism
+
+Formal verification has a famous failure mode: proving a weak or vacuous statement perfectly.
+
+DeepMind tried to test that boundary rather than hide it.
+
+The team reintroduced two previously fixed `libsignal` bugs, rebuilt the binaries, and proved that the mutated versions violated the symbolic security theorems. The framework also creates other plausible mutations, such as skipping message authentication, to check whether the specification rejects behavior it is supposed to forbid.
+
+That does not prove the specification catches every possible bug.
+
+It provides evidence that the specification is not merely decorative.
+
+This is an important pattern for AI-assisted formal methods. A green proof is stronger when the same specification can distinguish known-bad implementations from the intended one. The validator should be tested like any other security control.
+
+## Proof generation is becoming infrastructure
+
+The paper says a five-person team completed the work in four weeks, with researchers directing specification work and running proof agents continuously.
+
+DeepMind compares that with formal-verification projects that historically required years of specialist labor. That comparison is a company claim, not a controlled productivity study. The Signal result still shows a real change in the economics.
+
+Millions of proof lines are no longer millions of review lines.
+
+They are generated evidence that a small kernel can check.
+
+The scarce work moves to the trusted surface: writing specifications, testing them, reviewing assumptions, mapping the verified artifact to production, and repairing the proof when the code changes.
+
+DeepMind has [open-sourced the specifications, proofs, build scripts, and paper-to-code map](https://github.com/google-deepmind/code-verification). That matters more than the line count. Outside experts can inspect the exact theorems, rebuild the pinned binary, and challenge the assumptions instead of accepting a press-release adjective.
+
+The next test is maintenance.
+
+A proof of version 0.105.4 does not automatically cover version 0.105.5. If this workflow can repair affected proofs for each release before code ships, formal verification starts to look less like a heroic one-time project and more like continuous integration for security properties.
+
+That would be the product breakthrough.
+
+## "Unhackable" is still the wrong word
+
+[Axios quoted a DeepMind researcher](https://www.axios.com/2026/11/10/google-code-verification-signal) describing a path toward "unhackable software."
+
+That phrase is useful for attracting attention and terrible for describing a theorem.
+
+Software can satisfy its formal specification and still be exposed through an omitted property, a compromised endpoint, a side channel, unsafe surrounding code, a flawed trusted primitive, or a deployment that differs from the verified artifact.
+
+The mature claim is narrower and better:
+
+For one compiled build, under published assumptions and within explicit models, millions of machine-generated proof steps connect important Signal security properties to the machine code that executes them.
+
+That is not invulnerability.
+
+It is inspectable assurance.
+
+And it confirms the thesis of this article more clearly than any benchmark could.
+
+AI is making proof production dramatically cheaper.
+
+The bottleneck is deciding what the proof should mean.
 
 ## Update: DeepMind did not break modern RSA
 

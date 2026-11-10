@@ -1,10 +1,112 @@
 ---
 title: "La cryptographie a un goulot de validation"
-date: "2026-11-07"
-description: "Des agents guidés par des humains chez Google DeepMind ont produit un gain mesuré sur un calcul RSA-1024 et un algorithme non implémenté de factorisation par lots. Cette publication montre pourquoi la science assistée par IA doit distinguer calcul, théorie, vérification formelle et risque réel."
-tags: ["Sécurité IA", "Anthropic", "OpenAI", "Google", "Agents IA", "Recherche IA", "Cryptographie", "Open Source", "Outils développeurs"]
+date: "2026-11-10"
+description: "Google DeepMind a utilisé des agents IA pour prouver des propriétés de sécurité d'un build compilé de libsignal. Les 6,5 millions de lignes de preuve contrôlées impressionnent, mais les 26 000 lignes de confiance qui définissent l'affirmation deviennent la vraie frontière du produit."
+tags: ["Sécurité IA", "Anthropic", "OpenAI", "Google", "Agents IA", "Recherche IA", "Cryptographie", "Vérification formelle", "Signal", "Open Source", "Outils développeurs"]
 draft: false
 ---
+
+## Mise à jour : la preuve de Signal déplace le goulot vers la spécification
+
+Google DeepMind a utilisé des agents IA pour produire une preuve formelle de sécurité sur du code Signal compilé.
+
+Cette phrase est à la fois plus importante et plus limitée que « l'IA a prouvé que Signal était invulnérable ».
+
+Le nouvel [article sur AlphaProof Code](https://google-deepmind.github.io/code-verification/) relie des propriétés de sécurité du protocole à un exécutable AArch64 construit depuis `libsignal`, l'implémentation Rust officielle de Signal. Les agents ont généré environ 6,5 millions de lignes de preuve Lean. Le noyau de Lean contrôle ces preuves par rapport à une spécification approuvée par des chercheurs humains.
+
+Le résultat couvre le handshake PQXDH et le Triple Ratchet de Signal dans des modèles symbolique et computationnel. Il établit notamment la confidentialité persistante, l'authentification, la sécurité post-compromission et le secret du handshake dans les scénarios formalisés par l'article.
+
+Il descend aussi sous le code source Rust.
+
+Comme le théorème porte sur le code machine compilé, la preuve n'a pas besoin de supposer que le compilateur Rust a préservé le comportement attendu. Un bug du compilateur qui violerait l'une des propriétés formalisées rendrait le théorème faux et empêcherait la preuve d'aboutir.
+
+C'est une étape importante au-delà du contrôle d'un protocole sur le papier ou de la vérification du code source en faisant confiance au compilateur.
+
+Ce n'est pas une preuve sur tous les comportements des apps Signal installées par les utilisateurs.
+
+La cible est un build reproductible de `libsignal-cli`, compilé depuis `libsignal` 0.105.4 et SPQR 1.6.0 en un exécutable Linux AArch64 lié statiquement et mono-thread. Certaines routines cryptographiques de bas niveau et fonctions de sortie sont représentées par des contrats de confiance. Le résultat ne couvre ni les groupes, ni l'état multi-appareils, ni les canaux auxiliaires, ni les applications mobiles de Signal, ni toutes les garanties post-quantiques visées.
+
+L'article le dit explicitement.
+
+Le titre public devrait en faire autant.
+
+## Six millions de lignes contrôlées reposent sur 26 000 lignes de confiance
+
+L'échelle de la preuve générée fournit le chiffre spectaculaire.
+
+Ce n'est pas celui qu'un relecteur sécurité devrait examiner en premier.
+
+DeepMind indique que les 6,5 millions de lignes de preuve contrôlées reposent sur environ 18 000 lignes de définitions et d'énoncés de théorèmes de confiance, auxquelles s'ajoutent environ 8 000 lignes décrivant la sémantique AArch64. Le résultat dépend aussi du noyau de Lean, du modèle formel du processus Linux, des contrats des routines remplacées et des hypothèses sur les primitives cryptographiques.
+
+Voilà la frontière de confiance.
+
+Les agents de preuve ont le droit de ne pas être fiables. S'ils inventent une étape invalide, Lean la rejette. Un agent gatekeeper compare aussi le théorème terminé à une copie isolée de la spécification approuvée. Les agents ne peuvent donc pas affaiblir discrètement le problème pendant qu'ils le résolvent.
+
+Mais Lean ne peut pas décider si la spécification approuvée couvre tout ce que les utilisateurs entendent par « Signal est sécurisé ».
+
+Les humains doivent encore décider quelles capacités de l'attaquant comptent, quels comportements de l'environnement entrent dans le modèle, quelles hypothèses cryptographiques sont acceptables et quelles propriétés méritent un théorème.
+
+Les limites de l'article montrent à quel point ces choix sont concrets. La sémantique machine exclut les threads, les signaux, l'édition de liens dynamique et les fichiers extérieurs au répertoire courant. Le théorème computationnel vise un attaquant classique, pas quantique. Certaines bornes cessent d'apporter une garantie utile à grande échelle. Le résultat symbolique sur le ratchet ne prouve pas le rétablissement post-quantique pour lequel SPQR a été conçu.
+
+Rien de cela n'invalide la preuve.
+
+Cela définit la preuve.
+
+## Le test par les bugs adopte le bon scepticisme
+
+La vérification formelle possède un mode d'échec célèbre : prouver parfaitement un énoncé faible ou vide.
+
+DeepMind a essayé de tester cette frontière au lieu de la masquer.
+
+L'équipe a réintroduit deux bugs déjà corrigés dans `libsignal`, recompilé les binaires et prouvé que les versions modifiées violaient les théorèmes de sécurité symboliques. Le framework crée aussi d'autres mutations plausibles, comme ignorer l'authentification d'un message, afin de vérifier que la spécification rejette bien les comportements qu'elle doit interdire.
+
+Cela ne prouve pas que la spécification détecterait tous les bugs possibles.
+
+Cela montre qu'elle n'est pas seulement décorative.
+
+C'est un motif important pour les méthodes formelles assistées par IA. Une preuve verte est plus forte lorsque la même spécification distingue des implémentations connues comme mauvaises de celle qui est visée. Le validateur doit être testé comme n'importe quel autre contrôle de sécurité.
+
+## La production de preuves devient une infrastructure
+
+L'article indique qu'une équipe de cinq personnes a terminé ce travail en quatre semaines, en dirigeant la rédaction des spécifications et en faisant tourner les agents de preuve en continu.
+
+DeepMind compare ce délai à des projets de vérification formelle qui ont historiquement demandé des années de travail spécialisé. Cette comparaison reste une affirmation de l'entreprise, pas une étude contrôlée de productivité. Le résultat Signal montre tout de même un vrai changement économique.
+
+Des millions de lignes de preuve ne sont plus des millions de lignes à relire.
+
+Ce sont des éléments générés qu'un petit noyau peut contrôler.
+
+Le travail rare se déplace vers la surface de confiance : écrire les spécifications, les tester, relire les hypothèses, relier l'artefact vérifié à la production et réparer la preuve lorsque le code évolue.
+
+DeepMind a [publié en open source les spécifications, les preuves, les scripts de build et la carte entre l'article et le code](https://github.com/google-deepmind/code-verification). Cela compte davantage que le nombre de lignes. Des experts extérieurs peuvent inspecter les théorèmes exacts, reconstruire le binaire épinglé et contester les hypothèses au lieu d'accepter un adjectif de communiqué de presse.
+
+Le prochain test concerne la maintenance.
+
+Une preuve de la version 0.105.4 ne couvre pas automatiquement la version 0.105.5. Si ce workflow peut réparer les preuves affectées à chaque release avant que le code parte en production, la vérification formelle ressemblera moins à un projet héroïque ponctuel et davantage à une intégration continue des propriétés de sécurité.
+
+Voilà ce qui constituerait la percée produit.
+
+## « Invulnérable » reste le mauvais mot
+
+[Axios cite un chercheur de DeepMind](https://www.axios.com/2026/11/10/google-code-verification-signal) qui décrit une trajectoire vers des logiciels « invulnérables ».
+
+L'expression attire très bien l'attention et décrit très mal un théorème.
+
+Un logiciel peut satisfaire sa spécification formelle tout en restant exposé par une propriété omise, un terminal compromis, un canal auxiliaire, du code environnant dangereux, une primitive de confiance défaillante ou un déploiement différent de l'artefact vérifié.
+
+L'affirmation mature est plus étroite et meilleure :
+
+Pour un build compilé, avec des hypothèses publiées et dans des modèles explicites, des millions d'étapes de preuve générées par machine relient des propriétés importantes de sécurité de Signal au code machine qui les exécute.
+
+Ce n'est pas l'invulnérabilité.
+
+C'est une assurance inspectable.
+
+Et cela confirme la thèse de cet article plus clairement que n'importe quel benchmark.
+
+L'IA réduit brutalement le coût de production des preuves.
+
+Le goulot consiste à décider ce que la preuve doit signifier.
 
 ## Mise à jour : DeepMind n'a pas cassé le RSA moderne
 
